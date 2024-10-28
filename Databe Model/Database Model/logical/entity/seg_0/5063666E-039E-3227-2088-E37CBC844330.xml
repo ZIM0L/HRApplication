@@ -22,31 +22,37 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="UserId" id="B9A89EDD-7247-208F-C58C-C27BE284226D">
+<Attribute name="UserId" id="9F3D4A6B-6C37-20D0-517C-8EAF4EA977B6">
 <createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 11:36:42 UTC</createdTime>
+<createdTime>2024-10-28 12:22:58 UTC</createdTime>
 <generatorID>4A9E2CB6-369B-CD81-F41E-EC8EAEF23D10</generatorID>
 <ownerDesignName>Database Model</ownerDesignName>
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="RoleId" id="79FEED44-8C4E-803E-7326-C4101252F5E9">
+<Attribute name="RoleId" id="D103BF61-736E-3740-2154-258FB42374D8">
 <createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 11:36:51 UTC</createdTime>
+<createdTime>2024-10-28 12:25:22 UTC</createdTime>
 <generatorID>75D7A081-AFFB-693E-BB0A-1353B72CDCEC</generatorID>
 <ownerDesignName>Database Model</ownerDesignName>
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <referedAttribute>6E89F2D9-4D3E-0A41-D75E-7A874C208C5F</referedAttribute>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>

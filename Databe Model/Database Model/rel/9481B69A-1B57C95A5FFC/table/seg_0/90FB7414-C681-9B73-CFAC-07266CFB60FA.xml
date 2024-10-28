@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="90FB7414-C681-9B73-CFAC-07266CFB60FA" name="JobPositions">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>DCEEE987-9C76-100C-7428-BE7710750B66</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="JobPositionId" id="D1BEF1B1-E3E8-C599-EFB6-0D05D016D1F4">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>4FF97BE7-545C-EA7B-A35F-CBACEF2C30E3</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Title" id="294A021E-C19D-50C5-38CE-4A62D17FFE2F">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>38461BAA-9F14-47A9-D9E3-294206540A6C</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Description" id="9E45B779-12CF-DFAD-51AD-3ED74386BF40">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>93E2F3C3-24AB-C7DF-0512-DA55738C83D9</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Level" id="B20FFE48-323A-8254-605A-95BBC9FA3DD7">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>22591B38-FCD7-AB19-2601-46DE089FB7DF</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0AA10491-B1A1-B3A3-471F-E1B960A0ECC9" name="JobPositions_PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>95973680-E0F0-AF07-06B6-3D540414D296</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D1BEF1B1-E3E8-C599-EFB6-0D05D016D1F4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

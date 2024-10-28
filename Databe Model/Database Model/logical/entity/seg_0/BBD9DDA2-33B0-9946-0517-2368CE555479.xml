@@ -22,7 +22,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="RoleName" id="8DEAD138-4A20-7B9C-02E8-9C36A57EF268">
@@ -32,8 +34,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Description" id="20D20D74-DBB9-464A-58F6-81179626CD7C">
 <createdBy>sylzy</createdBy>
@@ -42,8 +47,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

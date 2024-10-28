@@ -22,19 +22,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="UserId" id="A17AC5F1-0927-9E94-7E4A-EA26F431A92C">
-<createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 11:45:58 UTC</createdTime>
-<generatorID>9728E1B2-F4AE-3463-A22C-857418C43379</generatorID>
-<ownerDesignName>Database Model</ownerDesignName>
-<engineerTo>
-<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
-</engineerTo>
-<referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="TeamId" id="0EBD497E-FC24-7BBB-5E1A-9355E97992F8">
@@ -46,7 +36,23 @@
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <referedAttribute>87B36D64-BFC2-F07F-4172-E55B36136A93</referedAttribute>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="UserId" id="2E8D79A7-5441-1FD0-02AB-B33A766661BA">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:22:58 UTC</createdTime>
+<generatorID>9728E1B2-F4AE-3463-A22C-857418C43379</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="JoinedAt" id="77653355-38B2-287B-79BF-BFBFB0D9747A">
@@ -56,7 +62,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="LeftAt" id="D87133F4-7DC3-3B0C-2E3B-10D081A54F4A">
@@ -67,7 +75,9 @@
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <nullsAllowed>true</nullsAllowed>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
@@ -82,7 +92,7 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>70E627F4-6CD9-DA41-412F-D6B5462DC97E</attributeRef>
-<attributeRef>A17AC5F1-0927-9E94-7E4A-EA26F431A92C</attributeRef>
+<attributeRef>2E8D79A7-5441-1FD0-02AB-B33A766661BA</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

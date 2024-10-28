@@ -22,7 +22,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Name" id="804FA32A-323B-7A6C-60B7-9A50A45C9056">
@@ -32,8 +34,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Description" id="24B75477-DD5C-ED29-2287-04F7E50F07C1">
 <createdBy>sylzy</createdBy>
@@ -42,7 +47,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="IsActive" id="72AB6FB1-0ECF-A650-26C3-6AF84733A052">
@@ -52,8 +59,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT034</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

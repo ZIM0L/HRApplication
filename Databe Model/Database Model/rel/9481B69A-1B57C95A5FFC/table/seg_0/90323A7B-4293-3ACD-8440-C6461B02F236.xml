@@ -1,0 +1,141 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="90323A7B-4293-3ACD-8440-C6461B02F236" name="Users">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>9AC799F4-FC9C-4B8F-4A47-85D612FF678D</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="UserId" id="72F94B89-4410-094B-FD49-F75121D77DE8">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Name" id="7333D139-D17B-9199-D655-F133CF76F85A">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>07930428-337F-C088-54B7-F41E56A73654</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Surname" id="69092E06-A84E-454B-5502-AF0D5DB845BD">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>AA53F5AB-D44D-856E-200E-1E731C5386C9</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Email" id="2F68A24C-C43F-44C4-115B-BAF8C487ED1C">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>D2426A5C-665E-3E6E-01AF-6AF36B4C406C</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PhoneNumber" id="A1E58CF0-2234-8161-141F-DA99D7344B4D">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>9331588F-533E-175C-E9CD-8835AE418F1F</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Password" id="39487316-EAC5-6620-C744-3A30FE4D0065">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>1B7D8B89-8B5A-31F9-D7E1-63AE0DAD27B2</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CreatedAt" id="E5159367-C037-585C-5871-3F852738FED0">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>EB25A861-E7B9-953B-1427-DB84F705B8CB</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UpdatedAt" id="5F16CCCE-198B-B872-DFD1-1B9658FFFEC3">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>B70A00C2-E75D-7F72-C8F5-18A97811BE72</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="IsActive" id="E649F576-D3E0-28F4-5440-E801CB778482">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>DEBEEF5A-D0AE-DA2E-E190-36AFFFE7A670</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT034</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2F113F8D-E0AB-4AD1-42E5-9EE4F027B91A" name="Users_PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>78905A2A-E853-5F02-16D8-B414121649BC</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="72F94B89-4410-094B-FD49-F75121D77DE8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9989D480-D419-ABAC-DAC8-BC80C24F017F" name="Users_Email_UN">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:38:04 UTC</createdTime>
+<generatorID>94609DCC-642E-6747-0D06-454C4BAA6A07</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2F68A24C-C43F-44C4-115B-BAF8C487ED1C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

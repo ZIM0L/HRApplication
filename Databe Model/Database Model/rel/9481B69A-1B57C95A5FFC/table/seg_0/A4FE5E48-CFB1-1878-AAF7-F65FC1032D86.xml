@@ -1,0 +1,110 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A4FE5E48-CFB1-1878-AAF7-F65FC1032D86" name="Sessions">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>F05E1639-3EC8-C678-D603-4EC68D0D43C1</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="SessionsId" id="70392C62-7C94-87F9-C49D-20781B905A71">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>76C0D7C2-1641-AF03-CAAA-1D2D64649394</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UserId" id="433B9F17-F4EB-7053-87F9-995AD53B2D51">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>F70A0C9A-6FB4-EBB1-2100-6ACB20180F0B</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DB8FE370-99C0-AB0E-B737-324220BF01FB" referredColumn="72F94B89-4410-094B-FD49-F75121D77DE8"/>
+</associations>
+</Column>
+<Column name="SessionToken" id="2F94772A-0DA6-8EC1-4930-A80FB04ABFA8">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>A74CDF26-D87E-C447-2917-50F265F7334A</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ExpiresAt" id="F9EE9B57-B249-DD50-0336-7C4F5350F75B">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>594626EB-95CA-3388-ED1E-5662A719C9C7</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="IsActive" id="3B70BCDB-9792-3B04-B98C-EC8A0C858BF5">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>13FF121A-47F8-4E32-065A-7D93FF70221D</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT034</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CreatedAt" id="1E8EEB2B-E850-B7B9-9F2B-3454A73B5A1A">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:38:04 UTC</createdTime>
+<generatorID>4F60E8B0-09B5-54C7-61EF-5A3EC627FB06</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0FABB88E-5A04-B229-FADD-719B5B6F41B7" name="Sessions_PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>2D52C2CE-889E-368A-155D-4E54095090F2</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="70392C62-7C94-87F9-C49D-20781B905A71"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="587CDCEE-8020-A516-EFD8-467715718E49" name="Sessions_Users_FK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>2BF5A07A-2382-127E-9981-291EB2C3B903</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="433B9F17-F4EB-7053-87F9-995AD53B2D51"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

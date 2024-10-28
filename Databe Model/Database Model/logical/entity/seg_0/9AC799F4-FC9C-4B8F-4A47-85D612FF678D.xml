@@ -22,7 +22,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Name" id="07930428-337F-C088-54B7-F41E56A73654">
@@ -32,8 +34,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Surname" id="AA53F5AB-D44D-856E-200E-1E731C5386C9">
 <createdBy>sylzy</createdBy>
@@ -42,8 +47,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Email" id="D2426A5C-665E-3E6E-01AF-6AF36B4C406C">
 <createdBy>sylzy</createdBy>
@@ -52,8 +60,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="PhoneNumber" id="9331588F-533E-175C-E9CD-8835AE418F1F">
 <createdBy>sylzy</createdBy>
@@ -62,8 +73,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Password" id="1B7D8B89-8B5A-31F9-D7E1-63AE0DAD27B2">
 <createdBy>sylzy</createdBy>
@@ -72,7 +86,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="CreatedAt" id="EB25A861-E7B9-953B-1427-DB84F705B8CB">
@@ -82,7 +98,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="UpdatedAt" id="B70A00C2-E75D-7F72-C8F5-18A97811BE72">
@@ -92,7 +110,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="IsActive" id="DEBEEF5A-D0AE-DA2E-E190-36AFFFE7A670">
@@ -102,8 +122,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT034</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
@@ -115,8 +138,21 @@
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <pk>true</pk>
+<newElementsIDs>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</newElementsIDs>
 <usedAttributes>
 <attributeRef>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="94609DCC-642E-6747-0D06-454C4BAA6A07" name="Email">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:21:26 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<newElementsIDs>D2426A5C-665E-3E6E-01AF-6AF36B4C406C</newElementsIDs>
+<usedAttributes>
+<attributeRef>D2426A5C-665E-3E6E-01AF-6AF36B4C406C</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

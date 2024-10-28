@@ -1,0 +1,111 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="49A6D37F-5A36-EEBB-5C04-603F7E737E81" name="UserTrainingProgress">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>2C797C42-B489-3E6E-A880-7AAB38C9A803</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="UserTrainingId" id="F559400C-0182-4616-7F7F-EDE4CC538DFC">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>72362B64-5921-6EEE-FD62-085FD264927E</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UserId" id="2BB0DE9D-D26A-89D7-63C8-C77157838C6F">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>27A22DA3-AB3F-6396-2BAC-AD5ACD12169E</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E0F29B7F-7881-29D0-23B0-022F4B28BDD2" referredColumn="72F94B89-4410-094B-FD49-F75121D77DE8"/>
+</associations>
+</Column>
+<Column name="TrainingId" id="1121B184-3B08-CEC4-BA0D-D3C07B40C791">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>3E738A93-3200-2099-5C8D-871BA695DA8F</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CF6047F7-C934-C103-2D03-82F7B23FA1F2" referredColumn="C8EAFC10-E717-F6BB-3AE6-F11603B75A23"/>
+</associations>
+</Column>
+<Column name="Progress" id="2A9C0781-0162-DFB0-0611-0E543811DCBE">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>9F29CAFE-F4CE-980B-ABEA-ED927B0A6605</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LastUpdated" id="F0A21D94-EFDE-3775-A964-D0FB1D895667">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>F16D9493-6779-8335-5CC5-88D9E7C4E577</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A181BBF3-8024-A536-0CF4-5C1ABF519DBD" name="UserTrainingProgress_PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>97FF35EF-28FB-A362-B723-8EDE8E3557BC</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F559400C-0182-4616-7F7F-EDE4CC538DFC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D6714E9E-C88D-52ED-48EB-C0ECA36B735D" name="UserTrainingProgress_Trainings_FK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>3451FC04-5CD9-3CD2-C4EA-E9A98598D550</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1121B184-3B08-CEC4-BA0D-D3C07B40C791"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8B7A06F9-5F95-E062-A685-B0EDC1131202" name="UserTrainingProgress_Users_FK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>D1AF8A04-843C-2126-A504-0DFA72B67E60</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2BB0DE9D-D26A-89D7-63C8-C77157838C6F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

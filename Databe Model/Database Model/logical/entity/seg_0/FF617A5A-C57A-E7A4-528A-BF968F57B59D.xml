@@ -22,19 +22,23 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="UserId" id="653E5576-4C45-AB13-469F-E1F41DD10E52">
+<Attribute name="UserId" id="8DA78FF5-1B71-1BEB-A0D2-3505AA46DD12">
 <createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 12:06:44 UTC</createdTime>
+<createdTime>2024-10-28 12:22:58 UTC</createdTime>
 <generatorID>2EA9A9F6-8013-F1D2-83DE-576453154EE4</generatorID>
 <ownerDesignName>Database Model</ownerDesignName>
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="JobPositionId" id="27320AC4-B1C3-A15C-9B7A-4D4C5AD72837">
@@ -46,7 +50,9 @@
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <referedAttribute>4FF97BE7-545C-EA7B-A35F-CBACEF2C30E3</referedAttribute>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="ContractType" id="3EA126AF-904B-A501-94BD-85E6EA87D02A">
@@ -56,8 +62,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="StartDate" id="323386AB-BE90-C937-E1BF-3C16279B01BB">
 <createdBy>sylzy</createdBy>
@@ -66,7 +75,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="EndDate" id="A0DF643C-F641-29BF-CA54-FB1423159DAC">
@@ -76,7 +87,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Salary" id="ACC67EFA-4294-B4F6-5C00-EE82D9A89C0E">
@@ -86,7 +99,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="HoursPerWeek" id="9E6E1933-8A22-0ADB-4FEB-9F2A6E023036">
@@ -96,7 +111,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="NoticePeriod" id="946A400A-D4A3-6C2D-EC6A-566332D14662">
@@ -106,17 +123,9 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Benefits" id="C2426CA2-08B1-93F1-68A6-94443C58CC77">
-<createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 12:06:22 UTC</createdTime>
-<ownerDesignName>Database Model</ownerDesignName>
-<engineerTo>
-<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
-</engineerTo>
-<use>0</use>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="IsActive" id="406B19EB-A54A-CA9F-3AB8-0160F32D57AE">
@@ -126,8 +135,11 @@
 <engineerTo>
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT034</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

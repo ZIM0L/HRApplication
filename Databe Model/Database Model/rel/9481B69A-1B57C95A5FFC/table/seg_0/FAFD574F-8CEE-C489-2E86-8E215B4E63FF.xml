@@ -1,0 +1,123 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FAFD574F-8CEE-C489-2E86-8E215B4E63FF" name="EmployeeJobPositions">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>513C0E66-8D05-8FB4-5265-D8710DA32751</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="EmployeeJobPositionId" id="DD725A54-5348-A4D3-BD10-BCEF4A9ED6E3">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>5363B9D1-8E2D-0D8B-DC0C-B33EB4DA4677</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UserId" id="3B6A1651-3D0E-7AB9-108A-4905ECAC7929">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>BEC3F4AC-1518-DF1A-A870-A5A14F3F7A55</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A9AC43FE-8A59-F112-E5A9-EA1C080B8B26" referredColumn="72F94B89-4410-094B-FD49-F75121D77DE8"/>
+</associations>
+</Column>
+<Column name="JobPositionId" id="5581D816-92F2-2548-46E0-4613511BA8BE">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>746058CD-9BC6-2EE8-D6D0-3C2566BB2242</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6B80A5DB-D305-82DE-DF88-55E864E59E11" referredColumn="D1BEF1B1-E3E8-C599-EFB6-0D05D016D1F4"/>
+</associations>
+</Column>
+<Column name="StartDate" id="22363811-BF31-92B4-6894-DBB22C933B34">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>4B278CD8-FE84-3978-ACD7-D35BFCC7ED4D</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EndDate" id="A277AF46-8C35-00E2-F16D-D140980906AC">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>55BAC2FE-61FB-35B3-39C7-1B034E5F7573</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5DF51210-6FC9-28D3-7DDC-5ADCAA077CB7" name="EmployeeJobPositions_PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>78FCFE4C-EE69-0AA7-0CB2-00B558910624</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DD725A54-5348-A4D3-BD10-BCEF4A9ED6E3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E2DC8821-7AA3-2B50-A83A-ECE238648D49" name="EmployeeJobPositions__IDX">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>24847BE1-189F-0956-16DE-54B4115911BE</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="3B6A1651-3D0E-7AB9-108A-4905ECAC7929"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D629CA8D-5111-306B-8137-5343EAD0833E" name="EmployeeJobPositions_Users_FK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>24847BE1-189F-0956-16DE-54B4115911BE</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3B6A1651-3D0E-7AB9-108A-4905ECAC7929"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C1B00D8F-8EFB-EF30-869C-01B3FEE938F1" name="EmployeeJobPositions_JobPos_FK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:17:11 UTC</createdTime>
+<generatorID>CBE6CFFE-5C83-3708-B40D-7CC7071AA850</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5581D816-92F2-2548-46E0-4613511BA8BE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
