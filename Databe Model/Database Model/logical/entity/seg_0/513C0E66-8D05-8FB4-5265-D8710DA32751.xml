@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="513C0E66-8D05-8FB4-5265-D8710DA32751" name="EmployeeJobPositions">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:01:33 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="EmployeeJobPositionId" id="5363B9D1-8E2D-0D8B-DC0C-B33EB4DA4677">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:01:50 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="UserId" id="BEC3F4AC-1518-DF1A-A870-A5A14F3F7A55">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:03:14 UTC</createdTime>
+<generatorID>24847BE1-189F-0956-16DE-54B4115911BE</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="JobPositionId" id="746058CD-9BC6-2EE8-D6D0-3C2566BB2242">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:03:25 UTC</createdTime>
+<generatorID>CBE6CFFE-5C83-3708-B40D-7CC7071AA850</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<referedAttribute>4FF97BE7-545C-EA7B-A35F-CBACEF2C30E3</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="StartDate" id="4B278CD8-FE84-3978-ACD7-D35BFCC7ED4D">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:02:03 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="EndDate" id="55BAC2FE-61FB-35B3-39C7-1B034E5F7573">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:02:14 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="78FCFE4C-EE69-0AA7-0CB2-00B558910624" name="EmployeeJobPositions PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 12:02:02 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>5363B9D1-8E2D-0D8B-DC0C-B33EB4DA4677</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

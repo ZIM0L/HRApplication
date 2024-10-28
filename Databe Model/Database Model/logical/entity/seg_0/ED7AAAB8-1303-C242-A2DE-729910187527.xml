@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="ED7AAAB8-1303-C242-A2DE-729910187527" name="LoginHistory">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:38:28 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="LoginId" id="5E7C60D3-2CC3-65DA-0DBC-CA92FC6610A7">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:38:34 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="UserId" id="4B66458E-DA6B-5A9E-8868-D86C7232816F">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:39:37 UTC</createdTime>
+<generatorID>B7F4829E-92EC-8408-0A72-FB497C6B02B8</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="LoginTime" id="46C279AC-63A7-1EF3-7229-1BBCDF4A3230">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:38:48 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="IpAddress" id="7D81B9E6-8DBD-B938-8C66-BBE17912CB37">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:39:00 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="IsSuccessful" id="C95E162A-55E2-AFA4-D4E6-F70612FEF59A">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:39:07 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="CBBD72E6-40EB-A1DA-1403-B0DDD5A9BA3A" name="LoginHistory PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:38:39 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>5E7C60D3-2CC3-65DA-0DBC-CA92FC6610A7</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

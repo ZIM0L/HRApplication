@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="511F3B06-00C3-D139-D6DB-0C82B8F220D3" name="Applications">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:51:32 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ApplicationId" id="7CB9A5D1-F6B0-99A7-5A08-AFD85B2009E6">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:52:01 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Status" id="D6AD80FE-D1FC-8D80-623F-955A9F3E1360">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:52:09 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SubmittedAt" id="A41D84AF-12EF-AB1D-CF47-C9DAB8880FA0">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:52:18 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="UserId" id="62E179C6-330E-AC3F-DCCD-1DCB0D0CA693">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:53:30 UTC</createdTime>
+<generatorID>59870B35-F779-62C6-96B6-9132FC1192F8</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<referedAttribute>44F0AF3F-B6AA-B295-83BA-F3C849A685CB</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PositionId" id="F6E51BB5-6D32-48B9-A7CB-04E0CD60A893">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:54:06 UTC</createdTime>
+<generatorID>86A30F61-2713-147C-5E20-5D85379A7095</generatorID>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<referedAttribute>92EE70B9-E73A-D013-171F-1F2F9EC0057E</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="BAF26B62-A76D-162D-8A8B-6BEFA9647D2E" name="Applications PK">
+<createdBy>sylzy</createdBy>
+<createdTime>2024-10-28 11:52:08 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>7CB9A5D1-F6B0-99A7-5A08-AFD85B2009E6</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
