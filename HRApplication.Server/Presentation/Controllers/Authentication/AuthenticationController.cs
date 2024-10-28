@@ -1,6 +1,7 @@
 ﻿using Application.Authentication;
 using ErrorOr;
 using HRApplication.Server.Application.Authentication.Commands;
+using HRApplication.Server.Application.Authentication.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
@@ -29,6 +30,24 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             ErrorOr<AuthenticationResult> response = await _mediator.Send(command); //pipieline
 
        
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+
+        }
+        [HttpPost]
+        [Route("/auth/login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+
+            var query = new LoginRequest(
+                request.email,
+                request.password);
+
+            ErrorOr<AuthenticationResult> response = await _mediator.Send(query); //pipieline
+
+
             return response.Match(
                 response => Ok(response),
                 errors => Problem(errors)

@@ -26,7 +26,7 @@ namespace ReactApp1.Server.Infrastructure.Authentication
             
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString() ?? string.Empty),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString() ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.Name ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.Surname ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),

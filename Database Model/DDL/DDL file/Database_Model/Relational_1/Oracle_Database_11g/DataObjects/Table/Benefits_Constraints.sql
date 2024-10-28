@@ -1,0 +1,1 @@
+ALTER TABLE benefits ADD CONSTRAINT benefits_pk PRIMARY KEY ( benefitid );

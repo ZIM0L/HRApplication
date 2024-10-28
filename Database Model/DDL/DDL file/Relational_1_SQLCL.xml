@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:n0="http://www.oracle.com/xml/ns/dbchangelog-ext" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<changeSet author="sylzy" id="_10">
+ <n0:runOracleScript objectName="MDSYS.SDO_GEOMETRY.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Structure_Type\MDSYS.SDO_GEOMETRY.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_20">
+ <n0:runOracleScript objectName="XMLTYPE.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Structure_Type\XMLTYPE.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_30">
+ <n0:runOracleScript objectName="Applications.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Applications.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_40">
+ <n0:runOracleScript objectName="Applications_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Applications_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_50">
+ <n0:runOracleScript objectName="Attachments_Firebase.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Attachments_Firebase.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_60">
+ <n0:runOracleScript objectName="Benefits.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Benefits.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_70">
+ <n0:runOracleScript objectName="Benefits_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Benefits_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_80">
+ <n0:runOracleScript objectName="ContractBenefits.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\ContractBenefits.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_90">
+ <n0:runOracleScript objectName="Contracts.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Contracts.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_100">
+ <n0:runOracleScript objectName="Contracts_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Contracts_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_110">
+ <n0:runOracleScript objectName="EmployeeJobPositions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\EmployeeJobPositions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_120">
+ <n0:runOracleScript objectName="EmployeeJobPositions_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\EmployeeJobPositions_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_130">
+ <n0:runOracleScript objectName="JobPositions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\JobPositions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_140">
+ <n0:runOracleScript objectName="JobPositions_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\JobPositions_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_150">
+ <n0:runOracleScript objectName="LeaveRequest.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LeaveRequest.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_160">
+ <n0:runOracleScript objectName="LeaveRequest_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LeaveRequest_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_170">
+ <n0:runOracleScript objectName="LoginHistory.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LoginHistory.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_180">
+ <n0:runOracleScript objectName="LoginHistory_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LoginHistory_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_190">
+ <n0:runOracleScript objectName="PasswordRecovery.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\PasswordRecovery.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_200">
+ <n0:runOracleScript objectName="PerfomanceReviews.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\PerfomanceReviews.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_210">
+ <n0:runOracleScript objectName="RecruitmentPositions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\RecruitmentPositions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_220">
+ <n0:runOracleScript objectName="RecruitmentPositions_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\RecruitmentPositions_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_230">
+ <n0:runOracleScript objectName="Roles.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Roles.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_240">
+ <n0:runOracleScript objectName="Roles_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Roles_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_250">
+ <n0:runOracleScript objectName="Schedule.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Schedule.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_260">
+ <n0:runOracleScript objectName="Schedule_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Schedule_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_270">
+ <n0:runOracleScript objectName="Sessions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Sessions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_280">
+ <n0:runOracleScript objectName="Sessions_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Sessions_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_290">
+ <n0:runOracleScript objectName="TeamMembers.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\TeamMembers.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_300">
+ <n0:runOracleScript objectName="TeamMembers_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\TeamMembers_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_310">
+ <n0:runOracleScript objectName="Teams.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Teams.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_320">
+ <n0:runOracleScript objectName="Teams_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Teams_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_330">
+ <n0:runOracleScript objectName="Trainings.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Trainings.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_340">
+ <n0:runOracleScript objectName="Trainings_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Trainings_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_350">
+ <n0:runOracleScript objectName="UserRoles.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserRoles.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_360">
+ <n0:runOracleScript objectName="UserRoles_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserRoles_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_370">
+ <n0:runOracleScript objectName="Users.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Users.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_380">
+ <n0:runOracleScript objectName="Users_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Users_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_390">
+ <n0:runOracleScript objectName="UserTrainingProgress.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserTrainingProgress.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_400">
+ <n0:runOracleScript objectName="UserTrainingProgress_Constraints.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserTrainingProgress_Constraints.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_410">
+ <n0:runOracleScript objectName="Applications_RecruitmentPositions_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Applications_RecruitmentPositions_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_420">
+ <n0:runOracleScript objectName="Applications_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Applications_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_430">
+ <n0:runOracleScript objectName="ContractBenefits_Benefits_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\ContractBenefits_Benefits_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_440">
+ <n0:runOracleScript objectName="ContractBenefits_Contracts_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\ContractBenefits_Contracts_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_450">
+ <n0:runOracleScript objectName="Contracts_JobPositions_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Contracts_JobPositions_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_460">
+ <n0:runOracleScript objectName="Contracts_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Contracts_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_470">
+ <n0:runOracleScript objectName="EmployeeJobPositions_JobPositions_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\EmployeeJobPositions_JobPositions_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_480">
+ <n0:runOracleScript objectName="EmployeeJobPositions_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\EmployeeJobPositions_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_490">
+ <n0:runOracleScript objectName="LeaveRequest_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\LeaveRequest_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_500">
+ <n0:runOracleScript objectName="LoginHistory_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\LoginHistory_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_510">
+ <n0:runOracleScript objectName="Schedule_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Schedule_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_520">
+ <n0:runOracleScript objectName="Sessions_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Sessions_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_530">
+ <n0:runOracleScript objectName="TeamMembers_Teams_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\TeamMembers_Teams_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_540">
+ <n0:runOracleScript objectName="TeamMembers_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\TeamMembers_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_550">
+ <n0:runOracleScript objectName="UserRoles_Roles_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserRoles_Roles_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_560">
+ <n0:runOracleScript objectName="UserRoles_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserRoles_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_570">
+ <n0:runOracleScript objectName="UserTrainingProgress_Trainings_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserTrainingProgress_Trainings_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_580">
+ <n0:runOracleScript objectName="UserTrainingProgress_Users_FK.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserTrainingProgress_Users_FK.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_590">
+ <n0:runOracleScript objectName="Applications.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Applications.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_600">
+ <n0:runOracleScript objectName="Attachments_Firebase.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Attachments_Firebase.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_610">
+ <n0:runOracleScript objectName="Benefits.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Benefits.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_620">
+ <n0:runOracleScript objectName="ContractBenefits.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\ContractBenefits.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_630">
+ <n0:runOracleScript objectName="Contracts.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Contracts.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_640">
+ <n0:runOracleScript objectName="EmployeeJobPositions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\EmployeeJobPositions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_650">
+ <n0:runOracleScript objectName="JobPositions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\JobPositions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_660">
+ <n0:runOracleScript objectName="LeaveRequest.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\LeaveRequest.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_670">
+ <n0:runOracleScript objectName="LoginHistory.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\LoginHistory.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_680">
+ <n0:runOracleScript objectName="PasswordRecovery.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\PasswordRecovery.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_690">
+ <n0:runOracleScript objectName="PerfomanceReviews.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\PerfomanceReviews.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_700">
+ <n0:runOracleScript objectName="RecruitmentPositions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\RecruitmentPositions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_710">
+ <n0:runOracleScript objectName="Roles.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Roles.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_720">
+ <n0:runOracleScript objectName="Schedule.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Schedule.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_730">
+ <n0:runOracleScript objectName="Sessions.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Sessions.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_740">
+ <n0:runOracleScript objectName="TeamMembers.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\TeamMembers.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_750">
+ <n0:runOracleScript objectName="Teams.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Teams.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_760">
+ <n0:runOracleScript objectName="Trainings.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Trainings.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_770">
+ <n0:runOracleScript objectName="UserRoles.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\UserRoles.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_780">
+ <n0:runOracleScript objectName="Users.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Users.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+<changeSet author="sylzy" id="_790">
+ <n0:runOracleScript objectName="UserTrainingProgress.sql" ownerName="OSDDM-sylzy" sourceType="FILE" >
+   <n0:source><![CDATA[Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\UserTrainingProgress.sql]]></n0:source>
+ </n0:runOracleScript>
+</changeSet>
+</databaseChangeLog>

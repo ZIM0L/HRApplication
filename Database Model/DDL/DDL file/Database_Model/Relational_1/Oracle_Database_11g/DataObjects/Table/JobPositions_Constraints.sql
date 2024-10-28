@@ -1,0 +1,1 @@
+ALTER TABLE jobpositions ADD CONSTRAINT jobpositions_pk PRIMARY KEY ( jobpositionid );

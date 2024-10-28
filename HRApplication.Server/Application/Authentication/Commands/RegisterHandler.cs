@@ -31,7 +31,7 @@ namespace HRApplication.Server.Application.Authentication.Commands
 
             if (_userRepository.GetUserByEmail(user.Email) is User)
             {
-                throw new InvalidOperationException("email taken");
+                return CustomErrorOr.CustomErrors.User.DuplicatedEmailError;
             }
 
             var token = _jwtTokenGenerator.GenerateToken(user);

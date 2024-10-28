@@ -1,0 +1,1 @@
+ALTER TABLE applications ADD CONSTRAINT applications_pk PRIMARY KEY ( applicationid );

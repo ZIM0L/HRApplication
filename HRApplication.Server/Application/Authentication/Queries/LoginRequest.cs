@@ -1,6 +1,10 @@
-﻿namespace HRApplication.Server.Application.Authentication.Queries
+﻿using Application.Authentication;
+using ErrorOr;
+using MediatR;
+
+namespace HRApplication.Server.Application.Authentication.Queries
 {
     public record LoginRequest(
         string email,
-        string password);
+        string password) : IRequest<ErrorOr<AuthenticationResult>>;
 }

@@ -3,14 +3,14 @@ using HRApplication.Server.Application.Authentication.Commands;
 
 namespace ReactApp1.Server.Application.Authentication.Commands.Register
 {
-    public class RegisterCommandValidator : AbstractValidator<RegisterRequest>
+    public class LoginQueryValidator : AbstractValidator<RegisterRequest>
     {
-        public RegisterCommandValidator() {
-            RuleFor(x => x.name).NotEmpty();
-            RuleFor(x => x.surname).NotEmpty();
-            RuleFor(x => x.email).NotEmpty();
-            RuleFor(x => x.password).NotEmpty();
-            RuleFor(x => x.phone).NotEmpty();
+        public LoginQueryValidator() {
+            RuleFor(x => x.name).NotEmpty().WithMessage("Name is required");
+            RuleFor(x => x.surname).NotEmpty().WithMessage("Surname is required");
+            RuleFor(x => x.email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Email address is required");
+            RuleFor(x => x.password).NotEmpty().WithMessage("Password is required");
+            RuleFor(x => x.phone).NotEmpty().WithMessage("Phone is required");
         }
     }
 }

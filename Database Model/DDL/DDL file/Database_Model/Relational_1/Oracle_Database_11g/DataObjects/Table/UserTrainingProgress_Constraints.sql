@@ -1,0 +1,1 @@
+ALTER TABLE usertrainingprogress ADD CONSTRAINT usertrainingprogress_pk PRIMARY KEY ( usertrainingid );

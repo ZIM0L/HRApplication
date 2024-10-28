@@ -1,0 +1,1 @@
+ALTER TABLE contracts ADD CONSTRAINT contracts_pk PRIMARY KEY ( contractid );

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<changeSet author="sylzy" id="_10">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter="/" splitStatements="false"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Structure_Type\MDSYS.SDO_GEOMETRY.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_20">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter="/" splitStatements="false"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Structure_Type\XMLTYPE.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_30">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Applications.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_40">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Applications_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_50">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Attachments_Firebase.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_60">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Benefits.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_70">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Benefits_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_80">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\ContractBenefits.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_90">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Contracts.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_100">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Contracts_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_110">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\EmployeeJobPositions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_120">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\EmployeeJobPositions_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_130">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\JobPositions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_140">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\JobPositions_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_150">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LeaveRequest.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_160">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LeaveRequest_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_170">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LoginHistory.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_180">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\LoginHistory_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_190">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\PasswordRecovery.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_200">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\PerfomanceReviews.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_210">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\RecruitmentPositions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_220">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\RecruitmentPositions_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_230">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Roles.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_240">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Roles_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_250">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Schedule.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_260">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Schedule_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_270">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Sessions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_280">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Sessions_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_290">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\TeamMembers.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_300">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\TeamMembers_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_310">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Teams.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_320">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Teams_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_330">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Trainings.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_340">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Trainings_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_350">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserRoles.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_360">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserRoles_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_370">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Users.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_380">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\Users_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_390">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserTrainingProgress.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_400">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\Table\UserTrainingProgress_Constraints.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_410">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Applications_RecruitmentPositions_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_420">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Applications_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_430">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\ContractBenefits_Benefits_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_440">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\ContractBenefits_Contracts_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_450">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Contracts_JobPositions_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_460">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Contracts_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_470">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\EmployeeJobPositions_JobPositions_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_480">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\EmployeeJobPositions_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_490">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\LeaveRequest_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_500">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\LoginHistory_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_510">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Schedule_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_520">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\Sessions_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_530">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\TeamMembers_Teams_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_540">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\TeamMembers_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_550">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserRoles_Roles_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_560">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserRoles_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_570">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserTrainingProgress_Trainings_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_580">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ForeignKey\UserTrainingProgress_Users_FK.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_590">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Applications.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_600">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Attachments_Firebase.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_610">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Benefits.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_620">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\ContractBenefits.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_630">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Contracts.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_640">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\EmployeeJobPositions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_650">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\JobPositions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_660">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\LeaveRequest.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_670">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\LoginHistory.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_680">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\PasswordRecovery.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_690">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\PerfomanceReviews.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_700">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\RecruitmentPositions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_710">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Roles.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_720">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Schedule.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_730">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Sessions.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_740">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\TeamMembers.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_750">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Teams.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_760">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Trainings.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_770">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\UserRoles.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_780">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\Users.sql"/>
+</changeSet>
+<changeSet author="sylzy" id="_790">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="Database_Model\Relational_1\Oracle_Database_11g\DataObjects\ordsDef\Table\UserTrainingProgress.sql"/>
+</changeSet>
+</databaseChangeLog>
