@@ -3,6 +3,7 @@ using ErrorOr;
 using HRApplication.Server.Application.Authentication.Commands;
 using HRApplication.Server.Application.Authentication.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
 
