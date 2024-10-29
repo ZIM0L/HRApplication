@@ -1,4 +1,6 @@
-﻿public class User
+﻿using HRApplication.Server.Domain.Models;
+
+public class User
 {
     public User(string name, string surname, string email, string password, string phoneNumber)
     {
@@ -21,4 +23,6 @@
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public char isActive { get; set; }
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime RefreshTokenExpiryTime { get; set; }
 }

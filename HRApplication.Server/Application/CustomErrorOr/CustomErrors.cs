@@ -15,7 +15,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
             );
             public static Error WrongPassword = Error.Conflict(
               description: "Entered Wrong Password"
-           );
+            );
+            public static Error InvalidRefreshToken = Error.Conflict(
+                description: "User not found by Token"
+            );
         }
     }
 }

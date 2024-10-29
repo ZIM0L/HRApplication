@@ -21,5 +21,15 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Users.SingleOrDefault(x => x.Email == email);
          
         }
+        public User? GetUserByRefreshToken(string refreshToken)
+        {
+            return _dbContex.Users.SingleOrDefault(x => x.RefreshToken == refreshToken);
+        }
+
+        public void UpdateUser(User user)
+        {
+            _dbContex.Users.Update(user);
+            _dbContex.SaveChanges();
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace Infrastructure
             services.AddDbContext<DBDatabase>(options =>
             options.UseSqlServer(configuration.GetConnectionString("MyConnectionString")));
 
+            services.AddHttpContextAccessor();
             services.Configure<JwtSetting>(configuration.GetSection("JwtSetting"));
             services.AddScoped<IUserRepository, UserRepository>();
             return services;

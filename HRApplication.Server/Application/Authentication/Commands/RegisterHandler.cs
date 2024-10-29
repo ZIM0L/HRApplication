@@ -36,12 +36,18 @@ namespace HRApplication.Server.Application.Authentication.Commands
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
-             _userRepository.AddUser(user);
+            var refreshToken = _jwtTokenGenerator.GenerateRefreshToken(token);
+            user.UpdatedAt = DateTime.UtcNow;
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            _userRepository.AddUser(user);
 
             return new AuthenticationResult
             (
                 user,
-                token
+                token,
+                refreshToken
             );
         }
     }

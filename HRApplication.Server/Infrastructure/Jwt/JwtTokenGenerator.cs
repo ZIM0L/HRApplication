@@ -3,16 +3,16 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ReactApp1.Server.Application.Interfaces.Authentication;
-using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Application.JwtSettings;
 using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
 
 namespace ReactApp1.Server.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
         private readonly IOptions<JwtSetting> _jwtSetting;
-        public JwtTokenGenerator(IOptions<JwtSetting> jwtSetting)
+        public JwtTokenGenerator(IOptions<JwtSetting> jwtSetting, IHttpContextAccessor httpContextAccessor)
         {
             _jwtSetting = jwtSetting;
         }
@@ -44,5 +44,16 @@ namespace ReactApp1.Server.Infrastructure.Authentication
                 );
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
         }
+        public string GenerateRefreshToken(string token)
+        {
+            var randomNumber = new byte[32]; // Użyj 64 bajtów dla lepszego bezpieczeństwa
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+            }
+            var refreshToken = Convert.ToBase64String(randomNumber);
+            return refreshToken;
+        }
+
     }
 }
