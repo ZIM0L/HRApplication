@@ -1,0 +1,18 @@
+/* Login.css */
+.login-section::before {
+    content: '';
+    position: absolute;
+    top: -10rem;
+    left: 0;
+    width: 110%;
+    height: 130%;
+    background-color: #252A34;
+    transform: rotate(8deg);
+    transform-origin: top left;
+    z-index: 0;
+}
+
+.login-section > * {
+    position: relative; 
+    z-index: 10;
+}
