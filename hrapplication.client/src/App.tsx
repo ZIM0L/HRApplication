@@ -1,5 +1,5 @@
 // src/App.tsx
-import {  Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contex/AuthContex';
 import AuthPage from './components/LoginRegister/AuthPage'; // U¿yj nowego komponentu
 import DashBoard from './components/Dashboard/Dashboard';
@@ -9,7 +9,8 @@ const App = () => {
     return (
         <AuthProvider>
             <BrowserRouter>
-                    <Routes>
+                <Routes>
+                        <Route path="/" element={<Navigate to="/auth" />} />
                         <Route path="/auth" element={<AuthPage />} />
                         <Route element={<ProtectedRoutes />}>
                             <Route path="/dashboard" element={<DashBoard />} />

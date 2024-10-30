@@ -1,15 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
-
 export interface TokenResponse {
     accessToken: string;
 };
 
 export const api = axios.create({
-    baseURL: 'http://localhost:7250/',
+    baseURL: 'https://localhost:7250',
     withCredentials: true,
     headers: {
-        'Content-Type': 'application/json',
-    },
+        'Content-Type': 'application/json' // Wysy³anie danych w formacie JSON
+    }
 });
 
 export const setAuthToken = (token: string | null) => {

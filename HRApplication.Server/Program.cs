@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Presentation;
 using Serilog;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Text;
 using HRApplication.Server.Application.JwtSettings;
 
@@ -55,6 +53,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:5173") 
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); 
+    });
+});
+
 //dbcontex added
 builder.Services.AddDbContext<DBDatabase>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnectionString")));
@@ -62,7 +72,6 @@ builder.Services.AddDbContext<DBDatabase>(options =>
 var app = builder.Build();
 
 app.UseDefaultFiles();
-app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -74,6 +83,11 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
+
+// needed for cors also
+app.UseRouting();
+app.UseCors("AllowFrontend");
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -771,7 +771,7 @@ video {
 @font-face {
   font-family: 'PlayfairDisplay';
 
-  src: url('../public/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
+  src: url('../fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
 
   font-weight: normal;
 
@@ -781,7 +781,7 @@ video {
 @font-face {
   font-family: 'PlayfairDisplay-SemiBold';
 
-  src: url('../public/fonts/Playfair_Display/static/PlayfairDisplay-SemiBold.ttf') format('truetype');
+  src: url('../fonts/Playfair_Display/static/PlayfairDisplay-SemiBold.ttf') format('truetype');
 
   font-weight: bold;
 
@@ -791,7 +791,7 @@ video {
 @font-face {
   font-family: 'PlayfairDisplay-Bold';
 
-  src: url('../public/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
+  src: url('../fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
 
   font-weight: bolder;
 

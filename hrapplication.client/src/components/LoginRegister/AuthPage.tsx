@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const AuthPage = () => {
 
-    const [isLoggedOn, setIsLoggedOn] = useState(false);
+    const [isLoggedOn] = useState(true);
 
     return (
         <div className="flex h-screen overflow-hidden text-dark-blue">

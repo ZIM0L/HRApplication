@@ -14,16 +14,15 @@ const Login = () => {
     handleSubmit,
     } = useForm<Inputs>()
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
-        api.post('/auth/login', data)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+
+            const response = await api.post('/auth/login', data);
+            console.log(response)
+        } catch (error) {
+            console.error( error);
+        }
+    };
 
     return (
         <div className="flex h-full w-[50%] w-full flex-col items-center justify-center bg-white px-8 lg:px-32">
