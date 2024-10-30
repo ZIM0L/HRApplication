@@ -1,6 +1,6 @@
-﻿import '../../styles/Login.css'; // Dodajemy zewnętrzny plik CSS dla niestandardowego stylu
+﻿import "../../../styles/Login.css"; // Dodajemy zewnętrzny plik CSS dla niestandardowego stylu
 
-const Login = () => {
+const AlreadySignUp = () => {
     return (
         <div className="login-section text-grey-white relative flex h-full w-[50%] flex-col items-center gap-48 p-8 text-white">
             <div className="font-['PlayfairDisplay-SemiBold'] self-start text-5xl text-cyan-blue">HrApplication</div> {/* Logo jako pierwszy element */}
@@ -17,4 +17,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default AlreadySignUp;

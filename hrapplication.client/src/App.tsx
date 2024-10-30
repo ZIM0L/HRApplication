@@ -1,19 +1,23 @@
-import './App.css';
-//import Login from './components/LoginRegister/Login';
-//import SignUp from './components/LoginRegister/SignUp';
-import AuthProvider from "./provider/authProvider";
-import Routes from "./routes/ProtectedRoutes";
+// src/App.tsx
+import {  Route, Routes, BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './contex/AuthContex';
+import AuthPage from './components/LoginRegister/AuthPage'; // U¿yj nowego komponentu
+import DashBoard from './components/Dashboard/Dashboard';
+import ProtectedRoutes from './utils/ProtectedRoutes';
 
 const App = () => {
     return (
-      <AuthProvider>
-        <Routes />  
-      </AuthProvider>
-        //<div className="flex h-screen overflow-hidden text-dark-blue">
-        //    <Login />
-        //    <SignUp />
-        //</div>
+        <AuthProvider>
+            <BrowserRouter>
+                    <Routes>
+                        <Route path="/auth" element={<AuthPage />} />
+                        <Route element={<ProtectedRoutes />}>
+                            <Route path="/dashboard" element={<DashBoard />} />
+                        </Route>
+                    </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     );
-}
+};
 
 export default App;
