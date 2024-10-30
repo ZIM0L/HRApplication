@@ -1,5 +1,5 @@
-﻿using Application.Authentication;
-using ErrorOr;
+﻿using ErrorOr;
+using HRApplication.Server.Application.Authentication.AuthenticationResults;
 using HRApplication.Server.Application.Interfaces;
 using MediatR;
 using ReactApp1.Server.Application.Interfaces.Authentication;
@@ -52,8 +52,8 @@ namespace HRApplication.Server.Application.Authentication.Queries
 
             return new AuthenticationResult(
                     user,
-                    token,
-                    refreshToken);
+                    token
+                    );
         }
     }
 }

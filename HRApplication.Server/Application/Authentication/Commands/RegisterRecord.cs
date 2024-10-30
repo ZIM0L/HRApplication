@@ -1,7 +1,4 @@
-﻿using Application.Authentication;
-using ErrorOr;
-using MediatR;
-
+﻿
 namespace HRApplication.Server.Application.Authentication.Commands
 {
     public record RegisterRecord(

@@ -25,7 +25,6 @@ public class RefreshTokenController : ControllerBase
         return Ok(new
         {
             AccessToken = authResult.token,
-            RefreshToken = authResult.refreshToken
         });
     }
 }

@@ -1,5 +1,5 @@
-﻿using Application.Authentication;
-using ErrorOr;
+﻿using ErrorOr;
+using HRApplication.Server.Application.Authentication.AuthenticationResults;
 using MediatR;
 
 namespace HRApplication.Server.Application.Authentication.Commands

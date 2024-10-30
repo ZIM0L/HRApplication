@@ -1,5 +1,5 @@
-﻿using Application.Authentication;
-using ErrorOr;
+﻿using ErrorOr;
+using HRApplication.Server.Application.Authentication.AuthenticationResults;
 using HRApplication.Server.Application.Interfaces;
 using MediatR;
 using ReactApp1.Server.Application.Interfaces.Authentication;
@@ -10,8 +10,10 @@ namespace HRApplication.Server.Application.Authentication.Commands
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        public RegisterHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator)
+        private readonly IHttpContextAccessor _httpContextAccessor; // Dodaj IHttpContextAccessor
+        public RegisterHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
         }
@@ -43,11 +45,19 @@ namespace HRApplication.Server.Application.Authentication.Commands
 
             _userRepository.AddUser(user);
 
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true, // Ciasteczko dostępne tylko dla HTTP
+                Expires = DateTime.UtcNow.AddDays(7), // Ustaw czas wygaśnięcia
+                SameSite = SameSiteMode.Strict // Ustawienie na ciasteczka pierwszej strony
+            };
+
+            _httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+
             return new AuthenticationResult
             (
                 user,
-                token,
-                refreshToken
+                token
             );
         }
     }

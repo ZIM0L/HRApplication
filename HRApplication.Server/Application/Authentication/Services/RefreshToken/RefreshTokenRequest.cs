@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using ErrorOr;
-using Application.Authentication;
+using HRApplication.Server.Application.Authentication.AuthenticationResults;
 
 namespace HRApplication.Server.Application.Authentication.Services.RefreshToken
 {
