@@ -1,26 +1,41 @@
-﻿import { useForm, SubmitHandler } from "react-hook-form"
+﻿import { useForm, SubmitHandler } from "react-hook-form";
 import { api } from "../../../routes/api";
+import { useNavigate } from "react-router-dom";
+import { IAuthenticationResult, IUser } from "../../../utils/interfaces/IAuthenticationResult";
+import { useAuth } from "../../../contex/AuthContex"; // Importuj `useAuth`
 
 type Inputs = {
-    email: string
-    password: string
-}
-
+    email: string;
+    password: string;
+};
 
 const Login = () => {
+    const { register, handleSubmit } = useForm<Inputs>();
+    const navigate = useNavigate();
+    const { SetAuthenticationToken } = useAuth();
 
-    const {
-    register,
-    handleSubmit,
-    } = useForm<Inputs>()
+    const SetLocalStorageUser = (user: IAuthenticationResult) => {
+        localStorage.setItem("user", JSON.stringify(user));
+    }
+    const ReadLocalStorageUser = (): IUser | null => {
+        const storedUser = localStorage.getItem("user");
+        const parsedUser = storedUser ? JSON.parse(storedUser) as IUser : null;
+        return parsedUser;
+    }
+
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
-
             const response = await api.post('/auth/login', data);
-            console.log(response)
+
+            if (response.status === 200) {
+                SetAuthenticationToken(response.data.token)
+                SetLocalStorageUser(response.data.user)
+                console.log(ReadLocalStorageUser())
+                navigate("/dashboard", { replace: true, state: { userData: ReadLocalStorageUser() } });
+            }
         } catch (error) {
-            console.error( error);
+            console.error("Login error:", error);
         }
     };
 
@@ -30,7 +45,7 @@ const Login = () => {
             <p className="mb-6 px-2 text-center text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
-            <form className="flex w-full flex-col px-16" onSubmit={handleSubmit(onSubmit)} >
+            <form className="flex w-full flex-col px-16" onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4 flex space-x-4">
                     <input
                         {...register("email", { required: true, maxLength: 255 })}
@@ -45,7 +60,6 @@ const Login = () => {
                         className="flex-1 w-1/3 border border-gray-300 p-2"
                     />
                 </div>
-               
                 <div className="mb-4 flex items-center self-end py-2 font-['PlayfairDisplay-SemiBold']">
                     <label className="text-gray-600">
                         Forgot password ? <a href="#" className="text-cyan-blue">Reset password</a>

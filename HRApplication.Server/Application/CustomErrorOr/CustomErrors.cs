@@ -11,14 +11,35 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 description: "Email is already in use."
             );
             public static Error InvalidCredentials = Error.Conflict(
-               description: "Invalid Credentials"
+                description: "Invalid Credentials"
             );
             public static Error WrongPassword = Error.Conflict(
-              description: "Entered Wrong Password"
+                description: "Entered Wrong Password"
             );
             public static Error InvalidRefreshToken = Error.Conflict(
                 description: "User not found by Token"
             );
         }
+        public static class Token
+        {
+            public static Error InvalidFormatError = Error.Unauthorized(
+                code: "Token.InvalidFormat",
+                description: "Invalid token format."
+            );
+            public static Error ExpiredError = Error.Unauthorized(
+                code: "Token.Expired",
+                description: "Token has expired"
+            );
+            public static Error InvalidSignatureError = Error.Unauthorized(
+                code: "Token.InvalidSignature",
+                description: "Token has an invalid signature"
+            );
+            public static Error InvalidRefreshToken = Error.Unauthorized(
+                code: "Token.InvalidRefreshToken",
+                description: "Refresh Token is invalid"
+            );
+        }
+
+
     }
 }

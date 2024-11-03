@@ -1,6 +1,11 @@
 ﻿import "../../../styles/Login.css"; // Dodajemy zewnętrzny plik CSS dla niestandardowego stylu
+interface IAlreadySignUp {
+    isLoggedOn: boolean,
+    setIsLoggedOn: ( x : boolean) => void
+}
 
-const AlreadySignUp = () => {
+const AlreadySignUp = ({ isLoggedOn, setIsLoggedOn }: IAlreadySignUp) => {
+
     return (
         <div className="login-section text-grey-white relative flex h-full w-[50%] flex-col items-center gap-48 p-8 text-white">
             <div className="font-['PlayfairDisplay-SemiBold'] self-start text-5xl text-cyan-blue">HrApplication</div> {/* Logo jako pierwszy element */}
@@ -10,7 +15,7 @@ const AlreadySignUp = () => {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere mauris ac nunc sollicitudin.Lorem ipsum dolor sit amet,
                     consectetur adipiscing elit. Donec posuere mauris ac nunc sollicitudin.
                 </p>
-                <button className="border border-white px-20 py-3 text-xl hover:bg-gray-700 font-['PlayfairDisplay-SemiBold']">Log in</button>
+                <button className="border border-white px-20 py-3 text-xl hover:bg-gray-700 font-['PlayfairDisplay-SemiBold']" onClick={() => setIsLoggedOn(!isLoggedOn)}>Log in</button>
 
             </div>
         </div>

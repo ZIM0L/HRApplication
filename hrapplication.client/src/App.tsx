@@ -1,7 +1,7 @@
 // src/App.tsx
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contex/AuthContex';
-import AuthPage from './components/LoginRegister/AuthPage'; // U¿yj nowego komponentu
+import AuthPage from './components/LoginRegister/AuthPage';
 import DashBoard from './components/Dashboard/Dashboard';
 import ProtectedRoutes from './utils/ProtectedRoutes';
 

@@ -13,6 +13,6 @@
     <Folder Include="src\config\" />
     <Folder Include="src\constants\" />
     <Folder Include="src\services\" />
-    <Folder Include="src\utils\" />
+    <Folder Include="src\utils\interfaces\" />
   </ItemGroup>
 </Project>

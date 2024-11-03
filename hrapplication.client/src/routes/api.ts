@@ -21,16 +21,16 @@ export const setAuthToken = (token: string | null) => {
 
 // Function to get the refresh token from cookies
 const getRefreshTokenFromCookie = (): string | null => {
-    const name = 'refreshToken='; 
+    const name = 'refreshToken=';
     const cookieArray = document.cookie.split(';');
 
     for (let i = 0; i < cookieArray.length; i++) {
         const cookie = cookieArray[i].trim();
         if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length); 
+            return cookie.substring(name.length, cookie.length);
         }
     }
-    return null; 
+    return null;
 };
 
 // before sending request
@@ -64,8 +64,8 @@ api.interceptors.response.use(
                 }
 
                 const response: AxiosResponse<TokenResponse> = await api.post('/refresh-Token',
-                {
-                    refreshToken, 
+                    {
+                        refreshToken,
                     });
 
                 localStorage.setItem('accessToken', response.data.accessToken)

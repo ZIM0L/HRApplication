@@ -8,8 +8,8 @@ interface IAuthProvider {
 }
 interface IAuthContextType {
     authToken: string | null; 
-    login: (token: string) => void; 
-    logout: () => void; 
+    SetAuthenticationToken: (token: string) => void; 
+    RemoveAuthenticationToken: () => void; 
 }
 
 const AuthContext = createContext<IAuthContextType| null >(null);
@@ -17,20 +17,20 @@ const AuthContext = createContext<IAuthContextType| null >(null);
 export const AuthProvider = ({ children }: IAuthProvider) => {
     const [authToken, setToken] = useState<string | null>(localStorage.getItem('accessToken'));
 
-    const login = (token : string) => {
+    const SetAuthenticationToken = (token : string) => {
         setToken(token);
         localStorage.setItem('accessToken', token);
         setAuthToken(token);
     };
 
-    const logout = () => {
+    const RemoveAuthenticationToken = () => {
         setToken(null);
         localStorage.removeItem('accessToken');
         document.cookie = "refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly";
         setAuthToken(null);
     };
     return (
-        <AuthContext.Provider value={{ authToken, login, logout }}>
+        <AuthContext.Provider value={{ authToken, SetAuthenticationToken, RemoveAuthenticationToken }}>
             {children}
         </AuthContext.Provider>
     );

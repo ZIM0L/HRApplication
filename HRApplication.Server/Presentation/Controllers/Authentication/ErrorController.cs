@@ -28,6 +28,7 @@ namespace ReactApp1.Server.Presentation.Api.Controllers
         {
             var statusCode = error.Type switch
             {
+                ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
                 ErrorType.Conflict => StatusCodes.Status409Conflict,
                 ErrorType.Validation => StatusCodes.Status400BadRequest,
                 ErrorType.NotFound => StatusCodes.Status404NotFound,
@@ -41,7 +42,7 @@ namespace ReactApp1.Server.Presentation.Api.Controllers
             var modelStateDictionary = new ModelStateDictionary();
             foreach (var error in errors)
             {
-                modelStateDictionary.AddModelError(error.Code, error.Description);
+                modelStateDictionary.AddModelError($"Error.{error.Code}", error.Description);
             }
             return ValidationProblem(modelStateDictionary);
         }
