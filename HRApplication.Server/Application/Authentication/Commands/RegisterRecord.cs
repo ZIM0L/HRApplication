@@ -6,5 +6,6 @@ namespace HRApplication.Server.Application.Authentication.Commands
         string surname,
         string email,
         string password,
-        string phone) ;
+        string phone,
+        string roleName) ;
 }

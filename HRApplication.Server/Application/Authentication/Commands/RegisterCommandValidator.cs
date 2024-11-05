@@ -11,6 +11,7 @@ namespace ReactApp1.Server.Application.Authentication.Commands.Register
             RuleFor(x => x.email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Email address is required");
             RuleFor(x => x.password).NotEmpty().WithMessage("Password is required");
             RuleFor(x => x.phone).NotEmpty().WithMessage("Phone is required");
+            RuleFor(x => x.roleName).NotEmpty().WithMessage("Role for user is required");
         }
     }
 }

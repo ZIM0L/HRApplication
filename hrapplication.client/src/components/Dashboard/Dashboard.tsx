@@ -1,17 +1,18 @@
 ﻿//import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuth } from '../../contex/AuthContex';
-import { useNavigate } from 'react-router-dom';
+//import { useAuth } from '../../contex/AuthContex';
+import { useNavigate, useParams } from 'react-router-dom';
 import { HttpStatusCode } from 'axios';
-import { ValidateToken } from '../../services/ValidateToken';
+import { ValidateTokenService } from '../../services/ValidateTokenService';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
-    const authToken = useAuth();
+    const { name } = useParams();
+    //const authToken = useAuth();
 
     useEffect(() => {
         const checkToken = async () => {
-            const status = await ValidateToken();
+            const status = await ValidateTokenService();
             console.log("Token status:", status);
                 
             if (status === HttpStatusCode.Unauthorized) {
@@ -46,7 +47,7 @@ const Dashboard: React.FC = () => {
             {/* Main Content */}
             <div className="flex-1 h-screen space-y-6 overflow-y-auto p-6 lg:ml-1/6">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold">Welcome Adrian 👋</h2>
+                    <h2 className="text-2xl font-bold">Welcome {name} 👋</h2>
                     <button className="rounded bg-teal-500 px-4 py-2 text-white">Add New Event</button>
                 </div>
 

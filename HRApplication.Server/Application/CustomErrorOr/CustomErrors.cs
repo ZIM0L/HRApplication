@@ -39,7 +39,13 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 description: "Refresh Token is invalid"
             );
         }
-
+        public static class Role
+        {
+            public static Error NoRoleExists = Error.Conflict(
+                code: "Role.NoRoleExists",
+                description: "Role does not exists"
+            );
+        }
 
     }
 }

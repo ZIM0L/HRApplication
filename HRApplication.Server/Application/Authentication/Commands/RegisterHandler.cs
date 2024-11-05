@@ -10,12 +10,17 @@ namespace HRApplication.Server.Application.Authentication.Commands
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        private readonly IHttpContextAccessor _httpContextAccessor; // Dodaj IHttpContextAccessor
-        public RegisterHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator, IHttpContextAccessor httpContextAccessor)
+        private readonly IHttpContextAccessor _httpContextAccessor; 
+        private readonly IRolesRepository _rolesRepository;
+        public RegisterHandler(IUserRepository userRepository,
+                               IJwtTokenGenerator jwtTokenGenerator,
+                               IHttpContextAccessor httpContextAccessor,
+                               IRolesRepository rolesRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _rolesRepository = rolesRepository;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterRequest request, CancellationToken cancellationToken)
@@ -30,6 +35,13 @@ namespace HRApplication.Server.Application.Authentication.Commands
                 request.password,
                 request.phone
             );
+
+            if (_rolesRepository.CheckIfRoleNameExists(request.roleName) == false)
+            {
+                return CustomErrorOr.CustomErrors.Role.NoRoleExists;
+            }
+
+            user.RoleName = request.roleName;
 
             if (_userRepository.GetUserByEmail(user.Email) is User)
             {

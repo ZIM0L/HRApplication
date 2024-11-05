@@ -26,7 +26,9 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                 request.surname,
                 request.email,
                 request.password,
-                request.phone);
+                request.phone,
+                request.roleName
+                );
 
             ErrorOr<AuthenticationResult> response = await _mediator.Send(command); //pipieline
 

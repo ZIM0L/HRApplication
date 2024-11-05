@@ -1,8 +1,8 @@
 ﻿import { useForm, SubmitHandler } from "react-hook-form";
 import { api } from "../../../routes/api";
 import { useNavigate } from "react-router-dom";
-import { IAuthenticationResult, IUser } from "../../../utils/interfaces/IAuthenticationResult";
 import { useAuth } from "../../../contex/AuthContex"; // Importuj `useAuth`
+import { SetLocalStorageUser, ReadLocalStorageUser } from "../../../services/LocalStorageTokenService";
 
 type Inputs = {
     email: string;
@@ -14,16 +14,6 @@ const Login = () => {
     const navigate = useNavigate();
     const { SetAuthenticationToken } = useAuth();
 
-    const SetLocalStorageUser = (user: IAuthenticationResult) => {
-        localStorage.setItem("user", JSON.stringify(user));
-    }
-    const ReadLocalStorageUser = (): IUser | null => {
-        const storedUser = localStorage.getItem("user");
-        const parsedUser = storedUser ? JSON.parse(storedUser) as IUser : null;
-        return parsedUser;
-    }
-
-
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
             const response = await api.post('/auth/login', data);
@@ -31,8 +21,7 @@ const Login = () => {
             if (response.status === 200) {
                 SetAuthenticationToken(response.data.token)
                 SetLocalStorageUser(response.data.user)
-                console.log(ReadLocalStorageUser())
-                navigate("/dashboard", { replace: true, state: { userData: ReadLocalStorageUser() } });
+                navigate(`/dashboard/${response.data.user.name}`, { replace: true, state: { userData: ReadLocalStorageUser() } });
             }
         } catch (error) {
             console.error("Login error:", error);

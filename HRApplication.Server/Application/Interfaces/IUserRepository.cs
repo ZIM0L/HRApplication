@@ -6,7 +6,7 @@ namespace HRApplication.Server.Application.Interfaces
     {
         void AddUser(User user);
         User? GetUserByEmail(string email);
-        User? GetUserByRefreshToken(string refreshToken);
+        User? GetUserByRefreshToken(string refreshToken); //TODO: move to different interface
         void UpdateUser(User user);
     }
 }

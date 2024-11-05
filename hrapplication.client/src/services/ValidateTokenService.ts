@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { api } from "../routes/api";
 
-export const ValidateToken = async (): Promise<number | undefined> => {
+export const ValidateTokenService = async (): Promise<number | undefined> => {
     try {
         const response = await api.get('/api/ValidateAuthToken');
         return response.status;

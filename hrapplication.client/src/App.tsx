@@ -13,7 +13,7 @@ const App = () => {
                         <Route path="/" element={<Navigate to="/auth" />} />
                         <Route path="/auth" element={<AuthPage />} />
                         <Route element={<ProtectedRoutes />}>
-                            <Route path="/dashboard" element={<DashBoard />} />
+                            <Route path="/dashboard/:name" element={<DashBoard />} />
                         </Route>
                     </Routes>
             </BrowserRouter>

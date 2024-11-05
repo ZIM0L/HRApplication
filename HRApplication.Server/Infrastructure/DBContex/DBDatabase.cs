@@ -9,6 +9,7 @@ namespace HRApplication.Server.Infrastructure.DBContex
         public DBDatabase(DbContextOptions<DBDatabase> options) : base(options) { } //trzeba dodac
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
