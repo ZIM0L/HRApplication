@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Authentication.AuthenticationResults;
-using HRApplication.Server.Application.Interfaces;
+using HRApplication.Server.Application.Interfaces.Repositories;
 using MediatR;
 using ReactApp1.Server.Application.Interfaces.Authentication;
 

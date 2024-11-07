@@ -1,4 +1,4 @@
-﻿using HRApplication.Server.Application.Interfaces;
+﻿using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
 

@@ -1,4 +1,4 @@
-﻿namespace HRApplication.Server.Application.Interfaces
+﻿namespace HRApplication.Server.Application.Interfaces.Repositories
 {
     public interface IRolesRepository
     {

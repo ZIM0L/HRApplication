@@ -1,5 +1,4 @@
-﻿
-using HRApplication.Server.Application.Interfaces;
+﻿using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.JwtSettings;
 using HRApplication.Server.Infrastructure.DBContex;
 using HRApplication.Server.Infrastructure.Persistance;
@@ -17,7 +16,8 @@ namespace Infrastructure
             services.AddHttpContextAccessor();
             services.Configure<JwtSetting>(configuration.GetSection("JwtSetting"));
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRolesRepository, RoleRepository>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<IJobPositionsRepository, JobPositionsRepository>();
             return services;
         }
     }

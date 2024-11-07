@@ -35,8 +35,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
        
             return response.Match(
                 response => Ok(response),
-                errors => Problem(errors)
-                );
+                errors => Problem(errors));
 
         }
         [HttpPost]

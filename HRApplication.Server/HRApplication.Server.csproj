@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Callender\" />
+    <Folder Include="Application\DatabaseTables\Callender\" />
   </ItemGroup>
 
 </Project>
