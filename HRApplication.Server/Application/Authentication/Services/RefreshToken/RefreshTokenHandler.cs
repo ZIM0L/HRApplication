@@ -23,19 +23,22 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, ErrorOr<
     {
         await Task.CompletedTask;
 
-        string decodedRefreshToken = Uri.UnescapeDataString(request.refreshToken);
+        var refreshToken = _httpContextAccessor.HttpContext?.Request.Cookies?["refreshToken"]?.ToString();
 
-        var user = _userRepository.GetUserByRefreshToken(decodedRefreshToken);
+        if (string.IsNullOrEmpty(refreshToken))
+        {
+            return CustomErrors.User.InvalidRefreshToken; // Jeśli nie ma tokenu, zwróć błąd
+        }
+
+        var user = _userRepository.GetUserByRefreshToken(refreshToken);
 
         if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
         {
             return CustomErrors.User.InvalidRefreshToken;
         }
 
-        // Wygeneruj nowy `access token`
         string newAccessToken = _jwtTokenGenerator.GenerateToken(user);
 
-        // (Opcjonalnie) Wygeneruj nowy `refresh token` i zaktualizuj bazę
         string newRefreshToken = _jwtTokenGenerator.GenerateRefreshToken(newAccessToken);
 
 
