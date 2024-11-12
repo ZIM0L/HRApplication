@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="public\fonts\" />
+    <Folder Include="src\components\JobPositions\" />
     <Folder Include="src\config\" />
     <Folder Include="src\constants\" />
     <Folder Include="src\utils\interfaces\" />

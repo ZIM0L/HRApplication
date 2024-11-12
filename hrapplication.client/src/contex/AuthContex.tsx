@@ -1,6 +1,6 @@
 // src/AuthContext.js
 import React, { createContext, useContext, useState } from 'react';
-import { setAuthToken } from '../routes/api'; // Importuj api i setAuthToken
+import { setAuthToken } from '../api/api'; // Importuj api i setAuthToken
 
 
 interface IAuthProvider {

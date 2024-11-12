@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { api } from "../routes/api";
+import { api } from "../api/api";
 
 export const ValidateTokenService = async (): Promise<number | undefined> => {
     try {

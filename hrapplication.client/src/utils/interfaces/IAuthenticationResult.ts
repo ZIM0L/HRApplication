@@ -15,8 +15,6 @@ export interface IAuthenticationResult {
     }
 }
 export interface IUser {
-    user:
-    {
         createdAt: string,
         email: string,
         isActive: string,
@@ -27,5 +25,4 @@ export interface IUser {
         surname: string,
         updatedAt: string,
         userId: string,
-    }
 }

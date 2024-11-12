@@ -1,5 +1,5 @@
 ﻿import { useForm, SubmitHandler } from "react-hook-form";
-import { api } from "../../../routes/api";
+import { api } from "../../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex"
 import { useState } from "react";
@@ -33,7 +33,7 @@ const Register = () => {
                 if (response.status === 200) {
                     SetAuthenticationToken(response.data.token)
                     SetLocalStorageUser(response.data.user)
-                    navigate(`/dashboard/${response.data.user.name}`, { replace: true, state: { userData: ReadLocalStorageUser() } });
+                    navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true, state: { userData: ReadLocalStorageUser() } });
                 }
             } else {
                 alert("Confirm password does not match password")
