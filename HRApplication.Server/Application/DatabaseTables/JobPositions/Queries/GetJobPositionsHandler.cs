@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Queries
 {

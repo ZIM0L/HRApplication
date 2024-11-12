@@ -19,7 +19,10 @@ namespace HRApplication.Server.Infrastructure.Persistance
         public User? GetUserByEmail(string email)
         {
             return _dbContex.Users.SingleOrDefault(x => x.Email == email);
-         
+        }
+        public User? GetUserById(Guid id)
+        {
+            return _dbContex.Users.SingleOrDefault(x => x.UserId == id);
         }
         public User? GetUserByRefreshToken(string refreshToken)
         {
