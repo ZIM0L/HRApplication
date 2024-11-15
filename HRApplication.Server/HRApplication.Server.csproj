@@ -41,6 +41,8 @@
 
   <ItemGroup>
     <Folder Include="Application\DatabaseTables\Callender\" />
+    <Folder Include="Application\DatabaseTables\TeamMembers\Queries\" />
+    <Folder Include="Application\DatabaseTables\Teams\Queries\" />
   </ItemGroup>
 
 </Project>

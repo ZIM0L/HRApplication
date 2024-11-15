@@ -4,7 +4,7 @@
     {
         public Schedule(Guid userId, string type, string description)
         {
-            Scheduleid = new Guid();
+            Scheduleid = Guid.NewGuid();
             Userid = userId;
             Type = type;
             Description = description;

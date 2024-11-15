@@ -1,5 +1,4 @@
 ﻿using ErrorOr;
-using System.Net;
 
 namespace HRApplication.Server.Application.CustomErrorOr
 {
@@ -8,20 +7,29 @@ namespace HRApplication.Server.Application.CustomErrorOr
         public static class User
         {
             public static Error DuplicatedEmailError = Error.Conflict(
+                code: "User.DuplicatedEmailError",
                 description: "Email is already in use."
             );
             public static Error InvalidCredentials = Error.Conflict(
+                code: "User.InvalidCredentials",
                 description: "Invalid Credentials"
             );
             public static Error WrongPassword = Error.Conflict(
+                code: "User.WrongPassword",
                 description: "Entered Wrong Password"
             );
             public static Error InvalidRefreshToken = Error.NotFound(
+                code: "User.InvalidRefreshToken",
                 description: "User not found by Token"
             );
             public static Error UserNotFound = Error.NotFound(
-               description: "User not found by Id"
+                code: "User.UserNotFound",
+                description: "User not found by Id"
            );
+            public static Error UserNotAuthorized = Error.Forbidden(
+                code: "User.UserNotAuthorized",
+                description: "User is unauthorized to do action"
+          );
         }
     }
-}
+ }

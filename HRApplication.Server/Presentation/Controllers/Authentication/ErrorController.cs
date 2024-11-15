@@ -32,6 +32,7 @@ namespace ReactApp1.Server.Presentation.Api.Controllers
                 ErrorType.Conflict => StatusCodes.Status409Conflict,
                 ErrorType.Validation => StatusCodes.Status400BadRequest,
                 ErrorType.NotFound => StatusCodes.Status404NotFound,
+                ErrorType.Forbidden => StatusCodes.Status403Forbidden,
                 _ => StatusCodes.Status500InternalServerError
             };
             return Problem(statusCode: statusCode, title: error.Description);
