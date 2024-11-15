@@ -3,7 +3,7 @@ import { api } from "../../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex"
 import { useState } from "react";
-import { SetLocalStorageUser, ReadLocalStorageUser } from "../../../services/LocalStorageTokenService";
+import { SetLocalStorageUser } from "../../../services/LocalStorageTokenService";
 
 type Inputs = {
     name: string;
@@ -33,7 +33,7 @@ const Register = () => {
                 if (response.status === 200) {
                     SetAuthenticationToken(response.data.token)
                     SetLocalStorageUser(response.data.user)
-                    navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true, state: { userData: ReadLocalStorageUser() } });
+                    navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true });
                 }
             } else {
                 alert("Confirm password does not match password")

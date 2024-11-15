@@ -1,0 +1,1 @@
+export enum Role { Administrator = "Administrator", Employee = "Employee", Guest = "Guest" }

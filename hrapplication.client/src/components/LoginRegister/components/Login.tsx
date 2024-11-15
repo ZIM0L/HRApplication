@@ -2,7 +2,7 @@
 import { api } from "../../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex"; // Importuj `useAuth`
-import { SetLocalStorageUser, ReadLocalStorageUser } from "../../../services/LocalStorageTokenService";
+import { SetLocalStorageUser } from "../../../services/LocalStorageTokenService";
 
 type Inputs = {
     email: string;
@@ -21,7 +21,7 @@ const Login = () => {
             if (response.status === 200) {
                 SetAuthenticationToken(response.data.token)
                 SetLocalStorageUser(response.data.user)
-                navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true, state: { userData: ReadLocalStorageUser() } });
+                navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true});
             }
         } catch (error) {
             console.error("Login error:", error);

@@ -19,19 +19,7 @@ export const setAuthToken = (token: string | null) => {
     }
 };
 
-// Function to get the refresh token from cookies
-const getRefreshTokenFromCookie = (): string | null => {
-    const name = 'refreshToken=';
-    const cookieArray = document.cookie.split(';');
 
-    for (let i = 0; i < cookieArray.length; i++) {
-        const cookie = cookieArray[i].trim();
-        if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
-        }
-    }
-    return null;
-};
 
 // before sending request
 api.interceptors.request.use(request => {
@@ -55,18 +43,11 @@ api.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-                // Retrieve the refresh token from the cookie
-                const refreshToken = getRefreshTokenFromCookie();
 
-                if (!refreshToken) {
-                    console.error('Brak tokenu odœwie¿aj¹cego');
-                    return Promise.reject(error); // Reject if there's no refresh token
-                }
+                const refreshRequestConfig = { ...originalRequest };
+                delete refreshRequestConfig.headers['Authorization'];
 
-                const response: AxiosResponse<TokenResponse> = await api.post('/refresh-Token',
-                    {
-                        refreshToken,
-                    });
+                const response: AxiosResponse<TokenResponse> = await api.post('/refresh-Token', null, refreshRequestConfig);
 
                 localStorage.setItem('accessToken', response.data.accessToken)
 

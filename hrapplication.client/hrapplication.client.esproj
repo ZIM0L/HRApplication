@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.784122">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.784122">
   <PropertyGroup>
     <StartupCommand>npm run dev</StartupCommand>
     <JavaScriptTestRoot>src\</JavaScriptTestRoot>
@@ -11,8 +11,8 @@
   <ItemGroup>
     <Folder Include="public\fonts\" />
     <Folder Include="src\components\JobPositions\" />
-    <Folder Include="src\config\" />
-    <Folder Include="src\constants\" />
+    <Folder Include="src\routes\" />
+    <Folder Include="src\types\Role\" />
     <Folder Include="src\utils\interfaces\" />
   </ItemGroup>
 </Project>
