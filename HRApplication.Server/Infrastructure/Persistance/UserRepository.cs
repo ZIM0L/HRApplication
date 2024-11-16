@@ -1,4 +1,5 @@
-﻿using HRApplication.Server.Application.Interfaces.Repositories;
+﻿using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
+using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
 
@@ -20,6 +21,18 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             return _dbContex.Users.SingleOrDefault(x => x.Email == email);
         }
+
+        public User? GetUserByGivenUser(ValidateUserRequest request)
+        {
+            return _dbContex.Users.SingleOrDefault(x => x.UserId.Equals(request.userId) &&
+                                                        x.Name.Equals(request.name) &&
+                                                        x.Surname.Equals(request.surname) &&
+                                                        x.Email.Equals(request.email) &&
+                                                        x.RoleName.Equals(request.role) &&
+                                                        x.PhoneNumber.Equals(request.phoneNumber)
+            );
+        }
+
         public User? GetUserById(Guid id)
         {
             return _dbContex.Users.SingleOrDefault(x => x.UserId == id);

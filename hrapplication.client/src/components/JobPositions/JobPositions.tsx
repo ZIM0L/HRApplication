@@ -10,10 +10,6 @@ function JobPositions() {
     const [jobPositions, setJobPositions] = useState<IJobPosition[]>([]);  // Stan do przechowywania wyników
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
 
-    const removeJob = (id) => {
-        setJobs(jobs.filter(job => job.id !== id));
-    };
-
     const fetchJobPositions = async () => {
         try {
             const response = await api.get('api/JobPosition/getAllJobPositions');

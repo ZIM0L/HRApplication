@@ -8,6 +8,7 @@ import Panel from './components/Dashboard/Panel';
 import AccessDenied from './components/ErrorComponents/AccessDenied';
 import NotFoundPage from './components/ErrorComponents/NotFoundPage';
 import { Role } from './types/Role/Role';
+import Organization from './components/Organization/OrganizationAdminView';
 
 const App = () => {
     return (
@@ -24,6 +25,7 @@ const App = () => {
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
                             <Route path="panel" element={<Panel />} />
+                            <Route path="organization" element={<Organization /> } />
                         </Route>
                     </Route>
 

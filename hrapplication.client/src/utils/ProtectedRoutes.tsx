@@ -45,7 +45,7 @@ const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ requiredRole}) => {
     if (!isAuthenticated) {
         return <Navigate to="/auth" state={{ from: location }} replace />;
     }
-    console.log(requiredRole.includes(userRole))
+    //console.log(requiredRole.includes(userRole))
     // Jeœli rola u¿ytkownika nie pasuje do wymaganych, przekierowujemy do strony "Access Denied"
     if (!requiredRole.includes(userRole)) {
         return <Navigate to="/accessdenied" state={{ from: location }} replace />;

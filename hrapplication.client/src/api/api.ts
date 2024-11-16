@@ -62,7 +62,7 @@ api.interceptors.response.use(
             } catch (refreshError) {
                 console.error('Odœwie¿enie tokenu nie powiod³o siê: ', refreshError);
                 localStorage.removeItem('accessToken');
-                window.location.href = '/login';
+                window.location.href = '/auth';
                 document.cookie = "refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly"
                 return Promise.reject(refreshError);
             }

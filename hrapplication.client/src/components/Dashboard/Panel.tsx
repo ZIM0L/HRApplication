@@ -1,14 +1,63 @@
 ﻿import { Calendar, dayjsLocalizer } from 'react-big-calendar';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { ReadLocalStorageUserFromToken } from '../../services/LocalStorageTokenService';
 import { Role } from '../../types/Role/Role';
+import { useEffect, useState } from 'react';
+import { ValidateTokenService } from '../../services/ValidateTokenService';
+import { HttpStatusCode } from 'axios';
+import { JwtPayload } from 'jwt-decode';
 
 function Panel() {
     const { name } = useParams();
     const mlocalizer = dayjsLocalizer(dayjs);
-    const decodedToken = ReadLocalStorageUserFromToken();
+    const navigate = useNavigate();
 
+    const [decodedToken, setDecodedToken] = useState<JwtPayload | null>();
+    const [isCheckingToken, setIsCheckingToken] = useState(true);
+
+    useEffect(() => {
+        const checkToken = async () => {
+            try {
+                const status = await ValidateTokenService();
+                if (status === HttpStatusCode.Unauthorized) {
+                    navigate("/*");
+                    return;
+                }
+
+                setDecodedToken(ReadLocalStorageUserFromToken());
+            } catch (error) {
+                console.error("Error checking token:", error);
+                navigate("/auth");
+            } finally {
+                setIsCheckingToken(false);
+            }
+        };
+
+        checkToken();
+    }, [navigate]);
+
+    if (isCheckingToken) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <p>Loading...</p> {/* Możesz dodać spinner */}
+            </div>
+        );
+    }
+    if (!decodedToken || decodedToken.role === Role.Guest) {
+        return (
+            <>
+                <div className="flex-1 h-screen space-y-6 overflow-y-auto p-6 lg:ml-1/6">
+                 <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-bold">Welcome {name} 👋</h2>
+                    <button className="rounded bg-dark-blue px-4 py-2 text-xl font-bold text-white">
+                        Add New Event
+                    </button>
+                </div>
+                    <div>No access</div>
+                </div>
+            </>
+        )}
     return (
         <div className="flex-1 h-screen space-y-6 overflow-y-auto p-6 lg:ml-1/6">
             <div className="flex items-center justify-between">
@@ -17,8 +66,6 @@ function Panel() {
                     Add New Event
                 </button>
             </div>
-
-            {decodedToken?.role !== Role.Guest ? (
                 <>
                     <Calendar
                         localizer={mlocalizer}
@@ -84,9 +131,6 @@ function Panel() {
                         </div>
                     </div>
                 </>
-            ) : (
-                <div>No access</div>
-            )}
         </div>
     );
 }

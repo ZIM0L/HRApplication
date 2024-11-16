@@ -6,6 +6,8 @@ using System.Text;
 using ErrorOr;
 using HRApplication.Server.Application.CustomErrorOr;
 using ReactApp1.Server.Presentation.Api.Controllers;
+using MediatR;
+using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
 
 
 namespace HRApplication.Server.Presentation.Controllers.Authentication
@@ -15,18 +17,21 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
     [Authorize]
     public class ValidateAuthTokenController : ErrorController
     {
+
         private readonly string _secretKey;
         private readonly string _issuer;
         private readonly string _audience;
+        private readonly IMediator _mediator;
 
-        public ValidateAuthTokenController(IConfiguration configuration)
+        public ValidateAuthTokenController(IConfiguration configuration, IMediator mediator)
         {
             _secretKey = configuration["JwtSettings:SecretKey"];
             _issuer = configuration["JwtSettings:Issuer"];
             _audience = configuration["JwtSettings:Audience"];
+            _mediator = mediator;
         }
         [HttpGet]
-        public IActionResult ValidateToken()
+        public async Task<IActionResult >ValidateToken()
         {
             var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
 
@@ -34,9 +39,11 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             {
                 return Problem(new List<Error> { CustomErrors.Token.InvalidFormatError});
             }
+            //actual token
             var token = authorizationHeader.Substring("Bearer ".Length).Trim();
             var handler = new JwtSecurityTokenHandler();
 
+            var tokenPayload = handler.ReadJwtToken(token).Payload;
             try
             {
                 // Validate the token
@@ -52,8 +59,19 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                     ClockSkew = TimeSpan.Zero 
                 }, out SecurityToken validatedToken);
 
-                
-                return Ok(new { message = "Token is valid." });
+                var result = await _mediator.Send(new ValidateUserRequest(
+                    new Guid(tokenPayload.Sub),
+                    tokenPayload["given_name"].ToString(),
+                    tokenPayload["family_name"].ToString(),
+                    tokenPayload["email"].ToString(),
+                    tokenPayload["role"].ToString(),
+                    tokenPayload["phonenumber"].ToString()));
+
+                if (result.IsError) {
+                    return Problem(result.Errors);
+                }
+
+                return Ok(new { message = tokenPayload });
             }
             catch (SecurityTokenExpiredException)
             {

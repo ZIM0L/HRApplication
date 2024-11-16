@@ -1,4 +1,5 @@
-﻿using HRApplication.Server.Domain.Models;
+﻿using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
+using HRApplication.Server.Domain.Models;
 
 namespace HRApplication.Server.Application.Interfaces.Repositories
 {
@@ -6,6 +7,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
     {
         void AddUser(User user);
         User? GetUserByEmail(string email);
+        User? GetUserByGivenUser(ValidateUserRequest request);
         User? GetUserById(Guid id);
         User? GetUserByRefreshToken(string refreshToken); //TODO: move to different interface
         void UpdateUser(User user);
