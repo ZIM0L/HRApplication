@@ -1,58 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { ValidateTokenService } from "../services/ValidateTokenService"; // Twoja funkcja walidacji tokenu
 import { Role } from "../types/Role/Role";
-import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../contex/AuthContex";
 
 type ProtectedRouteProps = {
     requiredRole: Role[]; // Definiujemy typy dla ról
 };
 
-
-const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ requiredRole}) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-    const [userRole, setUserRole] = useState<Role>(Role.Guest);
+const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
     const location = useLocation();
+    const { authToken, decodedToken, isCheckingToken, checkToken } = useAuth();
 
+    // Ensure that checkToken runs only once after the component mounts
     useEffect(() => {
-        const checkAuthentication = async () => {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                setIsAuthenticated(false);
-                return;
-            }
-            const decodedToken = jwtDecode(token);
-            setUserRole(decodedToken.role);  // Przypisujemy rolê u¿ytkownika z tokenu
+        checkToken();
+    }, [checkToken]);
 
-            try {
-                const status = await ValidateTokenService(); // Sprawdzamy status tokenu
-                setIsAuthenticated(status === 200);
-            } catch (error) {
-                console.error("Error validating token", error);
-                setIsAuthenticated(false);
-            }
-        };
-
-        checkAuthentication();
-    }, []);
-
-    if (isAuthenticated === null) {
-        // Jeœli sprawdzanie autentykacji trwa, wyœwietlamy loading
+    // Show a loading state while checking the token
+    if (isCheckingToken) {
         return <div>Loading...</div>;
     }
 
-    // Jeœli u¿ytkownik nie jest uwierzytelniony, przekierowujemy go na stronê logowania
-    if (!isAuthenticated) {
+    // If no token is found, redirect to the login page
+    if (!authToken) {
         return <Navigate to="/auth" state={{ from: location }} replace />;
     }
-    //console.log(requiredRole.includes(userRole))
-    // Jeœli rola u¿ytkownika nie pasuje do wymaganych, przekierowujemy do strony "Access Denied"
-    if (!requiredRole.includes(userRole)) {
+
+    // Check if the user's role is allowed; redirect to Access Denied if not
+    if (decodedToken?.role && !requiredRole.includes(decodedToken.role as Role)) {
         return <Navigate to="/accessdenied" state={{ from: location }} replace />;
     }
 
-    // Jeœli rola pasuje, wyœwietlamy elementy wewn¹trz <Outlet>
+    // If role matches, render the protected route
     return <Outlet />;
 };
 
 export default ProtectedRoutes;
+D

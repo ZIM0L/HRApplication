@@ -1,56 +1,11 @@
-﻿//import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-//import { useAuth } from '../../contex/AuthContex';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { HttpStatusCode } from 'axios';
-import { ValidateTokenService } from '../../services/ValidateTokenService';
+﻿import { Link, Outlet } from 'react-router-dom';
 import logo from '../../assets/open4fire.png'
 import { HomeIcon } from '@heroicons/react/24/solid';
 import { BriefcaseIcon } from '@heroicons/react/24/solid';
 import { NewspaperIcon } from '@heroicons/react/24/solid';
-import { ReadLocalStorageUserFromToken } from '../../services/LocalStorageTokenService';
-import { JwtPayload } from 'jwt-decode';
 
 const Dashboard: React.FC = () => {
-    const navigate = useNavigate();
-    const [decodedToken, setDecodedToken] = useState<JwtPayload | null>();
-    const [isCheckingToken, setIsCheckingToken] = useState(true);
 
-
-    // check if works as intented later
-    useEffect(() => {
-        const checkToken = async () => {
-            try {
-                const status = await ValidateTokenService();
-                if (status === HttpStatusCode.Unauthorized) {
-                    navigate("/*");
-                    return;
-                }
-
-                setDecodedToken(ReadLocalStorageUserFromToken());
-            } catch (error) {
-                console.error("Error checking token:", error);
-                navigate("/auth");
-            } finally {
-                setIsCheckingToken(false);
-            }
-        };
-
-        checkToken();
-    });
-
-    if (isCheckingToken) {
-        return (
-            <div className="flex h-screen items-center justify-center">
-                <p>Loading...</p> {/* Możesz dodać spinner */}
-            </div>
-        );
-    }
-    if (!decodedToken ) {
-        return (
-           <h1>Access Token ahs been changed !</h1>
-        )
-    }
     return (
         <div className="flex h-[100vh] bg-gray-100">
             {/* Sidebar */}

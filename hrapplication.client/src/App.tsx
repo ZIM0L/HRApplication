@@ -25,7 +25,12 @@ const App = () => {
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
                             <Route path="panel" element={<Panel />} />
-                            <Route path="organization" element={<Organization /> } />
+                        </Route>
+                    </Route>
+                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee]} />}>
+                        <Route path="/dashboard/:name" element={<DashBoard />}>
+                            <Route index element={<Navigate to="panel" replace />} />
+                            <Route path="organization" element={<Organization />} />
                         </Route>
                     </Route>
 
