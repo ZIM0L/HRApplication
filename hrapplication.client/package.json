@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.1.5",
     "@types/node": "^22.9.0",
     "@types/react-router-dom": "^5.3.3",
+    "animejs": "^3.2.2",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
     "firebase": "^11.0.2",
@@ -21,10 +22,12 @@
     "react-big-calendar": "^1.15.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.27.0",
+    "react-type-animation": "^3.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@types/animejs": "^3.1.12",
     "@types/axios": "^0.14.4",
     "@types/css": "^0.0.38",
     "@types/react": "^18.3.12",

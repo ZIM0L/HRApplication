@@ -2,6 +2,7 @@
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useAuth } from '../../contex/AuthContex';
+import SearchForTeam from '../SearchForTeam/SearchForTeam';
 
 function Panel() {
     const { decodedToken, isCheckingToken } = useAuth();
@@ -20,7 +21,7 @@ function Panel() {
 
     if (!decodedToken || decodedToken.role === 'Guest') {
         return (
-            <div>No access</div>
+            <SearchForTeam />
         );
     }
     return (

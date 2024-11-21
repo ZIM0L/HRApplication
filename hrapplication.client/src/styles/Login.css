@@ -1,18 +1,23 @@
-/* Login.css */
-.login-section::before {
-    content: '';
-    position: absolute;
-    top: -10rem;
-    left: 0;
-    width: 110%;
-    height: 130%;
-    background-color: #252A34;
-    transform: rotate(8deg);
-    transform-origin: top left;
-    z-index: 0;
-}
 
-.login-section > * {
-    position: relative; 
-    z-index: 10;
+/* Style powy¿ej 768px */
+@media (min-width: 768px ) {
+    .login-section::before {
+        content: '';
+        position: absolute;
+        top: -10rem;
+        left: 0;
+        width: 130%;
+        height: 130%;
+        background-color: #16191F;
+        transform: rotate(8deg);
+        transform-origin: top left;
+        z-index: 0;
+    }
+    .fill{
+        fill: white
+    }
+    .login-section > * {
+        position: relative;
+        z-index: 10;
+    }
 }

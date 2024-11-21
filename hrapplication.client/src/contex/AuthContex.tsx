@@ -1,10 +1,11 @@
 // src/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { setAuthToken } from '../api/api'; // Importuj api i setAuthToken
+import React, { createContext, useContext, useState } from 'react';
+import { api, setAuthToken } from '../api/api'; // Importuj api i setAuthToken
 import { ValidateTokenService } from '../services/ValidateTokenService'; // Funkcja sprawdzaj¹ca token
 import { ReadLocalStorageUserFromToken } from '../services/LocalStorageTokenService'; // Funkcja do odczytu tokenu
 import { JwtPayload } from 'jwt-decode';
-import { HttpStatusCode } from 'axios';
+import { AxiosResponse, HttpStatusCode } from 'axios';
+import { LoginInputs } from '../types/Login/LoginInputs'
 
 interface IAuthProvider {
     children: React.ReactNode;
@@ -15,8 +16,9 @@ interface IAuthContextType {
     decodedToken: JwtPayload | null;
     isCheckingToken: boolean;
     SetAuthenticationToken: (token: string) => void;
-    RemoveAuthenticationToken: () => void;
+    logOut: () => void;
     checkToken: () => Promise<void>; // Funkcja do sprawdzania tokenu
+    login: (data: LoginInputs) => Promise<AxiosResponse | null>;
 }
 
 const AuthContext = createContext<IAuthContextType | null>(null);
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         try {
             const status = await ValidateTokenService();
             if (status === HttpStatusCode.Unauthorized) {
-                RemoveAuthenticationToken();
+                logOut();
                 return;
             }
             if (authToken) {
@@ -40,7 +42,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
             }
         } catch (error) {
             console.error('Error checking token:', error);
-            RemoveAuthenticationToken();
+            logOut();
         } finally {
             setIsCheckingToken(false);
         }
@@ -54,21 +56,31 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     };
 
     // Funkcja do usuwania tokenu
-    const RemoveAuthenticationToken = () => {
+    const logOut = () => {
         setAuthTokenState(null);
         setDecodedToken(null);
         localStorage.removeItem('accessToken');
         document.cookie = 'refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly';
         setAuthToken(null); // Usuniêcie tokenu w API
     };
+    const login = async (data: LoginInputs): Promise<AxiosResponse | null> => {
+        try {
+            const response = await api.post('/auth/login', data);
 
-    // SprawdŸ token przy za³adowaniu kontekstu
-    useEffect(() => {
-        checkToken();
-    }, [authToken]);
+            if (response.status === 200) {
+                SetAuthenticationToken(response.data.token)
+                return response;
+            }
+            return response;
+        } catch (error) {
+            console.error("Login error:", error);
+            return null
+        }
+    }
+
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, RemoveAuthenticationToken, checkToken }}>
+        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, login}}>
             {children}
         </AuthContext.Provider>
     );

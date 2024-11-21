@@ -3,31 +3,40 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'PlayfairDisplay';
-    src: url('../fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
+    font-family: 'Kanit';
+    src: url('../fonts/Kanit/Kanit-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: 'PlayfairDisplay-SemiBold';
-    src: url('../fonts/Playfair_Display/static/PlayfairDisplay-SemiBold.ttf') format('truetype');
-    font-weight: bold;
+    font-family: 'Kanit-SemiBold';
+    src: url('../fonts/Kanit/Kanit-SemiBold.ttf') format('truetype');
+    font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: 'PlayfairDisplay-Bold';
-    src: url('../fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
-    font-weight: bolder;
+    font-family: 'Kanit-Bold';
+    src: url('../fonts/Kanit/Kanit-Bold.ttf') format('truetype');
+    font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 body {
     padding: 0 0;
     margin: 0 0;
-    font-family: 'PlayfairDisplay';
+    font-family: 'Kanit';
 }
 
 #root {
     padding: 0 0;
     margin: 0 0;
+}
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #16191F, #ccc, #16191F);
 }

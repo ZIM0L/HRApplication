@@ -14,7 +14,7 @@ const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
     // Ensure that checkToken runs only once after the component mounts
     useEffect(() => {
         checkToken();
-    }, [checkToken]);
+    }, []);
 
     // Show a loading state while checking the token
     if (isCheckingToken) {
@@ -36,4 +36,3 @@ const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
 };
 
 export default ProtectedRoutes;
-D

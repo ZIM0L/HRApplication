@@ -1,0 +1,63 @@
+﻿import anime from "animejs";
+import { useEffect } from "react";
+
+function LogoSVG() {
+
+    useEffect(() => {
+        // Tworzymy animacj�, kt�ra przesuwa element w prawo
+        anime({
+            targets: '.logo path',
+            strokeDasharray: function (el) {
+                return el.getTotalLength(); // Ustawiamy d�ugo�� �cie�ki SVG jako d�ugo�� dasharray
+            },
+            strokeDashoffset: [anime.setDashoffset, 0], // Zaczynamy z "pe�nym" dashoffset
+            easing: 'easeInOutSine',
+            duration: 1500,
+            delay: function (el, i) { return i * 250 }, // Delay na podstawie kolejno�ci element�w
+            direction: 'alternate', // Powtarzamy animacj� w przeciwn� stron�
+            loop: false, // Animacja nie b�dzie si� powtarza�
+            complete: () => {
+                // Po zako�czeniu animacji zmieniamy fill na bia�y
+
+                anime({
+                    targets: '.logo svg path',
+                    fill: ['none', 'rgba(8,217,214,0.9)'], // Kolor przej�cia z "none" do docelowego
+                    easing: 'easeInOutQuad',
+                    duration: 500,
+                    delay: function (el, i) { return i * 250; }, // Dodanie op�nienia mi�dzy elementami
+                    loop: false,
+                });
+                anime({
+                    targets: '.logo path[stroke="white"]',
+                    fill: ['none', 'rgba(255,255,255,0.9)'], // Kolor przej�cia z "none" do docelowego
+                    easing: 'easeInOutQuad',
+                    duration: 300,
+                    delay: function (el, i) { return i * 250; }, // Dodanie op�nienia mi�dzy elementami
+                    loop: false,
+                });
+            },
+        });
+    }, []); 
+
+  return (
+      <svg width="180" height="100" viewBox="0 30 200 27" className="logo self-start md:mt-4">
+          <path stroke="white" strokeWidth="1" d="M173.259 0.799927H188.379V3.53593H176.571V11.3839H187.119V14.1199H176.571V23.2639H188.379V25.9999H173.259V0.799927Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M151.261 0.799927H159.001C161.737 0.799927 163.777 1.36393 165.121 2.49193C166.465 3.59593 167.137 5.27593 167.137 7.53193C167.137 9.21193 166.717 10.6399 165.877 11.8159C165.037 12.9679 163.873 13.7479 162.385 14.1559V14.2279C162.889 14.5639 163.297 14.9239 163.609 15.3079C163.921 15.6679 164.185 16.1119 164.401 16.6399L168.181 25.9999H164.617L161.449 17.8639C161.041 16.8079 160.549 16.0999 159.973 15.7399C159.397 15.3799 158.497 15.1999 157.273 15.1999H154.573V25.9999H151.261V0.799927ZM158.821 12.4999C162.253 12.4999 163.969 10.9159 163.969 7.74793C163.969 6.33193 163.537 5.27593 162.673 4.57993C161.809 3.88393 160.489 3.53593 158.713 3.53593H154.573V12.4999H158.821Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M115.913 0.799927H119.225V11.8879H131.249V0.799927H134.561V25.9999H131.249V14.6239H119.225V25.9999H115.913V0.799927Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M104.76 21.6799H93.2039V18.8719L104.04 0.799927H108.072V18.9439H110.916V21.6799H108.072V25.9999H104.76V21.6799ZM104.76 18.9439V4.65193L96.2279 18.9439H104.76Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M88.2128 0.799927V25.9999H84.9368L72.7328 6.05593V25.9999H69.4208V0.799927H72.9128L84.9008 20.4919V0.799927H88.2128Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M48.5135 0.799927H63.6335V3.53593H51.8255V11.3839H62.3735V14.1199H51.8255V23.2639H63.6335V25.9999H48.5135V0.799927Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M26.7968 0.799927H34.2128C36.9968 0.799927 39.0968 1.44793 40.5128 2.74393C41.9528 4.03993 42.6728 5.93593 42.6728 8.43193C42.6728 11.0719 41.9288 13.0999 40.4408 14.5159C38.9528 15.9079 36.8168 16.6039 34.0328 16.6039H30.1088V25.9999H26.7968V0.799927ZM34.4648 13.8679C36.0728 13.8679 37.3088 13.4119 38.1728 12.4999C39.0608 11.5879 39.5048 10.2919 39.5048 8.61193C39.5048 6.95593 39.0488 5.69593 38.1368 4.83193C37.2248 3.96793 35.9048 3.53593 34.1768 3.53593H30.1088V13.8679H34.4648Z" fill="none" />
+          <path stroke="white" strokeWidth="1" d="M10.916 26.3599C8.732 26.3599 6.836 25.8439 5.228 24.8119C3.62 23.7559 2.384 22.2559 1.52 20.3119C0.655999 18.3439 0.223999 16.0399 0.223999 13.3999C0.223999 10.7599 0.655999 8.46794 1.52 6.52394C2.384 4.55594 3.62 3.05594 5.228 2.02394C6.836 0.967942 8.732 0.439941 10.916 0.439941C13.1 0.439941 14.984 0.967942 16.568 2.02394C18.176 3.05594 19.412 4.55594 20.276 6.52394C21.14 8.46794 21.572 10.7599 21.572 13.3999C21.572 16.0399 21.14 18.3439 20.276 20.3119C19.412 22.2559 18.176 23.7559 16.568 24.8119C14.984 25.8439 13.1 26.3599 10.916 26.3599ZM10.916 23.6959C12.404 23.6959 13.7 23.2759 14.804 22.4359C15.932 21.5959 16.784 20.4079 17.36 18.8719C17.96 17.3119 18.26 15.4879 18.26 13.3999C18.26 11.3119 17.96 9.49994 17.36 7.96394C16.784 6.40394 15.932 5.20394 14.804 4.36394C13.7 3.52394 12.404 3.10394 10.916 3.10394C9.404 3.10394 8.096 3.52394 6.992 4.36394C5.888 5.20394 5.036 6.40394 4.436 7.96394C3.836 9.49994 3.536 11.3119 3.536 13.3999C3.536 15.4879 3.836 17.3119 4.436 18.8719C5.036 20.4079 5.888 21.5959 6.992 22.4359C8.096 23.2759 9.404 23.6959 10.916 23.6959Z" fill="none" />
+
+          <svg width="290" height="72" viewBox="5 0 1 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path stroke="#08D9D6" strokeWidth="1" d="M0 0H5V36H0V0Z" fill="none" />
+          </svg>
+          <svg width="220" height="70" viewBox="0 -3 220 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path stroke="#08D9D6" strokeWidth="1" d="M0 0H189V5H0V0Z" fill="none" />
+          </svg>
+      </svg>
+  );
+}
+
+export default LogoSVG;

@@ -3,12 +3,13 @@ import Register from './components/Register';
 import Login from '../LoginRegister/components/Login'
 import { useState } from 'react';
 
+
 const AuthPage = () => {
 
     const [isLoggedOn, setIsLoggedOn] = useState(true);
 
     return (
-        <div className="flex h-screen overflow-hidden text-dark-blue">
+        <div className="h-screen flex-col space-y-8 text-dark-blue md:overflow-hidden md:flex-row md:flex">
             <AlreadySignUp isLoggedOn={isLoggedOn} setIsLoggedOn={setIsLoggedOn} />
             {isLoggedOn ? <Register /> : <Login />}
         </div>

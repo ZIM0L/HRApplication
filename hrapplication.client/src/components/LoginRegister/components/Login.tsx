@@ -1,36 +1,29 @@
 ﻿import { useForm, SubmitHandler } from "react-hook-form";
-import { api } from "../../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex"; // Importuj `useAuth`
-import { SetLocalStorageUser } from "../../../services/LocalStorageTokenService";
-
-type Inputs = {
-    email: string;
-    password: string;
-};
+import { LoginInputs } from '../../../types/Login/LoginInputs'
 
 const Login = () => {
-    const { register, handleSubmit } = useForm<Inputs>();
+    const { register, handleSubmit } = useForm<LoginInputs>();
     const navigate = useNavigate();
-    const { SetAuthenticationToken } = useAuth();
+    const { login } = useAuth();
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
         try {
-            const response = await api.post('/auth/login', data);
-
-            if (response.status === 200) {
-                SetAuthenticationToken(response.data.token)
-                SetLocalStorageUser(response.data.user)
-                navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true});
-            }
+            const response = login(data)
+            response.then(resolve => {
+                if (resolve?.status === 200) {
+                    navigate(`/dashboard/${resolve.data.user.name}/panel`, { replace: true });
+                } 
+            })
         } catch (error) {
-            console.error("Login error:", error);
+            console.error("Error message: " + error);
         }
     };
 
     return (
-        <div className="flex h-full w-[50%] w-full flex-col items-center justify-center bg-white px-8 lg:px-32">
-            <h2 className="mb-4 text-3xl font-['PlayfairDisplay-SemiBold'] px-2">Log in to dashboard</h2>
+        <div className="flex h-full w-[50%] w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
+            <h2 className="font-semiBold mb-4 px-2 text-3xl">Login to dashboard</h2>
             <p className="mb-6 px-2 text-center text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>

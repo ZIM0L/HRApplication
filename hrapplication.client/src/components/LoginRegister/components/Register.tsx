@@ -43,12 +43,12 @@ const Register = () => {
         }
     };
     return (
-        <div className="flex h-full w-[50%] w-full flex-col items-center justify-center bg-white px-8 lg:px-32">
-            <h2 className="mb-4 text-3xl font-['PlayfairDisplay-SemiBold'] px-2">Sign up for an Account</h2>
+        <div className="flex w-[50%] w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
+            <h2 className="mb-4 px-2 text-3xl font-semibold">Sign up for an Account</h2>
             <p className="mb-6 px-2 text-center text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
-            <form className="flex w-full flex-col px-16" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex w-full flex-col md:px-16" onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4 flex space-x-4">
                     <input
                         {...register("name", { required: true, maxLength: 50 })}

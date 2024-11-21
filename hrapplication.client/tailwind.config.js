@@ -15,12 +15,12 @@ export default {
       extend: {
           colors: {
               'cyan-blue': '#08D9D6',
-              'dark-blue': '#252A34',
+              'dark-blue': '#16191F',
               'light-red': '#FF2E63',
               'grey-white': '#EAEAEA',
             },
             fontFamily: {
-                custom: ['PlayfairDisplay', 'PlayfairDisplay-SemiBold', 'PlayfairDisplay-Bold']
+                custom: ['Kanit', 'Kanit-SemiBold', 'Kanit-Bold']
             }
       },
   },

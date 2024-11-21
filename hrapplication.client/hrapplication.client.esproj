@@ -11,6 +11,7 @@
   <ItemGroup>
     <Folder Include="public\fonts\" />
     <Folder Include="src\components\JobPositions\" />
+    <Folder Include="src\components\SearchForTeam\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\types\Role\" />
     <Folder Include="src\utils\interfaces\" />
