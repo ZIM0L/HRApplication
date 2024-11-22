@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const SearchForTeam = () => {
 
-    const [activeDropdown, setActiveDropdown] = useState < number | null>(null); // Przechowuje ID aktualnie otwartego dropdownu
+    const [teams, setTeams] = useState<ITeam[]>([]); 
 
     const toggleDropdown = (id: number | null) => {
         // Jeśli klikniesz ten sam dropdown, zamknie się
