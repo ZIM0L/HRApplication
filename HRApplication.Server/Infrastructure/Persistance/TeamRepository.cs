@@ -20,17 +20,17 @@ namespace HRApplication.Server.Infrastructure.Persistance
 
         public Team? GetTeamById(Guid teamId)
         {
-           return _dbContex.Teams.SingleOrDefault(x => x.TeamId.Equals(teamId));
+            return _dbContex.Teams.SingleOrDefault(x => x.TeamId.Equals(teamId));
         }
 
         public Team? GetTeamByName(string name)
         {
-           return _dbContex.Teams.FirstOrDefault(x => x.Name.Equals(name));
+            return _dbContex.Teams.FirstOrDefault(x => x.Name.Equals(name));
         }
 
         public List<Team>? GetTeamsIdsByName(string name)
         {
-           return _dbContex.Teams.Where(x => x.Name.Equals(name)).ToList();
+            return _dbContex.Teams.Where(x => x.Name.Equals(name)).ToList();
         }
     }
 }

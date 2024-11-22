@@ -1,6 +1,5 @@
 ﻿using ErrorOr;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
 
@@ -25,7 +24,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             var query = new GetUserByIdQuery(
                 request.id);
 
-            ErrorOr<User> response = await _mediator.Send(query); 
+            ErrorOr<User> response = await _mediator.Send(query);
 
             return response.Match(
                 response => Ok(response.RoleName),

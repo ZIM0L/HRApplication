@@ -30,7 +30,7 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Queries
                    job.CreatedDate,
                    job.UpdatedDate
                )).ToList();
-                
+
             return result;
 
         }

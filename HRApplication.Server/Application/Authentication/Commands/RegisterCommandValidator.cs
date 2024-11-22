@@ -5,7 +5,8 @@ namespace ReactApp1.Server.Application.Authentication.Commands.Register
 {
     public class LoginQueryValidator : AbstractValidator<RegisterRequest>
     {
-        public LoginQueryValidator() {
+        public LoginQueryValidator()
+        {
             RuleFor(x => x.name).NotEmpty().WithMessage("Name is required");
             RuleFor(x => x.surname).NotEmpty().WithMessage("Surname is required");
             RuleFor(x => x.email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Email address is required");

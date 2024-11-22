@@ -6,7 +6,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
 {
     public class JobPositionsRepository : IJobPositionsRepository
     {
-    private readonly DBDatabase _dbContex;
+        private readonly DBDatabase _dbContex;
         public JobPositionsRepository(DBDatabase dbContex)
         {
             _dbContex = dbContex;
@@ -14,11 +14,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
 
         public void AddJobPosition(JobPosition jobPosition)
         {
-           _dbContex.Add<JobPosition>(jobPosition);
-           _dbContex.SaveChanges();
+            _dbContex.Add<JobPosition>(jobPosition);
+            _dbContex.SaveChanges();
         }
 
-        public  List<JobPosition> GetAllJobPositions()
+        public List<JobPosition> GetAllJobPositions()
         {
             return _dbContex.Job_Positions.ToList();
         }

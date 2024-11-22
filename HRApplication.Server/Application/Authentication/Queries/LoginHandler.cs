@@ -20,7 +20,7 @@ namespace HRApplication.Server.Application.Authentication.Queries
         public async Task<ErrorOr<AuthenticationResult>> Handle(LoginRequest query, CancellationToken cancellationToken)
         {
 
-        await Task.CompletedTask;
+            await Task.CompletedTask;
 
             if (_userRepository.GetUserByEmail(query.email) is not User user)
             {

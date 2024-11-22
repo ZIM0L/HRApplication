@@ -1,6 +1,5 @@
-﻿using MediatR;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using MediatR;
 using System.Reflection;
 namespace Domain
 {
@@ -10,7 +9,7 @@ namespace Domain
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());   
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
     }

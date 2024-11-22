@@ -1,10 +1,10 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.Authentication.AuthenticationResults;
+using HRApplication.Server.Application.Authentication.Services.RefreshToken;
+using HRApplication.Server.Application.CustomErrorOr;
+using HRApplication.Server.Application.Interfaces.Repositories;
 using MediatR;
 using ReactApp1.Server.Application.Interfaces.Authentication;
-using HRApplication.Server.Application.CustomErrorOr;
-using HRApplication.Server.Application.Authentication.Services.RefreshToken;
-using HRApplication.Server.Application.Authentication.AuthenticationResults;
-using HRApplication.Server.Application.Interfaces.Repositories;
 
 public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, ErrorOr<AuthenticationResult>>
 {
@@ -55,7 +55,7 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, ErrorOr<
         };
 
         _httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", newRefreshToken, cookieOptions);
-        
+
         return new AuthenticationResult(user, newAccessToken);
     }
 }

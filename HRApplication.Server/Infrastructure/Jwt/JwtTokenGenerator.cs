@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using ReactApp1.Server.Application.Interfaces.Authentication;
-using HRApplication.Server.Application.JwtSettings;
+﻿using HRApplication.Server.Application.JwtSettings;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using ReactApp1.Server.Application.Interfaces.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace ReactApp1.Server.Infrastructure.Authentication
 {
@@ -19,13 +19,13 @@ namespace ReactApp1.Server.Infrastructure.Authentication
 
         public string GenerateToken(User user)
         {
-           
+
             //maybe change
             var secretKey = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("JwtSettings")["SecretKey"];
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                     SecurityAlgorithms.HmacSha256);
-            
+
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString() ?? string.Empty),
@@ -40,7 +40,7 @@ namespace ReactApp1.Server.Infrastructure.Authentication
             var securityToken = new JwtSecurityToken(
                 issuer: "your-issuer",
                 audience: "your-audience",
-                expires: DateTime.UtcNow.AddMinutes(60),   
+                expires: DateTime.UtcNow.AddMinutes(60),
                 claims: claims,
                 signingCredentials: signingCredentials
                 );

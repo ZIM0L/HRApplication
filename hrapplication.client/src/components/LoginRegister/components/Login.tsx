@@ -1,20 +1,22 @@
 ﻿import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contex/AuthContex"; // Importuj `useAuth`
-import { LoginInputs } from '../../../types/Login/LoginInputs'
+import { LoginInputs } from '../../../types/Auth/AuthInputTypes'
+import { loginUser } from '../../../api/UserAPI'
+import { useAuth } from "../../../contex/AuthContex";
 
 const Login = () => {
     const { register, handleSubmit } = useForm<LoginInputs>();
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { SetAuthenticationToken } = useAuth();
 
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
         try {
-            const response = login(data)
+            const response = loginUser(data)
             response.then(resolve => {
                 if (resolve?.status === 200) {
+                    SetAuthenticationToken(resolve.data.token)
                     navigate(`/dashboard/${resolve.data.user.name}/panel`, { replace: true });
-                } 
+                }
             })
         } catch (error) {
             console.error("Error message: " + error);

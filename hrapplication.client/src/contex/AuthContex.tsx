@@ -1,33 +1,22 @@
 // src/AuthContext.tsx
 import React, { createContext, useContext, useState } from 'react';
-import { api, setAuthToken } from '../api/api'; // Importuj api i setAuthToken
+import { setAuthToken } from '../api/Axios'; // Importuj api i setAuthToken
 import { ValidateTokenService } from '../services/ValidateTokenService'; // Funkcja sprawdzaj¹ca token
 import { ReadLocalStorageUserFromToken } from '../services/LocalStorageTokenService'; // Funkcja do odczytu tokenu
 import { JwtPayload } from 'jwt-decode';
-import { AxiosResponse, HttpStatusCode } from 'axios';
-import { LoginInputs } from '../types/Login/LoginInputs'
+import { HttpStatusCode } from 'axios';
+import { IContext } from '../types/Contex/IContex';
 
-interface IAuthProvider {
+interface IProvider {
     children: React.ReactNode;
 }
 
-interface IAuthContextType {
-    authToken: string | null;
-    decodedToken: JwtPayload | null;
-    isCheckingToken: boolean;
-    SetAuthenticationToken: (token: string) => void;
-    logOut: () => void;
-    checkToken: () => Promise<void>; // Funkcja do sprawdzania tokenu
-    login: (data: LoginInputs) => Promise<AxiosResponse | null>;
-}
+const AuthContext = createContext<IContext | null>(null);
 
-const AuthContext = createContext<IAuthContextType | null>(null);
-
-export const AuthProvider = ({ children }: IAuthProvider) => {
+export const AuthProvider = ({ children }: IProvider) => {
     const [authToken, setAuthTokenState] = useState<string | null>(localStorage.getItem('accessToken'));
     const [decodedToken, setDecodedToken] = useState<JwtPayload | null>(null);
     const [isCheckingToken, setIsCheckingToken] = useState(true);
-
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -63,24 +52,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         document.cookie = 'refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly';
         setAuthToken(null); // Usuniêcie tokenu w API
     };
-    const login = async (data: LoginInputs): Promise<AxiosResponse | null> => {
-        try {
-            const response = await api.post('/auth/login', data);
-
-            if (response.status === 200) {
-                SetAuthenticationToken(response.data.token)
-                return response;
-            }
-            return response;
-        } catch (error) {
-            console.error("Login error:", error);
-            return null
-        }
-    }
-
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, login}}>
+        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken}}>
             {children}
         </AuthContext.Provider>
     );

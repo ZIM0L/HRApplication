@@ -3,7 +3,6 @@ using HRApplication.Server.Application.Authentication.AuthenticationResults;
 using HRApplication.Server.Application.Authentication.Commands;
 using HRApplication.Server.Application.Authentication.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
 
@@ -13,13 +12,15 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
     public class AuthenticationController : ErrorController
     {
         private readonly IMediator _mediator;
-        public AuthenticationController(IMediator mediator) {
+        public AuthenticationController(IMediator mediator)
+        {
             _mediator = mediator;
         }
 
         [HttpPost]
         [Route("/auth/register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request) {
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
 
             var command = new RegisterRequest(
                 request.name,
@@ -32,7 +33,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
 
             ErrorOr<AuthenticationResult> response = await _mediator.Send(command); //pipieline
 
-       
+
             return response.Match(
                 response => Ok(response),
                 errors => Problem(errors));

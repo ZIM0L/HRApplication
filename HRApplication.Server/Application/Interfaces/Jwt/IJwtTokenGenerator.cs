@@ -1,6 +1,4 @@
-﻿using HRApplication.Server.Domain.Models;
-
-namespace ReactApp1.Server.Application.Interfaces.Authentication
+﻿namespace ReactApp1.Server.Application.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {

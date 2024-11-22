@@ -1,7 +1,7 @@
 ﻿// AddJobModal.tsx
 import { useState } from 'react';
 import { IAddJobPosition } from '../../types/JobPosition/IJobPosition';
-import { api } from '../../api/api';
+import { mainAxiosInstance } from '../../api/Axios';
 import { useForm, SubmitHandler } from "react-hook-form";
 
     interface AddJobModalProps {
@@ -24,7 +24,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
-            const response = await api.post('/api/JobPosition/addJobPosition', data);
+            const response = await mainAxiosInstance.post('/api/JobPosition/addJobPosition', data);
             if (response.status === 200) {
                 onRefresh();
                 onClose();

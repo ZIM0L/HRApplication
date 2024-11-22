@@ -13,7 +13,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
         // TODO: check if can be made better
         public bool CheckIfRoleNameExists(string roleName)
         {
-            var response = _dbContex.Roles.SingleOrDefault(x => x.rolename == roleName );
+            var response = _dbContex.Roles.SingleOrDefault(x => x.rolename == roleName);
             if (response != null)
             {
                 return true;

@@ -3,7 +3,7 @@ using HRApplication.Server.Application.CustomErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using MediatR;
 
-public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery,ErrorOr<User>>
+public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr<User>>
 {
     private readonly IUserRepository _userRepository;
 

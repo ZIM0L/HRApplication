@@ -10,7 +10,7 @@ namespace HRApplication.Server.Application.Authentication.Commands
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        private readonly IHttpContextAccessor _httpContextAccessor; 
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IRolesRepository _rolesRepository;
         public RegisterHandler(IUserRepository userRepository,
                                IJwtTokenGenerator jwtTokenGenerator,

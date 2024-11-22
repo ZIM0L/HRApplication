@@ -1,22 +1,15 @@
 ﻿import { useForm, SubmitHandler } from "react-hook-form";
-import { api } from "../../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex"
 import { useState } from "react";
 import { SetLocalStorageUser } from "../../../services/LocalStorageTokenService";
+import { registerUser } from "../../../api/UserAPI";
+import { RegisterInputs } from "../../../types/Auth/AuthInputTypes";
 
-type Inputs = {
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    password: string;
-    roleName: string;
-};
+
 // TODO make better confirm input
 const Register = () => {
-
-    const { register, handleSubmit } = useForm<Inputs>();
+    const { register, handleSubmit } = useForm<RegisterInputs>();
     const navigate = useNavigate();
     const { SetAuthenticationToken } = useAuth();
     const [ confirmPassword, SetConfirmPassword ] = useState("");
@@ -25,16 +18,17 @@ const Register = () => {
         return  confirmPassword == password ?  true :  false
     }
    
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
         try {
             if (CheckConfirmPassword(data.password)) {
-                console.log(data)
-                const response = await api.post('/auth/register', data)
-                if (response.status === 200) {
-                    SetAuthenticationToken(response.data.token)
-                    SetLocalStorageUser(response.data.user)
-                    navigate(`/dashboard/${response.data.user.name}/panel`, { replace: true });
-                }
+                const response = registerUser(data)
+                response.then((resolve) => {
+                    if (resolve?.status == 200) {
+                        SetAuthenticationToken(resolve.data.token)
+                        SetLocalStorageUser(resolve.data.user)
+                        navigate(`/dashboard/${resolve.data.user.name}/panel`, { replace: true });
+                    }
+                })
             } else {
                 alert("Confirm password does not match password")
             }

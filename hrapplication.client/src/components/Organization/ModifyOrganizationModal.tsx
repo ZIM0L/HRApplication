@@ -1,7 +1,4 @@
-﻿// AddJobModal.tsx
-
-
-interface ModifyOrganizationProp {
+﻿interface ModifyOrganizationProp {
     isOpen: boolean;
     onClose: () => void;
     onRefresh: () => void;

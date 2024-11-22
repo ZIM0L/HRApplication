@@ -1,7 +1,4 @@
-﻿
-using Serilog;
-
-namespace Presentation
+﻿namespace Presentation
 {
     public static class DepedencyInjection
     {

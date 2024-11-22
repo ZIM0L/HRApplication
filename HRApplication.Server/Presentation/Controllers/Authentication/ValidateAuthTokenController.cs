@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ErrorOr;
+using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
+using HRApplication.Server.Application.CustomErrorOr;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using ReactApp1.Server.Presentation.Api.Controllers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using ErrorOr;
-using HRApplication.Server.Application.CustomErrorOr;
-using ReactApp1.Server.Presentation.Api.Controllers;
-using MediatR;
-using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
 
 
 namespace HRApplication.Server.Presentation.Controllers.Authentication
@@ -31,13 +31,13 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<IActionResult >ValidateToken()
+        public async Task<IActionResult> ValidateToken()
         {
             var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
 
             if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
             {
-                return Problem(new List<Error> { CustomErrors.Token.InvalidFormatError});
+                return Problem(new List<Error> { CustomErrors.Token.InvalidFormatError });
             }
             //actual token
             var token = authorizationHeader.Substring("Bearer ".Length).Trim();
@@ -56,7 +56,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                     ValidateAudience = true,
                     ValidAudience = _audience,
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero 
+                    ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
                 var result = await _mediator.Send(new ValidateUserRequest(
@@ -67,7 +67,8 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                     tokenPayload["role"].ToString(),
                     tokenPayload["phonenumber"].ToString()));
 
-                if (result.IsError) {
+                if (result.IsError)
+                {
                     return Problem(result.Errors);
                 }
 
@@ -75,15 +76,15 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             }
             catch (SecurityTokenExpiredException)
             {
-                return Problem(new List<Error> { CustomErrors.Token.ExpiredError }); 
+                return Problem(new List<Error> { CustomErrors.Token.ExpiredError });
             }
             catch (SecurityTokenInvalidSignatureException)
             {
-                return Problem(new List<Error> { CustomErrors.Token.InvalidSignatureError }); 
+                return Problem(new List<Error> { CustomErrors.Token.InvalidSignatureError });
             }
             catch (Exception ex)
             {
-                return Problem(new List<Error> { Error.Unexpected("Token", $"Token is invalid: {ex.Message}") }); 
+                return Problem(new List<Error> { Error.Unexpected("Token", $"Token is invalid: {ex.Message}") });
             }
         }
     }

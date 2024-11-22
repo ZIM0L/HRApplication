@@ -29,11 +29,11 @@ namespace HRApplication.Server.Application.CustomErrorOr
             public static Error UserNotAuthorized = Error.Forbidden(
                 code: "User.UserNotAuthorized",
                 description: "User is unauthorized to do action"
-            ); 
+            );
             public static Error UsersTokenModified = Error.Conflict(
                 code: "User.UserModified",
                 description: "Token has been modified"
             );
         }
     }
- }
+}

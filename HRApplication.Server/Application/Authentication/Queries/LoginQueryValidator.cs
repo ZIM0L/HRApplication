@@ -5,7 +5,8 @@ namespace ReactApp1.Server.Application.Authentication.Queries.LoginQueryValidato
 {
     public class LoginQueryValidator : AbstractValidator<LoginRequest>
     {
-        public LoginQueryValidator() {
+        public LoginQueryValidator()
+        {
             RuleFor(x => x.email).NotEmpty()
                 .WithMessage("Email address is required")
                 .EmailAddress()

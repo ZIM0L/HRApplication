@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 import { ArrowRightCircleIcon, PlusIcon } from '@heroicons/react/24/solid';
-import { api } from '../../api/api'
+import { mainAxiosInstance } from '../../api/Axios'
 import { IJobPosition } from '../../types/JobPosition/IJobPosition'
 import AddJobModal from "./AddJobModal";
 function JobPositions() {
@@ -12,7 +12,7 @@ function JobPositions() {
 
     const fetchJobPositions = async () => {
         try {
-            const response = await api.get('api/JobPosition/getAllJobPositions');
+            const response = await mainAxiosInstance.get('api/JobPosition/getAllJobPositions');
             if (response.status === 200) {
                 setJobPositions(response.data);
             } else {

@@ -7,5 +7,5 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
     (
     string title,
     string description
-    ) :IRequest<ErrorOr<Unit>>;
+    ) : IRequest<ErrorOr<Unit>>;
 }

@@ -25,7 +25,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
             {
                 return CustomErrorOr.CustomErrors.Team.TeamNotFound;
             }
-            if(_teamMemberRepository.GetTeamMemberByUserIdFromCollection(request.userId) is TeamMember)
+            if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(request.userId) is TeamMember)
             {
                 return CustomErrorOr.CustomErrors.Team.UserAlreadyCreatedTeam;
             }

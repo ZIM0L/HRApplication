@@ -3,7 +3,7 @@ export interface TokenResponse {
     accessToken: string;
 };
 
-export const api = axios.create({
+export const mainAxiosInstance = axios.create({
     baseURL: 'https://localhost:7250',
     withCredentials: true,
     headers: {
@@ -13,16 +13,16 @@ export const api = axios.create({
 
 export const setAuthToken = (token: string | null) => {
     if (token) {
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        mainAxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
-        delete api.defaults.headers.common['Authorization'];
+        delete mainAxiosInstance.defaults.headers.common['Authorization'];
     }
 };
 
 
 
 // before sending request
-api.interceptors.request.use(request => {
+mainAxiosInstance.interceptors.request.use(request => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
         request.headers['Authorization'] = `Bearer ${accessToken}`
@@ -33,7 +33,7 @@ api.interceptors.request.use(request => {
 });
 
 // refresh token if 401
-api.interceptors.response.use(
+mainAxiosInstance.interceptors.response.use(
     (response) => response,  // if good return response
     async (error) => {   // if 401 send refresh token
         const originalRequest = error.config;
@@ -47,7 +47,7 @@ api.interceptors.response.use(
                 const refreshRequestConfig = { ...originalRequest };
                 delete refreshRequestConfig.headers['Authorization'];
 
-                const response: AxiosResponse<TokenResponse> = await api.post('/refresh-Token', null, refreshRequestConfig);
+                const response: AxiosResponse<TokenResponse> = await mainAxiosInstance.post('/refresh-Token', null, refreshRequestConfig);
 
                 localStorage.setItem('accessToken', response.data.accessToken)
 
@@ -57,7 +57,7 @@ api.interceptors.response.use(
                 //originalRequest.headers = originalRequest.headers || {};
                 //originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
 
-                return api(originalRequest);
+                return mainAxiosInstance(originalRequest);
 
             } catch (refreshError) {
                 console.error('Odœwie¿enie tokenu nie powiod³o siê: ', refreshError);

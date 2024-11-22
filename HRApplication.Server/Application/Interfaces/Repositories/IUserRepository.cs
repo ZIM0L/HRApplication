@@ -1,5 +1,4 @@
 ﻿using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
-using HRApplication.Server.Domain.Models;
 
 namespace HRApplication.Server.Application.Interfaces.Repositories
 {

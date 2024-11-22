@@ -1,6 +1,6 @@
 ﻿namespace HRApplication.Server.Infrastructure.Persistance
 {
-    public class EmployeeJobPositionRepository 
+    public class EmployeeJobPositionRepository
     {
     }
 }

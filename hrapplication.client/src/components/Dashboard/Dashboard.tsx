@@ -4,7 +4,7 @@ import { BriefcaseIcon } from '@heroicons/react/24/solid';
 import { NewspaperIcon } from '@heroicons/react/24/solid';
 import { useAuth } from '../../contex/AuthContex';
 import LogoSVG from '../LogoSVG/LogoSVG';
-
+ 
 const Dashboard: React.FC = () => {
     const { logOut, decodedToken } = useAuth();
     return (

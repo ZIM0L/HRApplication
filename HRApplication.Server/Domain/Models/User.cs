@@ -1,6 +1,4 @@
-﻿using HRApplication.Server.Domain.Models;
-
-public class User
+﻿public class User
 {
     public User(string name, string surname, string email, string password, string phoneNumber)
     {

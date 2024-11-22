@@ -1,6 +1,5 @@
 ﻿using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
 using HRApplication.Server.Application.Interfaces.Repositories;
-using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
 
 namespace HRApplication.Server.Infrastructure.Persistance
@@ -8,7 +7,8 @@ namespace HRApplication.Server.Infrastructure.Persistance
     public class UserRepository : IUserRepository
     {
         private readonly DBDatabase _dbContex;
-        public UserRepository(DBDatabase dbContex) {
+        public UserRepository(DBDatabase dbContex)
+        {
             _dbContex = dbContex;
         }
         public void AddUser(User user)

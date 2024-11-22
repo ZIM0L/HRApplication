@@ -1,14 +1,14 @@
 using Application;
 using Domain;
+using HRApplication.Server.Application.JwtSettings;
 using HRApplication.Server.Infrastructure.DBContex;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Presentation;
 using Serilog;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using HRApplication.Server.Application.JwtSettings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,10 +58,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("https://localhost:5173") 
+        policy.WithOrigins("https://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); 
+              .AllowCredentials();
     });
 });
 

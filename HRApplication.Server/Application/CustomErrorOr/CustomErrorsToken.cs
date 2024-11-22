@@ -1,5 +1,4 @@
 ﻿using ErrorOr;
-using System.Net;
 
 namespace HRApplication.Server.Application.CustomErrorOr
 {

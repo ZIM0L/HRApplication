@@ -4,7 +4,6 @@ using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands;
 using HRApplication.Server.Application.DatabaseTables.JobPositions.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
 
@@ -37,7 +36,7 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
         [HttpGet]
         [Route("/api/[controller]/getAllJobPositions")]
         public async Task<IActionResult> GetAllJobPositions()
-        {        
+        {
             var query = new GetJobPositionsQuery();
 
             ErrorOr<List<JobPositionsResult>> response = await _mediator.Send(query);

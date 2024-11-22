@@ -8,7 +8,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
     {
         private readonly DBDatabase _dbContex;
         public TeamMemberRepository(DBDatabase dbContex)
-        {
+        { 
             _dbContex = dbContex;
         }
         public void AddNewTeamMemberToCollection(TeamMember teamMember)
@@ -24,7 +24,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
 
         public TeamMember? GetTeamMemberFromCollection(TeamMember teamMember)
         {
-           return _dbContex.Team_Members.SingleOrDefault(x => x.TeamMemberId.Equals(teamMember.TeamMemberId));
+            return _dbContex.Team_Members.SingleOrDefault(x => x.TeamMemberId.Equals(teamMember.TeamMemberId));
         }
     }
 }

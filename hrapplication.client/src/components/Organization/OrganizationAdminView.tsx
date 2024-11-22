@@ -11,9 +11,7 @@ function Organization() {
     const refreshJobPositions = () => {
     };
     ValidateUserByToken()
-    const ModifyTeam = () => {
-
-    }
+   
     return (
 
         <>

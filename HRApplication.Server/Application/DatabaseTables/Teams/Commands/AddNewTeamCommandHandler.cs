@@ -11,7 +11,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
         private readonly ITeamRepository _teamRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;
-        public AddNewTeamCommandHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator) 
+        public AddNewTeamCommandHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator)
         {
             _teamRepository = teamRepository;
             _userRepository = userRepository;
