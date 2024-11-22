@@ -4,14 +4,14 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Queries
 {
-    public class GetJobPositionsHandler : IRequestHandler<GetJobPositionsQuery, ErrorOr<List<JobPositionsResult>>>
+    public class GetJobPositionsHandler : IRequestHandler<GetJobPositionsRequest, ErrorOr<List<JobPositionsResult>>>
     {
         private readonly IJobPositionsRepository _jobPositionsRepository;
         public GetJobPositionsHandler(IJobPositionsRepository jobPositionsRepository)
         {
             _jobPositionsRepository = jobPositionsRepository;
         }
-        public async Task<ErrorOr<List<JobPositionsResult>>> Handle(GetJobPositionsQuery query, CancellationToken cancellationToken)
+        public async Task<ErrorOr<List<JobPositionsResult>>> Handle(GetJobPositionsRequest query, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 

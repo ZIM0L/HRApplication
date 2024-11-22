@@ -1,3 +1,5 @@
+import { JwtPayload } from "jwt-decode";
+
 export interface IContext {
     authToken: string | null;
     decodedToken: JwtPayload | null;

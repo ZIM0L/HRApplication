@@ -14,6 +14,7 @@
     <Folder Include="src\components\SearchForTeam\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\types\Contex\" />
+    <Folder Include="src\types\Team\" />
     <Folder Include="src\types\Role\" />
     <Folder Include="src\utils\interfaces\" />
   </ItemGroup>

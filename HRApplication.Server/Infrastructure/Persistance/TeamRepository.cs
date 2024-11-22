@@ -28,6 +28,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Teams.FirstOrDefault(x => x.Name.Equals(name));
         }
 
+        public List<Team> GetTeams()
+        {
+            return _dbContex.Teams.ToList();
+        }
+
         public List<Team>? GetTeamsIdsByName(string name)
         {
             return _dbContex.Teams.Where(x => x.Name.Equals(name)).ToList();

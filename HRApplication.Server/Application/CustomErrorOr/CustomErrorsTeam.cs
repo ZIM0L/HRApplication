@@ -21,7 +21,11 @@ namespace HRApplication.Server.Application.CustomErrorOr
             public static Error UserAlreadyCreatedTeam = Error.Conflict(
               code: "Team.UserAlreadyCreatedTeam",
               description: "User already owns a team"
-           );
+            );
+            public static Error NoTeamFound = Error.Conflict(
+              code: "Team.NoTeamFound",
+              description: "No teams in database"
+            );
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
 {
-    public class AddNewTeamCommandValidator : AbstractValidator<TeamRequest>
+    public class AddNewTeamCommandValidator : AbstractValidator<TeamAddRequest>
     {
         public AddNewTeamCommandValidator()
         {

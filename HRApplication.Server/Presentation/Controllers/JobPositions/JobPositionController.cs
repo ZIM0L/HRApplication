@@ -37,7 +37,7 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
         [Route("/api/[controller]/getAllJobPositions")]
         public async Task<IActionResult> GetAllJobPositions()
         {
-            var query = new GetJobPositionsQuery();
+            var query = new GetJobPositionsRequest();
 
             ErrorOr<List<JobPositionsResult>> response = await _mediator.Send(query);
 

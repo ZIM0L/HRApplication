@@ -4,7 +4,7 @@ import { mainAxiosInstance } from '../../api/Axios'
 import { IJobPosition } from '../../types/JobPosition/IJobPosition'
 import AddJobModal from "./AddJobModal";
 function JobPositions() {
-    const [jobs, setJobs] = useState([
+    const [jobs] = useState([
         { id: 1, title: 'HR Specialist', department: 'HR' },
     ]);
     const [jobPositions, setJobPositions] = useState<IJobPosition[]>([]);  // Stan do przechowywania wyników

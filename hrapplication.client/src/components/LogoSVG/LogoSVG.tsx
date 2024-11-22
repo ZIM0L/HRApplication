@@ -4,35 +4,33 @@ import { useEffect } from "react";
 function LogoSVG() {
 
     useEffect(() => {
-        // Tworzymy animacj�, kt�ra przesuwa element w prawo
+
         anime({
             targets: '.logo path',
-            strokeDasharray: function (el) {
-                return el.getTotalLength(); // Ustawiamy d�ugo�� �cie�ki SVG jako d�ugo�� dasharray
+            strokeDasharray: function (el: SVGPathElement) {
+                return el.getTotalLength(); 
             },
-            strokeDashoffset: [anime.setDashoffset, 0], // Zaczynamy z "pe�nym" dashoffset
+            strokeDashoffset: [anime.setDashoffset, 0], 
             easing: 'easeInOutSine',
             duration: 1500,
-            delay: function (el, i) { return i * 250 }, // Delay na podstawie kolejno�ci element�w
-            direction: 'alternate', // Powtarzamy animacj� w przeciwn� stron�
-            loop: false, // Animacja nie b�dzie si� powtarza�
+            delay: function  (_el,i) { return i * 250 }, 
+            direction: 'alternate',
+            loop: false, 
             complete: () => {
-                // Po zako�czeniu animacji zmieniamy fill na bia�y
-
                 anime({
                     targets: '.logo svg path',
-                    fill: ['none', 'rgba(8,217,214,0.9)'], // Kolor przej�cia z "none" do docelowego
+                    fill: ['none', 'rgba(8,217,214,0.9)'], 
                     easing: 'easeInOutQuad',
                     duration: 500,
-                    delay: function (el, i) { return i * 250; }, // Dodanie op�nienia mi�dzy elementami
+                    delay: function (_el, i) { return i * 250; }, 
                     loop: false,
                 });
                 anime({
                     targets: '.logo path[stroke="white"]',
-                    fill: ['none', 'rgba(255,255,255,0.9)'], // Kolor przej�cia z "none" do docelowego
+                    fill: ['none', 'rgba(255,255,255,0.9)'],
                     easing: 'easeInOutQuad',
                     duration: 300,
-                    delay: function (el, i) { return i * 250; }, // Dodanie op�nienia mi�dzy elementami
+                    delay: function (_el, i) { return i * 250; }, 
                     loop: false,
                 });
             },

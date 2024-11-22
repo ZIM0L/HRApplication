@@ -6,18 +6,18 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
 {
-    public class AddNewTeamCommandHandler : IRequestHandler<TeamRequest, ErrorOr<TeamResult>>
+    public class GetTeamsHnadler : IRequestHandler<TeamAddRequest, ErrorOr<TeamResult>>
     {
         private readonly ITeamRepository _teamRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;
-        public AddNewTeamCommandHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator)
+        public GetTeamsHnadler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator)
         {
             _teamRepository = teamRepository;
             _userRepository = userRepository;
             _mediator = mediator;
         }
-        public async Task<ErrorOr<TeamResult>> Handle(TeamRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<TeamResult>> Handle(TeamAddRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -56,7 +56,14 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 return addTeamMembertoCollectionResult.Errors;
             }
 
-            return new TeamResult(team.Name, team.CreatedAt);
+            return new TeamResult(team.Name,
+                team.Industry,
+                team.Country,
+                team.Url,
+                team.Email,
+                team.Address,
+                team.City,
+                team.PhoneNumber);
         }
     }
 }
