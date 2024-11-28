@@ -2,9 +2,9 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex"
 import { useState } from "react";
-import { SetLocalStorageUser } from "../../../services/LocalStorageTokenService";
 import { registerUser } from "../../../api/UserAPI";
 import { RegisterInputs } from "../../../types/Auth/AuthInputTypes";
+import { jwtDecode } from "jwt-decode";
 
 
 // TODO make better confirm input
@@ -25,8 +25,8 @@ const Register = () => {
                 response.then((resolve) => {
                     if (resolve?.status == 200) {
                         SetAuthenticationToken(resolve.data.token)
-                        SetLocalStorageUser(resolve.data.user)
-                        navigate(`/dashboard/${resolve.data.user.name}/panel`, { replace: true });
+                        const { given_name } = jwtDecode(resolve.data.token);
+                        navigate(`/dashboard/${given_name}/panel`, { replace: true });
                     }
                 })
             } else {

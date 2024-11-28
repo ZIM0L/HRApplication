@@ -50,10 +50,7 @@ namespace HRApplication.Server.Application.Authentication.Queries
 
             _httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
 
-            return new AuthenticationResult(
-                    user,
-                    token
-                    );
+            return new AuthenticationResult(token);
         }
     }
 }

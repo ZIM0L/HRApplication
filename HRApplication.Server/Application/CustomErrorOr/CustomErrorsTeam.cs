@@ -26,6 +26,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
               code: "Team.NoTeamFound",
               description: "No teams in database"
             );
+            public static Error UserWithoutTeam = Error.Conflict(
+              code: "Team.UserWithoutTeam",
+              description: "User is not assigned to any team"
+            );
         }
     }
 }

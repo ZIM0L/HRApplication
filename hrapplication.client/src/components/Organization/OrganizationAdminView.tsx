@@ -2,16 +2,11 @@
 import { BuildingOffice2Icon } from "@heroicons/react/24/solid";
 import ModifyOrganizationModal from "./ModifyOrganizationModal";
 import { useState } from "react";
-import { ValidateUserByToken } from "../../services/ValidateUser";
 
 function Organization() {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
 
-    const refreshJobPositions = () => {
-    };
-    ValidateUserByToken()
-   
     return (
 
         <>
@@ -84,7 +79,7 @@ function Organization() {
             <ModifyOrganizationModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onRefresh={refreshJobPositions} />
+              />
         </>
 
     );

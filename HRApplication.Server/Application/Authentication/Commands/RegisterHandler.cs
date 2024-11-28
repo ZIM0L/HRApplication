@@ -68,7 +68,6 @@ namespace HRApplication.Server.Application.Authentication.Commands
 
             return new AuthenticationResult
             (
-                user,
                 token
             );
         }

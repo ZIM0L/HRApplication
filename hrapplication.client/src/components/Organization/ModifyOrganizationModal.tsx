@@ -1,35 +1,114 @@
-﻿interface ModifyOrganizationProp {
+﻿import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { IOrganization } from "../../types/Organization/IOrganization";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+    interface ModifyOrganizationProp {
     isOpen: boolean;
     onClose: () => void;
-    onRefresh: () => void;
 }
+    interface Inputs {
+        name: string,
+        industry: string,
+        country: string,
+        url: string,
+        email: string,
+        city: string,
+        phoneNumber: string,
+        zipCode: string
+    }
 
 const ModifyOrganizationModal = ({ isOpen, onClose }: ModifyOrganizationProp) => {
 
-if (!isOpen) return null;  
-    
+
+    const { register, handleSubmit } = useForm<Inputs>();
+    const [organization, setOrganization] = useState<IOrganization>({
+        name: "",
+        industry: "",
+        country: "",
+        city: "",
+        url: "",
+        email: "",
+        phoneNumber: "",
+        zipCode: ""
+    });
+
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            console.log(data)
+                onClose();
+        } catch (error) {
+            console.error("Adding new record error:", error); //smtihn better
+        }
+    };
+
+    if (!isOpen) return null;  
 
     return (
         <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-gray-900 bg-opacity-50">
-            <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
-                <h2 className="mb-4 text-lg font-semibold">Dodaj stanowisko</h2>
-                <form  className="space-y-4">
-                        <input
+            <div className="w-1/2 rounded-lg bg-white p-6 shadow-lg">
+                <form onSubmit={handleSubmit(onSubmit)}  className="space-y-3">
+                    <div className="mb-4 flex items-center justify-between">
+                        <h2 className="text-lg font-semibold">Modifying organization</h2>
+                        <button
+                            className="text-green-500"
+                            type="submit"
+                        >
+                            <CheckCircleIcon className="h-10 w-10">
+
+                            </CheckCircleIcon>
+                        </button>
+                    </div>
+                    <input
+                        {...register("name", { required: true, maxLength: 255 })}
                             type="text"
-                            placeholder="Tytuł stanowiska"
+                            placeholder="name of organization"
                             className="w-full rounded-md border border-gray-300 px-4 py-2"
+                            onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
                         />
-                        <textarea
-                            placeholder="Opis"
-                            className="h-50 w-full rounded-md border border-gray-300 px-4 py-2"
-                        />
+                    <input
+                        {...register("industry", { required: true, maxLength: 255 })}
+                        type="text"
+                        placeholder="industry"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2"
+                        onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
+                    />
+                    <input
+                        {...register("country", { required: true, maxLength: 255 })}
+                        type="text"
+                        placeholder="Country"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2"
+                        onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
+                    />
+                    <input
+                        {...register("city", { required: true, maxLength: 255 })}
+                        type="text"
+                        placeholder="City"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2"
+                        onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
+                    />
+                    <input
+                        {...register("url", { required: true, maxLength: 255 })}
+                        type="text"
+                        placeholder="Url"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2"
+                        onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
+                    />
+                    <input
+                        {...register("email", { required: true, maxLength: 255 })}
+                        type="text"
+                        placeholder="Email"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2"
+                        onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
+                    />
+                    <input
+                        {...register("phoneNumber", { required: true, maxLength: 15 })}
+                        type="text"
+                        placeholder="phone number"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2"
+                        onChange={(e) => setOrganization({ ...organization, name: e.target.value })}
+                    />
+                       
                         <div className="mt-4 flex justify-end">
-                            <button
-                                className="mr-2 rounded-md bg-blue-600 px-4 py-2 text-white"
-                                type="submit"
-                            >
-                                Dodaj
-                            </button>
                             <button
                             className="rounded-md bg-gray-300 px-4 py-2 text-gray-700"
                             onClick={onClose}

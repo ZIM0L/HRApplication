@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { LoginInputs } from '../../../types/Auth/AuthInputTypes'
 import { loginUser } from '../../../api/UserAPI'
 import { useAuth } from "../../../contex/AuthContex";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
     const { register, handleSubmit } = useForm<LoginInputs>();
     const navigate = useNavigate();
-    const { SetAuthenticationToken } = useAuth();
+    const { SetAuthenticationToken} = useAuth();
 
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
         try {
@@ -15,7 +16,8 @@ const Login = () => {
             response.then(resolve => {
                 if (resolve?.status === 200) {
                     SetAuthenticationToken(resolve.data.token)
-                    navigate(`/dashboard/${resolve.data.user.name}/panel`, { replace: true });
+                    const { given_name } = jwtDecode(resolve.data.token);
+                    navigate(`/dashboard/${given_name}/panel`, { replace: true });
                 }
             })
         } catch (error) {

@@ -56,6 +56,6 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, ErrorOr<
 
         _httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", newRefreshToken, cookieOptions);
 
-        return new AuthenticationResult(user, newAccessToken);
+        return new AuthenticationResult(newAccessToken);
     }
 }

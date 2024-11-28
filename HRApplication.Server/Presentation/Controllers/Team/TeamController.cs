@@ -45,6 +45,19 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 response => Ok(response),
                 errors => Problem(errors)
                 );
+        }  
+        [HttpGet]
+        [Route("/api/[controller]/GetTeam")]
+        public async Task<IActionResult> GetTeam()
+        {
+            var command = new GetTeamRequest();
+
+            ErrorOr<TeamResult> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
         }
     }
 }

@@ -22,7 +22,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
         {
 
             var query = new GetUserByIdQuery(
-                request.id);
+                request.UserId);
 
             ErrorOr<User> response = await _mediator.Send(query);
 

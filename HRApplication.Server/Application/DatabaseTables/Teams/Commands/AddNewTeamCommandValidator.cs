@@ -2,9 +2,9 @@
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
 {
-    public class AddNewTeamCommandValidator : AbstractValidator<TeamAddRequest>
+    public class GetTeamValidator : AbstractValidator<TeamAddRequest>
     {
-        public AddNewTeamCommandValidator()
+        public GetTeamValidator()
         {
             RuleFor(x => x.name).NotEmpty().WithMessage("Name is required");
         }

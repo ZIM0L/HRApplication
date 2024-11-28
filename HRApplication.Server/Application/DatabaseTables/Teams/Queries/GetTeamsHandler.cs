@@ -11,11 +11,9 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
     public class GetTeamsHandler : IRequestHandler<GetTeamsRequest, ErrorOr<List<TeamResult>>>
     {
         private readonly ITeamRepository _teamRepository;
-        private readonly IMediator _mediator;
         public GetTeamsHandler(ITeamRepository teamRepository, IMediator mediator)
         {
             _teamRepository = teamRepository;
-            _mediator = mediator;
         }
 
         public async Task<ErrorOr<List<TeamResult>>> Handle(GetTeamsRequest request, CancellationToken cancellationToken)

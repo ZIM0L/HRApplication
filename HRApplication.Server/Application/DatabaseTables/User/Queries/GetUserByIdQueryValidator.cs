@@ -4,6 +4,6 @@ public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
 {
     public GetUserByIdQueryValidator()
     {
-        RuleFor(x => x.id).NotEmpty().WithMessage("Empty Id request");
+        RuleFor(x => x.UserId).NotEmpty().WithMessage("Empty Id request");
     }
 }
