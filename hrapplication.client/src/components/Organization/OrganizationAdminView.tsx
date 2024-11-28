@@ -1,12 +1,22 @@
 ﻿import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { BuildingOffice2Icon } from "@heroicons/react/24/solid";
 import ModifyOrganizationModal from "./ModifyOrganizationModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { GetTeam } from "../../api/TeamAPI";
+import { ITeam } from "../../types/Team/ITeam";
 
 function Organization() {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
-
+    const [team, setTeam] = useState<ITeam>();
+    useEffect(() => {
+        const result = GetTeam()
+        result.then((resolve) => {
+            if (resolve?.status == 200) {
+                setTeam(resolve.data)
+            }
+        })
+    },[])
     return (
 
         <>
@@ -26,15 +36,12 @@ function Organization() {
 
                         {/* Informacje organizacyjne */}
                         <div>
-                            <h1 className="text-lg font-bold text-gray-800">My Organization</h1>
+                            <h1 className="text-lg font-bold text-gray-800">{team?.name}</h1>
                             <p className="text-sm text-gray-600">
-                                Numer rejestracyjny: <span className="font-medium">123456</span>
+                                Przemysł: <span className="font-medium">{team?.industry}</span>
                             </p>
                             <p className="text-sm text-gray-600">
-                                Przemysł: <span className="font-medium">Other</span>
-                            </p>
-                            <p className="text-sm text-gray-600">
-                                Kraj zamieszkania: <span className="font-medium">Poland</span>
+                                Kraj zamieszkania: <span className="font-medium">{team?.country}</span>
                             </p>
                             <p className="text-sm text-gray-600">
                                 Portal (URL):{" "}
@@ -44,7 +51,7 @@ function Organization() {
                                     rel="noopener noreferrer"
                                     className="text-blue-500 underline"
                                 >
-                                    https://hr.my/go/portal/71516ffeab6a425388e1b757bc955b3c
+                                    {team?.url}
                                 </a>
                             </p>
                         </div>
@@ -54,23 +61,17 @@ function Organization() {
                 <div className="border-2 mt-6 w-[70vw] border-t p-6">
                     <h2 className="text-lg font-semibold text-gray-800">Kontakt</h2>
                     <div className="grid-cols-2 mt-2 grid gap-y-2 text-sm text-gray-600">
-                        <p>
-                            E-mail: <span className="font-medium">–</span>
+                            <p>
+                                E-mail: <span className="font-medium">{team?.email}</span>
                         </p>
-                        <p>
-                            Strona internetowa: <span className="font-medium">–</span>
+                            <p>
+                                Adres1: <span className="font-medium">{team?.address}</span>
                         </p>
-                        <p>
-                            Adres1: <span className="font-medium">–</span>
+                            <p>
+                                Miasto: <span className="font-medium">{team?.city}</span>
                         </p>
-                        <p>
-                            Adres2: <span className="font-medium">–</span>
-                        </p>
-                        <p>
-                            Miasto: <span className="font-medium">–</span>
-                        </p>
-                        <p>
-                            Kod pocztowy: <span className="font-medium">–</span>
+                            <p>
+                                Kod pocztowy: <span className="font-medium">{team?.zipCode.slice(0, 2)}-{team?.zipCode.slice(2)}</span>
                         </p>
                     </div>
                 </div>

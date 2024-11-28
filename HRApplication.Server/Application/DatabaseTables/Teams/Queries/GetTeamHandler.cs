@@ -52,7 +52,8 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 team.Email,
                 team.Address,
                 team.City,
-                team.PhoneNumber
+                team.PhoneNumber,
+                team.ZipCode
                 );
         }
     }

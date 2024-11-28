@@ -9,3 +9,11 @@ export const GetTeams = async (): Promise<AxiosResponse | null> => {
         return null
     }
 }
+export const GetTeam = async (): Promise<AxiosResponse | null> => {
+    try {
+        return await mainAxiosInstance.get('api/Team/GetTeam');
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}

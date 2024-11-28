@@ -7,4 +7,5 @@ export interface ITeam {
     address: string,
     city: string,
     phoneNumber: string,
+    zipCode: string
 }
