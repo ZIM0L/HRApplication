@@ -46,7 +46,7 @@ function Organization() {
                             <p className="text-sm text-gray-600">
                                 Portal (URL):{" "}
                                 <a
-                                    href="https://hr.my/go/portal/71516ffeab6a425388e1b757bc955b3c"
+                                    href={team?.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-500 underline"
