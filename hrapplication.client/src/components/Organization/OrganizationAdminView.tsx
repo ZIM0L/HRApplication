@@ -46,9 +46,8 @@ function Organization() {
                             <p className="text-sm text-gray-600">
                                 Portal (URL):{" "}
                                 <a
-                                    href={team?.url}
+                                    href={`https://${team?.url}`}
                                     target="_blank"
-                                    rel="noopener noreferrer"
                                     className="text-blue-500 underline"
                                 >
                                     {team?.url}
