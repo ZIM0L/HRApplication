@@ -28,6 +28,7 @@ const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
 
     // Check if the user's role is allowed; redirect to Access Denied if not
     if (decodedToken?.role && !requiredRole.includes(decodedToken.role as Role)) {
+        console.log(decodedToken.role, Role.HRManager)
         return <Navigate to="/accessdenied" state={{ from: location }} replace />;
     }
 

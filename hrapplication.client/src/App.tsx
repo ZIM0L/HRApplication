@@ -21,13 +21,13 @@ const App = () => {
                     <Route path="/*" element={<NotFoundPage />} />
 
                     {/* Permission for everybody*/}
-                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee, Role.Guest]} />}>
+                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee, Role.Guest, Role.HRManager]} />}>
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
                             <Route path="panel" element={<Panel />} />
                         </Route>
                     </Route>
-                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee]} />}>
+                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee, Role.HRManager]} />}>
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
                             <Route path="organization" element={<Organization />} />
@@ -35,7 +35,7 @@ const App = () => {
                     </Route>
 
                     {/* Zagnie¿d¿ona trasa dla Guest */}
-                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator]} />}>
+                    <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.HRManager]} />}>
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
                             <Route path="job_positions" element={<JobPositions />} />

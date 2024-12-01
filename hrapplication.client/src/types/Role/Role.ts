@@ -1,1 +1,1 @@
-export enum Role { Administrator = "Administrator", Employee = "Employee", Guest = "Guest" }
+export enum Role { Administrator = "Administrator", Employee = "Employee", Guest = "Guest", HRManager = "Hr Manager"}

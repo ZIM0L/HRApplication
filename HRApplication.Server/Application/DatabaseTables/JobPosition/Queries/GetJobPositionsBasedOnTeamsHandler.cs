@@ -2,25 +2,26 @@
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using System.Net.Http;
+using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
-namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
+namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Queries
 {
-    public class AddJobPositionHandler : IRequestHandler<JobPositionRequest, ErrorOr<Unit>>
+    public class GetJobPositionsBasedOnTeamsHandler : IRequestHandler<GetJobPositionsRequest, ErrorOr<List<JobPositionsResult>>>
     {
         private readonly IJobPositionsRepository _jobPositionsRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ITeamMemberRepository _teamMemberRepository;
-        public AddJobPositionHandler(IUserRepository userRepository, IJobPositionsRepository jobPositionsRepository, IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository)
+
+        public GetJobPositionsBasedOnTeamsHandler(IJobPositionsRepository jobPositionsRepository, IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository)
         {
             _jobPositionsRepository = jobPositionsRepository;
             _httpContextAccessor = httpContextAccessor;
             _teamMemberRepository = teamMemberRepository;
         }
-        public async Task<ErrorOr<Unit>> Handle(JobPositionRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<List<JobPositionsResult>>> Handle(GetJobPositionsRequest query, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -30,7 +31,6 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
             {
                 return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
             }
-
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
             if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember teamMember)
@@ -38,31 +38,25 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
 
-            var jobPosition = new JobPosition
-                (
-                    request.title.ToLower(),
-                    request.description,
-                    teamMember.TeamId
-                );
-
-            // pozniej sprawdz
-            var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(jobPosition.TeamId);
+            var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(teamMember.TeamId);
 
             if (TeamsJobPositions == null)
             {
                 return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
             }
-            {
-                if (TeamsJobPositions.Any(jobPositions => jobPositions.Title.Equals(request.title, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return CustomErrorOr.CustomErrors.JobPosition.JobPositionAlreadyExists;
-                }
 
-                _jobPositionsRepository.AddJobPosition(jobPosition);
+            //TODO: maybe mappster
+            var result = TeamsJobPositions.Select(job => new JobPositionsResult
+               (
+                   job.Title,
+                   job.Description,
+                   job.IsActive,
+                   job.CreatedDate,
+                   job.UpdatedDate
+               )).ToList();
 
-                return Unit.Value;
+            return result;
 
-            }
         }
     }
 }

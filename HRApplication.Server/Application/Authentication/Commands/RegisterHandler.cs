@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Authentication.AuthenticationResults;
+using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using MediatR;
 using ReactApp1.Server.Application.Interfaces.Authentication;
@@ -12,15 +13,18 @@ namespace HRApplication.Server.Application.Authentication.Commands
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IRolesRepository _rolesRepository;
+        private readonly IMediator _mediator;
         public RegisterHandler(IUserRepository userRepository,
                                IJwtTokenGenerator jwtTokenGenerator,
                                IHttpContextAccessor httpContextAccessor,
-                               IRolesRepository rolesRepository)
+                               IRolesRepository rolesRepository,
+                               IMediator mediator)
         {
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
             _rolesRepository = rolesRepository;
+            _mediator = mediator;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterRequest request, CancellationToken cancellationToken)
@@ -48,6 +52,7 @@ namespace HRApplication.Server.Application.Authentication.Commands
                 return CustomErrorOr.CustomErrors.User.DuplicatedEmailError;
             }
 
+
             var token = _jwtTokenGenerator.GenerateToken(user);
 
             var refreshToken = _jwtTokenGenerator.GenerateRefreshToken(token);
@@ -56,6 +61,16 @@ namespace HRApplication.Server.Application.Authentication.Commands
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
             _userRepository.AddUser(user);
+
+            if (user.RoleName.Equals("Administrator") || user.RoleName.Equals("Hr Manager"))
+            {
+                var newTeam = await _mediator.Send(new TeamAddRequest("Organization",user.UserId));
+
+                if (newTeam.IsError)
+                {
+                    return newTeam.Errors;
+                }
+            }
 
             var cookieOptions = new CookieOptions
             {

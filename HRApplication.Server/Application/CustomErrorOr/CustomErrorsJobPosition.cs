@@ -10,9 +10,14 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "JobPosition.JobPositionAlreadyExixts",
                 description: "Job position is already created"
 
-            ); public static Error NoJobPositionExists = Error.NotFound(
+            ); 
+            public static Error NoJobPositionExists = Error.NotFound(
                 code: "JobPosition.NoJobPositionExists",
                 description: "There isn't any job position"
+            );
+            public static Error PositionAlreadyInTeam = Error.Conflict(
+                code: "JobPosition.PositionAlreadyInTeam",
+                description: "Position is already created in team"
             );
         }
 

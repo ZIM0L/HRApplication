@@ -2,6 +2,7 @@
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
@@ -21,12 +22,14 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
         {
             await Task.CompletedTask;
 
-            if (_userRepository.GetUserById(request.userId) is not User user)
+            var user = _userRepository.GetUserById(request.userId);
+
+            if (user is not User )
             {
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            if (!user.RoleName.Equals("Administrator"))
+            if (user.RoleName.Equals("Guest") || user.RoleName.Equals("Employee"))
             {
                 return CustomErrorOr.CustomErrors.User.UserNotAuthorized;
             }

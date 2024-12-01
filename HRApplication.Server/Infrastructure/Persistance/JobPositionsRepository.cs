@@ -27,5 +27,10 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             return _dbContex.Job_Positions.SingleOrDefault(x => x.Title == title);
         }
+
+        public List<JobPosition>? GetJobPositionsByTeamsId(Guid teamId)
+        {
+            return _dbContex.Job_Positions.Where(x => x.TeamId.Equals(teamId)).ToList(); 
+        }
     }
 }

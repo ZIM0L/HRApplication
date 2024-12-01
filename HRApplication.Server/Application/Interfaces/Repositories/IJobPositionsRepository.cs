@@ -7,6 +7,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         // user needed to check if has permissions
         void AddJobPosition(JobPosition jobPosition);
         JobPosition? GetJobPositionByTitle(string title);
+        List<JobPosition>? GetJobPositionsByTeamsId(Guid teamId);
         List<JobPosition> GetAllJobPositions();
     }
 }

@@ -90,7 +90,7 @@ const Register = () => {
                     >
                         <option value="" disabled hidden>Select a role</option>
                         <option value="Hr Manager">Hr Manager</option>
-                        <option value="Employee">Employee</option>
+                        <option value="Guest">Employee</option>
                     </select>
                 </div>
                 <div className="mb-4 flex items-center self-center py-2 font-['PlayfairDisplay-SemiBold']">

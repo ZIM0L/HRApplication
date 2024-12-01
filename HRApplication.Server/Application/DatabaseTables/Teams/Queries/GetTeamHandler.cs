@@ -25,12 +25,14 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
         {
             await Task.CompletedTask;
 
-            var BearerCheckerResult = BearerChecker.CheckBearerToken(_httpContextAccessor.HttpContext);
+            var httpContext = _httpContextAccessor.HttpContext;
 
-            if (string.IsNullOrEmpty(BearerCheckerResult.Value.Token))
+            if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
             {
-                return CustomErrorOr.CustomErrors.Token.InvalidFormatError; // Jeśli nie ma tokenu, zwróć błąd
+                return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
             }
+
+            var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
             if (_userRepository.GetUserById(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not User user)
             {
@@ -43,6 +45,10 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
             }
 
             var team = _teamRepository.GetTeamById(teamMember.TeamId);
+            if (team == null)
+            {
+                return CustomErrorOr.CustomErrors.Team.NoTeamFound; 
+            }
 
             return new TeamResult(
                 team.Name,
