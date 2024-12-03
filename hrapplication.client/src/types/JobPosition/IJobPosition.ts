@@ -4,6 +4,7 @@ export interface IJobPosition {
   title: string,
   description: string,
   isActive: string,
+  isRecruting: string,
   createdAt: string,
   updatedAt: string
 }

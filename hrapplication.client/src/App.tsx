@@ -20,7 +20,6 @@ const App = () => {
                     <Route path="/accessdenied" element={<AccessDenied />} />
                     <Route path="/*" element={<NotFoundPage />} />
 
-                    {/* Permission for everybody*/}
                     <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee, Role.Guest, Role.HRManager]} />}>
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
@@ -34,12 +33,10 @@ const App = () => {
                         </Route>
                     </Route>
 
-                    {/* Zagnie¿d¿ona trasa dla Guest */}
                     <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.HRManager]} />}>
                         <Route path="/dashboard/:name" element={<DashBoard />}>
                             <Route index element={<Navigate to="panel" replace />} />
                             <Route path="job_positions" element={<JobPositions />} />
-                            {/* Brak dostêpu do job_positions dla Guest */}
                         </Route>
                     </Route>
                 </Routes>

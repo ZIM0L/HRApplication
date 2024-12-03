@@ -4,6 +4,7 @@
         string Title,
         string Description,
         Boolean IsActive,
+        Boolean IsRecruiting,
         DateTime CreatedDate,
         DateTime? UpdatedDate
     );

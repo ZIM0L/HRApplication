@@ -85,7 +85,7 @@ const Register = () => {
                     <label className="mr-4 block font-medium text-gray-700">Role</label>
                     <select
                         className="block w-full rounded border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        defaultValue="Employee"
+                        defaultValue="Guest"
                         {...register("roleName", { required: true, maxLength: 50 })}
                     >
                         <option value="" disabled hidden>Select a role</option>

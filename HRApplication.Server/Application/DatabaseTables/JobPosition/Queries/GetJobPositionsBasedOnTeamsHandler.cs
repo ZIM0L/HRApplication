@@ -51,6 +51,7 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Queries
                    job.Title,
                    job.Description,
                    job.IsActive,
+                   job.IsRecruiting,
                    job.CreatedDate,
                    job.UpdatedDate
                )).ToList();
