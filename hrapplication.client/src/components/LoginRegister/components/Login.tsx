@@ -4,6 +4,7 @@ import { LoginInputs } from '../../../types/Auth/AuthInputTypes'
 import { loginUser } from '../../../api/UserAPI'
 import { useAuth } from "../../../contex/AuthContex";
 import { jwtDecode } from "jwt-decode";
+import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";
 
 const Login = () => {
     const { register, handleSubmit } = useForm<LoginInputs>();
@@ -26,7 +27,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex h-full w-[50%] w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
+        <div className="flex h-full w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
             <h2 className="font-semiBold mb-4 px-2 text-3xl">Login to dashboard</h2>
             <p className="mb-6 px-2 text-center text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -53,9 +54,7 @@ const Login = () => {
                 </div>
                 <button type="submit" className="mb-4 rounded-md bg-cyan-blue py-2 text-white hover:bg-teal-400">Log In</button>
                 <p className="text-center text-gray-600">Or Log in Using</p>
-                <div className="mt-4 flex justify-center">
-                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Sign Up" />
-                </div>
+                    <GoogleLoginButton />
             </form>
         </div>
     );

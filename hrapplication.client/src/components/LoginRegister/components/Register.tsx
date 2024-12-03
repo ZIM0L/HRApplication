@@ -5,6 +5,7 @@ import { useState } from "react";
 import { registerUser } from "../../../api/UserAPI";
 import { RegisterInputs } from "../../../types/Auth/AuthInputTypes";
 import { jwtDecode } from "jwt-decode";
+import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";
 
 
 // TODO make better confirm input
@@ -37,7 +38,7 @@ const Register = () => {
         }
     };
     return (
-        <div className="flex w-[50%] w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
+        <div className="flex w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
             <h2 className="mb-4 px-2 text-3xl font-semibold">Sign up for an Account</h2>
             <p className="mb-6 px-2 text-center text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -102,7 +103,7 @@ const Register = () => {
                 <button className="mb-4 rounded-md bg-cyan-blue py-2 text-white hover:bg-teal-400" type="submit">Sign Up</button>
                 <p className="text-center text-gray-600">Or Sign Up Using</p>
                 <div className="mt-4 flex justify-center">
-                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Sign Up" />
+                    <GoogleLoginButton />
                 </div>
             </form>
         </div>

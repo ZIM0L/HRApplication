@@ -9,6 +9,7 @@ import AccessDenied from './components/ErrorComponents/AccessDenied';
 import NotFoundPage from './components/ErrorComponents/NotFoundPage';
 import { Role } from './types/Role/Role';
 import Organization from './components/Organization/OrganizationAdminView';
+import GoogleAuthHandler from './utils/GooogleAuthHandler';
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/accessdenied" element={<AccessDenied />} />
                     <Route path="/*" element={<NotFoundPage />} />
+                    <Route path="/auth/google-handler" element={<GoogleAuthHandler />} />
 
                     <Route element={<ProtectedRoutes requiredRole={[Role.Administrator, Role.Employee, Role.Guest, Role.HRManager]} />}>
                         <Route path="/dashboard/:name" element={<DashBoard />}>
