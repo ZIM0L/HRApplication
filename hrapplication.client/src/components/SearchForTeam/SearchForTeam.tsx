@@ -1,7 +1,7 @@
 ﻿import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { GetTeams } from "../../api/TeamAPI";
+import { GetTeam } from "../../api/TeamAPI";
 import { ITeam } from "../../types/Team/ITeam";
 
 const SearchForTeam = () => {
@@ -10,7 +10,7 @@ const SearchForTeam = () => {
     const [teams, setTeams] = useState<ITeam[]>([]); 
  
     useEffect(() => {
-        const response = GetTeams();
+        const response = GetTeam();
         response.then(resolve => {
             if (resolve?.status == 200) {
                 setTeams(resolve.data);

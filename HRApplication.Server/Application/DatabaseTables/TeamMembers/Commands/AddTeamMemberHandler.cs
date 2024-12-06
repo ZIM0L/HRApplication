@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
+using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
 
@@ -9,33 +10,29 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
     {
         private readonly ITeamMemberRepository _teamMemberRepository;
         private readonly ITeamRepository _teamRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddTeamMemberHandler(ITeamMemberRepository teamMemberRepository, ITeamRepository teamRepository)
+        public AddTeamMemberHandler(ITeamMemberRepository teamMemberRepository, ITeamRepository teamRepository, IHttpContextAccessor httpContextAccessor)
         {
             _teamMemberRepository = teamMemberRepository;
             _teamRepository = teamRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ErrorOr<Unit>> Handle(AddTeamMemberRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
+            var httpContext = _httpContextAccessor.HttpContext;
 
-            if (_teamRepository.GetTeamById(request.teamId) is not Team)
+            if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
             {
-                return CustomErrorOr.CustomErrors.Team.TeamNotFound;
+                return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
             }
-            if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(request.userId) is TeamMember)
-            {
-                return CustomErrorOr.CustomErrors.Team.UserAlreadyCreatedTeam;
-            }
-            var newTeamMember = new TeamMember(request.userId, request.teamId);
 
-            //do same as for team (generate new guid)
-            if (_teamMemberRepository.GetTeamMemberFromCollection(newTeamMember) is TeamMember)
-            {
-                return CustomErrorOr.CustomErrors.Team.TeamAlreadyExists;
-            }
+            var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
+
+            var newTeamMember = new TeamMember(request.userId, request.teamId, request.roleName);
 
             _teamMemberRepository.AddNewTeamMemberToCollection(newTeamMember);
 

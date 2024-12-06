@@ -9,7 +9,6 @@
         Password = password;  
         PhoneNumber = phoneNumber;
         CreatedAt = DateTime.Now;
-        isActive = '0';
     }
 
     public Guid UserId { get; set; }
@@ -20,8 +19,6 @@
     public string? PhoneNumber { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public char isActive { get; set; }
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime RefreshTokenExpiryTime { get; set; }
-    public string? RoleName { get; set; }  
 }

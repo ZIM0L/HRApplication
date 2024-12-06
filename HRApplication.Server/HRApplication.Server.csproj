@@ -43,7 +43,6 @@
 
   <ItemGroup>
     <Folder Include="Application\DatabaseTables\Callender\" />
-    <Folder Include="Application\DatabaseTables\TeamMembers\Queries\" />
   </ItemGroup>
 
 </Project>

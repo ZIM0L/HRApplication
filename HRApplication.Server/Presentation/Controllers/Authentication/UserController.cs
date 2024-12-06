@@ -27,7 +27,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             ErrorOr<User> response = await _mediator.Send(query);
 
             return response.Match(
-                response => Ok(response.RoleName),
+                response => Ok(response),
                 errors => Problem(errors)
                 );
 

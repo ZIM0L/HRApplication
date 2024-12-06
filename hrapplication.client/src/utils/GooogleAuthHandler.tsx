@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contex/AuthContex";
-import { jwtDecode } from "jwt-decode";
 
 const GoogleAuthHandler = () => {
     const { SetAuthenticationToken } = useAuth();
@@ -10,12 +9,13 @@ const GoogleAuthHandler = () => {
     useEffect(() => {
 
         const urlParams = new URLSearchParams(window.location.search);
+        
+        console.log(window.location.search)
         const token = urlParams.get("token");
 
         if (token) {
             SetAuthenticationToken(token)
-            const { given_name } = jwtDecode(token);
-            navigate(`/dashboard/${given_name}/panel`, { replace: true });
+            navigate(`/organizations`, { replace: true });
         } else {
             console.error("Brak tokenu w URL!");
         }

@@ -1,4 +1,5 @@
 import { JwtPayload } from "jwt-decode";
+import { ITeamWithUserPermission } from "../Team/ITeam";
 
 export interface IContext {
     authToken: string | null;
@@ -7,4 +8,6 @@ export interface IContext {
     SetAuthenticationToken: (token: string) => void;
     logOut: () => void;
     checkToken: () => Promise<void>; // Funkcja do sprawdzania tokenu
+    selectedTeam: ITeamWithUserPermission | null;
+    setSelectedTeam: (team: ITeamWithUserPermission) => void;
 }

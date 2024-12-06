@@ -1,4 +1,5 @@
 export interface ITeam {
+    teamId: string,
     name: string,
     industry: string,
     country: string,
@@ -8,4 +9,8 @@ export interface ITeam {
     city: string,
     phoneNumber: string,
     zipCode: string
+}
+export interface ITeamWithUserPermission {
+    team: ITeam,
+    roleName: string
 }

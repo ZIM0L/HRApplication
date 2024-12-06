@@ -33,7 +33,6 @@ namespace ReactApp1.Server.Infrastructure.Authentication
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.Surname ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("role", user.RoleName ?? string.Empty),
                 new Claim("phonenumber", user.PhoneNumber ?? string.Empty)
             };
 

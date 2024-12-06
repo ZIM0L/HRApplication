@@ -47,8 +47,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                 request.surname,
                 request.email,
                 request.password,
-                request.phone,
-                request.roleName
+                request.phone
                 );
 
             ErrorOr<AuthenticationResult> response = await _mediator.Send(command); //pipieline
@@ -116,7 +115,6 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                     phoneNumber: null
                 );
                 newUser.CreatedAt = DateTime.UtcNow;
-                newUser.RoleName = "Hr Manager";
 
                 token = _jwtTokenGenerator.GenerateToken(newUser);
                 refreshToken = _jwtTokenGenerator.GenerateRefreshToken(token);

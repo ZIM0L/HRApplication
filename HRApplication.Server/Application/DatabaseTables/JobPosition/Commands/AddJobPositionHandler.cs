@@ -33,36 +33,37 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember teamMember)
-            {
-                return CustomErrorOr.CustomErrors.Team.NoTeamFound;
-            }
+            //if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember teamMember)
+            //{
+            //    return CustomErrorOr.CustomErrors.Team.NoTeamFound;
+            //}
 
-            var jobPosition = new JobPosition
-                (
-                    request.title.ToLower(),
-                    request.description,
-                    teamMember.TeamId
-                );
+            //var jobPosition = new JobPosition
+            //    (
+            //        request.title.ToLower(),
+            //        request.description,
+            //        teamMember.TeamId
+            //    );
 
             // pozniej sprawdz
-            var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(jobPosition.TeamId);
+            //var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(jobPosition.TeamId);
 
-            if (TeamsJobPositions == null)
-            {
-                return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
-            }
-            {
-                if (TeamsJobPositions.Any(jobPositions => jobPositions.Title.Equals(request.title, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return CustomErrorOr.CustomErrors.JobPosition.JobPositionAlreadyExists;
-                }
+            //if (TeamsJobPositions == null)
+            //{
+            //    return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
+            //}
+            //{
+            //    if (TeamsJobPositions.Any(jobPositions => jobPositions.Title.Equals(request.title, StringComparison.OrdinalIgnoreCase)))
+            //    {
+            //        return CustomErrorOr.CustomErrors.JobPosition.JobPositionAlreadyExists;
+            //    }
 
-                _jobPositionsRepository.AddJobPosition(jobPosition);
+            //    _jobPositionsRepository.AddJobPosition(jobPosition);
 
-                return Unit.Value;
+            //    return Unit.Value;
 
-            }
+            //}
+            return Unit.Value;
         }
     }
 }

@@ -6,6 +6,7 @@ import { ReadLocalStorageUserFromToken } from '../services/LocalStorageTokenServ
 import { JwtPayload } from 'jwt-decode';
 import { HttpStatusCode } from 'axios';
 import { IContext } from '../types/Contex/IContex';
+import { ITeamWithUserPermission } from '../types/Team/ITeam';
 
 interface IProvider {
     children: React.ReactNode;
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }: IProvider) => {
     const [authToken, setAuthTokenState] = useState<string | null>(localStorage.getItem('accessToken'));
     const [decodedToken, setDecodedToken] = useState<JwtPayload | null>(null);
     const [isCheckingToken, setIsCheckingToken] = useState(true);
+    const [selectedTeam, setSelectedTeam] = useState<ITeamWithUserPermission | null>(null);
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -26,9 +28,8 @@ export const AuthProvider = ({ children }: IProvider) => {
                 logOut();
                 return;
             }
-            if (authToken) {
-                setDecodedToken(ReadLocalStorageUserFromToken());
-            }
+            const decoded = ReadLocalStorageUserFromToken();
+            setDecodedToken(decoded);
         } catch (error) {
             console.error('Error checking token:', error);
             logOut();
@@ -42,19 +43,21 @@ export const AuthProvider = ({ children }: IProvider) => {
         setAuthTokenState(token);
         localStorage.setItem('accessToken', token);
         setAuthToken(token); // Ustawienie tokenu w API
+        setDecodedToken(ReadLocalStorageUserFromToken());
     };
 
     // Funkcja do usuwania tokenu
     const logOut = () => {
         setAuthTokenState(null);
         setDecodedToken(null);
+        setSelectedTeam(null);
         localStorage.removeItem('accessToken');
         document.cookie = 'refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly';
         setAuthToken(null); // Usuniêcie tokenu w API
     };
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken}}>
+        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, selectedTeam, setSelectedTeam }}>
             {children}
         </AuthContext.Provider>
     );

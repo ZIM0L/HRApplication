@@ -39,12 +39,12 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(user.UserId) is not TeamMember teamMember)
+            if (_teamMemberRepository.GetTeamMembersByUserIdFromCollection(user.UserId) is not List<TeamMember> teamMember)
             {
                 return CustomErrorOr.CustomErrors.Team.UserWithoutTeam;
             }
 
-            var team = _teamRepository.GetTeamById(teamMember.TeamId);
+            var team = _teamRepository.GetTeamById(teamMember[1].TeamId); //temporary
             if (team == null)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound; 

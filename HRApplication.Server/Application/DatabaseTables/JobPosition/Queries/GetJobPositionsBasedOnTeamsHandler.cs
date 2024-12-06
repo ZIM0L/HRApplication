@@ -33,12 +33,12 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Queries
             }
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember teamMember)
+            if (_teamMemberRepository.GetTeamMembersByUserIdFromCollection(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not List<TeamMember> teamMember)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
 
-            var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(teamMember.TeamId);
+            var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(teamMember[1].TeamId); //temporary
 
             if (TeamsJobPositions == null)
             {

@@ -1,17 +1,19 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries;
 using HRApplication.Server.Application.DatabaseTables.Teams;
 using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
 using HRApplication.Server.Application.DatabaseTables.Teams.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
 
 namespace HRApplication.Server.Presentation.Controllers.Teams
 {
-    [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TeamController : ErrorController
     {
         private readonly IMediator _mediatR;
@@ -24,7 +26,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         [Route("/api/[controller]/AddNewTeam")]
         public async Task<IActionResult> AddNewTeam([FromBody] TeamAddRequest request)
         {
-            var command = new TeamAddRequest(request.name, request.userId);
+            var command = new TeamAddRequest(request.name, request.country,request.phoneNumber);
 
             ErrorOr<TeamResult> response = await _mediatR.Send(command);
 
@@ -34,12 +36,12 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 );
         }
         [HttpGet]
-        [Route("/api/[controller]/GetTeams")]
+        [Route("/api/[controller]/GetUsersTeams")]
         public async Task<IActionResult> GetTeams()
         {
-            var command = new GetTeamsRequest();
+            var command = new GetUsersTeamsRequest();
 
-            ErrorOr<List<TeamResult>> response = await _mediatR.Send(command);
+            ErrorOr<List<TeamResultWithUserPermission>> response = await _mediatR.Send(command);
 
             return response.Match(
                 response => Ok(response),

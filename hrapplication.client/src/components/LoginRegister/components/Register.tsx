@@ -82,18 +82,6 @@ const Register = () => {
                     placeholder="Confirm Password"
                     className="mb-4 border border-gray-300 p-2"
                 />
-                <div className="flex items-center justify-between">
-                    <label className="mr-4 block font-medium text-gray-700">Role</label>
-                    <select
-                        className="block w-full rounded border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        defaultValue="Guest"
-                        {...register("roleName", { required: true, maxLength: 50 })}
-                    >
-                        <option value="" disabled hidden>Select a role</option>
-                        <option value="Hr Manager">Hr Manager</option>
-                        <option value="Guest">Employee</option>
-                    </select>
-                </div>
                 <div className="mb-4 flex items-center self-center py-2 font-['PlayfairDisplay-SemiBold']">
                     <input type="checkbox" className="mr-2" />
                     <label className="text-gray-600 max-lg:">

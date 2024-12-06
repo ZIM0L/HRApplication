@@ -17,9 +17,9 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
-        public TeamMember? GetTeamMemberByUserIdFromCollection(Guid userId)
+        public List<TeamMember>? GetTeamMembersByUserIdFromCollection(Guid userId)
         {
-            return _dbContex.Team_Members.SingleOrDefault(x => x.UserId.Equals(userId));
+            return _dbContex.Team_Members.Where(x => x.UserId.Equals(userId)).ToList();
         }
 
         public TeamMember? GetTeamMemberFromCollection(TeamMember teamMember)

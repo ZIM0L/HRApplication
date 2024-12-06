@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands;
 using HRApplication.Server.Application.Interfaces.Repositories;
+using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
@@ -12,45 +13,38 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
         private readonly ITeamRepository _teamRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;
-        public AddNewTeamHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AddNewTeamHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _teamRepository = teamRepository;
             _userRepository = userRepository;
             _mediator = mediator;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<ErrorOr<TeamResult>> Handle(TeamAddRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
-            var user = _userRepository.GetUserById(request.userId);
+            var httpContext = _httpContextAccessor.HttpContext;
+
+            if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
+            {
+                return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
+            }
+            var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
+
+            var user = _userRepository.GetUserById(Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
 
             if (user is not User )
             {
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            if (user.RoleName.Equals("Guest") || user.RoleName.Equals("Employee"))
-            {
-                return CustomErrorOr.CustomErrors.User.UserNotAuthorized;
-            }
-
-            var team = new Team(request.name);
-
-            if (_teamRepository.GetTeamsIdsByName(team.Name) is List<Team> teams)
-            {
-                foreach (var existingTeam in teams)
-                {
-                    if (existingTeam.TeamId.Equals(team))
-                    {
-                        team.TeamId = Guid.NewGuid();
-                        break;
-                    }
-                }
-            }
+            var team = new Team(request.name,request.country,request.phoneNumber);
 
             _teamRepository.AddNewTeam(team);
 
-            var command = new AddTeamMemberRequest(request.userId, team.TeamId);
+            var command = new AddTeamMemberRequest(user.UserId, team.TeamId, "Administrator");
             var addTeamMembertoCollectionResult = await _mediator.Send(command);
 
             if (addTeamMembertoCollectionResult.IsError)

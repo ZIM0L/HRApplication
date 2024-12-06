@@ -33,6 +33,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Teams.ToList();
         }
 
+        public List<Team>? GetTeamsByUserId(List<Guid> teamsId)
+        {
+            return _dbContex.Teams.Where(x => teamsId.Contains(x.TeamId)).ToList();   
+        }
+
         public List<Team>? GetTeamsIdsByName(string name)
         {
             return _dbContex.Teams.Where(x => x.Name.Equals(name)).ToList();

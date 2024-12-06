@@ -107,7 +107,7 @@
 }
 
 /*
-! tailwindcss v3.4.15 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -776,10 +776,6 @@ video {
 
 .w-\[140\%\] {
   width: 140%;
-}
-
-.w-\[50\%\] {
-  width: 50%;
 }
 
 .w-\[70vw\] {

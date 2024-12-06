@@ -3,6 +3,6 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
 {
-    public record AddTeamMemberRequest(Guid userId, Guid teamId) : IRequest<ErrorOr<Unit>>;
+    public record AddTeamMemberRequest(Guid userId, Guid teamId, string roleName) : IRequest<ErrorOr<Unit>>;
 
 }

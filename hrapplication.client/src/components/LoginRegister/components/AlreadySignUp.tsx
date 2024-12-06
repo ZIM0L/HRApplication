@@ -10,8 +10,8 @@ interface IAlreadySignUp {
 const AlreadySignUp = ({ isLoggedOn, setIsLoggedOn }: IAlreadySignUp) => {
 
     return (
-        <div className="login-section text-grey-white relative flex flex-col items-center gap-20 space-y-6 bg-dark-blue p-4 text-white md:h-full md:w-[50%] md:bg-white">
-           <LogoSVG />
+        <div className="login-section relative flex flex-col items-center gap-20 space-y-6 bg-dark-blue p-4 text-white md:h-full md:w-[50%] md:bg-white">
+            <LogoSVG width={180} />
             <div className="w-[80%] text-2xl font-bold tracking-wider">
                 <p className="w-[140%]">Welcome to Open4Hire,</p>
                 <span className="opacity-50">

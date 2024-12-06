@@ -12,8 +12,6 @@ namespace HRApplication.Server.Application.Authentication.Commands
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IRolesRepository _rolesRepository;
-        private readonly IMediator _mediator;
         public RegisterHandler(IUserRepository userRepository,
                                IJwtTokenGenerator jwtTokenGenerator,
                                IHttpContextAccessor httpContextAccessor,
@@ -23,8 +21,6 @@ namespace HRApplication.Server.Application.Authentication.Commands
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
-            _rolesRepository = rolesRepository;
-            _mediator = mediator;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterRequest request, CancellationToken cancellationToken)
@@ -40,18 +36,11 @@ namespace HRApplication.Server.Application.Authentication.Commands
                 request.phone
             );
 
-            if (_rolesRepository.CheckIfRoleNameExists(request.roleName) == false)
-            {
-                return CustomErrorOr.CustomErrors.Role.NoRoleExists;
-            }
-
-            user.RoleName = request.roleName;
 
             if (_userRepository.GetUserByEmail(user.Email) is User)
             {
                 return CustomErrorOr.CustomErrors.User.DuplicatedEmailError;
             }
-
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
@@ -62,15 +51,6 @@ namespace HRApplication.Server.Application.Authentication.Commands
 
             _userRepository.AddUser(user);
 
-            if (user.RoleName.Equals("Administrator") || user.RoleName.Equals("Hr Manager"))
-            {
-                var newTeam = await _mediator.Send(new TeamAddRequest("Organization",user.UserId));
-
-                if (newTeam.IsError)
-                {
-                    return newTeam.Errors;
-                }
-            }
 
             var cookieOptions = new CookieOptions
             {

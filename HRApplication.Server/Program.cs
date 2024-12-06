@@ -36,12 +36,16 @@ builder.Host.UseSerilog((context, configuration) =>
 });
 
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection("JwtSettings"));
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
-.AddCookie()
+.AddCookie("Cookies", options =>
+{
+    options.LoginPath = "/auth/google-login";  // Œcie¿ka logowania
+})
 .AddGoogle(options =>
 {
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"];

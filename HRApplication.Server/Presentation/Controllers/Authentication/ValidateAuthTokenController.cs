@@ -3,6 +3,7 @@ using HRApplication.Server.Application.Authentication.Queries.ValidateUser;
 using HRApplication.Server.Application.CustomErrorOr;
 using HRApplication.Server.Application.Utilities;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +15,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ValidateAuthTokenController : ErrorController
     {
 
@@ -55,7 +56,6 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                     BearerCheckerResult.Value.Payload["given_name"].ToString(),
                     BearerCheckerResult.Value.Payload["family_name"].ToString(),
                     BearerCheckerResult.Value.Payload["email"].ToString(),
-                    BearerCheckerResult.Value.Payload["role"].ToString(),
                     BearerCheckerResult.Value.Payload["phonenumber"].ToString()));
 
                 if (result.IsError)

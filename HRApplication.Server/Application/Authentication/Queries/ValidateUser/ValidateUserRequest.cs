@@ -8,6 +8,5 @@ namespace HRApplication.Server.Application.Authentication.Queries.ValidateUser
         string name,
         string surname,
         string email,
-        string role,
         string phoneNumber) : IRequest<ErrorOr<User>>;
 }

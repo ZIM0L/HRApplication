@@ -1,11 +1,15 @@
-﻿namespace HRApplication.Server.Domain.Models
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
+namespace HRApplication.Server.Domain.Models
 {
     public class Team
     {
-        public Team(string name)
+        public Team(string name, string country, string phoneNumber)
         {
             TeamId = Guid.NewGuid();
             Name = name;
+            Country = country;
+            PhoneNumber = phoneNumber;
         }
         public Guid TeamId { get; set; }
         public string Name { get; set; }

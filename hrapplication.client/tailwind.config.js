@@ -15,7 +15,9 @@ export default {
       extend: {
           colors: {
               'cyan-blue': '#08D9D6',
+              'cyan-blue-hover': '#0fabbd',
               'dark-blue': '#16191F',
+              'dark-blue-lighter': '#3c454f',
               'light-red': '#FF2E63',
               'grey-white': '#EAEAEA',
             },

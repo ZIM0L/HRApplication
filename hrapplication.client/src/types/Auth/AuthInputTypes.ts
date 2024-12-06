@@ -8,5 +8,4 @@ export type RegisterInputs = {
     email: string;
     phone: string;
     password: string;
-    roleName: string;
 };

@@ -28,7 +28,6 @@ namespace HRApplication.Server.Infrastructure.Persistance
                                                         x.Name.Equals(request.name) &&
                                                         x.Surname.Equals(request.surname) &&
                                                         x.Email.Equals(request.email) &&
-                                                        x.RoleName.Equals(request.role) &&
                                                         x.PhoneNumber.Equals(request.phoneNumber)
             );
         }
