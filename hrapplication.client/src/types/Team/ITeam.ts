@@ -14,3 +14,6 @@ export interface ITeamWithUserPermission {
     team: ITeam,
     roleName: string
 }
+export type ITeamSendId = {
+    teamId: string;
+};

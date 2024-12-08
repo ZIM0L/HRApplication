@@ -9,6 +9,7 @@ import NotFoundPage from './components/ErrorComponents/NotFoundPage';
 import GoogleAuthHandler from './utils/GooogleAuthHandler';
 import SelectDashboard from './components/SelectDashboard/SelectDashboard';
 import Organization from './components/Organization/OrganizationAdminView';
+import Team from './components/Team/Team';
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                                 <Route index element={<Navigate to="panel" replace />} />
                                 <Route path="panel" element={<Panel />} />
                                 <Route path="organization" element={<Organization />} />
+                                <Route path="team" element={<Team />} />
                             </Route>
                     </Route>
                     {/*<Route element={<ProtectedRoutes/>}>*/}

@@ -28,6 +28,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Teams.FirstOrDefault(x => x.Name.Equals(name));
         }
 
+        public Team? GetTeamByTeamId(Guid teamId)
+        {
+            return _dbContex.Teams.SingleOrDefault(x => x.TeamId.Equals(teamId));
+        }
+
         public List<Team> GetTeams()
         {
             return _dbContex.Teams.ToList();

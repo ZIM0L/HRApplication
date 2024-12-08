@@ -14,7 +14,7 @@
         public Guid TeamId { get; set; }
         public Guid? JobPositionId { get; set; }
         public DateTime JoinedAt { get; set; } = DateTime.Now;
-        public DateTime? LeftAt { get; set; }
+        public DateTime? LeftAt { get; set; } = null;
         public string RoleName { get; set; }
         public Boolean IsActive { get; set; } = true;  
     }

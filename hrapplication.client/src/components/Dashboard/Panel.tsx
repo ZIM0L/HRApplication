@@ -1,5 +1,7 @@
 ﻿import { useAuth } from '../../contex/AuthContex';
 import SearchForTeam from '../SearchForTeam/SearchForTeam';
+import Notifications from './Notifications';
+import UpcomingEventsAlert from './UpcomingEventsAlert';
 import WorkSchedule from './WorkSchedule';
 
 function Panel() {
@@ -16,17 +18,20 @@ function Panel() {
     if (!decodedToken) {
         return <SearchForTeam />;
     }
-
+ 
     return (
         <div className="min-h-screen w-full overflow-y-auto bg-gray-100">
-            {/* Górny pasek */}
-            <div className="flex items-center justify-between bg-dark-blue px-6 py-4 text-white">
-                <span className="text-sm">Dobry wieczór, {decodedToken.given_name} {decodedToken.family_name}</span>
-            </div>
+     
 
             {/* Główna sekcja */}
-            <div className="flex p-6">
-                <div className="flex flex-col space-y-4 md:w-1/3 md:mr-6">
+            {/*<div className="z-1 absolute top-12 h-[130px] w-full bg-red-200 bg-cover bg-center" style={{*/}
+            {/*    backgroundImage: `url('https://plus.unsplash.com/premium_photo-1673264933061-f1ea43b13032?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,*/}
+            {/*    content: ''*/}
+            {/*}}>*/}
+            {/*</div>*/}
+           
+            <div className="mt-10 flex p-4">
+                <div className="z-0 mr-6 flex w-1/4 flex-col space-y-4">
                     {/* Profil użytkownika */}
                     <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow">
                         <img
@@ -35,11 +40,10 @@ function Panel() {
                             className="mb-4 h-20 w-20 rounded-full"
                         />
                         <h2 className="text-lg font-semibold">{decodedToken.given_name} {decodedToken.family_name}</h2>
-                        <p className="text-red-500">Jeszcze nie zameldowano</p>
-                        <div className="mt-4">
+                        <div className="mt-4 text-center">
                             <div className="text-2xl font-bold">00 : 00 : 00</div>
-                            <button className="mt-2 rounded bg-green-500 px-4 py-2 text-white">
-                                Rozpoczęcie pracy
+                            <button className="mt-2 rounded bg-cyan-blue px-4 py-2 text-white hover:hover:bg-cyan-blue-hover">
+                                Start Shift
                             </button>
                         </div>
                     </div>
@@ -50,30 +54,13 @@ function Panel() {
                 </div>
 
                 {/* Informacje i harmonogram */}
-                <div className="flex flex-col md:w-2/3">
-                    <WorkSchedule />
-                    {/* Harmonogram pracy */}
-                    <div>
-                        <div className="mb-6 flex flex-col rounded-lg bg-white p-6 shadow">
-                            <h3 className="mb-4 text-lg font-semibold">Harmonogram pracy</h3>
-                            <div className="flex flex-col rounded-lg bg-gray-100 p-4">
-                                <div className="flex justify-between">
-                                    <span className="text-sm">01-Dec-2024 - 07-Dec-2024</span>
-                                    <span className="text-sm text-blue-500">General</span>
-                                </div>
-                                <div className="mt-2 text-sm">
-                                    9:00 PRZED POŁUDNIEM - 6:00 PO POŁUDNIU
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Wiadomości i inne */}
-                        <div className="flex rounded-lg bg-white p-6 shadow">
-                            <p className="text-sm text-orange-500">
-                                Musisz jeszcze dziś przesłać swoje rejestry czasu pracy!
-                            </p>
-                        </div>
+                <div className="flex flex-col space-y-5 md:w-full">
+                    <div className="z-0 flex space-x-4">
+                        <UpcomingEventsAlert />
+                        <Notifications />
                     </div>
+                    <WorkSchedule />
+               
                 </div>
             </div>
         </div>

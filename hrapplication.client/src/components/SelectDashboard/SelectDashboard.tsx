@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const SelectDashboard = () => {
 
-    const { decodedToken, setSelectedTeam } = useAuth();
+    const { decodedToken, setSelectedTeamState } = useAuth();
     const [teams, setTeams] = useState<ITeamWithUserPermission[] | null>();
     const navigate = useNavigate();
 
@@ -31,8 +31,8 @@ const SelectDashboard = () => {
     },[])
 
     const RedirectToDashboard = (team: ITeamWithUserPermission) => {
+        setSelectedTeamState(team)
         navigate(`/dashboard/${team.team.name.replace(/\s/g, '')}/${decodedToken?.given_name}`);
-        setSelectedTeam(team)
     }
     return (
         <div className="min-h-screen space-y-4 bg-gray-100">

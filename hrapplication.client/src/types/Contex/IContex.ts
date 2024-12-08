@@ -9,5 +9,6 @@ export interface IContext {
     logOut: () => void;
     checkToken: () => Promise<void>; // Funkcja do sprawdzania tokenu
     selectedTeam: ITeamWithUserPermission | null;
-    setSelectedTeam: (team: ITeamWithUserPermission) => void;
+    setSelectedTeam: (team: ITeamWithUserPermission | null) => void;
+    setSelectedTeamState: (team: ITeamWithUserPermission | null) => void
 }

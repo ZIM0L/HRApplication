@@ -7,5 +7,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         void AddNewTeamMemberToCollection(TeamMember teamMember);
         TeamMember? GetTeamMemberFromCollection(TeamMember teamMember);
         List<TeamMember>? GetTeamMembersByUserIdFromCollection(Guid userId);
+        List<TeamMember>? GetTeamMembersByTeamIdFromCollection(Guid teamId);
+
     }
 }

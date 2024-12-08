@@ -5,7 +5,7 @@ using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries
+namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams
 {
     public class GetUsersTeamsHandler : IRequestHandler<GetUsersTeamsRequest, ErrorOr<List<TeamResultWithUserPermission>>>
     {

@@ -18,6 +18,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                code: "Team.TeamNotFound",
                description: "Team does not exists"
             );
+            public static Error NoMembersInTeam = Error.NotFound(
+               code: "Team.NoMembersInTeam",
+               description: "Team does not have any memeber"
+            );
             public static Error UserAlreadyCreatedTeam = Error.Conflict(
               code: "Team.UserAlreadyCreatedTeam",
               description: "User already owns a team"

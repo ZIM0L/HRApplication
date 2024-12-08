@@ -17,3 +17,15 @@ export const GetTeam = async (): Promise<AxiosResponse | null> => {
         return null
     }
 }
+export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post('api/Team/GetTeamsUsers', {
+                teamId: id,
+            } 
+        );
+        return response;
+    } catch (error) {
+        console.error("Error fetching team users:", error);
+        return null; 
+    }
+};

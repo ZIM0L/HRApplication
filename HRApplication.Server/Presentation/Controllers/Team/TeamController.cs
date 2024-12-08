@@ -1,8 +1,11 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTeamsUsers;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams;
 using HRApplication.Server.Application.DatabaseTables.Teams;
 using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
 using HRApplication.Server.Application.DatabaseTables.Teams.Queries;
+using HRApplication.Server.Domain.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -47,7 +50,20 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 response => Ok(response),
                 errors => Problem(errors)
                 );
-        }  
+        }
+        [HttpPost]
+        [Route("/api/[controller]/GetTeamsUsers")]
+        public async Task<IActionResult> GetTeamsUsers([FromBody] GetTeamsUsersRequest request)
+        {
+            var command = new GetTeamsUsersRequest(request.teamId);
+
+            ErrorOr<List<UserDTO>> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
         [HttpGet]
         [Route("/api/[controller]/GetTeam")]
         public async Task<IActionResult> GetTeam()

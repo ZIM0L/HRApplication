@@ -18,7 +18,10 @@ export const AuthProvider = ({ children }: IProvider) => {
     const [authToken, setAuthTokenState] = useState<string | null>(localStorage.getItem('accessToken'));
     const [decodedToken, setDecodedToken] = useState<JwtPayload | null>(null);
     const [isCheckingToken, setIsCheckingToken] = useState(true);
-    const [selectedTeam, setSelectedTeam] = useState<ITeamWithUserPermission | null>(null);
+    const [selectedTeam, setSelectedTeam] = useState<ITeamWithUserPermission | null>(() => {
+        const storedTeam = localStorage.getItem("selectedTeam");
+        return storedTeam ? JSON.parse(storedTeam) : null;
+    });
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -35,6 +38,18 @@ export const AuthProvider = ({ children }: IProvider) => {
             logOut();
         } finally {
             setIsCheckingToken(false);
+        }
+    };
+    // Funkcja do ustawienia dru¿yny i zapisania jej w localStorage
+    const setSelectedTeamState = (team: ITeamWithUserPermission | null) => {
+        setSelectedTeam(team);
+
+        if (team) {
+            // Zapisanie dru¿yny do localStorage
+            localStorage.setItem('selectedTeam', JSON.stringify(team));
+        } else {
+            // Usuniêcie dru¿yny z localStorage, jeœli wybrano null
+            localStorage.removeItem('selectedTeam');
         }
     };
 
@@ -55,9 +70,10 @@ export const AuthProvider = ({ children }: IProvider) => {
         document.cookie = 'refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly';
         setAuthToken(null); // Usuniêcie tokenu w API
     };
+  
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, selectedTeam, setSelectedTeam }}>
+        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, setSelectedTeam }}>
             {children}
         </AuthContext.Provider>
     );
