@@ -1,17 +1,18 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.JobPosition.Queries.GetJobPositionsBasedOnTeams;
 using HRApplication.Server.Application.DatabaseTables.JobPositions;
 using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands;
-using HRApplication.Server.Application.DatabaseTables.JobPositions.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
 
 namespace HRApplication.Server.Presentation.Controllers.JobPositions
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class JobPositionController : ErrorController
     {
         private readonly IMediator _mediator;
@@ -33,11 +34,12 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
             response => Ok(response),
             errors => Problem(errors));
         }
-        [HttpGet]
-        [Route("/api/[controller]/getAllJobPositions")]
-        public async Task<IActionResult> GetAllJobPositions()
+        
+        [HttpPost]
+        [Route("/api/[controller]/GetJobPositionsBasedOnTeams")]
+        public async Task<IActionResult> GetJobPositionsBasedOnTeams([FromBody] GetJobPositionsBasedOnTeamsRequest request)
         {
-            var query = new GetJobPositionsRequest();
+            var query = new GetJobPositionsBasedOnTeamsRequest(request.teamId);
 
             ErrorOr<List<JobPositionsResult>> response = await _mediator.Send(query);
 

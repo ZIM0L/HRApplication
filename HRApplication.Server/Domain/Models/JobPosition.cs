@@ -1,5 +1,4 @@
-﻿using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
-
+﻿
 namespace HRApplication.Server.Domain.Models
 {
     public class JobPosition

@@ -15,7 +15,7 @@ type Inputs = {
     isRecruiting: boolean;
 };
 
-const EditJobmodal = ({ isOpen, onClose, job }: EditJobmodalProps) => {
+const EditJobModal = ({ isOpen, onClose, job }: EditJobmodalProps) => {
     const { register, handleSubmit, setValue, watch } = useForm<Inputs>();
     const isRecruiting = watch('isRecruiting');
 
@@ -99,4 +99,4 @@ const EditJobmodal = ({ isOpen, onClose, job }: EditJobmodalProps) => {
     );
 };
 
-export default EditJobmodal;
+export default EditJobModal;

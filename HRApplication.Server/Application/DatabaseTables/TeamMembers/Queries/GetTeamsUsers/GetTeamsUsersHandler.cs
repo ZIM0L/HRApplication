@@ -19,14 +19,14 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.Ge
             _teamMemberRepository = teamMemberRepository;
             _userRepository = userRepository;
         }
-        public async Task<ErrorOr<List<UserDTO>>> Handle(GetTeamsUsersRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<List<UserDTO>>> Handle(GetTeamsUsersRequest query, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
-            if(_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId)) is null)
+            if(_teamRepository.GetTeamByTeamId(Guid.Parse(query.teamId)) is null)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
-            var teamMembers = _teamMemberRepository.GetTeamMembersByTeamIdFromCollection(Guid.Parse(request.teamId));
+            var teamMembers = _teamMemberRepository.GetTeamMembersByTeamIdFromCollection(Guid.Parse(query.teamId));
   
             if (teamMembers == null)
             {

@@ -1,20 +1,25 @@
 ﻿import { useEffect, useState } from "react";
 import { ArrowRightCircleIcon, PlusIcon } from '@heroicons/react/24/solid';
-import { mainAxiosInstance } from '../../api/Axios'
 import { IJobPosition } from '../../types/JobPosition/IJobPosition'
 import AddJobModal from "./AddJobModal";
-import EditJobmodal from "./EditJobModal";
+import EditJobModal from "./EditJobModal";
+import { useAuth } from "../../contex/AuthContex";
+import { GetJobPositionsBasedOnTeams } from "../../api/JobPositionAPI";
 function JobPositions() {
     
     const [jobPositions, setJobPositions] = useState<IJobPosition[]>([]);  // Stan do przechowywania wyników
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
     const [selectedJob, setSelectedJob] = useState<IJobPosition | null>(null);
-
+    const { selectedTeam } = useAuth();
     const fetchJobPositions = async () => {
         try {
-            const response = await mainAxiosInstance.get('api/JobPosition/getAllJobPositions');
-            if (response.status === 200) {
+            if (!selectedTeam?.team.teamId) {
+                return
+            }
+            const response = await GetJobPositionsBasedOnTeams(selectedTeam?.team.teamId);
+            if (response?.status === 200) {
+                console.log(response.data)
                 setJobPositions(response.data);
             } else {
                 throw new Error('Something wrong');
@@ -33,60 +38,105 @@ function JobPositions() {
         fetchJobPositions();
         
     }, []);
+ 
 
     return (
-        <div className="w-full overflow-scroll">
-        <div className="w-full space-y-4 rounded-lg bg-white px-4 py-6 shadow-md">
-            {/* Header */}
-            <button className="rounded-full bg-cyan-blue p-2 text-white transition hover:bg-dark-blue">
-                    <PlusIcon className="h-6 w-6" onClick={() => setIsAddModalOpen(true)} />
-            </button>
-            <div className="border-2 flex items-center justify-between p-1">
-                <h2 className="ml-2 text-lg font-semibold">Positions : {jobPositions.length}</h2>
-                <div className="flex items-center overflow-hidden rounded-lg border-gray-300">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    />
-                    <button className="bg-indigo-500 px-3 py-2 text-white hover:bg-indigo-600 focus:outline-none">
-                            <img src="assets/icons/search-icon.svg" alt="Search" className="h-5 w-5" />
-                    </button>
+        <div className="min-h-screen bg-gray-100 p-6">
+            {/* Header Section */}
+            <div className="mb-4 flex items-center justify-between space-x-2 bg-white p-2 shadow-md">
+                <h2 className="text-lg font-semibold text-gray-700">Job Positions: {jobPositions.length}</h2>
+                <div className="flex items-center space-x-10">
+                    <div className="group relative">
+                        <PlusIcon onClick={() => setIsAddModalOpen(true)} className="h-6 w-6 hover:cursor-pointer" />
+                        <span className="opacity-0 group-hover:opacity-100 -translate-x-1/2 absolute left-1/2 top-7 transform whitespace-nowrap bg-gray-800 px-2 py-1 text-sm text-white shadow-lg transition-opacity">
+                            Add Position
+                        </span>
+                    </div>
+                    {/* Search Input */}
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder="Search job position..."
+                            className="rounded-lg border border-gray-300 px-4 py-2 focus:ring-1 focus:ring-cyan-blue focus:outline-none"
+                        />
+                    </div>
+
+                    {/* Add Job Button */}
                 </div>
             </div>
 
-            {/* Job List */}
-            <ul className="border-2 space-y-3">
-                {jobPositions.length > 0 ?
-                    jobPositions.map((job,key) => (
-                        <li key={key} className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2 shadow-sm">
-                            <div className="w-32">
-                                <p className="text-xl font-bold text-gray-800">{job.title}</p>
-                                <p className="text-md text-gray-500">{job.isActive == '1' ? "Active" : "Inactive"}</p>
-                            </div>
-                            <button onClick={() => {
-                                setSelectedJob(job);
-                                setIsEditModalOpen(true); 
-                            }}>
-                                <ArrowRightCircleIcon className="h-8 w-8 hover:cursor" />
-                            </button>
-                        </li>
-                    ))
-                        : <p className="ml-2">No Job Positions</p>}
-            </ul>
-            </div >
+            {/* Job Positions Table */}
+            <div className="overflow-x-auto rounded-lg bg-white shadow-md">
+                {jobPositions.length > 0 ? (
+                    <table className="w-full border-collapse border border-gray-200 text-left">
+                        <thead className="bg-gray-100">
+                            <tr>
+                                <th className="px-3 py-1 text-sm font-bold text-gray-600">Job Title</th>
+                                <th className="px-3 py-1 text-sm font-bold text-gray-600">Created At</th>
+                                <th className="px-3 py-1 text-sm font-bold text-gray-600">Status</th>
+                                <th className="border-l-2 p-3 text-center text-sm font-bold text-gray-600">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {jobPositions.map((job, key) => (
+                                <tr key={key} className="hover:bg-gray-50">
+                                    {/* Job Title */}
+                                    <td className="px-3 py-1 text-gray-800">
+                                        <p>{job.title}</p>
+                                        <p className="text-xs text-gray-400">ID: {job.jobPositionId}</p>
+                                    </td>
+                                    <td className="px-3 py-1 text-gray-800">
+                                            <p>{new Date(job.createdDate).toLocaleDateString()}</p>
+                                        <p className="text-sm text-gray-400">{new Date(job.createdDate).toLocaleTimeString()}</p>
+                                    </td>
+
+                                    {/* Status */}
+                                    <td className="px-3 py-1 text-gray-500">
+                                        <span
+                                            className={`rounded-full px-3 py-1 text-xs font-semibold ${job.isActive == true
+                                                    ? "bg-green-100 text-green-800"
+                                                    : "bg-red-100 text-red-800"
+                                                }`}
+                                        >
+                                            {job.isActive == true ? "Active" : "Inactive"}
+                                        </span>
+                                    </td>
+
+                                    {/* Actions */}
+                                    <td className="border-l-2 px-3 py-1 text-center">
+                                        <button
+                                            onClick={() => {
+                                                setSelectedJob(job);
+                                                setIsEditModalOpen(true);
+                                            }}
+                                            className="rounded-full bg-gray-100 p-2 hover:bg-gray-200"
+                                        >
+                                            <ArrowRightCircleIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p className="p-4 text-sm text-gray-500">No job positions found.</p>
+                )}
+            </div>
+
+            {/* Modals */}
             <AddJobModal
                 isOpen={isAddModalOpen}
                 onClose={() => setIsAddModalOpen(false)}
                 onRefresh={refreshJobPositions}
             />
-            <EditJobmodal
+            <EditJobModal
                 isOpen={isEditModalOpen}
                 onClose={() => setIsEditModalOpen(false)}
                 onRefresh={refreshJobPositions}
                 job={selectedJob}
             />
-       </div>
+        </div>
+
     );
 };
 

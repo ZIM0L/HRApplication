@@ -20,6 +20,7 @@ namespace Infrastructure
             services.AddScoped<IJobPositionsRepository, JobPositionsRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
+            services.AddScoped<IInvitationRepository, InvitationRepository>();
             return services;
         }
     }

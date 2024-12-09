@@ -3,10 +3,10 @@ export interface IJobPosition {
   jobPositionId: string,
   title: string,
   description: string,
-  isActive: string,
+  isActive: boolean,
   isRecruting: string,
-  createdAt: string,
-  updatedAt: string
+  createdDate: string,
+  updatedDate: string
 }
 export interface IAddJobPosition {
     title: string,

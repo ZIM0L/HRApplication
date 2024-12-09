@@ -10,6 +10,7 @@ import GoogleAuthHandler from './utils/GooogleAuthHandler';
 import SelectDashboard from './components/SelectDashboard/SelectDashboard';
 import Organization from './components/Organization/OrganizationAdminView';
 import Team from './components/Team/Team';
+import JobPositions from './components/JobPositions/JobPositions';
 
 const App = () => {
     return (
@@ -30,6 +31,7 @@ const App = () => {
                                 <Route path="panel" element={<Panel />} />
                                 <Route path="organization" element={<Organization />} />
                                 <Route path="team" element={<Team />} />
+                                <Route path="job_positions" element={<JobPositions />} />
                             </Route>
                     </Route>
                     {/*<Route element={<ProtectedRoutes/>}>*/}
@@ -41,7 +43,6 @@ const App = () => {
                     {/*<Route element={<ProtectedRoutes />}>*/}
                     {/*    <Route path="/dashboard/:name" element={<DashBoard />}>*/}
                     {/*        <Route index element={<Navigate to="panel" replace />} />*/}
-                    {/*        <Route path="job_positions" element={<JobPositions />} />*/}
                     {/*    </Route>*/}
                     {/*</Route>*/}
                 </Routes>
