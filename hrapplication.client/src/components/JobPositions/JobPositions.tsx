@@ -126,7 +126,7 @@ function JobPositions() {
             {/* Modals */}
             <AddJobModal
                 isOpen={isAddModalOpen}
-                onClose={() => setIsAddModalOpen(false)}
+                onClose={() => { setIsAddModalOpen(false); refreshJobPositions() }}
                 onRefresh={refreshJobPositions}
             />
             <EditJobModal

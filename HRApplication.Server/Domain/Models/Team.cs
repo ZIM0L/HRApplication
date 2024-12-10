@@ -4,12 +4,13 @@ namespace HRApplication.Server.Domain.Models
 {
     public class Team
     {
-        public Team(string name, string country, string phoneNumber)
+        public Team(string name, string country, string industry, string email)
         {
             TeamId = Guid.NewGuid();
             Name = name;
             Country = country;
-            PhoneNumber = phoneNumber;
+            Industry = industry;
+            Email = email;
         }
         public Guid TeamId { get; set; }
         public string Name { get; set; }

@@ -8,6 +8,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         TeamMember? GetTeamMemberFromCollection(TeamMember teamMember);
         List<TeamMember>? GetTeamMembersByUserIdFromCollection(Guid userId);
         List<TeamMember>? GetTeamMembersByTeamIdFromCollection(Guid teamId);
+        TeamMember? GetTeamMemberByTeamIdAndUserId(Guid teamId, Guid userId);
 
     }
 }

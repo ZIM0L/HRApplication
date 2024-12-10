@@ -29,7 +29,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         [Route("/api/[controller]/AddNewTeam")]
         public async Task<IActionResult> AddNewTeam([FromBody] TeamAddRequest request)
         {
-            var command = new TeamAddRequest(request.name, request.country,request.phoneNumber);
+            var command = new TeamAddRequest(request.name, request.country, request.industry, request.email);
 
             ErrorOr<TeamResult> response = await _mediatR.Send(command);
 

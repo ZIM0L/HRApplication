@@ -1,4 +1,4 @@
-﻿import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+﻿import { ArrowLeftStartOnRectangleIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AuthContex";
 import { useEffect, useState } from "react";
 import { GetUsersTeams } from "../../api/TeamAPI";
@@ -6,13 +6,17 @@ import { ITeamWithUserPermission } from "../../types/Team/ITeam";
 import { UsersIcon } from "@heroicons/react/24/solid";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import CookieFooter from "../CookieFooter/CookieFooter";
+import CreateNewTeamModal from "./CreateNewTeamModal";
 
 
 const SelectDashboard = () => {
 
-    const { decodedToken, setSelectedTeamState } = useAuth();
+    const { decodedToken, setSelectedTeamState, logOut } = useAuth();
     const [teams, setTeams] = useState<ITeamWithUserPermission[] | null>();
     const navigate = useNavigate();
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [isCreateNewTeamModalOpen, setIsCreateNewTeamModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchTeams = async () => {
@@ -30,32 +34,57 @@ const SelectDashboard = () => {
         fetchTeams();
     },[])
 
+    const LogOutOfSystem = () => {
+        setIsLoggingOut(true);
+        setTimeout(() => {
+            logOut();
+            navigate("/auth", { replace: true });
+        }, 1000);
+    };
     const RedirectToDashboard = (team: ITeamWithUserPermission) => {
         setSelectedTeamState(team)
         navigate(`/dashboard/${team.team.name.replace(/\s/g, '')}/${decodedToken?.given_name}`);
     }
+
+    if (isLoggingOut) {
+        return (
+            <div className="flex h-screen items-center justify-center bg-gray-100">
+                <h1 className="text-xl font-bold text-gray-600">Logging out...</h1>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen space-y-4 bg-gray-100">
+        <div className="min-h-screen space-y-8 bg-gray-100">
             <div className="flex justify-between bg-dark-blue p-4 text-white shadow-md">
                 <div>
-                    <ChevronLeftIcon className="h-6 w-6 hover:cursor-pointer" onClick={() => { }} />
+                    <button
+                        className=" flex w-full items-center justify-center space-x-4 rounded-md border border-dark-blue p-1 transition-colors duration-200 hover:border-white"
+                        onClick={() => LogOutOfSystem()}
+                    >
+                        <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
+                        <span className="text-sm font-semibold">Log out</span>
+                    </button>
                 </div>
-                    <div className="flex gap-4">
-                        <button className="rounded-lg bg-cyan-blue px-4 py-2 hover:bg-cyan-blue-hover">
-                            Add team
+                <div className="flex gap-4">
+                    <button onClick={() => setIsCreateNewTeamModalOpen(true)} className="border-2 rounded-lg border-dark-blue px-4 py-2 transition-all duration-300 ease-in-out hover:text-cyan-blue hover:border-cyan-blue">
+                        Create Team
                         </button>
-                        <button className="rounded-lg bg-light-red px-4 py-2 hover:bg-red-600">
-                            Delete team
+                        <button className="border-2 rounded-lg border-dark-blue px-4 py-2 transition-all duration-300 ease-in-out hover:text-light-red hover:border-light-red">
+                        Delete Team
                         </button>
                     </div>
             </div>
-            <div className="mx-auto rounded-lg bg-white shadow-md">
-                <h1 className="px-6 py-2 text-2xl font-bold">Welcome {decodedToken?.given_name} !</h1>
-                <p className="border-b px-6 py-2 text-gray-700">
+            <div className="mx-auto w-3/4 rounded-lg bg-white shadow-md">
+                <h1 className="px-6 py-1 text-2xl font-bold">Welcome {decodedToken?.given_name} !</h1>
+                <p className="border-b px-6 py-1 text-gray-500">
                     Select the system you want to access.
                 </p>
                 <div className="divide-y">
-                    {teams?.map((org, index) => (
+                    {teams?.length == 0 ?
+                        <div className=" px-6 py-5 text-center">You are not part of any team yet. Please wait for an invitation or create your own team to get started.</div>
+                        :
+                    teams?.map((org, index) => (
                         <div
                             key={index}
                             className="flex flex-col items-center justify-between px-6 py-2 hover:bg-gray-50 md:flex-row"
@@ -67,7 +96,7 @@ const SelectDashboard = () => {
                                     className="h-10 w-10"
                                 />
                                 <div>
-                                    <h3 className="flex items-center gap-2 text-lg font-semibold">
+                                    <h3 className="flex items-center text-lg font-semibold">
                                         {org.team.name}  
                                     </h3>
                                     <p className="text-sm text-gray-500">
@@ -89,6 +118,11 @@ const SelectDashboard = () => {
                         </div>
                     ))}
                 </div>
+                <CreateNewTeamModal
+                    isOpen={isCreateNewTeamModalOpen}
+                    onClose={() => { setIsCreateNewTeamModalOpen(false) }}
+                />
+            <CookieFooter />
             </div>
         </div>
     );

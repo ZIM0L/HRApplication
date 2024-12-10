@@ -8,7 +8,8 @@ export interface IJobPosition {
   createdDate: string,
   updatedDate: string
 }
-export interface IAddJobPosition {
+export interface IAddJobPositionInputs {
     title: string,
     description: string,
+    isRecruiting: boolean
 }

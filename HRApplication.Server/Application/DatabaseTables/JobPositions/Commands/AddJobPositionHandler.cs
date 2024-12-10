@@ -3,9 +3,7 @@ using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using System.Net.Http;
+
 
 namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
 {
@@ -14,11 +12,13 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
         private readonly IJobPositionsRepository _jobPositionsRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ITeamMemberRepository _teamMemberRepository;
-        public AddJobPositionHandler(IUserRepository userRepository, IJobPositionsRepository jobPositionsRepository, IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository)
+        private readonly ITeamRepository _teamRepository;
+        public AddJobPositionHandler(IUserRepository userRepository, IJobPositionsRepository jobPositionsRepository, IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository, ITeamRepository teamRepository)
         {
             _jobPositionsRepository = jobPositionsRepository;
             _httpContextAccessor = httpContextAccessor;
             _teamMemberRepository = teamMemberRepository;
+            _teamRepository = teamRepository;
         }
         public async Task<ErrorOr<Unit>> Handle(JobPositionRequest request, CancellationToken cancellationToken)
         {
@@ -33,36 +33,29 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            //if (_teamMemberRepository.GetTeamMemberByUserIdFromCollection(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember teamMember)
-            //{
-            //    return CustomErrorOr.CustomErrors.Team.NoTeamFound;
-            //}
+            if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId.ToLower())) is not Team)
+            {
+                return CustomErrorOr.CustomErrors.Team.NoTeamFound;
+            }
+            if (_teamMemberRepository.GetTeamMemberByTeamIdAndUserId(Guid.Parse(request.teamId.ToLower()), Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember)
+            {
+                return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
+            }
 
-            //var jobPosition = new JobPosition
-            //    (
-            //        request.title.ToLower(),
-            //        request.description,
-            //        teamMember.TeamId
-            //    );
+            var jobPosition = new Domain.Models.JobPosition
+                (
+                    request.title.ToLower(),
+                    request.description,
+                    Guid.Parse(request.teamId)
+                );
 
-            // pozniej sprawdz
-            //var TeamsJobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(jobPosition.TeamId);
+            if(_jobPositionsRepository.GetJobPositionByTeamIdAndTitle(jobPosition.TeamId, jobPosition.Title) is Domain.Models.JobPosition)
+            {
+                return CustomErrorOr.CustomErrors.JobPosition.PositionAlreadyInTeam;
+            }
 
-            //if (TeamsJobPositions == null)
-            //{
-            //    return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
-            //}
-            //{
-            //    if (TeamsJobPositions.Any(jobPositions => jobPositions.Title.Equals(request.title, StringComparison.OrdinalIgnoreCase)))
-            //    {
-            //        return CustomErrorOr.CustomErrors.JobPosition.JobPositionAlreadyExists;
-            //    }
+             _jobPositionsRepository.AddJobPosition(jobPosition);
 
-            //    _jobPositionsRepository.AddJobPosition(jobPosition);
-
-            //    return Unit.Value;
-
-            //}
             return Unit.Value;
         }
     }

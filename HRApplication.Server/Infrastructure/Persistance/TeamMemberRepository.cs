@@ -33,5 +33,9 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Team_Members.Where(x => x.TeamId.Equals(teamId)).ToList();
                            
         }
+        public TeamMember? GetTeamMemberByTeamIdAndUserId(Guid teamId, Guid userId)
+        {
+            return _dbContex.Team_Members.SingleOrDefault(x => x.TeamId == teamId && x.UserId == userId);
+        }
     }
 }

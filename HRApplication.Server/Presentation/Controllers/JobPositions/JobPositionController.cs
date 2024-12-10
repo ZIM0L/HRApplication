@@ -25,8 +25,10 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
         public async Task<IActionResult> AddJobPosition([FromBody] JobPositionRequest request)
         {
             var command = new JobPositionRequest(
+                request.teamId,
                 request.title,
-                request.description
+                request.description,
+                request.isRecruiting
                 );
             ErrorOr<Unit> response = await _mediator.Send(command);
 

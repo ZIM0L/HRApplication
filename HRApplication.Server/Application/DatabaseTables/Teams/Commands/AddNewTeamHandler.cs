@@ -40,7 +40,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            var team = new Team(request.name,request.country,request.phoneNumber);
+            var team = new Team(request.name,request.country, request.industry, request.email);
 
             _teamRepository.AddNewTeam(team);
 
@@ -53,7 +53,8 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 return addTeamMembertoCollectionResult.Errors;
             }
 
-            return new TeamResult(team.Name,
+            return new TeamResult(
+                team.Name,
                 team.Industry,
                 team.Country,
                 team.Url,

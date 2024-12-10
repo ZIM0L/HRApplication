@@ -1,42 +1,41 @@
 ﻿import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contex/AuthContex"
+import { useAuth } from "../../../contex/AuthContex";
 import { useState } from "react";
 import { registerUser } from "../../../api/UserAPI";
 import { RegisterInputs } from "../../../types/Auth/AuthInputTypes";
 import { jwtDecode } from "jwt-decode";
 import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";
 
-
-// TODO make better confirm input
 const Register = () => {
-    const { register, handleSubmit } = useForm<RegisterInputs>();
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterInputs>();
     const navigate = useNavigate();
     const { SetAuthenticationToken } = useAuth();
-    const [ confirmPassword, SetConfirmPassword ] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordError, setPasswordError] = useState(false); // Stan dla komunikatu o błędzie haseł
 
-    const CheckConfirmPassword = (password : string) => {
-        return  confirmPassword == password ?  true :  false
-    }
-   
     const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
+        if (data.password !== confirmPassword) {
+            setPasswordError(true); 
+            return;
+        }
+
         try {
-            if (CheckConfirmPassword(data.password)) {
-                const response = registerUser(data)
-                response.then((resolve) => {
-                    if (resolve?.status == 200) {
-                        SetAuthenticationToken(resolve.data.token)
-                        const { given_name } = jwtDecode(resolve.data.token);
-                        navigate(`/dashboard/${given_name}/panel`, { replace: true });
-                    }
-                })
-            } else {
-                alert("Confirm password does not match password")
+            const response = await registerUser(data);
+            if (response?.status === 200) {
+                SetAuthenticationToken(response.data.token);
+                navigate(`/organizations`, { replace: true });
             }
         } catch (error) {
             console.error("Register error:", error);
         }
     };
+
+    const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(event.target.value);
+        setPasswordError(false); 
+    };
+
     return (
         <div className="flex w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
             <h2 className="mb-4 px-2 text-3xl font-semibold">Sign up for an Account</h2>
@@ -48,13 +47,13 @@ const Register = () => {
                     <input
                         {...register("name", { required: true, maxLength: 50 })}
                         type="text"
-                        placeholder="Your first Name"
+                        placeholder="Your First Name"
                         className="flex-1 w-1/3 border border-gray-300 p-2"
                     />
                     <input
                         {...register("surname", { required: true, maxLength: 50 })}
-                        type="  text"
-                        placeholder="Your last Name"
+                        type="text"
+                        placeholder="Your Last Name"
                         className="flex-1 w-1/3 border border-gray-300 p-2"
                     />
                 </div>
@@ -66,22 +65,35 @@ const Register = () => {
                 />
                 <input
                     {...register("phone", { required: true, maxLength: 12 })}
-                    type="phone"
+                    type="tel"
                     placeholder="Your Phone Number"
                     className="mb-4 border border-gray-300 p-2"
                 />
-                <input
-                    {...register("password", { required: true, maxLength: 255 })}
-                    type="password"
-                    placeholder="Your Password"
-                    className="mb-4 border border-gray-300 p-2"
-                />
-                <input
-                    type="password"
-                    onChange={(event) => SetConfirmPassword(event.target.value)}
-                    placeholder="Confirm Password"
-                    className="mb-4 border border-gray-300 p-2"
-                />
+                <div className="mb-4">
+                    <input
+                        {...register("password", {
+                            required: "Password is required",
+                            maxLength: { value: 255, message: "Password cannot exceed 255 characters" },
+                            minLength: { value: 6, message: "Password must be at least 6 characters long" }
+                        })}
+                        type="password"
+                        placeholder="Your Password"
+                        className="w-full border border-gray-300 p-2"
+                    />
+                    {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
+                </div>
+                <div className="mb-4">
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        placeholder="Confirm Password"
+                        className="w-full border border-gray-300 p-2"
+                    />
+                    {passwordError && (
+                        <p className="mt-1 text-sm text-red-500">Passwords do not match</p>
+                    )}
+                </div>
                 <div className="mb-4 flex items-center self-center py-2 font-['PlayfairDisplay-SemiBold']">
                     <input type="checkbox" className="mr-2" />
                     <label className="text-gray-600 max-lg:">

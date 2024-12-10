@@ -10,6 +10,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "Team.TeamAlreadyExists",
                 description: "Team with that Name already exists"
             );
+            public static Error UserDoesntBelongToTeam = Error.Conflict(
+                code: "Team.UserDoesntBelongToTeam",
+                description: "User doesn't belong to this team"
+            );
             public static Error TeamMemeberAlreadyInCollection = Error.Conflict(
                 code: "Team.TeamMemeberAlreadyInCollection",
                 description: "User has already join team"

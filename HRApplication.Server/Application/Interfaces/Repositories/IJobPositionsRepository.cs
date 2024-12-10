@@ -9,5 +9,6 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         JobPosition? GetJobPositionByTitle(string title);
         List<JobPosition>? GetJobPositionsByTeamsId(Guid teamId);
         List<JobPosition> GetAllJobPositions();
+        JobPosition? GetJobPositionByTeamIdAndTitle(Guid teamId, string title);
     }
 }

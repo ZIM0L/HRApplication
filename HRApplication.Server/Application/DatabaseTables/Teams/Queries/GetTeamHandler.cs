@@ -44,7 +44,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 return CustomErrorOr.CustomErrors.Team.UserWithoutTeam;
             }
 
-            var team = _teamRepository.GetTeamById(teamMember[1].TeamId); //temporary
+            var team = _teamRepository.GetTeamByTeamId(teamMember[1].TeamId); //temporary
             if (team == null)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound; 

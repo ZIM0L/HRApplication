@@ -1,28 +1,41 @@
-﻿import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { ArrowLeftStartOnRectangleIcon, ListBulletIcon, Squares2X2Icon } from '@heroicons/react/24/solid';
-import { BriefcaseIcon } from '@heroicons/react/24/solid';
-import { NewspaperIcon } from '@heroicons/react/24/solid';
-import { useAuth } from '../../contex/AuthContex';
-import LogoSVG from '../LogoSVG/LogoSVG';
-import { useState } from 'react';
-import { UserGroupIcon } from '@heroicons/react/24/solid';
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
-import { UsersIcon } from '@heroicons/react/24/solid';
-import { RectangleStackIcon } from '@heroicons/react/24/solid';
-import { TableCellsIcon } from '@heroicons/react/24/solid';
- 
+﻿import { Link, Outlet, useNavigate } from "react-router-dom";
+import {
+    ArrowLeftStartOnRectangleIcon,
+    Bars3Icon,
+    XMarkIcon,
+    Squares2X2Icon,
+    BriefcaseIcon,
+    UserGroupIcon,
+    UsersIcon,
+    NewspaperIcon,
+    TableCellsIcon,
+    RectangleStackIcon,
+    ListBulletIcon,
+    QuestionMarkCircleIcon,
+} from "@heroicons/react/24/solid";
+import { useAuth } from "../../contex/AuthContex";
+import LogoSVG from "../LogoSVG/LogoSVG";
+import { useState } from "react";
+
 const Dashboard: React.FC = () => {
     const { logOut, decodedToken, setSelectedTeamState, selectedTeam } = useAuth();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Stan dla zwijania paska
     const navigate = useNavigate();
 
     const LogOutOfSystem = () => {
         setIsLoggingOut(true);
         setTimeout(() => {
-            logOut(); 
-            navigate("/auth", { replace: true }); 
-        }, 1000); 
+            logOut();
+            navigate("/auth", { replace: true });
+        }, 1000);
     };
+
+    const onChangeTeam = () => {
+        setSelectedTeamState(null);
+        navigate("/organizations");
+    };
+
     if (isLoggingOut) {
         return (
             <div className="flex h-screen items-center justify-center bg-gray-100">
@@ -30,22 +43,29 @@ const Dashboard: React.FC = () => {
             </div>
         );
     }
-    if (!selectedTeam) {
-        return <div>No team</div>
-    }
 
-    const onChangeTeam = () => {
-        setSelectedTeamState(null)
-        navigate("/organizations")
+    if (!selectedTeam) {
+        return <div>No team</div>;
     }
 
     return (
-        <div className="flex h-[100vh] w-full flex-col bg-white md:overflow-hidden md:flex-row">
-            {/* Sidebar */}
-            <div className="flex flex-col justify-between bg-dark-blue p-4 text-white">
+        <div className="flex h-[100vh] w-full flex-col overflow-y-hidden bg-white md:flex-row">
+            {/* Przycisk mobilny do otwierania/zamykania */}
+            <button
+                className="flex items-center justify-center bg-dark-blue p-2 text-white md:hidden"
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            >
+                {isSidebarOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+            </button>
+
+            {/* Pasek boczny */}
+            <div
+                className={`${isSidebarOpen ? "block" : "hidden"
+                    } md:flex flex-col justify-between bg-dark-blue p-4 text-white transition-all duration-300`}
+            >
                 <div>
                     <div className="space-y-4 text-xl">
-                        <LogoSVG width={140}/>
+                        <LogoSVG width={140} />
                         <div>
                             <Link to="panel">
                                 <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
@@ -132,7 +152,6 @@ const Dashboard: React.FC = () => {
                                 </>
                             )
                         }
-
                     </div>
                 </div>
                 <div className="mt-6 text-center">
@@ -145,11 +164,15 @@ const Dashboard: React.FC = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Główna zawartość */}
             <div className="flex w-full flex-col">
-                {/* Górny pasek powitania */}
+                {/* Pasek górny */}
                 {decodedToken && (
                     <div className="flex h-fit items-center justify-between bg-dark-blue px-4 py-2 text-white">
-                        <span className="text-sm">Dobry wieczór, {decodedToken.given_name} {decodedToken.family_name}</span>
+                        <span className="text-sm">
+                            Dobry wieczór, {decodedToken.given_name} {decodedToken.family_name}
+                        </span>
                         <div className="relative flex items-center space-x-2">
                             <div className="group relative flex flex-col items-center">
                                 <button onClick={() => onChangeTeam()}>
@@ -167,8 +190,8 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                 )}
-                        <div className="border-2 w-full px-4 py-2 text-sm text-gray-500">{selectedTeam.team.name}</div>
-                {/* Main */}
+                <div className="border-2 w-full px-4 py-2 text-sm text-gray-500">{selectedTeam.team.name}</div>
+                {/* Zawartość */}
                 <Outlet />
             </div>
         </div>

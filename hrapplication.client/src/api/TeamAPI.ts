@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { mainAxiosInstance } from "./Axios";
 
 export const GetUsersTeams = async (): Promise<AxiosResponse | null> => {
@@ -13,8 +13,11 @@ export const GetTeam = async (): Promise<AxiosResponse | null> => {
     try {
         return await mainAxiosInstance.get('api/Team/GetTeam');
     } catch (error) {
-        console.log(error)
-        return null
+        if (error instanceof AxiosError) {
+            console.error("Error fetching team: ", error);
+            throw new Error(error.response?.data?.title);
+        }
+        throw new Error("Unexpected error occurred fetching team.");
     }
 }
 export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> => {
@@ -25,7 +28,10 @@ export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> =
         );
         return response;
     } catch (error) {
-        console.error("Error fetching team users:", error);
-        return null; 
+        if (error instanceof AxiosError) {
+            console.error("Error fetching teams users: ", error);
+            throw new Error(error.response?.data?.title);
+        }
+        throw new Error("Unexpected error occurred fetching teams users.");
     }
 };
