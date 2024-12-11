@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using HRApplication.Server.Application.DatabaseTables.Invitation.Commands;
 
-namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands
+namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.SendInvitation
 {
     public class SendInvitationValidator : AbstractValidator<SendInvitationRequest>
     {
-        public SendInvitationValidator() {
+        public SendInvitationValidator()
+        {
             RuleFor(request => request.userid)
                  .NotEmpty().WithMessage("User ID is required.")
                  .Must(x => x != string.Empty).WithMessage("User ID must be a valid GUID.");

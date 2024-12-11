@@ -23,6 +23,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Job_Positions.ToList();
         }
 
+        public JobPosition? GetJobPositionById(Guid jobPositionId)
+        {
+            return _dbContex.Job_Positions.FirstOrDefault(x => jobPositionId == x.JobPositionId);
+        }
+
         public JobPosition? GetJobPositionByTeamIdAndTitle(Guid teamId, string title)
         {
             return _dbContex.Job_Positions.FirstOrDefault(x => x.TeamId == teamId && x.Title == title);

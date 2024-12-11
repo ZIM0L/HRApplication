@@ -1,23 +1,23 @@
 ﻿using ErrorOr;
-using HRApplication.Server.Application.DatabaseTables.Invitation.Commands;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
-using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands
+namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.SendInvitation
 {
     public class SendInvitationHandler : IRequestHandler<SendInvitationRequest, ErrorOr<Unit>>
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
+        private readonly IJobPositionsRepository _jobPositionsRepository;
 
-        public SendInvitationHandler(IInvitationRepository invitationRepository, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository)
+        public SendInvitationHandler(IInvitationRepository invitationRepository, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository, IJobPositionsRepository jobPositionsRepository)
         {
             _invitationRepository = invitationRepository;
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
+            _jobPositionsRepository = jobPositionsRepository;
         }
         public async Task<ErrorOr<Unit>> Handle(SendInvitationRequest command, CancellationToken cancellationToken)
         {
@@ -32,14 +32,24 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if(_userRepository.GetUserById(Guid.Parse(command.userid)) is not User)
+            if (_userRepository.GetUserById(Guid.Parse(command.userid)) is not User)
             {
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            var invitation = new Domain.Models.Invitation(Guid.Parse(command.userid),Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(command.jobpositionid));
+            if (_jobPositionsRepository.GetJobPositionById(Guid.Parse(command.jobpositionid)) is Domain.Models.JobPosition)
+            {
+                return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
+            }
 
-            if(_invitationRepository.IsInvitationAlreadyCreated(invitation) is Domain.Models.Invitation)
+            var invitation = new Domain.Models.Invitation(Guid.Parse(command.userid), Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(command.jobpositionid));
+
+            if(invitation.UserId == invitation.SendByUserId)
+            {
+                return CustomErrorOr.CustomErrors.Invitation.WrongInvitationTarget;
+            }
+
+            if (_invitationRepository.IsInvitationAlreadyCreated(invitation) is Domain.Models.Invitation)
             {
                 return CustomErrorOr.CustomErrors.Invitation.InvitationAlreadyCreated;
             }

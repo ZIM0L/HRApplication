@@ -10,6 +10,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "Invitation.InvitationAlreadyCreated",
                 description: "Invitation has already been sent to this user"
             );
+            public static Error WrongInvitationTarget = Error.Conflict(
+                code: "Invitation.WrongInvitationUser",
+                description: "An invitation can't be sent to the user who is the same as the sender"
+            );
         }
 
     }
