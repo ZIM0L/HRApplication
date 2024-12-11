@@ -1,4 +1,4 @@
-﻿import { ArrowLeftStartOnRectangleIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
+﻿import { ArrowLeftStartOnRectangleIcon, ChevronLeftIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AuthContex";
 import { useEffect, useState } from "react";
 import { GetUsersTeams } from "../../api/TeamAPI";
@@ -8,6 +8,8 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import CookieFooter from "../CookieFooter/CookieFooter";
 import CreateNewTeamModal from "./CreateNewTeamModal";
+import EnvelopeIconNotification from "../Notification/EnvelopeIconNotification";
+import NotificationModal from "../Notification/NotificationModal";
 
 
 const SelectDashboard = () => {
@@ -17,6 +19,8 @@ const SelectDashboard = () => {
     const navigate = useNavigate();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isCreateNewTeamModalOpen, setIsCreateNewTeamModalOpen] = useState(false);
+    const [isRed, setIsRed] = useState(true);
+    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(true);
 
     useEffect(() => {
         const fetchTeams = async () => {
@@ -55,9 +59,9 @@ const SelectDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen space-y-8 bg-gray-100">
-            <div className="flex justify-between bg-dark-blue p-4 text-white shadow-md">
-                <div>
+        <div className="min-h-screen bg-gray-100">
+            <div className="flex flex-col-reverse justify-between bg-dark-blue p-4 text-white shadow-md md:flex-row">
+                <div className="mt-4 flex items-center md:mt-0">
                     <button
                         className=" flex w-full items-center justify-center space-x-4 rounded-md border border-dark-blue p-1 transition-colors duration-200 hover:border-white"
                         onClick={() => LogOutOfSystem()}
@@ -66,7 +70,10 @@ const SelectDashboard = () => {
                         <span className="text-sm font-semibold">Log out</span>
                     </button>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-col-reverse items-center gap-4 md:flex-row">
+                    <button onClick={() => setIsNotificationModalOpen(true)}>
+                        <EnvelopeIconNotification isRed={isRed} />
+                    </button>
                     <button onClick={() => setIsCreateNewTeamModalOpen(true)} className="border-2 rounded-lg border-dark-blue px-4 py-2 transition-all duration-300 ease-in-out hover:text-cyan-blue hover:border-cyan-blue">
                         Create Team
                         </button>
@@ -75,6 +82,7 @@ const SelectDashboard = () => {
                         </button>
                     </div>
             </div>
+            <p className="border-b-2 mb-8 p-2 text-sm text-gray-500">Logged as {decodedToken?.email}</p>
             <div className="mx-auto w-3/4 rounded-lg bg-white shadow-md">
                 <h1 className="px-6 py-1 text-2xl font-bold">Welcome {decodedToken?.given_name} !</h1>
                 <p className="border-b px-6 py-1 text-gray-500">
@@ -122,7 +130,8 @@ const SelectDashboard = () => {
                     isOpen={isCreateNewTeamModalOpen}
                     onClose={() => { setIsCreateNewTeamModalOpen(false) }}
                 />
-            <CookieFooter />
+                <CookieFooter />
+                <NotificationModal isOpen={isNotificationModalOpen} onClose={() => setIsNotificationModalOpen(false)} />
             </div>
         </div>
     );

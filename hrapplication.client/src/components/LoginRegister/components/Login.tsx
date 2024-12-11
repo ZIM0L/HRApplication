@@ -51,8 +51,11 @@ const Login = () => {
                     </label>
                 </div>
                 <button type="submit" className="mb-4 rounded-md bg-cyan-blue py-2 text-white hover:bg-teal-400">Log In</button>
-                <p className="text-center text-gray-600">Or Log in Using</p>
-                    <GoogleLoginButton />
+                <div className="mb-4 inline-flex w-full items-center justify-center">
+                    <hr className="border-0 my-4 h-px w-64 bg-gray-200 dark:bg-gray-700" />
+                    <span className="absolute bg-white px-3 font-medium">or</span>
+                </div>
+                <GoogleLoginButton />
             </form>
         </div>
     );
