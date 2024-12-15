@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HRApplication.Server.Application.Utilities; 
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
 {
@@ -8,11 +9,11 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
         {
             RuleFor(x => x.userId)
                 .NotEmpty().WithMessage("UserId is required")
-                .Must(x => x != Guid.Empty).WithMessage("UserId must be a valid GUID");
+                .Must(x => GuidValidator.IsValidGuid(x)).WithMessage("UserId must be a valid GUID");
 
             RuleFor(x => x.teamId)
                 .NotEmpty().WithMessage("TeamId is required")
-                .Must(x => x != Guid.Empty).WithMessage("TeamId must be a valid GUID");
+                .Must(x => GuidValidator.IsValidGuid(x)).WithMessage("TeamId must be a valid GUID");
 
             RuleFor(x => x.roleName)
                 .NotEmpty().WithMessage("RoleName is required")

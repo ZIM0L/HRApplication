@@ -10,6 +10,7 @@ import CookieFooter from "../CookieFooter/CookieFooter";
 import CreateNewTeamModal from "./CreateNewTeamModal";
 import EnvelopeIconNotification from "../Notification/EnvelopeIconNotification";
 import NotificationModal from "../Notification/NotificationModal";
+import { CheckIfAnyInvitationForUser } from "../../api/NotificationAPI";
 
 
 const SelectDashboard = () => {
@@ -20,26 +21,41 @@ const SelectDashboard = () => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isCreateNewTeamModalOpen, setIsCreateNewTeamModalOpen] = useState(false);
     const [isRed, setIsRed] = useState(true);
-    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(true);
+    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
     useEffect(() => {
-        const fetchTeams = async () => {
-            try {
-                const response = GetUsersTeams();
-                response.then(resolve => {
-                    if (resolve?.status === 200) {
-                        setTeams(resolve.data);
-                    }
-                })
-            } catch (error) {
-                console.error("Error message: " + error);
-            }
-        }
+        fetchInvitations();
         fetchTeams();
     },[])
+    const fetchTeams = async () => {
+        try {
+            const response = GetUsersTeams();
+            response.then(resolve => {
+                if (resolve?.status === 200) {
+                    setTeams(resolve.data);
+                }
+            })
+        } catch (error) {
+            console.error("Error message: " + error);
+        }
+    }
+    const fetchInvitations = async () => {
+        try {
+            const response = CheckIfAnyInvitationForUser();
+            response.then(resolve => {
+                if (resolve?.status === 200) {
+                    setIsRed(resolve.data);
+                }
+            })
+        } catch (error) {
+            console.error("Error message: " + error);
+        }
+    }
 
     const LogOutOfSystem = () => {
         setIsLoggingOut(true);
+        setIsRed(false)
+        setTeams(null)
         setTimeout(() => {
             logOut();
             navigate("/auth", { replace: true });
@@ -128,10 +144,15 @@ const SelectDashboard = () => {
                 </div>
                 <CreateNewTeamModal
                     isOpen={isCreateNewTeamModalOpen}
-                    onClose={() => { setIsCreateNewTeamModalOpen(false) }}
+                    onClose={() => {
+                        setIsCreateNewTeamModalOpen(false);
+                        fetchInvitations();
+                        fetchTeams(); }}
                 />
                 <CookieFooter />
-                <NotificationModal isOpen={isNotificationModalOpen} onClose={() => setIsNotificationModalOpen(false)} />
+                <NotificationModal isOpen={isNotificationModalOpen} onClose={() => {
+                    setIsNotificationModalOpen(false); fetchInvitations();
+                    fetchTeams(); }} />
             </div>
         </div>
     );

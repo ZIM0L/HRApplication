@@ -41,10 +41,16 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
             }
 
             var team = new Team(request.name,request.country, request.industry, request.email);
+                team.Email = request.email;
+                team.City = request.city;
+                team.Country = request.country;
+                team.Url = request.url;
+                team.PhoneNumber = request.phoneNumber;
+                team.ZipCode = request.zipCode;
 
             _teamRepository.AddNewTeam(team);
 
-            var command = new AddTeamMemberRequest(user.UserId, team.TeamId, "Administrator");
+            var command = new AddTeamMemberRequest(user.UserId, team.TeamId, null, "Administrator");
             var addTeamMembertoCollectionResult = await _mediator.Send(command);
 
             if (addTeamMembertoCollectionResult.IsError)

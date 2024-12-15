@@ -2,11 +2,12 @@
 {
     public class TeamMember
     {
-        public TeamMember(Guid userId, Guid teamId, string roleName)
+        public TeamMember(Guid userId, Guid teamId, Guid? jobPositionId, string roleName)
         {
             TeamMemberId = Guid.NewGuid();
             UserId = userId;
             TeamId = teamId;
+            JobPositionId = jobPositionId;
             RoleName = roleName;
         }
         public Guid TeamMemberId { get; set; }

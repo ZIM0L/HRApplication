@@ -1,22 +1,25 @@
-﻿import { useForm, SubmitHandler } from "react-hook-form";
+﻿import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contex/AuthContex";
-import { useState } from "react";
 import { registerUser } from "../../../api/UserAPI";
 import { RegisterInputs } from "../../../types/Auth/AuthInputTypes";
-import { jwtDecode } from "jwt-decode";
 import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";
+import Notification from "../../Notification/Notification"; // Import Notification component
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterInputs>();
     const navigate = useNavigate();
     const { SetAuthenticationToken } = useAuth();
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [passwordError, setPasswordError] = useState(false); // Stan dla komunikatu o błędzie haseł
+    const [passwordError, setPasswordError] = useState(false);
+    const [showNotificationModal, setShowNotificationModal] = useState<boolean>(false)
+    const [errosMessage, setErrorMessage] = useState<string[]>([])
+    const [isError, setIsError] = useState(false)
 
     const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
         if (data.password !== confirmPassword) {
-            setPasswordError(true); 
+            setPasswordError(true);
             return;
         }
 
@@ -25,15 +28,20 @@ const Register = () => {
             if (response?.status === 200) {
                 SetAuthenticationToken(response.data.token);
                 navigate(`/organizations`, { replace: true });
-            }
+            } 
         } catch (error) {
+            setIsError(true)
+            setShowNotificationModal(true)
+            if (error instanceof Error) {
+                setErrorMessage(error.message.split(" | "))
+            }
             console.error("Register error:", error);
         }
     };
 
     const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setConfirmPassword(event.target.value);
-        setPasswordError(false); 
+        setPasswordError(false);
     };
 
     return (
@@ -42,6 +50,8 @@ const Register = () => {
             <p className="mb-6 px-2 text-center text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
+
+      
             <form className="flex w-full flex-col md:px-16" onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4 flex space-x-4">
                     <input
@@ -64,9 +74,17 @@ const Register = () => {
                     className="mb-4 border border-gray-300 p-2"
                 />
                 <input
-                    {...register("phone", { required: true, maxLength: 12 })}
-                    type="tel"
+                    {...register("phone", {
+                        required: "Phone number is required",
+                        pattern: {
+                            value: /^[0-9]+$/, // Regex that allows only numbers
+                            message: "Phone number must only contain digits"
+                        },
+                        maxLength: { value: 12, message: "Phone number cannot exceed 12 digits" }
+                    })}
+                    type="tel" // Keep it as 'tel' for numeric input on mobile devices
                     placeholder="Your Phone Number"
+                    maxLength={12} // Restrict to 12 characters (if needed)
                     className="mb-4 border border-gray-300 p-2"
                 />
                 <div className="mb-4">
@@ -96,19 +114,24 @@ const Register = () => {
                 </div>
                 <div className="mb-4 flex items-center self-center py-2 font-['PlayfairDisplay-SemiBold']">
                     <input type="checkbox" className="mr-2" />
-                    <label className="text-gray-600 max-lg:">
+                    <label className="text-gray-600">
                         I agree on HrApplication <a href="#" className="text-cyan-blue">Terms & Conditions</a>
                     </label>
                 </div>
                 <button className="mb-4 rounded-md bg-cyan-blue py-2 text-white hover:bg-teal-400" type="submit">Sign Up</button>
                 <div className="inline-flex w-full items-center justify-center">
                     <hr className="border-0 my-4 h-px w-64 bg-gray-200 dark:bg-gray-700" />
-                        <span className="absolute bg-white px-3 font-medium">or</span>
+                    <span className="absolute bg-white px-3 font-medium">or</span>
                 </div>
                 <div className="mt-4 flex justify-center">
                     <GoogleLoginButton />
                 </div>
             </form>
+            {showNotificationModal ? 
+            <Notification
+                    messages={errosMessage}
+                    onClose={() => setShowNotificationModal(false)} isError={isError} />
+            : null }
         </div>
     );
 };

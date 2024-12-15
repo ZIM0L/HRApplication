@@ -14,6 +14,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "Invitation.WrongInvitationUser",
                 description: "An invitation can't be sent to the user who is the same as the sender"
             );
+            public static Error InvitationDoesNotExist = Error.Conflict(
+               code: "Invitation.InvitationDoesNotExist",
+               description: "An invitation do not exists"
+           );
         }
 
     }

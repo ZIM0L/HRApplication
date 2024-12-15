@@ -1,5 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { mainAxiosInstance } from "./Axios";
+import { TeamInputs } from "../types/Team/ITeam";
+import { ExtractErrorsFromAPI } from "../utils/functions/ExtractErrorsFromAPI";
 
 export const GetUsersTeams = async (): Promise<AxiosResponse | null> => {
     try {
@@ -15,9 +17,34 @@ export const GetTeam = async (): Promise<AxiosResponse | null> => {
     } catch (error) {
         if (error instanceof AxiosError) {
             console.error("Error fetching team: ", error);
-            throw new Error(error.response?.data?.title);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+
+            throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred fetching team.");
+    }
+}
+export const CreateTeam = async (data: TeamInputs): Promise<AxiosResponse | null> => {
+    try {
+        return await mainAxiosInstance.post('api/Team/AddNewTeam', data);
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error creating team: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+
+            throw new Error(errorMessage); 
+        }
+        throw new Error("Unexpected error occurred while creating team.");
     }
 }
 export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> => {
@@ -30,7 +57,14 @@ export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> =
     } catch (error) {
         if (error instanceof AxiosError) {
             console.error("Error fetching teams users: ", error);
-            throw new Error(error.response?.data?.title);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+
+            throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred fetching teams users.");
     }

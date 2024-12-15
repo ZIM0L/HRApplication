@@ -1,7 +1,9 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables;
+using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.AcceptInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.DeclineInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.SendInvitation;
+using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.CheckIfAnyInvitationForUser;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetUserInvitations;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -62,6 +64,30 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
 
             return response.Match(
             response => Ok(response),
+            errors => Problem(errors));
+        }  
+        [HttpGet]
+        [Route("/api/[controller]/CheckIfAnyInvitationForUser")]
+        public async Task<IActionResult> CheckIfAnyInvitationForUser()
+        {
+            var command = new CheckIfAnyInvitationForUserRequest();
+
+            ErrorOr<Boolean> response = await _mediator.Send(command);
+
+            return response.Match(
+            response => Ok(response),
+            errors => Problem(errors));
+        }
+        [HttpPost]
+        [Route("/api/[controller]/AcceptInvitation")]
+        public async Task<IActionResult> AcceptInvitation([FromBody] AcceptInvitationRequest request)
+        {
+            var command = new AcceptInvitationRequest(request.invitaitonId, request.jobPositionId);
+
+            ErrorOr<Unit> response = await _mediator.Send(command);
+
+            return response.Match(
+            response => Ok("User has join a team"),
             errors => Problem(errors));
         }
     }

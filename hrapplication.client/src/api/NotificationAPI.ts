@@ -1,14 +1,14 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { LoginInputs, RegisterInputs } from "../types/Auth/AuthInputTypes";
 import { mainAxiosInstance } from "./Axios";
 import { ExtractErrorsFromAPI } from "../utils/functions/ExtractErrorsFromAPI";
 
-export const loginUser = async (data: LoginInputs): Promise<AxiosResponse> => {
+export const GetUserInvitation = async (): Promise<AxiosResponse | null> => {
     try {
-        return await mainAxiosInstance.post('/auth/login', data);
+        const response = await mainAxiosInstance.get('api/Invitation/GetUserInvitation');
+        return response;
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Error login user: ", error);
+            console.error("Error fetching users invitations: ", error);
 
             const extractedErrors = ExtractErrorsFromAPI(error);
 
@@ -18,15 +18,16 @@ export const loginUser = async (data: LoginInputs): Promise<AxiosResponse> => {
 
             throw new Error(errorMessage); 
         }
-        throw new Error("Unexpected error occurred while loggin");
+        throw new Error("Unexpected error occurred fetching users invitations.");
     }
-}
-export const registerUser = async (data: RegisterInputs): Promise<AxiosResponse > => {
+};
+export const CheckIfAnyInvitationForUser = async (): Promise<AxiosResponse | null> => {
     try {
-        return await mainAxiosInstance.post('auth/register', data)
+        const response = await mainAxiosInstance.get('api/Invitation/CheckIfAnyInvitationForUser');
+        return response;
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Error registering user: ", error);
+            console.error("Error fetching users invitations: ", error);
 
             const extractedErrors = ExtractErrorsFromAPI(error);
 
@@ -36,6 +37,6 @@ export const registerUser = async (data: RegisterInputs): Promise<AxiosResponse 
 
             throw new Error(errorMessage); 
         }
-        throw new Error("Unexpected error occurred while registering user");
+        throw new Error("Unexpected error occurred fetching users invitations.");
     }
-}
+};

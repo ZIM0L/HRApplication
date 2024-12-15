@@ -4,22 +4,30 @@ import { LoginInputs } from '../../../types/Auth/AuthInputTypes'
 import { loginUser } from '../../../api/UserAPI'
 import { useAuth } from "../../../contex/AuthContex";
 import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";
+import Notification from "../../Notification/Notification";
+import { useState } from "react";
 
 const Login = () => {
     const { register, handleSubmit } = useForm<LoginInputs>();
     const navigate = useNavigate();
     const { SetAuthenticationToken } = useAuth();
+    const [showNotificationModal, setShowNotificationModal] = useState<boolean>(false)
+    const [errosMessage, setErrorMessage] = useState<string[]>()
+    const [isError, setIsError] = useState(false)
 
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
         try {
-            const response = loginUser(data)
-            response.then(resolve => {
-                if (resolve?.status === 200) {
-                    SetAuthenticationToken(resolve.data.token)
-                    navigate(`/organizations`, { replace: true });
-                }
-            })
+            const response = await loginUser(data)
+            if (response?.status === 200) {
+                SetAuthenticationToken(response.data.token)
+                navigate(`/organizations`, { replace: true });
+            }
         } catch (error) {
+            setShowNotificationModal(true)
+            if (error instanceof Error) {
+                setErrorMessage(error.message.split(" | "));
+            }
+            setIsError(true)
             console.error("Error message: " + error);
         }
     };
@@ -57,6 +65,12 @@ const Login = () => {
                 </div>
                 <GoogleLoginButton />
             </form>
+            {showNotificationModal ? 
+                <Notification
+                    messages={errosMessage}
+                    onClose={() => { setShowNotificationModal(false)}}
+                    isError={isError} />
+            : null }
         </div>
     );
 };

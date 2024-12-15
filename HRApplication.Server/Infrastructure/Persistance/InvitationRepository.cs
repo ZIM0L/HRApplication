@@ -20,9 +20,19 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
+        public bool CheckIfAnyInvitationForUser(Guid userId)
+        {
+            return _dbContex.Invitations.Any(x => x.UserId == userId);
+        }
+
         public void DeleteUserInvitation()
         {
             throw new NotImplementedException();
+        }
+
+        public Invitation? GetInvitationById(Guid invitationId)
+        {
+            return _dbContex.Invitations.SingleOrDefault(x => x.InvitationId == invitationId);
         }
 
         public Invitation? IsInvitationAlreadyCreated(Invitation invitation)

@@ -13,7 +13,7 @@ interface AddJobModalProps {
 
 const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onRefresh }) => {
     const { register, handleSubmit, reset } = useForm<IAddJobPositionInputs>();
-    const [notificationMessage, setNotificationMessage] = useState<string>("");
+    const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
     const { selectedTeam } = useAuth();
@@ -32,7 +32,7 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onRefresh })
             setIsError(true);
             setShowNotification(true); 
             if (err instanceof Error) {
-                setNotificationMessage(err.message);
+                setNotificationMessage(err.message.split(" | "))
             }
         }
     };
@@ -97,7 +97,7 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onRefresh })
             </div>
             {showNotification && (
                 <Notification
-                    message={notificationMessage}
+                    messages={notificationMessage}
                     onClose={() => setShowNotification(false)}
                     isError={isError}
                 />

@@ -1,18 +1,18 @@
 ﻿import React, { useEffect, useState } from "react";
 
 interface NotificationProps {
-    message: string;
+    messages: string[];  // Zmieniamy z 'message' na 'messages', by obsługiwać tablicę błędów
     onClose: () => void;
     isError: boolean;
 }
 
-const Notification: React.FC<NotificationProps> = ({ message, onClose, isError }) => {
+const Notification: React.FC<NotificationProps> = ({ messages, onClose, isError }) => {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setIsVisible(false); 
-        }, 3000); 
+            setIsVisible(false);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -24,9 +24,11 @@ const Notification: React.FC<NotificationProps> = ({ message, onClose, isError }
     return (
         <div
             className={`fixed right-5 top-5 z-50 rounded-lg ${isError ? 'bg-red-500' : 'bg-green-500'} px-4 py-2 text-white shadow-lg ${notificationClass}`}
-            onTransitionEnd={isVisible ? undefined : onClose} 
+            onTransitionEnd={isVisible ? undefined : onClose}
         >
-            {message}
+            {messages.map((message, index) => (
+                <div key={index} className="mb-2">{message}</div> 
+            ))}
         </div>
     );
 };

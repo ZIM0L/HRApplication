@@ -3,5 +3,5 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
 {
-    public record TeamAddRequest(string name, string country, string industry, string email) : IRequest<ErrorOr<TeamResult>>;
+    public record TeamAddRequest(string name, string country, string industry, string email, string? city, string? zipCode, string? url, string? address, string? phoneNumber) : IRequest<ErrorOr<TeamResult>>;
 }

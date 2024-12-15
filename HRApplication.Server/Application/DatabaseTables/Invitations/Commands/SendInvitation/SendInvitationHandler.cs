@@ -37,7 +37,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.S
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            if (_jobPositionsRepository.GetJobPositionById(Guid.Parse(command.jobpositionid)) is Domain.Models.JobPosition)
+            if (_jobPositionsRepository.GetJobPositionById(Guid.Parse(command.jobpositionid)) is not Domain.Models.JobPosition)
             {
                 return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
             }

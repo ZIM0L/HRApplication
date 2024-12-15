@@ -2,32 +2,26 @@
 import { useState, useRef, useEffect } from "react";
 import Country from "../../utils/enums/Country"; // Import Country enum
 import Industry from "../../utils/enums/Industry"; // Import Industry enum
+import { CreateTeam } from "../../api/TeamAPI";
+import Notification from "../Notification/Notification";
+import { TeamInputs } from "../../types/Team/ITeam";
 
 interface AddJobModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-type Inputs = {
-    name: string;
-    industry: string;
-    country: string;
-    url?: string;
-    email: string;
-    address?: string;
-    city?: string;
-    phoneNumber?: string;
-    zipcode?: string;
-};
-
 const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
-    const { register, handleSubmit, reset} = useForm<Inputs>();
+    const { register, handleSubmit, reset, setValue } = useForm<TeamInputs>();
     const [searchCountry, setSearchCountry] = useState("");
     const [searchIndustry, setSearchIndustry] = useState("");
     const [isCountryDropdownVisible, setIsCountryDropdownVisible] = useState(false);
     const [isIndustryDropdownVisible, setIsIndustryDropdownVisible] = useState(false);
     const [invalidCountry, setInvalidCountry] = useState(false);
     const [invalidIndustry, setInvalidIndustry] = useState(false);
+    const [showResultNotification, setShowResultNotification] = useState(false)
+    const [isError, seIsError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     // Refs to detect clicks outside the dropdown
     const countryInputRef = useRef<HTMLInputElement>(null);
@@ -43,14 +37,24 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
         industry.toLowerCase().includes(searchIndustry.toLowerCase())
     );
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmit: SubmitHandler<TeamInputs> = async (data) => {
         try {
             validateCountry(searchCountry);
             validateIndustry(searchIndustry);
             console.log("Data submitted:", data);
-            //reset();
-            onClose(); // Zamknij modal po pomyślnym przesłaniu
+            const result = await CreateTeam(data);
+            if (result?.status == 200) {
+                setErrorMessage("Team has been Created")
+                setShowResultNotification(true)
+                seIsError(false)
+                reset()
+            } 
         } catch (error) {
+            seIsError(true)
+            setShowResultNotification(true)
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            }
             console.error("Error submitting data:", error);
         }
     };
@@ -71,7 +75,6 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
         }
     };
 
-    // Detect clicks outside the input/dropdown
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (
@@ -98,8 +101,8 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
             <div className="w-[90%] max-w-4xl rounded-lg bg-white p-6 shadow-lg">
                 <div className="mb-4">
-                    <p className="text-lg font-semibold">Create new team</p>
-                    <p className="text-sm font-semibold text-gray-500">By creating a team, you will automatically be assigned the role of Administrator.</p>
+                    <p className="mb-2 text-lg font-semibold">Create new team</p>
+                    <p className="border-2 border-dashed border-[#b3b380] bg-[#ffffd2] p-2 text-sm font-semibold text-[#b3b380]">By creating a team, you will automatically be assigned the role of Administrator.</p>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="grid-cols-1 grid gap-4 sm:grid-cols-2">
                     {/* Name */}
@@ -122,25 +125,27 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                             Industry <span className="text-red-500">*</span>
                         </label>
                         <input
+                            {...register("industry")}
                             ref={industryInputRef}
                             type="text"
                             placeholder="Search industry"
                             value={searchIndustry}
                             onFocus={() => setIsIndustryDropdownVisible(true)}
-                            onChange={(e) => { setSearchIndustry(e.target.value); setInvalidIndustry(false)}}
+                            onChange={(e) => { setSearchIndustry(e.target.value); setInvalidIndustry(false); setValue("industry", e.target.value) }}
                             className="w-full rounded-md border border-gray-300 px-4 py-2 mb-2"
                         />
                         {isIndustryDropdownVisible && (
                             <ul
                                 ref={industryDropdownRef}
                                 className="absolute max-h-36 overflow-y-auto rounded-md border border-gray-300 bg-white p-2"
-                                style={{ maxHeight: "180px" }} // Ustawiłem wysokość na 180px (ok. 3 elementów)
+                                style={{ maxHeight: "180px" }} 
                             >
                                 {filteredIndustries.length > 0 ? (
                                     filteredIndustries.map((industry) => (
                                         <li
                                             key={industry}
                                             onClick={() => {
+                                                setValue("industry", industry)
                                                 setSearchIndustry(industry);
                                                 setIsIndustryDropdownVisible(false);
                                             }}
@@ -165,12 +170,13 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                             Country <span className="text-red-500">*</span>
                         </label>
                         <input
+                            {...register("country")}
                             ref={countryInputRef}
                             type="text"
                             placeholder="Search country"
                             value={searchCountry}
                             onFocus={() => setIsCountryDropdownVisible(true)}
-                            onChange={(e) => { setSearchCountry(e.target.value); setInvalidCountry(false) }}
+                            onChange={(e) => { setSearchCountry(e.target.value); setInvalidCountry(false); setValue("country", e.target.value); }}
                             className="w-full relative rounded-md border border-gray-300 px-4 py-2 mb-2"
                         />
                         {isCountryDropdownVisible && (
@@ -184,6 +190,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                                         <li
                                             key={country}
                                             onClick={() => {
+                                                setValue("country", country);
                                                 setSearchCountry(country);
                                                 setIsCountryDropdownVisible(false);
                                             }}
@@ -283,14 +290,22 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                         </button>
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={() => { reset(); setSearchIndustry(""); setSearchCountry("");  onClose(); }}
                             className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
                         >
-                            Cancel
+                            Dismiss
                         </button>
                     </div>
                 </form>
             </div>
+            {showResultNotification ? 
+            <Notification
+                message={errorMessage}
+                onClose={() => { setShowResultNotification(false)}}
+                isError={isError} />
+                :
+                null
+            }
         </div>
     );
 };

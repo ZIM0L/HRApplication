@@ -10,6 +10,18 @@ export interface ITeam {
     phoneNumber: string,
     zipCode: string
 }
+export type TeamInputs = {
+    name: string;
+    industry: string;
+    country: string;
+    url?: string;
+    email: string;
+    address?: string;
+    city?: string;
+    phoneNumber?: string;
+    zipcode?: string;
+};
+
 export interface ITeamWithUserPermission {
     team: ITeam,
     roleName: string

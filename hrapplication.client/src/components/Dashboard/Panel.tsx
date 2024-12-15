@@ -21,14 +21,6 @@ function Panel() {
  
     return (
         <div className="min-h-screen w-full overflow-y-auto bg-gray-100">
-     
-
-            {/* Główna sekcja */}
-            {/*<div className="z-1 absolute top-12 h-[130px] w-full bg-red-200 bg-cover bg-center" style={{*/}
-            {/*    backgroundImage: `url('https://plus.unsplash.com/premium_photo-1673264933061-f1ea43b13032?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,*/}
-            {/*    content: ''*/}
-            {/*}}>*/}
-            {/*</div>*/}
            
             <div className="mt-10 flex p-4">
                 <div className="z-0 mr-6 flex w-1/4 flex-col space-y-4">

@@ -32,7 +32,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            var newTeamMember = new TeamMember(request.userId, request.teamId, request.roleName);
+            var newTeamMember = new TeamMember(request.userId, request.teamId, request.jobPositionId , request.roleName);
 
             _teamMemberRepository.AddNewTeamMemberToCollection(newTeamMember);
 

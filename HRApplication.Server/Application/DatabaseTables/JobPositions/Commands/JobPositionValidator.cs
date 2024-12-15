@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HRApplication.Server.Application.Utilities;
 
 namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
 {
@@ -8,7 +9,7 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
         {
             RuleFor(x => x.teamId)
                 .NotEmpty().WithMessage("TeamId is required.")
-                .Matches(@"^[a-zA-Z0-9\-]+$").WithMessage("TeamId can only contain alphanumeric characters and hyphens.");
+                .Must(GuidValidator.IsValidGuid).WithMessage("TeamId must be a valid GUID.");
 
             RuleFor(x => x.title)
                 .NotEmpty().WithMessage("Title is required.")
