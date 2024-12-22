@@ -7,9 +7,6 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.S
     {
         public SendInvitationValidator()
         {
-            RuleFor(request => request.userid)
-                .NotEmpty().WithMessage("User ID is required.")
-                .Must(GuidValidator.IsValidGuid).WithMessage("Employee ID must be a valid GUID.");
 
             RuleFor(request => request.jobpositionid)
                 .NotEmpty().WithMessage("Job Position ID is required.")

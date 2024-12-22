@@ -8,6 +8,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         void AddJobPosition(JobPosition jobPosition);
         JobPosition? GetJobPositionByTitle(string title);
         JobPosition? GetJobPositionById(Guid jobPositionId);
+        List<JobPosition>? GetJobPositionsByIds(List<Guid> jobPositionId);
         List<JobPosition>? GetJobPositionsByTeamsId(Guid teamId);
         List<JobPosition> GetAllJobPositions();
         JobPosition? GetJobPositionByTeamIdAndTitle(Guid teamId, string title);

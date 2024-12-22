@@ -1,19 +1,18 @@
 ﻿using ErrorOr;
-using HRApplication.Server.Application.DatabaseTables.Teams.Queries;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
+namespace HRApplication.Server.Application.DatabaseTables.Teams.Queries.GetTeamInfo
 {
     public class GetTeamsHnadler : IRequestHandler<GetTeamRequest, ErrorOr<TeamResult>>
     {
         private readonly ITeamRepository _teamRepository;
         private readonly ITeamMemberRepository _teamMemberRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor; 
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public GetTeamsHnadler(ITeamRepository teamRepository, IUserRepository userRepository, ITeamMemberRepository teamMemberRepository, IHttpContextAccessor httpContextAccessor)
         {
             _teamRepository = teamRepository;
@@ -43,24 +42,28 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
             {
                 return CustomErrorOr.CustomErrors.Team.UserWithoutTeam;
             }
-
-            var team = _teamRepository.GetTeamByTeamId(teamMember[1].TeamId); //temporary
-            if (team == null)
+            foreach (var teamMatching in teamMember)
             {
-                return CustomErrorOr.CustomErrors.Team.NoTeamFound; 
+                if(teamMatching.TeamId == Guid.Parse(request.teamId))
+                {
+                   var team = _teamRepository.GetTeamByTeamId(teamMatching.TeamId);
+                    if (team != null)
+                    {
+                    return new TeamResult(
+                        team.Name,
+                        team.Industry,
+                        team.Country,
+                        team.Url,
+                        team.Email,
+                        team.Address,
+                        team.City,
+                        team.PhoneNumber,
+                        team.ZipCode
+                        );
+                    }
+                }
             }
-
-            return new TeamResult(
-                team.Name,
-                team.Industry,
-                team.Country,
-                team.Url,
-                team.Email,
-                team.Address,
-                team.City,
-                team.PhoneNumber,
-                team.ZipCode
-                );
+            return CustomErrorOr.CustomErrors.Team.TeamNotFound;
         }
     }
 }

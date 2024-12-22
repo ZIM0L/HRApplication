@@ -4,6 +4,7 @@ using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Domain.Models.User;
 using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
+using System.Data.Entity.Core.Metadata.Edm;
 using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTeamsUsers
@@ -13,11 +14,13 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.Ge
         private readonly ITeamMemberRepository _teamMemberRepository;
         private readonly ITeamRepository _teamRepository;
         private readonly IUserRepository _userRepository;
-        public GetTeamsUsersHandler(ITeamRepository teamRepository, ITeamMemberRepository teamMemberRepository, IUserRepository userRepository)
+        private readonly IJobPositionsRepository _jobPositionsRepository;
+        public GetTeamsUsersHandler(ITeamRepository teamRepository, ITeamMemberRepository teamMemberRepository, IUserRepository userRepository, IJobPositionsRepository jobPositionsRepository)
         {
             _teamRepository = teamRepository;
             _teamMemberRepository = teamMemberRepository;
             _userRepository = userRepository;
+            _jobPositionsRepository = jobPositionsRepository;
         }
         public async Task<ErrorOr<List<UserDTO>>> Handle(GetTeamsUsersRequest query, CancellationToken cancellationToken)
         {
@@ -40,25 +43,45 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.Ge
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
+            var jobPositionIds = teamMembers
+              .Where(tm => tm.JobPositionId.HasValue)
+              .Select(tm => tm.JobPositionId.Value)
+              .Distinct()
+              .ToList();
+
+            var jobPositions = _jobPositionsRepository.GetJobPositionsByIds(jobPositionIds);
+
             var userDTOs = teamMembers
-                .Join(
-                    users,
-                    teamMember => teamMember.UserId,
-                    user => user.UserId,
-                    (teamMember, user) => new UserDTO(
-                        user.Name,
-                        user.Surname,
-                        user.Email,
-                        user.PhoneNumber)
-                    {
-                        JobPosition = teamMember.JobPositionId?.ToString() ?? string.Empty,
-                        Permission = teamMember.RoleName,
-                        JoinedAt = teamMember.JoinedAt,
-                        LeftAt = teamMember.LeftAt,
-                        isActive = teamMember.IsActive
-                    }
-                )
-                .ToList();
+             .Join(
+                 users,
+                 teamMember => teamMember.UserId,
+                 user => user.UserId,
+                 (teamMember, user) => new { teamMember, user }
+             )
+             .GroupJoin(
+                 jobPositions,
+                 result => result.teamMember.JobPositionId,
+                 jobPosition => jobPosition.JobPositionId,
+                 (result, jobPositionGroup) => new
+                 {
+                     result.teamMember,
+                     result.user,
+                     JobPositionTitle = jobPositionGroup.FirstOrDefault()?.Title ?? "Unknown"
+                 }
+             )
+             .Select(mapped => new UserDTO(
+                 mapped.user.Name,
+                 mapped.user.Surname,
+                 mapped.user.Email,
+                 mapped.user.PhoneNumber)
+             {
+                 JobPosition = mapped.JobPositionTitle,
+                 Permission = mapped.teamMember.RoleName,
+                 JoinedAt = mapped.teamMember.JoinedAt,
+                 LeftAt = mapped.teamMember.LeftAt,
+                 isActive = mapped.teamMember.IsActive
+             })
+             .ToList();
 
             return userDTOs;
 

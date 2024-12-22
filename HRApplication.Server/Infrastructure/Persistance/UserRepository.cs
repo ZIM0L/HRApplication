@@ -46,6 +46,13 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Users.Where(x => id.Contains(x.UserId)).ToList();
         }
 
+        public List<User>? GetUsersByNameAndSurname(List<string> query)
+        {
+            return _dbContex.Users
+                           .Where(u => query.Any(q => u.Name.Contains(q) || u.Surname.Contains(q))) 
+                           .ToList();
+        }
+
         public void UpdateUser(User user)
         {
             _dbContex.Users.Update(user);

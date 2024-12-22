@@ -9,6 +9,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         User? GetUserByGivenUser(ValidateUserRequest request);
         User? GetUserById(Guid id);
         List<User>? GetUsersByIds(List<Guid> id);
+        List<User>? GetUsersByNameAndSurname(List<string> query);
         User? GetUserByRefreshToken(string refreshToken); //TODO: move to different interface
         void UpdateUser(User user);
     }

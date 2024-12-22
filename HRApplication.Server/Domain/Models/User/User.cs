@@ -8,7 +8,7 @@
         Email = email;
         Password = password;  
         PhoneNumber = phoneNumber;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public Guid UserId { get; set; }
@@ -21,4 +21,7 @@
     public DateTime? UpdatedAt { get; set; }
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime RefreshTokenExpiryTime { get; set; }
+    public string? GoogleRefreshToken{ get; set; } = string.Empty;
+    public DateTime? GoogleRefreshTokenExpiryTime { get; set; }
+    public Boolean? IsGoogleLoggedIn { get; set; } = false;
 }

@@ -35,6 +35,17 @@ const Dashboard: React.FC = () => {
         setSelectedTeamState(null);
         navigate("/organizations");
     };
+    const getGreeting = () => {
+        const currentHour = new Date().getHours(); 
+
+        if (currentHour < 12) {
+            return "Good Morning"; 
+        } else if (currentHour < 18) {
+            return "Good Afternoon"; 
+        } else {
+            return "Good Evening"; 
+        }
+    }
 
     if (isLoggingOut) {
         return (
@@ -83,15 +94,6 @@ const Dashboard: React.FC = () => {
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <UserGroupIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Team</span>
-                                                <div className="translate-x-[-120%] group-hover:translate-x-6 absolute inset-0 transform bg-gray-200 transition-transform duration-300 dark:bg-gray-700"></div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                    <div>
-                                        <Link to="job_positions">
-                                            <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
-                                                <UsersIcon className="h-6 w-6" />
-                                                <span className="z-10 relative text-sm">Aplications</span>
                                                 <div className="translate-x-[-120%] group-hover:translate-x-6 absolute inset-0 transform bg-gray-200 transition-transform duration-300 dark:bg-gray-700"></div>
                                             </div>
                                         </Link>
@@ -171,9 +173,10 @@ const Dashboard: React.FC = () => {
                 {decodedToken && (
                     <div className="flex h-fit items-center justify-between bg-dark-blue px-4 py-2 text-white">
                         <span className="text-sm">
-                            Dobry wieczór, {decodedToken.given_name} {decodedToken.family_name}
+                            {getGreeting()}, {decodedToken.given_name} {decodedToken.family_name}
                         </span>
                         <div className="relative flex items-center space-x-2">
+                            <span className="text-gray-200">{selectedTeam.team.name}</span>
                             <div className="group relative flex flex-col items-center">
                                 <button onClick={() => onChangeTeam()}>
                                     <ArrowLeftStartOnRectangleIcon className="h-6 w-6 hover:cursor-pointer" />
@@ -190,7 +193,10 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                 )}
-                <div className="border-2 w-full px-4 py-2 text-sm text-gray-500">{selectedTeam.team.name}</div>
+                <div className="border-2 flex w-full px-2 py-2 text-sm text-gray-500">
+                    <span className="border-r-2 px-2">{selectedTeam.team.name}</span>
+                    <span className="px-2 transition-all hover:text-gray-900 hover:scale-105 hover:hover:cursor-pointer">Callender</span>
+                </div>
                 {/* Zawartość */}
                 <Outlet />
             </div>

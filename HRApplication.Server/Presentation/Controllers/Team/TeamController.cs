@@ -4,7 +4,7 @@ using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTea
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams;
 using HRApplication.Server.Application.DatabaseTables.Teams;
 using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
-using HRApplication.Server.Application.DatabaseTables.Teams.Queries;
+using HRApplication.Server.Application.DatabaseTables.Teams.Queries.GetTeamInfo;
 using HRApplication.Server.Domain.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -64,11 +64,11 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 errors => Problem(errors)
                 );
         }
-        [HttpGet]
+        [HttpPost]
         [Route("/api/[controller]/GetTeam")]
-        public async Task<IActionResult> GetTeam()
+        public async Task<IActionResult> GetTeam([FromBody] GetTeamRequest request)
         {
-            var command = new GetTeamRequest();
+            var command = new GetTeamRequest(request.teamId);
 
             ErrorOr<TeamResult> response = await _mediatR.Send(command);
 

@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { mainAxiosInstance } from "./Axios";
-import { AcceptInvitationInputs, InvitationInputs } from "../types/Invitation/Invitation";
+import { AcceptInvitationInputs, InvitationInputs, SearchForfullNameInputs } from "../types/Invitation/Invitation";
 import { ExtractErrorsFromAPI } from "../utils/functions/ExtractErrorsFromAPI";
 
 export const InviteUserToTeam = async (data: InvitationInputs): Promise<AxiosResponse | null> => {
@@ -12,6 +12,20 @@ export const InviteUserToTeam = async (data: InvitationInputs): Promise<AxiosRes
         if (error instanceof AxiosError) {
             console.error("Error inviting user to team: ", error);
 
+            throw new Error(error.response?.data.title); 
+        }
+
+        throw new Error("Unexpected error occurred inviting user.");
+    }
+};
+export const SeachForUser = async (data: SearchForfullNameInputs): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post('/api/Invitation/SeachForUser', data);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error fetching users: ", error);
+
             const extractedErrors = ExtractErrorsFromAPI(error);
 
             const errorMessage = extractedErrors
@@ -21,7 +35,7 @@ export const InviteUserToTeam = async (data: InvitationInputs): Promise<AxiosRes
             throw new Error(errorMessage); 
         }
 
-        throw new Error("Unexpected error occurred inviting user.");
+        throw new Error("Unexpected error occurred while fetching users.");
     }
 };
 export const AcceptInvitation = async (data: AcceptInvitationInputs): Promise<AxiosResponse | null> => {

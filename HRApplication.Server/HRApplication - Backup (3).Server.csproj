@@ -43,4 +43,8 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\DatabaseTables\Teams\Queries\NewFolder\" />
+  </ItemGroup>
+
 </Project>

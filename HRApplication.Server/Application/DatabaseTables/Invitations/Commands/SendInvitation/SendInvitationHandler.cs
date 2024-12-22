@@ -32,7 +32,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.S
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (_userRepository.GetUserById(Guid.Parse(command.userid)) is not User)
+            if (_userRepository.GetUserByEmail(command.email) is not User user)
             {
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
@@ -42,7 +42,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.S
                 return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
             }
 
-            var invitation = new Domain.Models.Invitation(Guid.Parse(command.userid), Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(command.jobpositionid));
+            var invitation = new Domain.Models.Invitation(user.UserId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(command.jobpositionid));
 
             if(invitation.UserId == invitation.SendByUserId)
             {

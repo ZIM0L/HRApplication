@@ -5,6 +5,8 @@ using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.Decli
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.SendInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.CheckIfAnyInvitationForUser;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetUserInvitations;
+using HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearch;
+using HRApplication.Server.Domain.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +31,6 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
         public async Task<IActionResult> AddJobPosition([FromBody] SendInvitationRequest request)
         {
             var command = new SendInvitationRequest(
-                request.userid,
                 request.jobpositionid,
                 request.name,
                 request.surname,
@@ -41,7 +42,22 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             return response.Match(
             response => Ok(response),
             errors => Problem(errors));
-        } 
+        }
+        [HttpPost]
+        [Route("/api/[controller]/SeachForUser")]
+        public async Task<IActionResult> SeachForUser([FromBody] GetUserBySearchRequest request)
+        {
+            var command = new GetUserBySearchRequest(
+                request.fullName,
+                request?.email
+                );
+
+            ErrorOr<List<UserSearchDTO>> response = await _mediator.Send(command);
+
+            return response.Match(
+            response => Ok(response),
+            errors => Problem(errors));
+        }
         [HttpGet]
         [Route("/api/[controller]/GetUserInvitation")]
         public async Task<IActionResult> GetUserInvitation()

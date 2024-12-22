@@ -167,9 +167,9 @@ const Team: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {dataToDisplay.map((employee) => (
+                        {dataToDisplay.map((employee, key) => (
                             <tr
-                                key={`${employee.name}-${employee.surname}`}
+                                key={key}
                                 className="transition-colors duration-200 hover:bg-gray-50"
                             >
                                 <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-700">{employee.name}</td>

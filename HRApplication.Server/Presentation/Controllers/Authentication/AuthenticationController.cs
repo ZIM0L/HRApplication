@@ -100,6 +100,17 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             var firstName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
             var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
 
+            // Uzyskanie tokenu dostępowego z kontekstu
+            var accessToken = info.Properties.GetTokenValue("access_token");
+            var accessTokentest = info.Properties.GetTokens();
+            var googleRefreshToken = info.Properties.GetTokenValue("refresh_token");
+            var googleAccessTokenExpiry = info.Properties.ExpiresUtc?.UtcDateTime;
+
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("Access token is missing.");
+            }
+
             var existingUser = _userRepository.GetUserByEmail(email);
             string token;
             string refreshToken;
@@ -115,6 +126,9 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                     phoneNumber: null
                 );
                 newUser.CreatedAt = DateTime.UtcNow;
+                newUser.IsGoogleLoggedIn = true;
+                newUser.GoogleRefreshToken = googleRefreshToken;
+                newUser.GoogleRefreshTokenExpiryTime = googleAccessTokenExpiry;
 
                 token = _jwtTokenGenerator.GenerateToken(newUser);
                 refreshToken = _jwtTokenGenerator.GenerateRefreshToken(token);
@@ -126,24 +140,26 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             }
             else
             {
-                // Aktualizacja istniejącego użytkownika
+                existingUser.IsGoogleLoggedIn = true;
+                existingUser.GoogleRefreshToken = googleRefreshToken;
+                existingUser.GoogleRefreshTokenExpiryTime = googleAccessTokenExpiry;
+                existingUser.UpdatedAt = DateTime.UtcNow;
+
                 token = _jwtTokenGenerator.GenerateToken(existingUser);
                 refreshToken = _jwtTokenGenerator.GenerateRefreshToken(token);
 
-                existingUser.UpdatedAt = DateTime.UtcNow;
                 existingUser.RefreshToken = refreshToken;
                 existingUser.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
                 _userRepository.UpdateUser(existingUser);
             }
 
-            // Dodanie ciasteczka z refresh tokenem
             AppendRefreshTokenToCookie(refreshToken);
 
-            // Przekierowanie użytkownika na frontend z tokenem w URL
             var frontendUrl = $"https://localhost:5173/auth/google-handler?token={token}";
             return Redirect(frontendUrl);
         }
+
         private void AppendRefreshTokenToCookie(string refreshToken)
         {
             var cookieOptions = new CookieOptions

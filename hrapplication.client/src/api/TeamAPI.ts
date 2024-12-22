@@ -11,9 +11,11 @@ export const GetUsersTeams = async (): Promise<AxiosResponse | null> => {
         return null
     }
 }
-export const GetTeam = async (): Promise<AxiosResponse | null> => {
+export const GetTeam = async (data : string): Promise<AxiosResponse | null> => {
     try {
-        return await mainAxiosInstance.get('api/Team/GetTeam');
+        return await mainAxiosInstance.post('api/Team/GetTeam', {
+            teamId : data
+        });
     } catch (error) {
         if (error instanceof AxiosError) {
             console.error("Error fetching team: ", error);

@@ -10,11 +10,19 @@ export interface IInvitation {
 }
 
 export type InvitationInputs = {
-    userId: string;
     name: string;
     surname: string;
     email: string;
     jobPositionId: string;  
+};
+export type SearchForUserInputs = {
+    name: string;
+    surname: string;
+    email: string;
+};
+export type SearchForfullNameInputs = {
+    fullName: string;
+    email: string;
 };
 export type AcceptInvitationInputs = {
     invitaitonId: string;
