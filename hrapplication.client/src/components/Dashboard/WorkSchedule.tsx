@@ -1,5 +1,4 @@
 ﻿import { ClockIcon } from '@heroicons/react/24/solid';
-import React from 'react';
 
 const WorkSchedule = () => {
     const weekSchedule = [
@@ -11,12 +10,6 @@ const WorkSchedule = () => {
         { date: '06-Dec-2024', day: 'Sat', status: 'Working', hours: '9:00 AM - 6:00 PM' },
         { date: '07-Dec-2024', day: 'Sun', status: 'Weekend', hours: '9:00 AM - 6:00 PM' },
     ];
-
-    const statusColors = {
-        Absent: 'bg-red-500',
-        Working: 'bg-green-500',
-        Weekend: 'bg-yellow-500'
-    };
 
     return (
         <div className="bg-gray-100">

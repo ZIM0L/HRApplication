@@ -93,6 +93,10 @@ const Team: React.FC = () => {
                 let valueA = a[sortBy as keyof EmployeeData];
                 let valueB = b[sortBy as keyof EmployeeData];
 
+                if (valueA == null && valueB == null) return 0;
+                if (valueA == null) return sortOrder === 'asc' ? 1 : -1; 
+                if (valueB == null) return sortOrder === 'asc' ? -1 : 1; 
+
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     valueA = valueA.toLowerCase();
                     valueB = valueB.toLowerCase();
@@ -105,6 +109,7 @@ const Team: React.FC = () => {
 
         return filteredData;
     };
+
 
     // Przetworzone dane do wyświetlenia
     const dataToDisplay = processedData();

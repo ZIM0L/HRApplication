@@ -13,6 +13,7 @@ export const GetJobPositionsBasedOnTeams = async (teamId: string): Promise<Axios
     } catch (error) {
         console.error("Error fetching job position: ", error);
 
+        if (error instanceof AxiosError) {
         const extractedErrors = ExtractErrorsFromAPI(error);
 
         const errorMessage = extractedErrors
@@ -20,6 +21,8 @@ export const GetJobPositionsBasedOnTeams = async (teamId: string): Promise<Axios
             .join(" | ");
 
         throw new Error(errorMessage); 
+        }
+        throw new Error("Unexpected error occurred while fetching job position.");
     }
 };
 export const AddJobPosition = async (

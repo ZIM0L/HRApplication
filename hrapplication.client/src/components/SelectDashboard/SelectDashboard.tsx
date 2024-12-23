@@ -1,4 +1,4 @@
-﻿import { ArrowLeftStartOnRectangleIcon, ChevronLeftIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
+﻿import { ArrowLeftStartOnRectangleIcon} from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AuthContex";
 import { useEffect, useState } from "react";
 import { GetUsersTeams } from "../../api/TeamAPI";

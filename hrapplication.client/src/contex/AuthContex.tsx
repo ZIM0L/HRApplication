@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }: IProvider) => {
         setSelectedTeam(null);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('selectedTeam');
-        document.cookie = 'refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly';
+        document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         setAuthToken(null); // Usuniêcie tokenu w API
     };
   

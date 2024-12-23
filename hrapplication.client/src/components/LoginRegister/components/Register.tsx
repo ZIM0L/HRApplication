@@ -124,9 +124,9 @@ const Register = () => {
                     <span className="absolute bg-white px-3 font-medium">or</span>
                 </div>
                 <div className="mt-4 flex justify-center">
-                    <GoogleLoginButton />
                 </div>
             </form>
+            <GoogleLoginButton />
             {showNotificationModal ? 
             <Notification
                     messages={errosMessage}

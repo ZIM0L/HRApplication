@@ -1,5 +1,4 @@
 ﻿import { useAuth } from '../../contex/AuthContex';
-import SearchForTeam from '../SearchForTeam/SearchForTeam';
 import Notifications from './Notifications';
 import UpcomingEventsAlert from './UpcomingEventsAlert';
 import WorkSchedule from './WorkSchedule';
@@ -16,7 +15,7 @@ function Panel() {
     }
 
     if (!decodedToken) {
-        return <SearchForTeam />;
+        return <div>No Token</div>;
     }
  
     return (
@@ -24,7 +23,6 @@ function Panel() {
            
             <div className="mt-10 flex p-4">
                 <div className="z-0 mr-6 flex w-1/4 flex-col space-y-4">
-                    {/* Profil użytkownika */}
                     <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow">
                         <img
                             src="https://via.placeholder.com/80"
@@ -45,7 +43,6 @@ function Panel() {
                     </div>
                 </div>
 
-                {/* Informacje i harmonogram */}
                 <div className="flex flex-col space-y-5 md:w-full">
                     <div className="z-0 flex space-x-4">
                         <UpcomingEventsAlert />

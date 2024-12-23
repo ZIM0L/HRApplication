@@ -12,6 +12,7 @@ function JobPositions() {
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
     const [selectedJob, setSelectedJob] = useState<IJobPosition | null>(null);
     const { selectedTeam } = useAuth();
+
     const fetchJobPositions = async () => {
         try {
             if (!selectedTeam?.team.teamId) {
@@ -29,14 +30,12 @@ function JobPositions() {
         }
     };
 
-    // Funkcja odświeżająca listę stanowisk
     const refreshJobPositions = () => {
         fetchJobPositions();
     };
 
     useEffect(() => {
         fetchJobPositions();
-        
     }, []);
  
 

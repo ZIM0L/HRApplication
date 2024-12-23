@@ -21,7 +21,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
     const [invalidIndustry, setInvalidIndustry] = useState(false);
     const [showResultNotification, setShowResultNotification] = useState(false)
     const [isError, seIsError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
     // Refs to detect clicks outside the dropdown
     const countryInputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +44,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
             console.log("Data submitted:", data);
             const result = await CreateTeam(data);
             if (result?.status == 200) {
-                setErrorMessage("Team has been Created")
+                setErrorMessage(["Team has been Created"])
                 setShowResultNotification(true)
                 seIsError(false)
                 reset()
@@ -53,14 +53,14 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
             seIsError(true)
             setShowResultNotification(true)
             if (error instanceof Error) {
-                setErrorMessage(error.message);
+                setErrorMessage([error.message]);
             }
             console.error("Error submitting data:", error);
         }
     };
 
     const validateCountry = (value: string) => {
-        if (!filteredCountries.includes(value)) {
+        if (!filteredCountries.includes(value as Country)) {
             setInvalidCountry(true);
         } else {
             setInvalidCountry(false);
@@ -68,7 +68,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
     };
 
     const validateIndustry = (value: string) => {
-        if (!filteredIndustries.includes(value)) {
+        if (!filteredIndustries.includes(value as Industry)) {
             setInvalidIndustry(true);
         } else {
             setInvalidIndustry(false);
@@ -131,7 +131,9 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                             placeholder="Search industry"
                             value={searchIndustry}
                             onFocus={() => setIsIndustryDropdownVisible(true)}
-                            onChange={(e) => { setSearchIndustry(e.target.value); setInvalidIndustry(false); setValue("industry", e.target.value) }}
+                            onChange={(e) => {
+                                setSearchIndustry(e.target.value); setInvalidIndustry(false); setValue("industry", e.target.value)
+                            }}
                             className="w-full rounded-md border border-gray-300 px-4 py-2 mb-2"
                         />
                         {isIndustryDropdownVisible && (
@@ -300,7 +302,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
             </div>
             {showResultNotification ? 
             <Notification
-                message={errorMessage}
+                messages={errorMessage}
                 onClose={() => { setShowResultNotification(false)}}
                 isError={isError} />
                 :

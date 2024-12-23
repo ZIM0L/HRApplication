@@ -135,11 +135,11 @@ namespace HRApplication.Server.Presentation.Controllers
     // Model dla tworzenia wydarzenia
     public class CreateEventRequest
     {
-        public string Summary { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
+        public string Summary { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public List<string> Attendees { get; set; } // Lista emaili uczestników
+        public List<string> Attendees { get; set; } = [""]; // Lista emaili uczestników
     }
 }

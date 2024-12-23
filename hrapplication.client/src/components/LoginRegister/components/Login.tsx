@@ -12,7 +12,7 @@ const Login = () => {
     const navigate = useNavigate();
     const { SetAuthenticationToken } = useAuth();
     const [showNotificationModal, setShowNotificationModal] = useState<boolean>(false)
-    const [errosMessage, setErrorMessage] = useState<string[]>()
+    const [errosMessage, setErrorMessage] = useState<string[]>([])
     const [isError, setIsError] = useState(false)
 
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
@@ -25,7 +25,7 @@ const Login = () => {
         } catch (error) {
             setShowNotificationModal(true)
             if (error instanceof Error) {
-                setErrorMessage(error.message.split(" | "));
+                setErrorMessage([error.message]);
             }
             setIsError(true)
             console.error("Error message: " + error);
@@ -63,8 +63,8 @@ const Login = () => {
                     <hr className="border-0 my-4 h-px w-64 bg-gray-200 dark:bg-gray-700" />
                     <span className="absolute bg-white px-3 font-medium">or</span>
                 </div>
-                <GoogleLoginButton />
             </form>
+                <GoogleLoginButton />
             {showNotificationModal ? 
                 <Notification
                     messages={errosMessage}

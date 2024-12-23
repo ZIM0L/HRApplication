@@ -15,7 +15,6 @@
     <Folder Include="src\components\CookieFooter\" />
     <Folder Include="src\components\Callender\" />
     <Folder Include="src\components\Notification\" />
-    <Folder Include="src\components\SearchForTeam\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\types\Contex\" />
     <Folder Include="src\types\Invitation\" />

@@ -6,7 +6,6 @@ import {
     Squares2X2Icon,
     BriefcaseIcon,
     UserGroupIcon,
-    UsersIcon,
     NewspaperIcon,
     TableCellsIcon,
     RectangleStackIcon,
