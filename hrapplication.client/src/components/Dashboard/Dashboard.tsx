@@ -11,6 +11,7 @@ import {
     RectangleStackIcon,
     ListBulletIcon,
     QuestionMarkCircleIcon,
+    CalendarDaysIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AuthContex";
 import LogoSVG from "../LogoSVG/LogoSVG";
@@ -194,7 +195,10 @@ const Dashboard: React.FC = () => {
                 )}
                 <div className="border-2 flex w-full px-2 py-2 text-sm text-gray-500">
                     <span className="border-r-2 px-2">{selectedTeam.team.name}</span>
-                    <span className="px-2 transition-all hover:text-gray-900 hover:scale-105 hover:hover:cursor-pointer">Callender</span>
+                    <Link to="calendar" className="flex space-x-2 px-2 transition-all hover:text-gray-900 hover:scale-105 hover:hover:cursor-pointer">
+                        <span>Callender</span>
+                        <CalendarDaysIcon className="h-5 w-5" />
+                    </Link>
                 </div>
                 {/* Zawartość */}
                 <Outlet />

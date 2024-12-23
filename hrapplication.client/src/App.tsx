@@ -11,6 +11,7 @@ import SelectDashboard from './components/SelectDashboard/SelectDashboard';
 import Organization from './components/Organization/OrganizationAdminView';
 import Team from './components/Team/Team';
 import JobPositions from './components/JobPositions/JobPositions';
+import Callender from './components/Callender/Callender';
 
 const App = () => {
     return (
@@ -28,7 +29,8 @@ const App = () => {
 
                             <Route path="/dashboard/:organization/:name" element={<DashBoard />}>
                                 <Route index element={<Navigate to="panel" replace />} />
-                                <Route path="panel" element={<Panel />} />
+                            <Route path="panel" element={<Panel />} />
+                                <Route path="calendar" element={<Callender />} />
                                 <Route path="organization" element={<Organization />} />
                                 <Route path="team" element={<Team />} />
                                 <Route path="job_positions" element={<JobPositions />} />

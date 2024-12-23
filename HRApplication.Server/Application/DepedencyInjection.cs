@@ -18,8 +18,10 @@ namespace Application
             typeof(ValidationdBehavior<,>)
             );
 
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+
             return services;
         }
     }

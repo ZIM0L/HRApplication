@@ -7,9 +7,10 @@ namespace Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             return services;
         }
     }
