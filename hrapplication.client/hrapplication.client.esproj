@@ -13,7 +13,6 @@
     <Folder Include="src\components\JobPositions\" />
     <Folder Include="src\components\GoogleAuthButton\" />
     <Folder Include="src\components\CookieFooter\" />
-    <Folder Include="src\components\Callender\" />
     <Folder Include="src\components\Notification\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\types\Contex\" />

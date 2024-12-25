@@ -12,6 +12,7 @@ import {
     ListBulletIcon,
     QuestionMarkCircleIcon,
     CalendarDaysIcon,
+    ArrowsRightLeftIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AuthContex";
 import LogoSVG from "../LogoSVG/LogoSVG";
@@ -179,7 +180,7 @@ const Dashboard: React.FC = () => {
                             <span className="text-gray-200">{selectedTeam.team.name}</span>
                             <div className="group relative flex flex-col items-center">
                                 <button onClick={() => onChangeTeam()}>
-                                    <ArrowLeftStartOnRectangleIcon className="h-6 w-6 hover:cursor-pointer" />
+                                    <ArrowsRightLeftIcon className="h-5 w-5 hover:cursor-pointer" />
                                 </button>
                                 <span className="opacity-0 group-hover:opacity-100 absolute top-8 whitespace-nowrap bg-dark-blue px-2 py-1 text-sm text-white transition-opacity">
                                     Change Team
