@@ -14,7 +14,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AddNewTeamHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        public AddNewTeamHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator, IHttpContextAccessor httpContextAccessor, ITeamsCalendarRepository teamsCalendarRepository)
         {
             _teamRepository = teamRepository;
             _userRepository = userRepository;
@@ -58,6 +58,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
                 // add if error, then delete team
                 return addTeamMembertoCollectionResult.Errors;
             }
+            await _mediator.Send(new TeamsCalendar(team.TeamId));
 
             return new TeamResult(
                 team.Name,

@@ -21,6 +21,8 @@ namespace Infrastructure
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
             services.AddScoped<IInvitationRepository, InvitationRepository>();
+            services.AddScoped<ITeamsCalendarRepository, TeamsCalendarRepository>();
+            services.AddScoped<ICalendarEventsRepository, CalendarEventsRepository>();
             return services;
         }
     }

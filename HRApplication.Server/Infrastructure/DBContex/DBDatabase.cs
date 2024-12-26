@@ -14,6 +14,8 @@ namespace HRApplication.Server.Infrastructure.DBContex
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamMember> Team_Members { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
+        public DbSet<TeamsCalendar> Teams_Calendar { get; set; }
+        public DbSet<CalendarEvents> Calendar_Events { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
