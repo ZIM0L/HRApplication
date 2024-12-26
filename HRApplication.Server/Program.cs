@@ -51,8 +51,6 @@ builder.Services.AddAuthentication(options =>
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
-    options.Scope.Add("https://www.googleapis.com/auth/calendar");
-    options.Scope.Add("https://www.googleapis.com/auth/calendar.events");
     options.SaveTokens = true; // Zapisuje tokeny w kontekœcie autoryzacji
 })
 .AddJwtBearer(options =>

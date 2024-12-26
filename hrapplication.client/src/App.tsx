@@ -12,6 +12,7 @@ import Organization from './components/Organization/OrganizationAdminView';
 import Team from './components/Team/Team';
 import JobPositions from './components/JobPositions/JobPositions';
 import Callender from './components/Callender/Callender';
+import SessionExpired from './components/ErrorComponents/SessionExpired';
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                     <Route path="/" element={<Navigate to="/auth" />} />
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/accessdenied" element={<AccessDenied />} />
+                    <Route path="/sessionexpired" element={<SessionExpired /> }/>
                     <Route path="/*" element={<NotFoundPage />} />
                     <Route path="/auth/google-handler" element={<GoogleAuthHandler />} />
 

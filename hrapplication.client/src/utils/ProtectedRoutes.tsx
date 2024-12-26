@@ -17,10 +17,6 @@ const ProtectedRoutes = () => {
     if (isCheckingToken) {
         return <div>Loading...</div>;
     }
-    if (!authToken) {
-        return <Navigate to="/auth" state={{ from: location }} replace />;
-    }
-
     if (!decodedToken) {
         return <Navigate to="/accessdenied" state={{ from: location }} replace />;
     }

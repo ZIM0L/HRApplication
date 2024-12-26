@@ -18,9 +18,13 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "User.WrongPassword",
                 description: "Entered Wrong Password"
             );
-            public static Error InvalidRefreshToken = Error.NotFound(
+            public static Error InvalidRefreshToken = Error.Conflict(
                 code: "User.InvalidRefreshToken",
                 description: "User not found by Token"
+            );   
+            public static Error ExpiredRefreshToken = Error.Conflict(
+                code: "User.InvalidRefreshToken",
+                description: "Users refresh token has expired"
             );
             public static Error UserNotFound = Error.NotFound(
                 code: "User.UserNotFound",

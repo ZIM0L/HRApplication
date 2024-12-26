@@ -46,7 +46,7 @@ function CalendarApp() {
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // Store selected categories
 
-    const [sidebarOpen, setSidebarOpen] = useState(false); // State to control sidebar visibility
+    const [sidebarOpen, setSidebarOpen] = useState(false); 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -150,7 +150,7 @@ function CalendarApp() {
                 {/* Button to open/close sidebar */}
 
                 {/* Sidebar */}
-                <div className={`transition-all mt-2 p-2 duration-500 ease-in-out transform ${sidebarOpen ? '-translate-x-52 invisible w-1' : 'translate-x-0 w-36'} overflow-hidden whitespace-nowrap `}>
+                <div className={`transition-all mt-2 p-2 duration-500 ease-in-out transform ${sidebarOpen ? 'translate-x-0 w-36' : '-translate-x-52 invisible w-1'} overflow-hidden whitespace-nowrap `}>
                     <div className="relative flex flex-col">
                         <button
                             className="border-2 mb-2 w-full rounded border-white px-1 text-left transition-colors duration-200 hover:bg-cyan-50 hover:border-cyan-blue"

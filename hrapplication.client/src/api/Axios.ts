@@ -54,15 +54,12 @@ mainAxiosInstance.interceptors.response.use(
                 //automatically sets header of every task
                 setAuthToken(response.data.accessToken);
 
-                //originalRequest.headers = originalRequest.headers || {};
-                //originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
-
                 return mainAxiosInstance(originalRequest);
 
             } catch (refreshError) {
                 console.error('Odœwie¿enie tokenu nie powiod³o siê: ', refreshError);
                 localStorage.removeItem('accessToken');
-                window.location.href = '/auth';
+                window.location.href = '/sessionexpired'; 
                 document.cookie = "refreshToken=; expires=Wed, 01 Jan 1970 00:00:00 GMT; path=/; samesite=strict; httponly"
                 return Promise.reject(refreshError);
             }

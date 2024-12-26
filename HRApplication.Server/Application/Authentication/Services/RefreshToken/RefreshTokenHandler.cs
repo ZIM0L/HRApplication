@@ -32,9 +32,13 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, ErrorOr<
 
         var user = _userRepository.GetUserByRefreshToken(refreshToken);
 
-        if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+        if (user == null)
         {
             return CustomErrors.User.InvalidRefreshToken;
+        }
+        if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+        {
+            return CustomErrors.User.ExpiredRefreshToken;
         }
 
         string newAccessToken = _jwtTokenGenerator.GenerateToken(user);
