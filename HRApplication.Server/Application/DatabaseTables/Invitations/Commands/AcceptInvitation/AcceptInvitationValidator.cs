@@ -6,9 +6,9 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
     public class AcceptInvitationValidator : AbstractValidator<AcceptInvitationRequest>
     {
         public AcceptInvitationValidator() {
-            RuleFor(x => x.jobPositionId)
-                   .NotEmpty().WithMessage("JobPositionId is required.")
-                   .Must(GuidValidator.IsValidGuid).WithMessage("JobPositionId can only contain alphanumeric characters and hyphens.");
+            RuleFor(x => x.invitaitonId)
+                   .NotEmpty().WithMessage("invitaitonId is required.")
+                   .Must(GuidValidator.IsValidGuid).WithMessage("invitaitonId can only contain alphanumeric characters and hyphens.");
         }
     }
 }

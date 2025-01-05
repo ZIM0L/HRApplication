@@ -4,7 +4,8 @@ using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
+// TODO : check if user is already created
+namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AddTeamMember
 {
     public class AddTeamMemberHandler : IRequestHandler<AddTeamMemberRequest, ErrorOr<Unit>>
     {
@@ -32,7 +33,12 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            var newTeamMember = new TeamMember(request.userId, request.teamId, request.jobPositionId , request.roleName);
+            var newTeamMember = new TeamMember(request.userId, request.teamId, request.jobPositionId, request.roleName);
+
+            if (_teamMemberRepository.GetTeamMemberFromCollection(newTeamMember) is TeamMember)
+            {
+                return CustomErrorOr.CustomErrors.Team.TeamMemeberAlreadyInCollection;
+            }
 
             _teamMemberRepository.AddNewTeamMemberToCollection(newTeamMember);
 

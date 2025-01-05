@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables;
+using HRApplication.Server.Application.DatabaseTables.Invitations.Commands;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.AcceptInvitation;
-using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.DeclineInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.SendInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.CheckIfAnyInvitationForUser;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetUserInvitations;
@@ -70,18 +70,6 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             response => Ok(response),
             errors => Problem(errors));
         }  
-        [HttpDelete]
-        [Route("/api/[controller]/DeclineUserInvitation")]
-        public async Task<IActionResult> DeclineUserInvitation([FromBody] DeclineInvitationRequest request)
-        {
-            var command = new DeclineInvitationRequest();
-
-            ErrorOr<Unit> response = await _mediator.Send(command);
-
-            return response.Match(
-            response => Ok(response),
-            errors => Problem(errors));
-        }  
         [HttpGet]
         [Route("/api/[controller]/CheckIfAnyInvitationForUser")]
         public async Task<IActionResult> CheckIfAnyInvitationForUser()
@@ -98,12 +86,24 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
         [Route("/api/[controller]/AcceptInvitation")]
         public async Task<IActionResult> AcceptInvitation([FromBody] AcceptInvitationRequest request)
         {
-            var command = new AcceptInvitationRequest(request.invitaitonId, request.jobPositionId);
+            var command = new AcceptInvitationRequest(request.invitaitonId);
 
             ErrorOr<Unit> response = await _mediator.Send(command);
 
             return response.Match(
             response => Ok("User has join a team"),
+            errors => Problem(errors));
+        }  
+        [HttpDelete]
+        [Route("/api/[controller]/DeclineInvitation")]
+        public async Task<IActionResult> DeclineInvitation([FromBody] DeclineInvitationRequest request)
+        {
+            var command = new DeclineInvitationRequest(request.invitation);
+
+            ErrorOr<Unit> response = await _mediator.Send(command);
+
+            return response.Match(
+            response => Ok(),
             errors => Problem(errors));
         }
     }

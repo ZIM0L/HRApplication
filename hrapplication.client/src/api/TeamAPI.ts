@@ -25,7 +25,6 @@ export const GetTeam = async (data : string): Promise<AxiosResponse | null> => {
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
-
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred fetching team.");
@@ -43,7 +42,9 @@ export const CreateTeam = async (data: TeamInputs): Promise<AxiosResponse | null
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
-
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title); 
+            }
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred while creating team.");
@@ -69,5 +70,25 @@ export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> =
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred fetching teams users.");
+    }
+};
+export const DeleteTeamPermanently = async (teamId : string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.delete(`api/Team/DisbandTeam/${teamId}`
+        );
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error disbanding team: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+
+            throw new Error(errorMessage); 
+        }
+        throw new Error("Unexpected error occurred disbanding team.");
     }
 };

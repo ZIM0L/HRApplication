@@ -28,7 +28,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Team_Members.SingleOrDefault(x => x.TeamMemberId.Equals(teamMember.TeamMemberId));
         }
 
-        public List<TeamMember>? GetTeamMembersByTeamIdFromCollection(Guid teamId)
+        public List<TeamMember> GetTeamMembersByTeamIdFromCollection(Guid teamId)
         {
             return _dbContex.Team_Members.Where(x => x.TeamId.Equals(teamId)).ToList();
                            
@@ -36,6 +36,12 @@ namespace HRApplication.Server.Infrastructure.Persistance
         public TeamMember? GetTeamMemberByTeamIdAndUserId(Guid teamId, Guid userId)
         {
             return _dbContex.Team_Members.SingleOrDefault(x => x.TeamId == teamId && x.UserId == userId);
+        }
+
+        public void DeleteTeamMembersFromCollection(List<TeamMember> teamMembers)
+        {
+            _dbContex.Team_Members.RemoveRange(teamMembers);
+            _dbContex.SaveChanges();
         }
     }
 }

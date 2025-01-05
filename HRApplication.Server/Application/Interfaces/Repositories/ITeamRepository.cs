@@ -5,10 +5,10 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
     public interface ITeamRepository
     {
         void AddNewTeam(Team team);
-        Team? GetTeamByName(string name);
-        List<Team>? GetTeamsIdsByName(string name); //TODO : chekc if necessary
         Team? GetTeamByTeamId(Guid teamId); //TODO : chekc if necessary
+        Team? GetTeamByName(string name); //TODO : chekc if necessary
         List<Team>? GetTeamsByUserId(List<Guid> teamsId); //TODO : chekc if necessary
         List<Team> GetTeams();
+        void DeleteTeamPermanently(Team team);
     }
 }

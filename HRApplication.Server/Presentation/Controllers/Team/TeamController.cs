@@ -4,6 +4,8 @@ using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTea
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams;
 using HRApplication.Server.Application.DatabaseTables.Teams;
 using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
+using HRApplication.Server.Application.DatabaseTables.Teams.Commands.AddNewTeam;
+using HRApplication.Server.Application.DatabaseTables.Teams.Commands.DisbandTeam;
 using HRApplication.Server.Application.DatabaseTables.Teams.Queries.GetTeamInfo;
 using HRApplication.Server.Domain.Models.User;
 using MediatR;
@@ -71,6 +73,19 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
             var command = new GetTeamRequest(request.teamId);
 
             ErrorOr<TeamResult> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }  
+        [HttpDelete]
+        [Route("/api/[controller]/DisbandTeam/{teamId}")]
+        public async Task<IActionResult> DisbandTeam(string teamId)
+        {
+            var command = new DisbandTeamRequest(teamId);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
 
             return response.Match(
                 response => Ok(response),

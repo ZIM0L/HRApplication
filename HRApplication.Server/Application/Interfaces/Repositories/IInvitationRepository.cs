@@ -10,6 +10,6 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         bool CheckIfAnyInvitationForUser(Guid userId);
         Invitation? IsInvitationAlreadyCreated(Invitation invitation);
         List<InvitationResult> GetAllUserInvitations(Guid userId);
-        void DeleteUserInvitation();
+        void DeleteUserInvitation(Invitation invitation);
     }
 }

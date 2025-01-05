@@ -1,7 +1,9 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AddTeamMember;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
+using HRApplication.Server.Domain.Models;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.AcceptInvitation
@@ -34,11 +36,11 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if(_invitationRepository.GetInvitationById(Guid.Parse(request.invitaitonId)) == null)
+            if(_invitationRepository.GetInvitationById(Guid.Parse(request.invitaitonId)) is not Invitation invitation)
             {
                 return CustomErrorOr.CustomErrors.Invitation.InvitationDoesNotExist;
             }
-            var jobPosition = _jobPositionsRepository.GetJobPositionById(Guid.Parse(request.jobPositionId));
+            var jobPosition = _jobPositionsRepository.GetJobPositionById(invitation.JobPositionId);
 
             if (jobPosition == null) {
                 return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
@@ -49,14 +51,23 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
 
-            var command = new AddTeamMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), jobPosition.TeamId, jobPosition.JobPositionId, "Employee");
+            var AddTeamMemberCommand = new AddTeamMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), jobPosition.TeamId, jobPosition.JobPositionId, "Employee");
 
-            var result = await _mediator.Send(command);
+            var resultAddTeamMemberCommand = await _mediator.Send(AddTeamMemberCommand);
 
-            if (result.IsError)
+            if (resultAddTeamMemberCommand.IsError)
             {
-                return result.Errors;
+                return resultAddTeamMemberCommand.Errors;
             }
+
+            var resultDeleteInvitationCommand = await _mediator.Send(new DeclineInvitationRequest(invitation));
+            
+            if (resultDeleteInvitationCommand.IsError)
+            {
+                // pipiline to delete teammember later
+                return resultDeleteInvitationCommand.Errors;
+            }
+
 
             return Unit.Value;
         }

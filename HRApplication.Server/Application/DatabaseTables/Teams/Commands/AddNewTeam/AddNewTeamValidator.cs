@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
+namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.AddNewTeam
 {
     public class GetTeamValidator : AbstractValidator<TeamAddRequest>
     {

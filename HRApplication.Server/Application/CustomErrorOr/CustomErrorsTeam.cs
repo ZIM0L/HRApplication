@@ -6,9 +6,9 @@ namespace HRApplication.Server.Application.CustomErrorOr
     {
         public static class Team
         {
-            public static Error TeamAlreadyExists = Error.Conflict(
+            public static Error TeamAlreadyExistsInUserCollection = Error.Conflict(
                 code: "Team.TeamAlreadyExists",
-                description: "Team with that Name already exists"
+                description: "Team with given name already exists in your collection"
             );
             public static Error UserDoesntBelongToTeam = Error.Conflict(
                 code: "Team.UserDoesntBelongToTeam",
@@ -37,6 +37,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
             public static Error UserWithoutTeam = Error.Conflict(
               code: "Team.UserWithoutTeam",
               description: "User is not assigned to any team"
+            );
+            public static Error UserForbiddenAction = Error.Forbidden(
+              code: "Team.UserForbiddenAction",
+              description: "User is forbidden to do this action"
             );
         }
     }

@@ -47,13 +47,17 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                 setErrorMessage(["Team has been Created"])
                 setShowResultNotification(true)
                 seIsError(false)
-                reset()
+                setTimeout(() => {
+                    reset()
+                    onClose()
+                }, 3000)
             } 
         } catch (error) {
             seIsError(true)
             setShowResultNotification(true)
             if (error instanceof Error) {
-                setErrorMessage([error.message]);
+                
+                setErrorMessage(error.message.split(" | "));
             }
             console.error("Error submitting data:", error);
         }

@@ -3,6 +3,7 @@ using HRApplication.Server.Application.DatabaseTables;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRApplication.Server.Infrastructure.Persistance
 {
@@ -25,9 +26,10 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Invitations.Any(x => x.UserId == userId);
         }
 
-        public void DeleteUserInvitation()
+        public void DeleteUserInvitation(Invitation invitation)
         {
-            throw new NotImplementedException();
+            _dbContex.Invitations.Remove(invitation);
+            _dbContex.SaveChanges();
         }
 
         public Invitation? GetInvitationById(Guid invitationId)
@@ -80,7 +82,6 @@ namespace HRApplication.Server.Infrastructure.Persistance
                     result.InvitationId, // InviteId
                     result.Name,  // Sender Name
                     result.Surname,  // Sender Surname
-                    result.JobPositionId, // JobPositionId 
                     result.Title,  // Title JobPosition
                     team.Name,  // Team name
                     team.Industry,  // Team Industry

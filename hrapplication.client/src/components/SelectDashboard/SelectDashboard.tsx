@@ -93,9 +93,7 @@ const SelectDashboard = () => {
                     <button onClick={() => setIsCreateNewTeamModalOpen(true)} className="border-2 rounded-lg border-dark-blue px-4 py-2 transition-all duration-300 ease-in-out hover:text-cyan-blue hover:border-cyan-blue">
                         Create Team
                         </button>
-                        <button className="border-2 rounded-lg border-dark-blue px-4 py-2 transition-all duration-300 ease-in-out hover:text-light-red hover:border-light-red">
-                        Delete Team
-                        </button>
+                       
                     </div>
             </div>
             <p className="border-b-2 mb-8 p-2 text-sm text-gray-500">Logged as {decodedToken?.email}</p>
@@ -147,7 +145,8 @@ const SelectDashboard = () => {
                     onClose={() => {
                         setIsCreateNewTeamModalOpen(false);
                         fetchInvitations();
-                        fetchTeams(); }}
+                        fetchTeams();
+                    }}
                 />
                 <CookieFooter />
                 <NotificationModal isOpen={isNotificationModalOpen} onClose={() => {

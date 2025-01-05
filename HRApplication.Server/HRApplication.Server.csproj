@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\DatabaseTables\TeamMembers\Commands\RemoveTeamMember\" />
     <Folder Include="Domain\Utils\" />
   </ItemGroup>
 

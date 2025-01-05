@@ -1,12 +1,14 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.Commands;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AddTeamMember;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
+namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.AddNewTeam
 {
     public class AddNewTeamHandler : IRequestHandler<TeamAddRequest, ErrorOr<TeamResult>>
     {
@@ -35,18 +37,23 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
 
             var user = _userRepository.GetUserById(Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
 
-            if (user is not User )
+            if (user is not User)
             {
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
 
-            var team = new Team(request.name,request.country, request.industry, request.email);
-                team.Email = request.email;
-                team.City = request.city;
-                team.Country = request.country;
-                team.Url = request.url;
-                team.PhoneNumber = request.phoneNumber;
-                team.ZipCode = request.zipCode;
+            var team = new Team(request.name, request.country, request.industry, request.email);
+            team.Email = request.email;
+            team.City = request.city;
+            team.Country = request.country;
+            team.Url = request.url;
+            team.PhoneNumber = request.phoneNumber;
+            team.ZipCode = request.zipCode;
+
+            if(_teamRepository.GetTeamByName(team.Name) is Team)
+            {
+                return CustomErrorOr.CustomErrors.Team.TeamAlreadyExistsInUserCollection;
+            }
 
             _teamRepository.AddNewTeam(team);
 
@@ -55,10 +62,10 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
 
             if (addTeamMembertoCollectionResult.IsError)
             {
-                // add if error, then delete team
+                _teamRepository.DeleteTeamPermanently(team);
                 return addTeamMembertoCollectionResult.Errors;
             }
-            await _mediator.Send(new TeamsCalendar(team.TeamId));
+            await _mediator.Send(new CreateCalendarRequest(team.TeamId));
 
             return new TeamResult(
                 team.Name,

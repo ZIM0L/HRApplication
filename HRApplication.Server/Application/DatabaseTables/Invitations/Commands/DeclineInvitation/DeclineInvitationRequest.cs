@@ -1,7 +1,8 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Domain.Models;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.DeclineInvitation
+namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands
 {
-    public record DeclineInvitationRequest() : IRequest<ErrorOr<Unit>>;
+    public record DeclineInvitationRequest(Invitation invitation) : IRequest<ErrorOr<Unit>>;
 }

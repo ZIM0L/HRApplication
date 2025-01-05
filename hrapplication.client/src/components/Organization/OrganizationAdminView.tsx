@@ -7,7 +7,7 @@ import { useAuth } from "../../contex/AuthContex";
 
 function Organization() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [team, setTeam] = useState<ITeam>();
+    const [team, setTeam] = useState<ITeam | null>(null); // Make sure the team is nullable
     const { selectedTeam } = useAuth();
 
     useEffect(() => {
@@ -88,10 +88,11 @@ function Organization() {
                 </div>
             </div>
 
-            {/* ModifyOrganizationModal - Controlled by the parent (Organization) */}
+            {/* ModifyOrganizationModal - Pass team data as props */}
             <ModifyOrganizationModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
+                team={team} // Pass team info as a prop
             />
         </>
     );

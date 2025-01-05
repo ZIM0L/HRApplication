@@ -14,7 +14,13 @@ namespace HRApplication.Server.Infrastructure.Persistance
 
         public void AddJobPosition(JobPosition jobPosition)
         {
-            _dbContex.Add<JobPosition>(jobPosition);
+            _dbContex.Job_Positions.Add(jobPosition);
+            _dbContex.SaveChanges();
+        }
+
+        public void DeleteAllJobPositions(List<JobPosition> jobPosition)
+        {
+            _dbContex.Job_Positions.RemoveRange(jobPosition);
             _dbContex.SaveChanges();
         }
 

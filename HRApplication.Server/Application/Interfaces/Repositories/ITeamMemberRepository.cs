@@ -7,8 +7,9 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         void AddNewTeamMemberToCollection(TeamMember teamMember);
         TeamMember? GetTeamMemberFromCollection(TeamMember teamMember);
         List<TeamMember>? GetTeamMembersByUserIdFromCollection(Guid userId);
-        List<TeamMember>? GetTeamMembersByTeamIdFromCollection(Guid teamId);
+        List<TeamMember> GetTeamMembersByTeamIdFromCollection(Guid teamId);
         TeamMember? GetTeamMemberByTeamIdAndUserId(Guid teamId, Guid userId);
+        void DeleteTeamMembersFromCollection(List<TeamMember> teamMembers);
 
     }
 }

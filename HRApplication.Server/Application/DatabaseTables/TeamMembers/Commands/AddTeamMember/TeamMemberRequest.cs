@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands
+namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AddTeamMember
 {
     public record AddTeamMemberRequest(Guid userId, Guid teamId, Guid? jobPositionId, string roleName) : IRequest<ErrorOr<Unit>>;
 

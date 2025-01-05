@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
     }
 
     return (
-        <div className="flex h-[100vh] w-full flex-col overflow-y-hidden bg-white md:flex-row">
+        <div className="flex h-[100vh] w-full flex-col overflow-x-hidden bg-white md:overflow-y-hidden md:flex-row">
             {/* Przycisk mobilny do otwierania/zamykania */}
             <button
                 className="flex items-center justify-center bg-dark-blue p-2 text-white md:hidden"

@@ -17,9 +17,16 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.Teams.Add(team);
             _dbContex.SaveChanges();
         }
+
+        public void DeleteTeamPermanently(Team team)
+        {
+            _dbContex.Teams.Remove(team);
+            _dbContex.SaveChanges();
+        }
+
         public Team? GetTeamByName(string name)
         {
-            return _dbContex.Teams.FirstOrDefault(x => x.Name == name);
+            return _dbContex.Teams.SingleOrDefault(x=> x.Name == name);
         }
 
         public Team? GetTeamByTeamId(Guid teamId)
@@ -35,11 +42,6 @@ namespace HRApplication.Server.Infrastructure.Persistance
         public List<Team>? GetTeamsByUserId(List<Guid> teamsId)
         {
             return _dbContex.Teams.Where(x => teamsId.Contains(x.TeamId)).ToList();   
-        }
-
-        public List<Team>? GetTeamsIdsByName(string name)
-        {
-            return _dbContex.Teams.Where(x => x.Name == name).ToList();
         }
     }
 }

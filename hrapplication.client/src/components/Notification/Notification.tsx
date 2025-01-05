@@ -27,7 +27,7 @@ const Notification: React.FC<NotificationProps> = ({ messages, onClose, isError 
             onTransitionEnd={isVisible ? undefined : onClose}
         >
             {messages.map((message, index) => (
-                <p key={index} className="mb-2">{message}</p> 
+                <p key={index} >{message}</p> 
             ))}
         </div>
     );
