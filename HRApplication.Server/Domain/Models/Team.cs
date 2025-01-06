@@ -15,9 +15,10 @@ namespace HRApplication.Server.Domain.Models
         public Guid TeamId { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; } = null;
         public Boolean IsActive { get; set; } = true;
         public string Industry { get; set; } = "";
-        public string? Country { get; set; } = "";
+        public string Country { get; set; } = "";
         public string? Url { get; set; } = "";
         public string? Email { get; set; } = "";
         public string? Address { get; set; } = "";

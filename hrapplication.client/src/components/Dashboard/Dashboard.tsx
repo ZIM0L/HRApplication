@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
         );
     }
 
-    if (!selectedTeam) {
+    if (!selectedTeam?.team) {
         return <div>No team</div>;
     }
 
@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
         <div className="flex h-[100vh] w-full flex-col overflow-x-hidden bg-white md:overflow-y-hidden md:flex-row">
             {/* Przycisk mobilny do otwierania/zamykania */}
             <button
-                className="flex items-center justify-center bg-dark-blue p-2 text-white md:hidden"
+                className="z-20 flex items-center justify-center bg-dark-blue p-2 text-white md:hidden"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
                 {isSidebarOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
@@ -72,14 +72,14 @@ const Dashboard: React.FC = () => {
 
             {/* Pasek boczny */}
             <div
-                className={`${isSidebarOpen ? "block" : "hidden"
-                    } md:flex flex-col justify-between bg-dark-blue p-4 text-white transition-all duration-300`}
+                className={`${isSidebarOpen ? "" : "-translate-y-full"
+                    } md:flex flex-col md:translate-y-0 justify-between bg-dark-blue p-4 text-white transition-all z-10 bg-dark-blue duration-500`}
             >
                 <div>
                     <div className="space-y-4 text-xl">
                         <LogoSVG width={140} />
                         <div>
-                            <Link to="panel">
+                            <Link to="panel" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                 <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                     <Squares2X2Icon className="h-6 w-6" />
                                     <span className="z-10 relative text-sm">Dashboard</span>
@@ -91,7 +91,7 @@ const Dashboard: React.FC = () => {
                             !decodedToken ? null : (
                                 <>
                                     <div>
-                                        <Link to="team">
+                                        <Link to="team" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <UserGroupIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Team</span>
@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="job_positions">
+                                        <Link to="job_positions" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <BriefcaseIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Job Positions</span>
@@ -109,7 +109,7 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization">
+                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <NewspaperIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Organization</span>
@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization">
+                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <TableCellsIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Shifts</span>
@@ -127,7 +127,7 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization">
+                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <RectangleStackIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Requests</span>
@@ -136,7 +136,7 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization">
+                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <ListBulletIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Tasks</span>
@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
                                             </div>
                                         </Link>
                                     </div> <div>
-                                        <Link to="organization">
+                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <QuestionMarkCircleIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Questions</span>
@@ -169,7 +169,8 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/* Główna zawartość */}
-            <div className="flex w-full flex-col">
+            <div className={`flex w-full flex-col transition-all duration-500 ${isSidebarOpen ? "" : "-translate-y-[526px]"} md:translate-y-0`}
+>
                 {/* Pasek górny */}
                 {decodedToken && (
                     <div className="flex h-fit items-center justify-between bg-dark-blue px-4 py-2 text-white">

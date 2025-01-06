@@ -17,7 +17,7 @@ namespace HRApplication.Server.Application.CustomErrorOr
             );
             public static Error PositionAlreadyInTeam = Error.Conflict(
                 code: "JobPosition.PositionAlreadyInTeam",
-                description: "Position is already created in team"
+                description: "Position with given name is already created in team"
             );
         }
 

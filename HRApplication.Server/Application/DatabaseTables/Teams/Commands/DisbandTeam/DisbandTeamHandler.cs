@@ -39,17 +39,21 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.Disband
             }
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (_teamMemberRepository.GetTeamMemberByTeamIdAndUserId(teamId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember administratorTeamMember)
+            var UsersteamMembers = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(teamId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
+            
+            if (UsersteamMembers == null)
             {
                 return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
-            if (administratorTeamMember.RoleName != "Administrator")
+            var isUserAdministrator = UsersteamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
+            
+            if (isUserAdministrator == null)
             {
                 return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
             }
-            var teamMembers = _teamMemberRepository.GetTeamMembersByTeamIdFromCollection(teamId);
+            var teamTeamMembers = _teamMemberRepository.GetTeamMembersByTeamIdFromCollection(teamId);
 
-            _teamMemberRepository.DeleteTeamMembersFromCollection(teamMembers);
+            _teamMemberRepository.DeleteTeamMembersFromCollection(teamTeamMembers);
 
             var jobPositions = _jobPositionsRepository.GetJobPositionsByTeamsId(teamId);
 

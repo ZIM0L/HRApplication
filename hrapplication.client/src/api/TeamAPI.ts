@@ -30,6 +30,25 @@ export const GetTeam = async (data : string): Promise<AxiosResponse | null> => {
         throw new Error("Unexpected error occurred fetching team.");
     }
 }
+export const UpdateTeam = async (data: TeamInputs): Promise<AxiosResponse | null> => {
+    try {
+        return await mainAxiosInstance.post('api/Team/GetTeam', {
+            teamId: data
+        });
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error fetching team: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred fetching team.");
+    }
+}
 export const CreateTeam = async (data: TeamInputs): Promise<AxiosResponse | null> => {
     try {
         return await mainAxiosInstance.post('api/Team/AddNewTeam', data);

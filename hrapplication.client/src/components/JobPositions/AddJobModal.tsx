@@ -8,10 +8,9 @@ import { useAuth } from "../../contex/AuthContex";
 interface AddJobModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onRefresh: () => void;
 }
 
-const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onRefresh }) => {
+const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
     const { register, handleSubmit, reset } = useForm<IAddJobPositionInputs>();
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
@@ -25,7 +24,10 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onRefresh })
             if (response?.status == 200) {
                 setIsError(false)
                 setShowNotification(true); 
-                onRefresh(); 
+                setNotificationMessage(["New job position was added"])
+                setTimeout(() => {
+                    onClose()
+                },3500)
             } 
 
         } catch (err) {

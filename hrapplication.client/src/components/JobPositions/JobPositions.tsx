@@ -20,13 +20,12 @@ function JobPositions() {
             }
             const response = await GetJobPositionsBasedOnTeams(selectedTeam?.team.teamId);
             if (response?.status === 200) {
-                console.log(response.data)
                 setJobPositions(response.data);
             } else {
-                throw new Error('Something wrong');
+                throw new Error('error fetching job positions');
             }
         } catch (e) {
-            console.log(e); 
+            console.error(e);
         }
     };
 
@@ -45,12 +44,14 @@ function JobPositions() {
             <div className="mb-4 flex items-center justify-between space-x-2 bg-white p-2 shadow-md">
                 <h2 className="text-lg font-semibold text-gray-700">Job Positions: {jobPositions.length}</h2>
                 <div className="flex items-center space-x-10">
-                    <div className="group relative">
-                        <PlusIcon onClick={() => setIsAddModalOpen(true)} className="h-6 w-6 hover:cursor-pointer" />
-                        <span className="opacity-0 group-hover:opacity-100 -translate-x-1/2 absolute left-1/2 top-7 transform whitespace-nowrap bg-gray-800 px-2 py-1 text-sm text-white shadow-lg transition-opacity">
-                            Add Position
-                        </span>
-                    </div>
+                    {selectedTeam?.roleName == "Administrator" ? 
+                        <div className="group relative">
+                            <PlusIcon onClick={() => setIsAddModalOpen(true)} className="h-6 w-6 hover:cursor-pointer" />
+                            <span className="opacity-0 group-hover:opacity-100 -translate-x-1/2 absolute left-1/2 top-7 transform whitespace-nowrap bg-gray-800 px-2 py-1 text-sm text-white shadow-lg transition-opacity">
+                                Add Position
+                            </span>
+                        </div>
+                    : null}
                     {/* Search Input */}
                     <div className="relative">
                         <input
@@ -73,7 +74,9 @@ function JobPositions() {
                                 <th className="px-3 py-1 text-sm font-bold text-gray-600">Job Title</th>
                                 <th className="px-3 py-1 text-sm font-bold text-gray-600">Created At</th>
                                 <th className="px-3 py-1 text-sm font-bold text-gray-600">Status</th>
-                                <th className="border-l-2 p-3 text-center text-sm font-bold text-gray-600">Actions</th>
+                                {selectedTeam?.roleName == "Administrator" ? 
+                                    <th className="border-l-2 p-3 text-center text-sm font-bold text-gray-600">Actions</th>
+                                : null}
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -100,19 +103,19 @@ function JobPositions() {
                                             {job.isActive == true ? "Active" : "Inactive"}
                                         </span>
                                     </td>
-
-                                    {/* Actions */}
-                                    <td className="border-l-2 px-3 py-1 text-center">
-                                        <button
-                                            onClick={() => {
-                                                setSelectedJob(job);
-                                                setIsEditModalOpen(true);
-                                            }}
-                                            className="rounded-full bg-gray-100 p-2 hover:bg-gray-200"
-                                        >
-                                            <ArrowRightCircleIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
-                                        </button>
-                                    </td>
+                                    {selectedTeam?.roleName == "Administrator" ?  
+                                        <td className="border-l-2 px-3 py-1 text-center">
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedJob(job);
+                                                    setIsEditModalOpen(true);
+                                                }}
+                                                className="rounded-full bg-gray-100 p-2 hover:bg-gray-200"
+                                            >
+                                                <ArrowRightCircleIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
+                                            </button>
+                                        </td>
+                                    : null}
                                 </tr>
                             ))}
                         </tbody>
@@ -121,19 +124,20 @@ function JobPositions() {
                     <p className="p-4 text-sm text-gray-500">No job positions found.</p>
                 )}
             </div>
-
-            {/* Modals */}
-            <AddJobModal
-                isOpen={isAddModalOpen}
-                onClose={() => { setIsAddModalOpen(false); refreshJobPositions() }}
-                onRefresh={refreshJobPositions}
-            />
-            <EditJobModal
-                isOpen={isEditModalOpen}
-                onClose={() => setIsEditModalOpen(false)}
-                onRefresh={refreshJobPositions}
-                job={selectedJob}
-            />
+            {selectedTeam?.roleName == "Administrator" ? 
+            <>
+                <AddJobModal
+                    isOpen={isAddModalOpen}
+                    onClose={() => { setIsAddModalOpen(false); refreshJobPositions() }}
+                />
+                <EditJobModal
+                    isOpen={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    onRefresh={refreshJobPositions}
+                    job={selectedJob}
+                />
+            </>
+            : null}
         </div>
 
     );

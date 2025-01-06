@@ -3,17 +3,16 @@ using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Queries.GetTeamInfo
 {
-    public class GetTeamsHnadler : IRequestHandler<GetTeamRequest, ErrorOr<TeamResult>>
+    public class GetTeamsHandler : IRequestHandler<GetTeamRequest, ErrorOr<TeamResult>>
     {
         private readonly ITeamRepository _teamRepository;
         private readonly ITeamMemberRepository _teamMemberRepository;
         private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public GetTeamsHnadler(ITeamRepository teamRepository, IUserRepository userRepository, ITeamMemberRepository teamMemberRepository, IHttpContextAccessor httpContextAccessor)
+        public GetTeamsHandler(ITeamRepository teamRepository, IUserRepository userRepository, ITeamMemberRepository teamMemberRepository, IHttpContextAccessor httpContextAccessor)
         {
             _teamRepository = teamRepository;
             _userRepository = userRepository;

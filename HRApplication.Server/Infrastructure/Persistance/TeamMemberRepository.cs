@@ -1,7 +1,6 @@
 ﻿using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
-using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Infrastructure.Persistance
 {
@@ -33,15 +32,20 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Team_Members.Where(x => x.TeamId.Equals(teamId)).ToList();
                            
         }
-        public TeamMember? GetTeamMemberByTeamIdAndUserId(Guid teamId, Guid userId)
+        public List<TeamMember>? GetTeamMembersByTeamIdAndUserId(Guid teamId, Guid userId)
         {
-            return _dbContex.Team_Members.SingleOrDefault(x => x.TeamId == teamId && x.UserId == userId);
+            return _dbContex.Team_Members.Where(x => x.TeamId == teamId && x.UserId == userId).ToList();
         }
 
         public void DeleteTeamMembersFromCollection(List<TeamMember> teamMembers)
         {
             _dbContex.Team_Members.RemoveRange(teamMembers);
             _dbContex.SaveChanges();
+        }
+
+        public TeamMember? GetTeamMemberByUserIdAndJobPositionId(Guid jobPositionId, Guid userId)
+        {
+            return _dbContex.Team_Members.SingleOrDefault(x => x.JobPositionId == jobPositionId && x.UserId == userId);
         }
     }
 }

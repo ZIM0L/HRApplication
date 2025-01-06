@@ -78,6 +78,29 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 response => Ok(response),
                 errors => Problem(errors)
                 );
+        }   
+        [HttpPut]
+        [Route("/api/[controller]/UpdateTeam/{teamId}")]
+        public async Task<IActionResult> GetTeam([FromBody] UpdateTeamRequest request, string teamId)
+        {
+            var command = new UpdateTeamRequest(
+                request.teamId,
+                request.Name,
+                request.Industry,
+                request.Country,
+                request.Url,
+                request.Email,
+                request.Address,
+                request.City,
+                request.PhoneNumber,
+                request.ZipCode);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
         }  
         [HttpDelete]
         [Route("/api/[controller]/DisbandTeam/{teamId}")]

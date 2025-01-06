@@ -1,4 +1,5 @@
-﻿using HRApplication.Server.Application.Interfaces.Repositories;
+﻿using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
+using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
 
@@ -42,6 +43,12 @@ namespace HRApplication.Server.Infrastructure.Persistance
         public List<Team>? GetTeamsByUserId(List<Guid> teamsId)
         {
             return _dbContex.Teams.Where(x => teamsId.Contains(x.TeamId)).ToList();   
+        }
+
+        public void UpdateTeam(Team updatedTeam)
+        {
+            _dbContex.Teams.Update(updatedTeam);
+            _dbContex.SaveChanges();
         }
     }
 }

@@ -38,17 +38,6 @@ const App = () => {
                                 <Route path="job_positions" element={<JobPositions />} />
                             </Route>
                     </Route>
-                    {/*<Route element={<ProtectedRoutes/>}>*/}
-                    {/*    <Route path="/dashboard/:name" element={<DashBoard />}>*/}
-                    {/*        <Route index element={<Navigate to="panel" replace />} />*/}
-                    {/*    </Route>*/}
-                    {/*</Route>*/}
-
-                    {/*<Route element={<ProtectedRoutes />}>*/}
-                    {/*    <Route path="/dashboard/:name" element={<DashBoard />}>*/}
-                    {/*        <Route index element={<Navigate to="panel" replace />} />*/}
-                    {/*    </Route>*/}
-                    {/*</Route>*/}
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

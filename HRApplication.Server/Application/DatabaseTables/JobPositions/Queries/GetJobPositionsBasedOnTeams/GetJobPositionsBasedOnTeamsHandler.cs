@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.JobPosition.Queries.GetJobPositionsBasedOnTeams;
 using HRApplication.Server.Application.DatabaseTables.JobPositions;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
@@ -6,7 +7,7 @@ using MediatR;
 using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 
-namespace HRApplication.Server.Application.DatabaseTables.JobPosition.Queries.GetJobPositionsBasedOnTeams
+namespace HRApplication.Server.Application.DatabaseTable.Queries.GetJobPositionsBasedOnTeams
 {
     public class GetJobPositionsBasedOnTeamsHandler : IRequestHandler<GetJobPositionsBasedOnTeamsRequest, ErrorOr<List<JobPositionsResult>>>
     {

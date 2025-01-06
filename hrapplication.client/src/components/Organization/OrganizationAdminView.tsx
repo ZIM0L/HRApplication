@@ -27,12 +27,14 @@ function Organization() {
                 {/* Top section - Basic Info */}
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold text-gray-800">Organization Information</h1>
-                    <button
-                        className="rounded-full bg-blue-500 p-2 text-white transition hover:bg-blue-600"
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        <PencilSquareIcon className="h-6 w-6" />
-                    </button>
+                    {selectedTeam?.roleName == "Administrator" ? 
+                        <button
+                            className="rounded-full bg-blue-500 p-2 text-white transition hover:bg-blue-600"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            <PencilSquareIcon className="h-6 w-6" />
+                        </button>
+                    : null}
                 </div>
 
                 {/* Basic Info Section */}
@@ -87,13 +89,13 @@ function Organization() {
                     </div>
                 </div>
             </div>
-
-            {/* ModifyOrganizationModal - Pass team data as props */}
-            <ModifyOrganizationModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                team={team} // Pass team info as a prop
-            />
+            {selectedTeam?.roleName == "Administrator" ?
+                <ModifyOrganizationModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    team={team} // Pass team info as a prop
+                />
+            : null}
         </>
     );
 }

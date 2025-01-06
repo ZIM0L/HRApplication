@@ -3,6 +3,7 @@ using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
+using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 
 namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
@@ -33,15 +34,22 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId.ToLower())) is not Team)
+            if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId.ToLower())) is not Domain.Models.Team)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
-            if (_teamMemberRepository.GetTeamMemberByTeamIdAndUserId(Guid.Parse(request.teamId.ToLower()), Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not TeamMember)
+            var UsersteamMembers = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(Guid.Parse(request.teamId), Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
+
+            if (UsersteamMembers == null)
             {
                 return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
+            var isUserAdministrator = UsersteamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
 
+            if (isUserAdministrator == null)
+            {
+                return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
+            }
             var jobPosition = new Domain.Models.JobPosition
                 (
                     request.title.ToLower(),

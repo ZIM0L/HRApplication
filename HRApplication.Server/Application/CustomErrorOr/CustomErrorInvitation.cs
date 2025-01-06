@@ -18,6 +18,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                code: "Invitation.InvitationDoesNotExist",
                description: "An invitation do not exists"
            );
+            public static Error UserAlreadyOccupyingPosition = Error.Conflict(
+                code: "Invitation.InvitationAlreadyCreated",
+                description: "This position is already occupied by the user"
+            );
         }
 
     }

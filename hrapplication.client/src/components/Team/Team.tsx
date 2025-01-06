@@ -137,12 +137,14 @@ const Team: React.FC = () => {
                 </div>
                 <div className="group relative flex items-center space-x-4">
                     {/* Plus Icon with Tooltip */}
-                    <div className="relative">
-                        <PlusIcon onClick={() => setIsModalOpen(true)} className="h-6 w-6 hover:cursor-pointer" />
-                        <span className="opacity-0 group-hover:opacity-100 -translate-x-1/2 absolute left-1/2 top-7 transform whitespace-nowrap bg-gray-800 px-2 py-1 text-sm text-white shadow-lg transition-opacity">
-                            Invite 
-                        </span>
-                    </div>
+                    {selectedTeam.roleName == "Administrator" ? 
+                        <div className="relative">
+                            <PlusIcon onClick={() => setIsModalOpen(true)} className="h-6 w-6 hover:cursor-pointer" />
+                            <span className="opacity-0 group-hover:opacity-100 -translate-x-1/2 absolute left-1/2 top-7 transform whitespace-nowrap bg-gray-800 px-2 py-1 text-sm text-white shadow-lg transition-opacity">
+                                Invite 
+                            </span>
+                        </div>
+                    : null}
 
                     {/* Search Input */}
                     <input
@@ -209,10 +211,12 @@ const Team: React.FC = () => {
                 </table>
 
             </div>
-            <InviteToTeamModal
-                isOpen={isModalOpen}
-                onClose={() => handleCloseModal()}
-                />
+            {selectedTeam.roleName == "Administrator" ? 
+                <InviteToTeamModal
+                    isOpen={isModalOpen}
+                    onClose={() => handleCloseModal()}
+                    />
+            : null}
         </div>
     );
 };

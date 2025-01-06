@@ -47,6 +47,9 @@ export const AddJobPosition = async (
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
 
+            if (extractedErrors.length == 0) {
+                throw new Error(error.response?.data.title); 
+            }
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred while adding the job position.");
