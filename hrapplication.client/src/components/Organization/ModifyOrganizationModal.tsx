@@ -261,7 +261,6 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                                 id="phoneNumber"
                                 placeholder="Phone Number"
                                 className="w-full rounded-md border border-gray-300 px-4 py-2"
-                               
                                 onInput={(e) => {
                                     e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, "");
                                     if (e.currentTarget.value.length > 12) {

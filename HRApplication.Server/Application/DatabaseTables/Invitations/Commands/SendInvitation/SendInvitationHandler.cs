@@ -47,19 +47,13 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.S
                 return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
             }
 
-            var senderUsersteamMembers = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(jobPosition.TeamId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
-
-            if (senderUsersteamMembers == null)
+            var isAdminResult = IsAdministrator.CheckUser(_teamMemberRepository, jobPosition.TeamId, BearerCheckerResult.Value.Payload.Sub);
+            if (isAdminResult.IsError)
             {
-                return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
+                return isAdminResult.Errors;
             }
-            var isUserAdministrator = senderUsersteamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
 
-            if (isUserAdministrator == null)
-            {
-                return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
-            }
-            if(_teamMemberRepository.GetTeamMemberByUserIdAndJobPositionId(jobPosition.JobPositionId, userSendTo.UserId) is TeamMember)
+            if (_teamMemberRepository.GetTeamMemberByUserIdAndJobPositionId(jobPosition.JobPositionId, userSendTo.UserId) is TeamMember)
             {
                 return CustomErrorOr.CustomErrors.Invitation.UserAlreadyOccupyingPosition;
             }

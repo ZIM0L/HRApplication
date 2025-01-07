@@ -56,7 +56,7 @@ function Organization() {
                         <p className="text-sm text-gray-600">
                             Website:{" "}
                             <a
-                                href={`https://${team?.url}`}
+                                href={`${team?.url}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-500 underline"

@@ -12,11 +12,13 @@ import '../../styles/Calendar.css'
 import DeleteModal from './DeleteEventModal';
 import EditModal from './EditEventModal';
 import AddEventModal from './AddEventModal';
+import { useAuth } from '../../contex/AuthContex';
 function CalendarApp() {
     const eventsService = useState(() => createEventsServicePlugin())[0];
     const dragAndDropPlugin = useState(() => createDragAndDropPlugin())[0];
     const resizePlugin = useState(() => createResizePlugin(30))[0];
     const eventModal = createEventModalPlugin();
+    const { selectedTeam } = useAuth();
     const [initEvents, setInitEvents] = useState<CalendarEventExternal[]>([
         {
             calendarId: 'workrelated',
@@ -157,26 +159,28 @@ function CalendarApp() {
                 {/* Button to open/close sidebar */}
 
                 {/* Sidebar */}
-                <div className={`transition-all absolute md:static mt-2 px-4 md:px-1 duration-500 ease-in-out transform mb-4 w-full ${sidebarOpen ? ' md:translate-x-0  md:w-40 ' : 'md:-translate-x-52 md:w-1'} md:overflow-hidden whitespace-nowrap `}>
+                <div className={`transition-all absolute md:static mt-2 px-4 md:pl-3  duration-500 ease-in-out transform mb-4 w-full ${sidebarOpen ? ' md:translate-x-0  md:w-40 ' : 'md:-translate-x-52 md:w-1'} md:overflow-hidden whitespace-nowrap `}>
                     <div className="relative flex flex-col-reverse md:flex-col">
-                        <div className="flex space-x-3 md:space-x-0 md:flex-col">
-                            <button
-                                className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:bg-cyan-50 hover:border-cyan-blue md:py-0 md:text-left md:w-full"
-                                onClick={() => setIsAddModalOpen(true)}>
-                                Add event
-                            </button>
-                            <button
-                                className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:border-red-800 hover:bg-red-50 md:py-0 md:text-left md:w-full"
-                                onClick={() => setIsDeleteModalOpen(true)}>
-                                Delete events
-                            </button>
-                            <button
-                                className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:border-yellow-400 hover:bg-yellow-50 md:py-0 md:text-left"
-                                onClick={() => setIsEditModalOpen(true)}>
-                                Edit events
-                            </button>
-                        </div>
+                        {selectedTeam?.roleName == "Administrator" ? 
+                            <div className="flex space-x-3 md:space-x-0 md:flex-col">
+                                <button
+                                    className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:bg-cyan-50 hover:border-cyan-blue md:py-0 md:text-left md:w-full"
+                                    onClick={() => setIsAddModalOpen(true)}>
+                                    Add event
+                                </button>
+                                <button
+                                    className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:border-red-800 hover:bg-red-50 md:py-0 md:text-left md:w-full"
+                                    onClick={() => setIsDeleteModalOpen(true)}>
+                                    Delete events
+                                </button>
+                                <button
+                                    className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:border-yellow-400 hover:bg-yellow-50 md:py-0 md:text-left"
+                                    onClick={() => setIsEditModalOpen(true)}>
+                                    Edit events
+                                </button>
                         <hr className="my-2" />
+                            </div>
+                        : null}
                         {/* Filter by C ategory */}
                         <div className="flex flex-col">
                             <label htmlFor="category" className="text-md tracking-wide">Category filter</label>
@@ -209,39 +213,42 @@ function CalendarApp() {
                                 onClick={() => setSidebarOpen(!sidebarOpen)}
                             >
                                 {sidebarOpen ?
-                            <ChevronDoubleRightIcon className="-rotate-90 h-4 w-4 md:rotate-0" />
-                                    : 
                             <ChevronDoubleLeftIcon className="-rotate-90 h-4 w-4 md:rotate-0" />
+                                    : 
+                            <ChevronDoubleRightIcon className="-rotate-90 h-4 w-4 md:rotate-0" />
                                 }
                     </button>
                         <ScheduleXCalendar calendarApp={calendar} />
                 </div>
             </div>
+            {selectedTeam?.roleName == "Administrator" ? 
+                <>
+                    {isAddModalOpen && (
+                        <AddEventModal
+                            onAdd={(event) => {
+                                setInitEvents((prevEvents) => [...prevEvents, event]);
+                                eventsService.add(event);
+                            }}
+                            onClose={() => setIsAddModalOpen(false)}
+                        />
+                    )}
 
-            {isAddModalOpen && (
-                <AddEventModal
-                    onAdd={(event) => {
-                        setInitEvents((prevEvents) => [...prevEvents, event]);
-                        eventsService.add(event);
-                    }}
-                    onClose={() => setIsAddModalOpen(false)}
-                />
-            )}
-
-            {isDeleteModalOpen && (
-                <DeleteModal
-                    events={initEvents}
-                    onDelete={handleDeleteEvent}
-                    onClose={() => setIsDeleteModalOpen(false)}
-                />
-            )}
-            {isEditModalOpen && (
-                <EditModal
-                    events={initEvents}
-                    onSave={handleEditEvent}
-                    onClose={() => setIsEditModalOpen(false)}
-                />
-            )}
+                    {isDeleteModalOpen && (
+                        <DeleteModal
+                            events={initEvents}
+                            onDelete={handleDeleteEvent}
+                            onClose={() => setIsDeleteModalOpen(false)}
+                        />
+                    )}
+                    {isEditModalOpen && (
+                        <EditModal
+                            events={initEvents}
+                            onSave={handleEditEvent}
+                            onClose={() => setIsEditModalOpen(false)}
+                        />
+                )}
+                </>
+            : null}
         </div>
     );
 

@@ -39,18 +39,12 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.Disband
             }
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            var UsersteamMembers = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(teamId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
-            
-            if (UsersteamMembers == null)
+            var isAdminResult = IsAdministrator.CheckUser(_teamMemberRepository, teamId, BearerCheckerResult.Value.Payload.Sub);
+            if (isAdminResult.IsError)
             {
-                return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
+                return isAdminResult.Errors;
             }
-            var isUserAdministrator = UsersteamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
-            
-            if (isUserAdministrator == null)
-            {
-                return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
-            }
+
             var teamTeamMembers = _teamMemberRepository.GetTeamMembersByTeamIdFromCollection(teamId);
 
             _teamMemberRepository.DeleteTeamMembersFromCollection(teamTeamMembers);

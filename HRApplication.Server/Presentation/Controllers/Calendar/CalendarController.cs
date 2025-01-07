@@ -19,21 +19,5 @@ namespace HRApplication.Server.Presentation.Controllers.Calendar
             _mediator = mediator;
         }
 
-        [HttpPost]
-        [Route("/api/[controller]/CreateCalendarTEST")]
-        public async Task<IActionResult> CreateCalendarTEST([FromBody] CreateCalendarRequest request)
-        {
-
-            var command = new CreateCalendarRequest(
-                request.teamId);
-
-            ErrorOr<Unit> response = await _mediator.Send(command);
-
-            return response.Match(
-                response => Ok(response),
-                errors => Problem(errors)
-                );
-
-        }
     }
 }

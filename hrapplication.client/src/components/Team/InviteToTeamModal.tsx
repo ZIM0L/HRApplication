@@ -1,5 +1,4 @@
-﻿// InviteToTeamModal.tsx
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IJobPosition } from "../../types/JobPosition/IJobPosition";
 import { GetJobPositionsBasedOnTeams } from "../../api/JobPositionAPI";
@@ -21,6 +20,7 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
     const [jobPositions, setJobPositions] = useState<IJobPosition[]>([]);
+    const [isDisabledInvite, setIsDisabledInvite] = useState(true);
 
     useEffect(() => {
         const fetchJobPositions = async () => {
@@ -30,14 +30,18 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
                 }
                 const response = await GetJobPositionsBasedOnTeams(selectedTeam?.team.teamId);
                 if (response?.status === 200) {
-                    setJobPositions(response.data);
-                } 
+                    setJobPositions(response.data || []);
+                }
             } catch (e) {
                 console.log(e);
             }
         };
         fetchJobPositions();
     }, [selectedTeam?.team.teamId]);
+
+    useEffect(() => {
+        setIsDisabledInvite(jobPositions.length === 0);
+    }, [jobPositions]);
 
     const handleUserSelect = (user: SearchForUserInputs) => {
         setValue("name", user.name);
@@ -53,10 +57,10 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
                 setShowNotification(true);
                 setIsError(false);
                 setTimeout(() => {
-                    reset()
-                    onClose()
+                    reset();
+                    onClose();
                     setShowNotification(false);
-                },2000)
+                }, 2000);
             }
         } catch (error) {
             setIsError(true);
@@ -101,7 +105,8 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
                     <div className="mt-4 flex justify-end">
                         <button
                             type="submit"
-                            className="mr-2 rounded-md bg-cyan-blue px-4 py-2 text-white hover:bg-cyan-blue-hover"
+                            className={`mr-2 rounded-md ${isDisabledInvite ? "bg-cyan-blue-hover" : "bg-cyan-blue"} px-4 py-2 text-white hover:bg-cyan-blue-hover`}
+                            disabled={isDisabledInvite}
                         >
                             Invite
                         </button>
