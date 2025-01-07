@@ -1,33 +1,21 @@
 ﻿import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import DeleteTeamModal from "./DeleteTeamModal";
-import { ITeam } from "../../types/Team/ITeam";
-import { DeleteTeamPermanently } from "../../api/TeamAPI";
+import { ITeam, TeamInputs } from "../../types/Team/ITeam";
+import { DeleteTeamPermanently, UpdateTeam } from "../../api/TeamAPI";
 import { useAuth } from "../../contex/AuthContex";
 import { useNavigate } from "react-router-dom";
 import Notification from "../Notification/Notification";
-import ConfirmChangeModal from "./ConfirmChangesModal"; // Importing the new modal
+import ConfirmChangeModal from "./ConfirmChangesModal";
 
 interface ModifyOrganizationProp {
     isOpen: boolean;
     onClose: () => void;
-    team: ITeam | null; // Receive team data from parent
-}
-
-interface Inputs {
-    name: string;
-    industry: string;
-    country: string;
-    url: string;
-    email: string;
-    city: string;
-    address: string;
-    phoneNumber: string;
-    zipCode: string;
+    team: ITeam | null; 
 }
 
 const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationProp) => {
-    const { register, handleSubmit, setValue, watch, reset } = useForm<Inputs>();
+    const { register, handleSubmit, setValue, watch, reset } = useForm<TeamInputs>();
     const { selectedTeam } = useAuth();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
@@ -37,11 +25,25 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
     const [changes, setChanges] = useState<{ [key: string]: string }>({}); 
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmit: SubmitHandler<TeamInputs> = async (data) => {
         try {
-            setShowConfirmModal(false)
-            onClose();
+            if (!selectedTeam) return;
+            const result = await UpdateTeam(selectedTeam?.team.teamId, data);
+            if (result?.status == 200) {
+                setIsError(false)
+                setNotificationMessage(["Team information has been updated"])
+                setShowNotification(true)
+                setTimeout(() => {
+                    onClose();
+                    setShowConfirmModal(false)
+                },3500)
+            }
         } catch (error) {
+            if (error instanceof Error) {
+                setIsError(true)
+                setNotificationMessage([error.message])
+                setShowNotification(true)
+            }
             console.error("Adding new record error:", error);
         }
     };
@@ -80,8 +82,8 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
         const newChanges: { [key: string]: string } = {};
 
         Object.keys(formData).forEach((key) => {
-            if (formData[key as keyof Inputs] !== team?.[key as keyof ITeam]) {
-                newChanges[key] = formData[key as keyof Inputs];
+            if (formData[key as keyof TeamInputs] !== team?.[key as keyof ITeam]) {
+                newChanges[key] = formData[key as keyof TeamInputs];
             }
         });
 
@@ -92,8 +94,8 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
         const newChanges: { [key: string]: string } = {};
 
         Object.keys(formData).forEach((key) => {
-            if (formData[key as keyof Inputs] !== team?.[key as keyof ITeam]) {
-                newChanges[key] = formData[key as keyof Inputs];
+            if (formData[key as keyof TeamInputs] !== team?.[key as keyof ITeam]) {
+                newChanges[key] = formData[key as keyof TeamInputs];
             }
         });
 
@@ -171,7 +173,10 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                                 required
                                 placeholder="Industry"
                                 className="w-full rounded-md border border-gray-300 px-4 py-2"
-                            />
+                                onInput ={(e) => {
+                                    e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-Z]/g, "");
+                                }}
+                            />  
                         </div>
 
                         <div>
@@ -185,6 +190,9 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                                 required
                                 placeholder="Country"
                                 className="w-full rounded-md border border-gray-300 px-4 py-2"
+                                onInput={(e) => {
+                                    e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-Z]/g, "");
+                                }}
                             />
                         </div>
 
@@ -198,7 +206,10 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                                 id="city"
                                 placeholder="City"
                                 className="w-full rounded-md border border-gray-300 px-4 py-2"
-                            />
+                                onInput={(e) => {
+                                    e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-Z]/g, "");
+                                }}
+                                />
                         </div>
 
                         <div>
@@ -270,6 +281,11 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                                 id="zipCode"
                                 placeholder="Zip Code"
                                 className="w-full rounded-md border border-gray-300 px-4 py-2"
+                                onInput={(e) => {
+                                    if (e.currentTarget.value.length > 10) {
+                                        e.currentTarget.value = e.currentTarget.value.slice(0, 10);
+                                    }
+                                }}
                             />
                         </div>
                     </div>

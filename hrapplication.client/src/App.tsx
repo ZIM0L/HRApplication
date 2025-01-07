@@ -8,7 +8,7 @@ import AccessDenied from './components/ErrorComponents/AccessDenied';
 import NotFoundPage from './components/ErrorComponents/NotFoundPage';
 import GoogleAuthHandler from './utils/GooogleAuthHandler';
 import SelectDashboard from './components/SelectDashboard/SelectDashboard';
-import Organization from './components/Organization/OrganizationAdminView';
+import Organization from './components/Organization/OrganizationView';
 import Team from './components/Team/Team';
 import JobPositions from './components/JobPositions/JobPositions';
 import Callender from './components/Callender/Callender';

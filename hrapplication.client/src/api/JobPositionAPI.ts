@@ -14,13 +14,14 @@ export const GetJobPositionsBasedOnTeams = async (teamId: string): Promise<Axios
         console.error("Error fetching job position: ", error);
 
         if (error instanceof AxiosError) {
-        const extractedErrors = ExtractErrorsFromAPI(error);
+            const extractedErrors = ExtractErrorsFromAPI(error);
 
-        const errorMessage = extractedErrors
-            .map(e => `${e.messages.join(", ")}`)
-            .join(" | ");
-
-        throw new Error(errorMessage); 
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
         }
         throw new Error("Unexpected error occurred while fetching job position.");
     }

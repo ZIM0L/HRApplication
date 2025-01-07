@@ -84,7 +84,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         public async Task<IActionResult> GetTeam([FromBody] UpdateTeamRequest request, string teamId)
         {
             var command = new UpdateTeamRequest(
-                request.teamId,
+                Guid.Parse(teamId),
                 request.Name,
                 request.Industry,
                 request.Country,

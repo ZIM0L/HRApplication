@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
     }
 
     return (
-        <div className="flex h-[100vh] w-full flex-col overflow-x-hidden bg-white md:overflow-y-hidden md:flex-row">
+        <div className="flex h-fit w-full flex-col overflow-x-hidden bg-gray-100 md:h-[100vh] md:overflow-y-hidden md:flex-row">
             {/* Przycisk mobilny do otwierania/zamykania */}
             <button
                 className="z-20 flex items-center justify-center bg-dark-blue p-2 text-white md:hidden"
@@ -72,8 +72,8 @@ const Dashboard: React.FC = () => {
 
             {/* Pasek boczny */}
             <div
-                className={`${isSidebarOpen ? "" : "-translate-y-full"
-                    } md:flex flex-col md:translate-y-0 justify-between bg-dark-blue p-4 text-white transition-all z-10 bg-dark-blue duration-500`}
+                className={`${isSidebarOpen ? "translate-y-0" : "-translate-y-full "
+                    }sticky md:static w-full md:w-fit  md:flex flex-col md:translate-y-0 justify-between bg-dark-blue p-4 text-white transition-all z-10 bg-dark-blue duration-500`}
             >
                 <div>
                     <div className="space-y-4 text-xl">
@@ -169,7 +169,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/* Główna zawartość */}
-            <div className={`flex w-full flex-col transition-all duration-500 ${isSidebarOpen ? "" : "-translate-y-[526px]"} md:translate-y-0`}
+            <div className={`flex absolute md:static w-full flex-col transition-all duration-500  md:translate-y-0 ${isSidebarOpen ? "translate-y-[526px]" : "translate-y-0"}`}
 >
                 {/* Pasek górny */}
                 {decodedToken && (

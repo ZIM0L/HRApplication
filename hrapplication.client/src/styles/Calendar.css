@@ -1,5 +1,6 @@
 .sx__date-picker-popup{
     max-height: 300px;
+    overflow-x : auto;
 }
 .sx__date-picker__week { 
     margin-bottom: 0;

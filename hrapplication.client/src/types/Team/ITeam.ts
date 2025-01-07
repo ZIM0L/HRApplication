@@ -15,11 +15,11 @@ export type TeamInputs = {
     industry: string;
     country: string;
     url?: string;
-    email: string;
+    email?: string;
     address?: string;
     city?: string;
     phoneNumber?: string;
-    zipcode?: string;
+    zipCode?: string;
 };
 
 export interface ITeamWithUserPermission {

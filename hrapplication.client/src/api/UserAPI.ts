@@ -15,6 +15,9 @@ export const loginUser = async (data: LoginInputs): Promise<AxiosResponse> => {
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
 
             throw new Error(errorMessage); 
         }
@@ -33,6 +36,9 @@ export const registerUser = async (data: RegisterInputs): Promise<AxiosResponse 
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
 
             throw new Error(errorMessage); 
         }

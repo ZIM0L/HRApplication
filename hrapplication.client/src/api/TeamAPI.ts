@@ -25,16 +25,17 @@ export const GetTeam = async (data : string): Promise<AxiosResponse | null> => {
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred fetching team.");
     }
 }
-export const UpdateTeam = async (data: TeamInputs): Promise<AxiosResponse | null> => {
+export const UpdateTeam = async(teamId : string , data: TeamInputs): Promise<AxiosResponse | null> => {
     try {
-        return await mainAxiosInstance.post('api/Team/GetTeam', {
-            teamId: data
-        });
+        return await mainAxiosInstance.put(`api/Team/UpdateTeam/${teamId}`, data);
     } catch (error) {
         if (error instanceof AxiosError) {
             console.error("Error fetching team: ", error);
@@ -44,6 +45,9 @@ export const UpdateTeam = async (data: TeamInputs): Promise<AxiosResponse | null
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
             throw new Error(errorMessage);
         }
         throw new Error("Unexpected error occurred fetching team.");
@@ -85,7 +89,9 @@ export const GetTeamsUsers = async (id: string): Promise<AxiosResponse | null> =
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
-
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred fetching teams users.");
@@ -105,7 +111,9 @@ export const DeleteTeamPermanently = async (teamId : string): Promise<AxiosRespo
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
-
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred disbanding team.");

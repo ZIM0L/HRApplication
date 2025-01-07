@@ -279,7 +279,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                     <div>
                         <label className="mb-1 block text-sm font-medium text-gray-700">Zipcode</label>
                         <input
-                            {...register("zipcode")}
+                            {...register("zipCode")}
                             type="text"
                             placeholder="Enter zipcode"
                             className="w-full rounded-md border border-gray-300 px-4 py-2"

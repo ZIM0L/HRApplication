@@ -10,14 +10,14 @@ function Organization() {
     const [team, setTeam] = useState<ITeam | null>(null); // Make sure the team is nullable
     const { selectedTeam } = useAuth();
 
+    const fetchTeam = async () => {
+        if (!selectedTeam?.team.teamId) return;
+        const result = await GetTeam(selectedTeam.team.teamId);
+        if (result?.status === 200) {
+            setTeam(result.data);
+        }
+    };
     useEffect(() => {
-        const fetchTeam = async () => {
-            if (!selectedTeam?.team.teamId) return;
-            const result = await GetTeam(selectedTeam.team.teamId);
-            if (result?.status === 200) {
-                setTeam(result.data);
-            }
-        };
         fetchTeam();
     }, [selectedTeam]);
 
@@ -83,7 +83,7 @@ function Organization() {
                         <p>
                             Postal Code:{" "}
                             <span className="font-medium">
-                                {team?.zipCode.slice(0, 2)}-{team?.zipCode.slice(2)}
+                                {team?.zipCode.slice(0, 2)}{team?.zipCode.slice(2)}
                             </span>
                         </p>
                     </div>
@@ -92,7 +92,7 @@ function Organization() {
             {selectedTeam?.roleName == "Administrator" ?
                 <ModifyOrganizationModal
                     isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={() => { setIsModalOpen(false); fetchTeam() }}
                     team={team} // Pass team info as a prop
                 />
             : null}

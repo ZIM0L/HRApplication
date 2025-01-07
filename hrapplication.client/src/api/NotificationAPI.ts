@@ -15,6 +15,9 @@ export const GetUserInvitation = async (): Promise<AxiosResponse | null> => {
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
 
             throw new Error(errorMessage); 
         }
@@ -34,6 +37,9 @@ export const CheckIfAnyInvitationForUser = async (): Promise<AxiosResponse | nul
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
 
             throw new Error(errorMessage); 
         }

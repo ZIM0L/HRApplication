@@ -23,8 +23,15 @@ function CalendarApp() {
             description: 'Meeting with team',
             id: '1',
             title: 'Work Meeting',
-            start: '2024-12-16 10:15',
-            end: '2024-12-16 12:15',
+            start: '2025-01-16 10:15',
+            end: '2025-01-16 12:15',
+        }, {
+            calendarId: 'workrelated',
+            description: 'Meeting with team',
+            id: '1',
+            title: 'Work Meeting',
+            start: '2025-01-16 10:15',
+            end: '2025-01-16 12:15',
         },
         {
             calendarId: 'personal',
@@ -113,8 +120,8 @@ function CalendarApp() {
         backgroundEvents: [
             {
                 title: 'Out of office',
-                start: '2024-12-16',
-                end: '2024-12-16',
+                start: '2025-01-16',
+                end: '2025-01-16',
                 style: {
                     // create tilted 5px thick gray lines
                     backgroundImage: 'repeating-linear-gradient(45deg, #ccc, #ccc 5px, transparent 5px, transparent 10px)',
@@ -144,62 +151,69 @@ function CalendarApp() {
     }, [selectedCategories]);
 
     return (
-        <div className=" mt-4 h-screen overflow-auto px-2">
+        <div className={` mt-4 h-screen  bg-gray-100 md:overflow-auto`}>
             {/* Main Content */}
-            <div className="flex w-full overflow-hidden py-4">
+            <div className="flex w-full flex-col py-4 md:flex-row">
                 {/* Button to open/close sidebar */}
 
                 {/* Sidebar */}
-                <div className={`transition-all mt-2 p-2 duration-500 ease-in-out transform ${sidebarOpen ? 'translate-x-0 w-36' : '-translate-x-52 invisible w-1'} overflow-hidden whitespace-nowrap `}>
-                    <div className="relative flex flex-col">
-                        <button
-                            className="border-2 mb-2 w-full rounded border-white px-1 text-left transition-colors duration-200 hover:bg-cyan-50 hover:border-cyan-blue"
-                            onClick={() => setIsAddModalOpen(true)}>
-                            Add event
-                        </button>
-                        <button
-                            className="border-2 mb-2 w-full rounded border-white px-1 text-left transition-colors duration-200 hover:border-red-800 hover:bg-red-50"
-                            onClick={() => setIsDeleteModalOpen(true)}>
-                            Delete events
-                        </button>
-                        <button
-                            className="border-2 mb-2 w-full rounded border-white px-1 text-left transition-colors duration-200 hover:border-yellow-400 hover:bg-yellow-50"
-                            onClick={() => setIsEditModalOpen(true)}>
-                            Edit events
-                        </button>
-
+                <div className={`transition-all absolute md:static mt-2 px-4 md:px-1 duration-500 ease-in-out transform mb-4 w-full ${sidebarOpen ? ' md:translate-x-0  md:w-40 ' : 'md:-translate-x-52 md:w-1'} md:overflow-hidden whitespace-nowrap `}>
+                    <div className="relative flex flex-col-reverse md:flex-col">
+                        <div className="flex space-x-3 md:space-x-0 md:flex-col">
+                            <button
+                                className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:bg-cyan-50 hover:border-cyan-blue md:py-0 md:text-left md:w-full"
+                                onClick={() => setIsAddModalOpen(true)}>
+                                Add event
+                            </button>
+                            <button
+                                className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:border-red-800 hover:bg-red-50 md:py-0 md:text-left md:w-full"
+                                onClick={() => setIsDeleteModalOpen(true)}>
+                                Delete events
+                            </button>
+                            <button
+                                className="border-2 mb-2 w-1/3 rounded border-gray-100 px-1 py-2 transition-colors duration-200 hover:border-yellow-400 hover:bg-yellow-50 md:py-0 md:text-left"
+                                onClick={() => setIsEditModalOpen(true)}>
+                                Edit events
+                            </button>
+                        </div>
                         <hr className="my-2" />
                         {/* Filter by C ategory */}
-                        <span></span>
-                        <label htmlFor="category" className="text-md tracking-wide">Category filter</label>
-                        <p className="text-xs text-gray-400">Choose what to see</p>
-                        <div id="category" className="flex flex-col space-y-2">
-                            {Object.keys(eventTypes).map((category) => (
-                                <div key={category} className="flex items-center">
-                                    <input
+                        <div className="flex flex-col">
+                            <label htmlFor="category" className="text-md tracking-wide">Category filter</label>
+                            <p className="text-xs text-gray-400">Choose what to see</p>
+                           <div
+                              id="category"
+                              className="flex flex-col flex-wrap md:space-y-2"
+                              tabIndex={-1} // Zapobiega przypadkowemu focusowi
+                              contentEditable={false} // Wyłącza możliwość edycji
+                            >
+                              {Object.keys(eventTypes).map((category) => (
+                                    <div key={category} className="flex w-fit items-center p-2 md:p-0">
+                                        <input
                                         type="checkbox"
                                         id={category}
                                         checked={selectedCategories.includes(category.toLowerCase())}
                                         onChange={() => handleCategoryChange(category.toLowerCase())}
-                                        className={`mr-2 h-2 w-2 appearance-none border-2 border-gray-300 text-nowrap rounded-md checked:bg-cyan-blue checked:border-cyan-blue focus:ring-2 focus:ring-cyan-blue focus:ring-offset-2 hover:cursor-pointer`}
-                                    />
-                                    <label htmlFor={category}>{eventTypes[category].label}</label>
-                                </div>
-                            ))}
+                                        className="mr-2 h-2 w-2 appearance-none border-2 border-gray-300 text-nowrap rounded-md checked:bg-cyan-blue checked:border-cyan-blue focus:ring-2 focus:ring-cyan-blue focus:ring-offset-2 hover:cursor-pointer"
+                                        />
+                                        <label htmlFor={category}>{eventTypes[category].label}</label>
+                                    </div>
+                              ))}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="relative w-full" >
-                        <button
-                            className={`z-10 transition-all ease-in-out duration-500 absolute -left-4 -top-4 flex h-9 w-9 items-center justify-center rounded-full border border-gray-400 bg-white text-black transition-all1`}
+                <div className={` w-full px-4 relative transition-all duration-500  ${sidebarOpen ? "translate-y-[500px]" : "translate-y-2"} md:translate-y-0`} >
+                    <button 
+                        className={`z-10 transition-all ease-in-out duration-500 absolute left-1/2 md:-left-0 -top-6 md:-top-4 flex h-9 w-9 items-center justify-center rounded-full border border-gray-400 bg-white text-black transition-all1`}
                                 onClick={() => setSidebarOpen(!sidebarOpen)}
                             >
                                 {sidebarOpen ?
-                                    <ChevronDoubleRightIcon className="h-4 w-4" />
+                            <ChevronDoubleRightIcon className="-rotate-90 h-4 w-4 md:rotate-0" />
                                     : 
-                                    <ChevronDoubleLeftIcon className="h-4 w-4" />
+                            <ChevronDoubleLeftIcon className="-rotate-90 h-4 w-4 md:rotate-0" />
                                 }
-                        </button>
+                    </button>
                         <ScheduleXCalendar calendarApp={calendar} />
                 </div>
             </div>

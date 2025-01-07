@@ -12,7 +12,14 @@ export const InviteUserToTeam = async (data: InvitationInputs): Promise<AxiosRes
         if (error instanceof AxiosError) {
             console.error("Error inviting user to team: ", error);
 
-            throw new Error(error.response?.data.title); 
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
         }
 
         throw new Error("Unexpected error occurred inviting user.");
@@ -31,7 +38,9 @@ export const SeachForUser = async (data: SearchForfullNameInputs): Promise<Axios
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`) 
                 .join(" | "); 
-
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
             throw new Error(errorMessage); 
         }
 
@@ -52,6 +61,9 @@ export const AcceptInvitation = async (data: AcceptInvitationInputs): Promise<Ax
             const errorMessage = extractedErrors
                 .map(e => `${e.messages.join(", ")}`)
                 .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
 
             throw new Error(errorMessage);
         }

@@ -46,8 +46,7 @@ public class UpdateTeamRequestValidator : AbstractValidator<UpdateTeamRequest>
 
         // Walidacja dla ZipCode
         RuleFor(x => x.ZipCode)
-            .Matches(@"^\d{5}(-\d{4})?$").WithMessage("Invalid zip code format.")
-             .MaximumLength(10).WithMessage("Zip Code exceed 10 characters.")
+            .MaximumLength(10).WithMessage("Zip Code exceed 10 characters.")
             .When(x => !string.IsNullOrEmpty(x.ZipCode));
     }
 }
