@@ -1,25 +1,11 @@
 ﻿import { PencilSquareIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
 import ModifyOrganizationModal from "./ModifyOrganizationModal";
-import { useEffect, useState } from "react";
-import { GetTeam } from "../../api/TeamAPI";
-import { ITeam } from "../../types/Team/ITeam";
+import { useState } from "react";
 import { useAuth } from "../../contex/AuthContex";
 
 function Organization() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [team, setTeam] = useState<ITeam | null>(null); // Make sure the team is nullable
     const { selectedTeam } = useAuth();
-
-    const fetchTeam = async () => {
-        if (!selectedTeam?.team.teamId) return;
-        const result = await GetTeam(selectedTeam.team.teamId);
-        if (result?.status === 200) {
-            setTeam(result.data);
-        }
-    };
-    useEffect(() => {
-        fetchTeam();
-    }, [selectedTeam]);
 
     return (
         <>
@@ -92,8 +78,8 @@ function Organization() {
             {selectedTeam?.roleName == "Administrator" ?
                 <ModifyOrganizationModal
                     isOpen={isModalOpen}
-                    onClose={() => { setIsModalOpen(false); fetchTeam() }}
-                    team={team} // Pass team info as a prop
+                    onClose={() => { setIsModalOpen(false); }}
+                    team={selectedTeam?.team} // Pass team info as a prop
                 />
             : null}
         </>

@@ -16,13 +16,15 @@ import {
 } from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AuthContex";
 import LogoSVG from "../LogoSVG/LogoSVG";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Dashboard: React.FC = () => {
     const { logOut, decodedToken, setSelectedTeamState, selectedTeam } = useAuth();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Stan dla zwijania paska
+
     const navigate = useNavigate();
+    const { getAllTeamInformation, teamInformation } = useAuth();
 
     const LogOutOfSystem = () => {
         setIsLoggingOut(true);
@@ -47,6 +49,17 @@ const Dashboard: React.FC = () => {
             return "Good Evening"; 
         }
     }
+    // Funkcja fetchData będzie wywoływana tylko raz przy załadowaniu komponentu
+    const fetchData = async () => {
+        await getAllTeamInformation();
+    };
+    useEffect(() => {
+        fetchData();
+    }, []); 
+
+    // Działa tylko po załadowaniu teamInformation
+    useEffect(() => {
+    }, [teamInformation]);
 
     if (isLoggingOut) {
         return (

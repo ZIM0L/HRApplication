@@ -23,7 +23,7 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
     const [isError, setIsError] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false); 
     const [changes, setChanges] = useState<{ [key: string]: string }>({});
-    const { updateSelectedTeam } = useAuth()
+    const { updateSelectedTeam, setTeamInformation } = useAuth()
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<TeamInputs> = async (data) => {
@@ -119,6 +119,7 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
         try {
             const result = await DeleteTeamPermanently(selectedTeam.team.teamId);
             if (result?.status == 200) {
+                setTeamInformation(null)
                 setShowNotification(true);
                 setNotificationMessage(["You will be redirected to organization tab"]);
                 setTimeout(() => {

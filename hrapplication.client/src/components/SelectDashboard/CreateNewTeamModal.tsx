@@ -9,9 +9,10 @@ import { TeamInputs } from "../../types/Team/ITeam";
 interface AddJobModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onCreate: () => void
 }
 
-const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
+const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCreate }) => {
     const { register, handleSubmit, reset, setValue } = useForm<TeamInputs>();
     const [searchCountry, setSearchCountry] = useState("");
     const [searchIndustry, setSearchIndustry] = useState("");
@@ -50,7 +51,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => 
                 seIsError(false);
                 setTimeout(() => {
                     reset();
-                    onClose();
+                    onCreate();
                 }, 3000);
             }
         } catch (error) {

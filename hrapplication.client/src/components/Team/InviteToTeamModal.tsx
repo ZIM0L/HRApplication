@@ -15,33 +15,15 @@ interface InviteToTeamModalProps {
 
 const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }) => {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<InvitationInputs>();
-    const { selectedTeam } = useAuth();
+    const { teamInformation } = useAuth();
     const [notificationMessages, setNotificationMessages] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [jobPositions, setJobPositions] = useState<IJobPosition[]>([]);
     const [isDisabledInvite, setIsDisabledInvite] = useState(true);
 
     useEffect(() => {
-        const fetchJobPositions = async () => {
-            try {
-                if (!selectedTeam?.team.teamId) {
-                    return;
-                }
-                const response = await GetJobPositionsBasedOnTeams(selectedTeam?.team.teamId);
-                if (response?.status === 200) {
-                    setJobPositions(response.data || []);
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        fetchJobPositions();
-    }, [selectedTeam?.team.teamId]);
-
-    useEffect(() => {
-        setIsDisabledInvite(jobPositions.length === 0);
-    }, [jobPositions]);
+        setIsDisabledInvite(teamInformation?.JobPositions.length === 0);
+    }, [teamInformation?.JobPositions]);
 
     const handleUserSelect = (user: SearchForUserInputs) => {
         setValue("name", user.name);
@@ -71,7 +53,6 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
             console.error("Error inviting user:", error);
         }
     };
-
     if (!isOpen) return null;
 
     return (
@@ -82,14 +63,14 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
                     <UserSearch onSelectUser={handleUserSelect} />
                     <div>
                         <label className="mb-1 block text-sm font-medium text-gray-700">Job Position</label>
-                        {jobPositions.length === 0 ? (
+                        {teamInformation?.JobPositions.length === 0 ? (
                             <select disabled className="w-full border border-gray-300 bg-gray-100 px-4 py-2">
                                 <option value="">No positions available</option>
                             </select>
                         ) : (
                             <select {...register("jobPositionId", { required: "Job position is required" })} className="w-full rounded-md border px-4 py-2">
-                                <option disabled value="">Select a job position</option>
-                                {jobPositions.map((job, index) => (
+                                    <option disabled value="">Select a job position</option>
+                                    {teamInformation?.JobPositions.map((job, index) => (
                                     <option key={index} value={job.jobPositionId}>{job.title}</option>
                                 ))}
                             </select>

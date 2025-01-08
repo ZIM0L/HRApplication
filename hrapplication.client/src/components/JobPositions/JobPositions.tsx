@@ -4,45 +4,22 @@ import { IJobPosition } from '../../types/JobPosition/IJobPosition'
 import AddJobModal from "./AddJobModal";
 import EditJobModal from "./EditJobModal";
 import { useAuth } from "../../contex/AuthContex";
-import { GetJobPositionsBasedOnTeams } from "../../api/JobPositionAPI";
 function JobPositions() {
     
-    const [jobPositions, setJobPositions] = useState<IJobPosition[]>([]);  // Stan do przechowywania wyników
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
     const [selectedJob, setSelectedJob] = useState<IJobPosition | null>(null);
-    const { selectedTeam } = useAuth();
-
-    const fetchJobPositions = async () => {
-        try {
-            if (!selectedTeam?.team.teamId) {
-                return
-            }
-            const response = await GetJobPositionsBasedOnTeams(selectedTeam?.team.teamId);
-            if (response?.status === 200) {
-                setJobPositions(response.data);
-            } else {
-                throw new Error('error fetching job positions');
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    const refreshJobPositions = () => {
-        fetchJobPositions();
-    };
+    const { selectedTeam, teamInformation } = useAuth();
 
     useEffect(() => {
-        fetchJobPositions();
+        // fetchJobPositions();
     }, []);
- 
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
             {/* Header Section */}
             <div className="mb-4 flex items-center justify-between space-x-2 bg-white p-2 shadow-md">
-                <h2 className="text-lg font-semibold text-gray-700">Job Positions: {jobPositions.length}</h2>
+                <h2 className="text-lg font-semibold text-gray-700">Job Positions: {teamInformation?.JobPositions.length}</h2>
                 <div className="flex items-center space-x-10">
                     {selectedTeam?.roleName == "Administrator" ? 
                         <div className="group relative">
@@ -67,7 +44,7 @@ function JobPositions() {
 
             {/* Job Positions Table */}
             <div className="overflow-x-auto rounded-lg bg-white shadow-md">
-                {jobPositions.length > 0 ? (
+                {teamInformation?.JobPositions.length != 0 ? (
                     <table className="w-full border-collapse border border-gray-200 text-left">
                         <thead className="bg-gray-100">
                             <tr>
@@ -80,7 +57,7 @@ function JobPositions() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                            {jobPositions.map((job, key) => (
+                            {teamInformation?.JobPositions.map((job, key) => (
                                 <tr key={key} className="hover:bg-gray-50">
                                     {/* Job Title */}
                                     <td className="px-3 py-1 text-gray-800">
@@ -128,12 +105,11 @@ function JobPositions() {
             <>
                 <AddJobModal
                     isOpen={isAddModalOpen}
-                    onClose={() => { setIsAddModalOpen(false); refreshJobPositions() }}
+                    onClose={() => { setIsAddModalOpen(false)}}
                 />
                 <EditJobModal
                     isOpen={isEditModalOpen}
                     onClose={() => setIsEditModalOpen(false)}
-                    onRefresh={refreshJobPositions}
                     job={selectedJob}
                 />
             </>

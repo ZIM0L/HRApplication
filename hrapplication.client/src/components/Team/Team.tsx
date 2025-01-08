@@ -1,51 +1,16 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState } from 'react';
 import { FunnelIcon } from '@heroicons/react/24/solid';
-import { GetTeamsUsers } from '../../api/TeamAPI';
 import { useAuth } from '../../contex/AuthContex';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import InviteToTeamModal from './InviteToTeamModal';
-
-interface EmployeeData {
-    name: string;
-    surname: string;
-    email: string;
-    jobPosition: string;
-    permission: string;
-    leftAt: Date | null;
-    joinedAt: string;
-    isActive: boolean;
-    phoneNumber: string;
-}
+import { EmployeeData } from '../../types/User/IUser';
 
 const Team: React.FC = () => {
     const [sortBy, setSortBy] = useState<string>(''); 
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchQuery, setSearchQuery] = useState<string>(''); 
-    const [userData, setUserData] = useState<EmployeeData[]>([]); 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { selectedTeam } = useAuth();
-
-    useEffect(() => {
-        if (!selectedTeam?.team?.teamId) {
-            return;
-        }
-
-        const fetchData = async () => {
-            try {
-                const response = await GetTeamsUsers(selectedTeam.team.teamId);
-                if (response?.status === 200) {
-                    setUserData(response.data); 
-                } else {
-                    setUserData([]); 
-                }
-            } catch (error) {
-                console.error('Error fetching team users:', error);
-                setUserData([]);
-            }
-        };
-
-        fetchData();
-    }, [selectedTeam]);
+    const { selectedTeam, teamInformation } = useAuth();
 
     if (!selectedTeam) {
         return <div>No team has been selected</div>;
@@ -70,9 +35,9 @@ const Team: React.FC = () => {
     };
  
     const processedData = () => {
-        if (!userData || userData.length === 0) return [];
+        if (!teamInformation?.UserData || teamInformation?.UserData.length === 0) return [];
 
-        let filteredData = userData;
+        let filteredData = teamInformation?.UserData;
 
         if (searchQuery.trim() !== '') {
             filteredData = filteredData.filter((employee) => {
@@ -209,7 +174,6 @@ const Team: React.FC = () => {
                         ))}
                     </tbody>
                 </table>
-
             </div>
             {selectedTeam.roleName == "Administrator" ? 
                 <InviteToTeamModal

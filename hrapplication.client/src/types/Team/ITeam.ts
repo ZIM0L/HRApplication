@@ -1,3 +1,6 @@
+import { IJobPosition } from "../JobPosition/IJobPosition";
+import { EmployeeData } from "../User/IUser";
+
 export interface ITeam {
     teamId: string,
     name: string,
@@ -29,3 +32,7 @@ export interface ITeamWithUserPermission {
 export type ITeamSendId = {
     teamId: string;
 };
+export interface ITeamInformation {
+    UserData: EmployeeData[],
+    JobPositions: IJobPosition[]
+}

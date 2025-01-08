@@ -4,6 +4,7 @@ import Notification from "../Notification/Notification";
 import { useState } from "react";
 import { AddJobPosition } from "../../api/JobPositionAPI";
 import { useAuth } from "../../contex/AuthContex";
+import { ITeamInformation } from "../../types/Team/ITeam";
 
 interface AddJobModalProps {
     isOpen: boolean;
@@ -15,7 +16,7 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
-    const { selectedTeam } = useAuth();
+    const { selectedTeam, setTeamInformation } = useAuth();
 
     const onSubmit: SubmitHandler<IAddJobPositionInputs> = async (data: IAddJobPositionInputs) => {
         try {
@@ -26,6 +27,13 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                 setShowNotification(true); 
                 setNotificationMessage(["New job position was added"])
                 setTimeout(() => {
+                    setTeamInformation((prev: ITeamInformation) => {
+                        return {
+                            ...prev,
+                            JobPositions: [...prev.JobPositions, response.data], 
+                        };
+                    });
+                    reset()
                     onClose()
                 },3500)
             } 

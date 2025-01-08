@@ -6,7 +6,6 @@ interface EditJobmodalProps {
     job: IJobPosition | null;
     isOpen: boolean;
     onClose: () => void;
-    onRefresh: () => void;
 }
 
 type Inputs = {

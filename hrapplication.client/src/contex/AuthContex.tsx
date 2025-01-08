@@ -6,7 +6,11 @@ import { ReadLocalStorageUserFromToken } from '../services/LocalStorageTokenServ
 import { JwtPayload } from 'jwt-decode';
 import { HttpStatusCode } from 'axios';
 import { IContext } from '../types/Contex/IContex';
-import { ITeamWithUserPermission, TeamInputs } from '../types/Team/ITeam';
+import { ITeamInformation, ITeamWithUserPermission, TeamInputs } from '../types/Team/ITeam';
+import { GetTeamsUsers } from '../api/TeamAPI';
+import { GetJobPositionsBasedOnTeams } from '../api/JobPositionAPI';
+import { INotifications } from '../types/Notification/INotification';
+import { GetUserInvitation } from '../api/NotificationAPI';
 
 interface IProvider {
     children: React.ReactNode;
@@ -22,6 +26,8 @@ export const AuthProvider = ({ children }: IProvider) => {
         const storedTeam = localStorage.getItem("selectedTeam");
         return storedTeam ? JSON.parse(storedTeam) : null;
     });
+    const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [] });
+    const [notifications, setNotifications] = useState<INotifications | null>(null);
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -59,6 +65,56 @@ export const AuthProvider = ({ children }: IProvider) => {
         };
         setSelectedTeamState(updatedTeam)
     }
+    const getUserInvitations = async (): Promise<INotifications> => {
+        if (!decodedToken) {
+            return Promise.reject("No decoded token available");
+        }
+
+        try {
+            const [invitationResponse] = await Promise.all([
+                GetUserInvitation(),
+            ]);
+
+            const newNotifications: INotifications = {
+                Invitations: invitationResponse?.data || [],
+            };
+
+            setNotifications(newNotifications); // Ustaw nowy stan
+            return newNotifications; // Zwrot nowych danych
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+
+            const emptyNotifications: INotifications = {
+                Invitations: [],
+            };
+
+            setNotifications(emptyNotifications); // Ustaw pusty stan w przypadku b³êdu
+            return emptyNotifications; // Zwrot pustych danych
+        }
+    };
+
+    const getAllTeamInformation = async () => {
+        if (!selectedTeam) return;
+
+        try {
+            const [usersResponse, jobPositionsResponse] = await Promise.all([
+                GetTeamsUsers(selectedTeam.team.teamId), 
+                GetJobPositionsBasedOnTeams(selectedTeam.team.teamId) 
+            ]);
+
+            setTeamInformation({
+                UserData: usersResponse?.data,
+                JobPositions: jobPositionsResponse?.data 
+            });
+        } catch (error) {
+            console.error("Error fetching team information:", error);
+            setTeamInformation({
+                UserData: [],
+                JobPositions: []
+            });
+        }
+    };
+
     // Funkcja do ustawienia dru¿yny i zapisania jej w localStorage
     const setSelectedTeamState = (team: ITeamWithUserPermission | null) => {
         setSelectedTeam(team);
@@ -93,7 +149,7 @@ export const AuthProvider = ({ children }: IProvider) => {
   
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, updateSelectedTeam }}>
+        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, updateSelectedTeam, getAllTeamInformation, teamInformation, setTeamInformation, notifications, setNotifications, getUserInvitations }}>
             {children}
         </AuthContext.Provider>
     );
