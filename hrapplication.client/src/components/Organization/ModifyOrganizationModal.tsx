@@ -22,7 +22,8 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false); 
-    const [changes, setChanges] = useState<{ [key: string]: string }>({}); 
+    const [changes, setChanges] = useState<{ [key: string]: string }>({});
+    const { updateSelectedTeam } = useAuth()
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<TeamInputs> = async (data) => {
@@ -34,6 +35,7 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                 setNotificationMessage(["Team information has been updated"])
                 setShowNotification(true)
                 setTimeout(() => {
+                    updateSelectedTeam(result.data)
                     onClose();
                     setShowConfirmModal(false)
                 },3500)

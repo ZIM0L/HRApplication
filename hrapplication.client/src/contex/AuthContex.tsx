@@ -6,7 +6,7 @@ import { ReadLocalStorageUserFromToken } from '../services/LocalStorageTokenServ
 import { JwtPayload } from 'jwt-decode';
 import { HttpStatusCode } from 'axios';
 import { IContext } from '../types/Contex/IContex';
-import { ITeamWithUserPermission } from '../types/Team/ITeam';
+import { ITeamWithUserPermission, TeamInputs } from '../types/Team/ITeam';
 
 interface IProvider {
     children: React.ReactNode;
@@ -40,6 +40,25 @@ export const AuthProvider = ({ children }: IProvider) => {
             setIsCheckingToken(false);
         }
     };
+    const updateSelectedTeam = (updatedTeamInputs: TeamInputs) => {
+        if (!selectedTeam) return null;
+        const updatedTeam: ITeamWithUserPermission = {
+            team: {
+                teamId: selectedTeam?.team.teamId,
+                name: updatedTeamInputs.name,
+                industry: updatedTeamInputs.industry,
+                country: updatedTeamInputs.country,
+                url: updatedTeamInputs.url,
+                email: updatedTeamInputs.email,
+                address: updatedTeamInputs.address,
+                city: updatedTeamInputs.city,
+                phoneNumber: updatedTeamInputs.phoneNumber,
+                zipCode: updatedTeamInputs.zipCode,
+            },
+            roleName: selectedTeam?.roleName, 
+        };
+        setSelectedTeamState(updatedTeam)
+    }
     // Funkcja do ustawienia dru¿yny i zapisania jej w localStorage
     const setSelectedTeamState = (team: ITeamWithUserPermission | null) => {
         setSelectedTeam(team);
@@ -74,7 +93,7 @@ export const AuthProvider = ({ children }: IProvider) => {
   
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, setSelectedTeam }}>
+        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, updateSelectedTeam }}>
             {children}
         </AuthContext.Provider>
     );

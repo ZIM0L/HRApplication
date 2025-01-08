@@ -55,11 +55,7 @@ const Dashboard: React.FC = () => {
             </div>
         );
     }
-
-    if (!selectedTeam?.team) {
-        return <div>No team</div>;
-    }
-
+ 
     return (
         <div className="flex h-fit w-full flex-col overflow-x-hidden bg-gray-100 md:h-[100vh] md:overflow-y-hidden md:flex-row">
             {/* Przycisk mobilny do otwierania/zamykania */}
@@ -178,7 +174,7 @@ const Dashboard: React.FC = () => {
                             {getGreeting()}, {decodedToken.given_name} {decodedToken.family_name}
                         </span>
                         <div className="relative flex items-center space-x-2">
-                            <span className="text-gray-200">{selectedTeam.team.name}</span>
+                            <span className="text-gray-200">{selectedTeam?.team.name}</span>
                             <div className="group relative flex flex-col items-center">
                                 <button onClick={() => onChangeTeam()}>
                                     <ArrowsRightLeftIcon className="h-5 w-5 hover:cursor-pointer" />
@@ -196,7 +192,7 @@ const Dashboard: React.FC = () => {
                     </div>
                 )}
                 <div className="border-2 flex w-full px-2 py-2 text-sm text-gray-500">
-                    <span className="border-r-2 px-2">{selectedTeam.team.name}</span>
+                    <span className="border-r-2 px-2">{selectedTeam?.team.name}</span>
                     <Link to="calendar" className="flex space-x-2 px-2 transition-all hover:text-gray-900 hover:scale-105 hover:hover:cursor-pointer">
                         <span>Callender</span>
                         <CalendarDaysIcon className="h-5 w-5" />

@@ -34,7 +34,7 @@ export const eventTypes = {
         label: "Financial",
         description: "Payroll, financial planning, and budgeting events."
     },
-    Admin: {
+    Administrative: {
         color: "#4682B4",
         label: "Admin",
         description: "Administrative tasks like HR meetings, system updates, and maintenance."

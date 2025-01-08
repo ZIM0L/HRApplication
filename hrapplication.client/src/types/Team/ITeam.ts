@@ -3,12 +3,12 @@ export interface ITeam {
     name: string,
     industry: string,
     country: string,
-    url: string,
-    email: string,
-    address: string,
-    city: string,
-    phoneNumber: string,
-    zipCode: string
+    url?: string,
+    email?: string,
+    address?: string,
+    city?: string,
+    phoneNumber?: string,
+    zipCode?: string
 }
 export type TeamInputs = {
     name: string;

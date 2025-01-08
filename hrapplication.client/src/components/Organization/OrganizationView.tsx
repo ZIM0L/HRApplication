@@ -46,22 +46,22 @@ function Organization() {
 
                     {/* Organizational Info */}
                     <div className="text-center md:text-left">
-                        <h2 className="text-xl font-bold text-gray-800">{team?.name}</h2>
+                        <h2 className="text-xl font-bold text-gray-800">{selectedTeam?.team?.name}</h2>
                         <p className="text-sm text-gray-600">
-                            Industry: <span className="font-medium">{team?.industry}</span>
+                            Industry: <span className="font-medium">{selectedTeam?.team?.industry}</span>
                         </p>
                         <p className="text-sm text-gray-600">
-                            Country: <span className="font-medium">{team?.country}</span>
+                            Country: <span className="font-medium">{selectedTeam?.team?.country}</span>
                         </p>
                         <p className="text-sm text-gray-600">
                             Website:{" "}
                             <a
-                                href={`${team?.url}`}
+                                href={`${selectedTeam?.team?.url}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-500 underline"
                             >
-                                {team?.url}
+                                {selectedTeam?.team?.url}
                             </a>
                         </p>
                     </div>
@@ -72,18 +72,18 @@ function Organization() {
                     <h2 className="mb-4 text-lg font-semibold text-gray-800">Contact Information</h2>
                     <div className="grid-cols-1 grid gap-y-2 text-sm text-gray-600 md:grid-cols-2 md:gap-x-6">
                         <p>
-                            Email: <span className="font-medium">{team?.email}</span>
+                            Email: <span className="font-medium">{selectedTeam?.team?.email}</span>
                         </p>
                         <p>
-                            Address: <span className="font-medium">{team?.address}</span>
+                            Address: <span className="font-medium">{selectedTeam?.team?.address}</span>
                         </p>
                         <p>
-                            City: <span className="font-medium">{team?.city}</span>
+                            City: <span className="font-medium">{selectedTeam?.team?.city}</span>
                         </p>
                         <p>
                             Postal Code:{" "}
                             <span className="font-medium">
-                                {team?.zipCode.slice(0, 2)}{team?.zipCode.slice(2)}
+                                {selectedTeam?.team?.zipCode?.slice(0, 2)}{selectedTeam?.team?.zipCode?.slice(2)}
                             </span>
                         </p>
                     </div>
