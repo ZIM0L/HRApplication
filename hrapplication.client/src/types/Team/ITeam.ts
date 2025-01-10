@@ -1,5 +1,6 @@
+import { ICalendarEvent } from "../Calendar/ICalendar";
 import { IJobPosition } from "../JobPosition/IJobPosition";
-import { EmployeeData } from "../User/IUser";
+import { IEmployeeData } from "../User/IUser";
 
 export interface ITeam {
     teamId: string,
@@ -33,6 +34,7 @@ export type ITeamSendId = {
     teamId: string;
 };
 export interface ITeamInformation {
-    UserData: EmployeeData[],
-    JobPositions: IJobPosition[]
+    UserData: IEmployeeData[],
+    JobPositions: IJobPosition[],
+    CalendarEvents: ICalendarEvent[]
 }

@@ -3,10 +3,11 @@ using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
+using Team = HRApplication.Server.Domain.Models.Team;
 
 namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.UpdateTeam
 {
-    public class UpdateTeamHandler : IRequestHandler< UpdateTeamRequest, ErrorOr<Unit>>
+    public class UpdateTeamHandler : IRequestHandler< UpdateTeamRequest, ErrorOr<TeamResult>>
     {
         private readonly ITeamRepository _teamRepository;
         private readonly ITeamMemberRepository _teamMemberRepository;
@@ -17,7 +18,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.UpdateT
             _teamMemberRepository = teamMemberRepository;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<ErrorOr<Unit>> Handle(UpdateTeamRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<TeamResult>> Handle(UpdateTeamRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -33,17 +34,10 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.UpdateT
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
-            var PermittedUser = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(request.teamId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
-
-            if (PermittedUser == null)
+            var isAdminResult = IsAdministrator.CheckUser(_teamMemberRepository, team.TeamId, BearerCheckerResult.Value.Payload.Sub);
+            if (isAdminResult.IsError)
             {
-                return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
-            }
-            var isUserAdministrator = PermittedUser.FirstOrDefault(x => x.RoleName == "Administrator");
-
-            if (isUserAdministrator == null)
-            {
-                return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
+                return isAdminResult.Errors;
             }
 
             team.Name = request.Name;
@@ -59,7 +53,16 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.UpdateT
 
             _teamRepository.UpdateTeam(team);
 
-            return Unit.Value;
+            return new TeamResult(
+                team.Name,
+                team.Industry,
+                team.Country,
+                team.Url,
+                team.Email,
+                team.Address,
+                team.City,
+                team.PhoneNumber,
+                team.ZipCode);
         }
     }
 }

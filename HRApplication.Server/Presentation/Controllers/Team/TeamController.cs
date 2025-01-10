@@ -95,7 +95,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 request.PhoneNumber,
                 request.ZipCode);
 
-            ErrorOr<Unit> response = await _mediatR.Send(command);
+            ErrorOr<TeamResult> response = await _mediatR.Send(command);
 
             return response.Match(
                 response => Ok(response),

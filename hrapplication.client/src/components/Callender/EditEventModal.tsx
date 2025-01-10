@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { CalendarEventExternal } from '@schedule-x/calendar';
 
 interface EditModalProps {
@@ -11,6 +11,7 @@ const EditModal: React.FC<EditModalProps> = ({ events, onSave, onClose }) => {
     const [selectedEvent, setSelectedEvent] = useState<CalendarEventExternal | null>(null);
 
     const handleSave = () => {
+        console.log(selectedEvent)
         if (selectedEvent) {
             onSave(selectedEvent);
         }
@@ -18,21 +19,31 @@ const EditModal: React.FC<EditModalProps> = ({ events, onSave, onClose }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-[400px] rounded bg-white p-6 shadow-lg">
-                <h2 className="mb-4 text-lg font-bold">Edit Event</h2>
-                <ul className="mb-4 max-h-64 overflow-auto">
-                    {events.map((event) => (
-                        <li key={event.id} className="mb-2 flex justify-between">
-                            <span>{event.title}</span>
-                            <button
-                                className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
-                                onClick={() => setSelectedEvent(event)}
-                            >
-                                Edit
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+            <div className="w-1/2 min-w-[410px] max-w-[550px] rounded bg-white p-6 shadow-lg">
+                <div className="mb-4">
+                    <label className="mb-2 block font-semibold">
+                        Select Event to Edit:
+                    </label>
+                    <select
+                        className="w-full rounded border p-2"
+                        onChange={(e) => {
+                            const selectedId = e.target.value;
+                            const event = events.find((event) => event.id === selectedId);
+                            setSelectedEvent(event || null); // Ustaw wybrane zdarzenie
+                        }}
+                        value={selectedEvent?.id || ''}
+                    >
+                        <option value="" disabled>
+                            -- Select an Event --
+                        </option>
+                        {events.map((event) => (
+                            <option key={event.id} value={event.id}>
+                                {event.title}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
 
                 {selectedEvent && (
                     <div>
@@ -78,6 +89,16 @@ const EditModal: React.FC<EditModalProps> = ({ events, onSave, onClose }) => {
                                     setSelectedEvent({ ...selectedEvent, description: e.target.value })
                                 }
                             ></textarea>
+                        </label>
+                        <label className="mb-2 block">
+                            Location:
+                            <input
+                                className="w-full rounded border p-2"
+                                value={selectedEvent.location}
+                                onChange={(e) =>
+                                    setSelectedEvent({ ...selectedEvent, description: e.target.value })
+                                }
+                            ></input>
                         </label>
                     </div>
                 )}

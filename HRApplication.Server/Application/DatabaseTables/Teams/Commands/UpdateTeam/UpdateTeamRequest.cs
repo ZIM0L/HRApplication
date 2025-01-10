@@ -14,5 +14,5 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands
     string? City ,
     string? PhoneNumber ,
     string? ZipCode
-    ) : IRequest<ErrorOr<Unit>>;
+    ) : IRequest<ErrorOr<TeamResult>>;
 }

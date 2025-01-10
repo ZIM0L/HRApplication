@@ -2,6 +2,7 @@
 using HRApplication.Server.Application.DatabaseTables.JobPosition.Queries.GetJobPositionsBasedOnTeams;
 using HRApplication.Server.Application.DatabaseTables.JobPositions;
 using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands;
+using HRApplication.Server.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +31,7 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
                 request.description,
                 request.isRecruiting
                 );
-            ErrorOr<Unit> response = await _mediator.Send(command);
+            ErrorOr<JobPositionsResult> response = await _mediator.Send(command);
 
             return response.Match(
             response => Ok(response),

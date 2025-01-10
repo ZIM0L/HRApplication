@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contex/AuthContex";
+import { useAuth } from "../../../contex/AppContex";
 import { registerUser } from "../../../api/UserAPI";
 import { RegisterInputs } from "../../../types/Auth/AuthInputTypes";
 import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";

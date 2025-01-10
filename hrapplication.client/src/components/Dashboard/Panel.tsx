@@ -1,4 +1,4 @@
-﻿import { useAuth } from '../../contex/AuthContex';
+﻿import { useAuth } from '../../contex/AppContex';
 import Notifications from './Notifications';
 import UpcomingEventsAlert from './UpcomingEventsAlert';
 import WorkSchedule from './WorkSchedule';

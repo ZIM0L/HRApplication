@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contex/AuthContex";
+import { useAuth } from "../contex/AppContex";
 
 const GoogleAuthHandler = () => {
     const { SetAuthenticationToken } = useAuth();
@@ -10,15 +10,12 @@ const GoogleAuthHandler = () => {
 
         const urlParams = new URLSearchParams(window.location.search);
         
-        console.log(window.location.search)
         const token = urlParams.get("token");
 
         if (token) {
             SetAuthenticationToken(token)
             navigate(`/organizations`, { replace: true });
-        } else {
-            console.error("Brak tokenu w URL!");
-        }
+        } 
     }, []);
 
     return <div>Trwa logowanie, proszê czekaæ...</div>;

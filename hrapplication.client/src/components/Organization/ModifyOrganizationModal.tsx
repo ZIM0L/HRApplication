@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import DeleteTeamModal from "./DeleteTeamModal";
 import { ITeam, TeamInputs } from "../../types/Team/ITeam";
 import { DeleteTeamPermanently, UpdateTeam } from "../../api/TeamAPI";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 import { useNavigate } from "react-router-dom";
 import Notification from "../Notification/Notification";
 import ConfirmChangeModal from "./ConfirmChangesModal";

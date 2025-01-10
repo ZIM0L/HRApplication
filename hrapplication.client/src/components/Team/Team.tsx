@@ -1,9 +1,9 @@
 ﻿import React, { useState } from 'react';
 import { FunnelIcon } from '@heroicons/react/24/solid';
-import { useAuth } from '../../contex/AuthContex';
+import { useAuth } from '../../contex/AppContex';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import InviteToTeamModal from './InviteToTeamModal';
-import { EmployeeData } from '../../types/User/IUser';
+import { IEmployeeData } from '../../types/User/IUser';
 
 const Team: React.FC = () => {
     const [sortBy, setSortBy] = useState<string>(''); 
@@ -55,8 +55,8 @@ const Team: React.FC = () => {
 
         if (sortBy) {
             filteredData = filteredData.sort((a, b) => {
-                let valueA = a[sortBy as keyof EmployeeData];
-                let valueB = b[sortBy as keyof EmployeeData];
+                let valueA = a[sortBy as keyof IEmployeeData];
+                let valueB = b[sortBy as keyof IEmployeeData];
 
                 if (valueA == null && valueB == null) return 0;
                 if (valueA == null) return sortOrder === 'asc' ? 1 : -1; 

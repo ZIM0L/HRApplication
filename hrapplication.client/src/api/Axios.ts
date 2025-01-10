@@ -6,9 +6,7 @@ export interface TokenResponse {
 export const mainAxiosInstance = axios.create({
     baseURL: 'https://localhost:7250',
     withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json' // Wysy³anie danych w formacie JSON
-    }
+    headers: {}
 });
 
 export const setAuthToken = (token: string | null) => {

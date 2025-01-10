@@ -20,7 +20,6 @@
     <Folder Include="src\types\Organization\" />
     <Folder Include="src\types\Team\" />
     <Folder Include="src\types\Role\" />
-    <Folder Include="src\utils\interfaces\" />
     <Folder Include="src\utils\enums\" />
     <Folder Include="src\utils\functions\" />
   </ItemGroup>

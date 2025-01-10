@@ -1,10 +1,10 @@
 ﻿namespace HRApplication.Server.Domain.Models
 {
-    public class CalendarEvents
+    public class CalendarEvent
     {
-        public CalendarEvents(Guid teamsCalendarId, string title, string description, string category, DateTime startDate, DateTime endDate, string? location = null)
+        public CalendarEvent(Guid teamsCalendarId, string title, string description, string category, DateTime startDate, DateTime endDate, string permission, string? location = null, Guid? teamTaskId = null)
         {
-            CalendarEventsId = Guid.NewGuid();
+            CalendarEventId = Guid.NewGuid();
             Title = title;
             StartDate = startDate;
             EndDate = endDate;
@@ -12,15 +12,19 @@
             Location = location;
             Category = category;
             Description = description;
+            TeamTaskId = teamTaskId;
+            Permission = permission;
         }
-        public Guid CalendarEventsId { get; set; }
+        public Guid CalendarEventId { get; set; }
         public Guid TeamsCalendarId { get; set; }
+        public Guid? TeamTaskId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string? Location { get; set; }
+        public string Permission {  get; set; }
 
     }
 }

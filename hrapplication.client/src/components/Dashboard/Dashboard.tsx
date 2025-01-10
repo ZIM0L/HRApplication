@@ -14,7 +14,7 @@ import {
     CalendarDaysIcon,
     ArrowsRightLeftIcon,
 } from "@heroicons/react/24/solid";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 import LogoSVG from "../LogoSVG/LogoSVG";
 import { useEffect, useState } from "react";
 

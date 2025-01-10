@@ -1,7 +1,7 @@
 ﻿import { PencilSquareIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
 import ModifyOrganizationModal from "./ModifyOrganizationModal";
 import { useState } from "react";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 
 function Organization() {
     const [isModalOpen, setIsModalOpen] = useState(false);

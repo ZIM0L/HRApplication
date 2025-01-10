@@ -1,4 +1,3 @@
-// src/AuthContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 import { setAuthToken } from '../api/Axios'; // Importuj api i setAuthToken
 import { ValidateTokenService } from '../services/ValidateTokenService'; // Funkcja sprawdzaj¹ca token
@@ -11,12 +10,13 @@ import { GetTeamsUsers } from '../api/TeamAPI';
 import { GetJobPositionsBasedOnTeams } from '../api/JobPositionAPI';
 import { INotifications } from '../types/Notification/INotification';
 import { GetUserInvitation } from '../api/NotificationAPI';
+import { GetCalendarEvents } from '../api/CalendarAPI';
 
 interface IProvider {
     children: React.ReactNode;
 }
 
-const AuthContext = createContext<IContext | null>(null);
+const AppContext = createContext<IContext | null>(null);
 
 export const AuthProvider = ({ children }: IProvider) => {
     const [authToken, setAuthTokenState] = useState<string | null>(localStorage.getItem('accessToken'));
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: IProvider) => {
         const storedTeam = localStorage.getItem("selectedTeam");
         return storedTeam ? JSON.parse(storedTeam) : null;
     });
-    const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [] });
+    const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [], CalendarEvents : [] });
     const [notifications, setNotifications] = useState<INotifications | null>(null);
 
     // Funkcja do sprawdzania tokenu
@@ -97,20 +97,23 @@ export const AuthProvider = ({ children }: IProvider) => {
         if (!selectedTeam) return;
 
         try {
-            const [usersResponse, jobPositionsResponse] = await Promise.all([
+            const [usersResponse, jobPositionsResponse, calendarEventsResponse] = await Promise.all([
                 GetTeamsUsers(selectedTeam.team.teamId), 
-                GetJobPositionsBasedOnTeams(selectedTeam.team.teamId) 
+                GetJobPositionsBasedOnTeams(selectedTeam.team.teamId), 
+                GetCalendarEvents(selectedTeam.team.teamId)
             ]);
 
             setTeamInformation({
                 UserData: usersResponse?.data,
-                JobPositions: jobPositionsResponse?.data 
+                JobPositions: jobPositionsResponse?.data,
+                CalendarEvents: calendarEventsResponse?.data
             });
         } catch (error) {
             console.error("Error fetching team information:", error);
             setTeamInformation({
                 UserData: [],
-                JobPositions: []
+                JobPositions: [],
+                CalendarEvents: []
             });
         }
     };
@@ -149,15 +152,15 @@ export const AuthProvider = ({ children }: IProvider) => {
   
 
     return (
-        <AuthContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, updateSelectedTeam, getAllTeamInformation, teamInformation, setTeamInformation, notifications, setNotifications, getUserInvitations }}>
+        <AppContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, updateSelectedTeam, getAllTeamInformation, teamInformation, setTeamInformation, notifications, setNotifications, getUserInvitations }}>
             {children}
-        </AuthContext.Provider>
+        </AppContext.Provider>
     );
 };
 
 // Hook do korzystania z kontekstu
 export const useAuth = () => {
-    const context = useContext(AuthContext);
+    const context = useContext(AppContext);
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
     }

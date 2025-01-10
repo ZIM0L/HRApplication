@@ -2,7 +2,7 @@
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { AcceptInvitation } from "../../api/InvitationAPI";
 import Notification from "./Notification";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 
 interface NotificationModalProps {
     isOpen: boolean; 

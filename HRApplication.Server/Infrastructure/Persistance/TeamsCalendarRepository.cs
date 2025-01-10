@@ -6,21 +6,32 @@ namespace HRApplication.Server.Infrastructure.Persistance
 {
     public class TeamsCalendarRepository : ITeamsCalendarRepository
     {
-        private readonly DBDatabase _dBContex;
-        public TeamsCalendarRepository(DBDatabase dBContex)
+        private readonly DBDatabase _dbContex;
+        public TeamsCalendarRepository(DBDatabase dbContex)
         {
-            _dBContex = dBContex;
+            _dbContex = dbContex;
+        }
+
+        public void CreateTeamCalendar(TeamsCalendar teamsCalendar)
+        {
+            _dbContex.Teams_Calendar.Add(teamsCalendar);
+            _dbContex.SaveChanges();
         }
 
         public void deleteTeamCalendar(TeamsCalendar teamsCalendar)
         {
-            _dBContex.Teams_Calendar.Remove(teamsCalendar);
-            _dBContex.SaveChanges();
+            _dbContex.Teams_Calendar.Remove(teamsCalendar);
+            _dbContex.SaveChanges();
+        }
+
+        public TeamsCalendar? GetTeamsCalendarByTeamCalendarId(Guid teamCalendarId)
+        {
+            return _dbContex.Teams_Calendar.SingleOrDefault(t => t.TeamsCalendarId == teamCalendarId);
         }
 
         public TeamsCalendar? GetTeamsCalendarByTeamId(Guid teamId)
         {
-            return _dBContex.Teams_Calendar.SingleOrDefault(t => t.TeamId == teamId);
+            return _dbContex.Teams_Calendar.SingleOrDefault(t => t.TeamId == teamId);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace HRApplication.Server.Domain.Models
+﻿namespace HRApplication.Server.Domain.Models
 {
     public class JobPosition
     {
@@ -14,8 +13,8 @@ namespace HRApplication.Server.Domain.Models
         public Guid TeamId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public Boolean IsActive { get; set; } = true;
-        public Boolean IsRecruiting { get; set; } = false;
+        public bool IsActive { get; set; } = true;
+        public bool IsRecruiting { get; set; } = false;
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
 

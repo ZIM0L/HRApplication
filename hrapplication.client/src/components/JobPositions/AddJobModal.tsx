@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import { useState } from "react";
 import { AddJobPosition } from "../../api/JobPositionAPI";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 import { ITeamInformation } from "../../types/Team/ITeam";
 
 interface AddJobModalProps {

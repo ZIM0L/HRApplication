@@ -1,5 +1,5 @@
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { IAuthenticationResult } from "../utils/interfaces/IAuthenticationResult";
+import { IAuthenticationResult } from "../types/Auth/IAuthenticationResult";
 
 export const SetLocalStorageUser = (user: IAuthenticationResult) => {
     localStorage.setItem("user", JSON.stringify(user));

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuth } from "../contex/AuthContex";
+import { useAuth } from "../contex/AppContex";
 
 const ProtectedRoutes = () => {
     const location = useLocation();

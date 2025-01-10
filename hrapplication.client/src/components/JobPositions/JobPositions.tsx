@@ -1,9 +1,9 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useState } from "react";
 import { ArrowRightCircleIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { IJobPosition } from '../../types/JobPosition/IJobPosition'
 import AddJobModal from "./AddJobModal";
 import EditJobModal from "./EditJobModal";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 function JobPositions() {
     
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false); // Stan kontrolujący widoczność modalu
@@ -11,10 +11,7 @@ function JobPositions() {
     const [selectedJob, setSelectedJob] = useState<IJobPosition | null>(null);
     const { selectedTeam, teamInformation } = useAuth();
 
-    useEffect(() => {
-        // fetchJobPositions();
-    }, []);
-
+  
     return (
         <div className="min-h-screen bg-gray-100 p-6">
             {/* Header Section */}

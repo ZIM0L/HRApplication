@@ -1,14 +1,12 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
-using HRApplication.Server.Domain.Models;
 using MediatR;
-using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 
 namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
 {
-    public class AddJobPositionHandler : IRequestHandler<JobPositionRequest, ErrorOr<Unit>>
+    public class AddJobPositionHandler : IRequestHandler<JobPositionRequest, ErrorOr<JobPositionsResult>>
     {
         private readonly IJobPositionsRepository _jobPositionsRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -21,7 +19,7 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
             _teamMemberRepository = teamMemberRepository;
             _teamRepository = teamRepository;
         }
-        public async Task<ErrorOr<Unit>> Handle(JobPositionRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<JobPositionsResult>> Handle(JobPositionRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -57,14 +55,24 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
                     Guid.Parse(request.teamId)
                 );
 
-            if(_jobPositionsRepository.GetJobPositionByTeamIdAndTitle(jobPosition.TeamId, jobPosition.Title) is Domain.Models.JobPosition)
+            var jobPositionDTO = new JobPositionsResult
+                (
+                    jobPosition.JobPositionId,
+                    jobPosition.Title,
+                    jobPosition.Description,
+                    true,
+                    jobPosition.IsRecruiting,
+                    CreatedDate: jobPosition.CreatedDate,
+                    UpdatedDate: null
+                );
+            if (_jobPositionsRepository.GetJobPositionByTeamIdAndTitle(jobPosition.TeamId, jobPosition.Title) is Domain.Models.JobPosition)
             {
                 return CustomErrorOr.CustomErrors.JobPosition.PositionAlreadyInTeam;
             }
 
              _jobPositionsRepository.AddJobPosition(jobPosition);
 
-            return Unit.Value;
+            return jobPositionDTO;
         }
     }
 }

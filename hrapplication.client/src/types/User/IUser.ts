@@ -7,7 +7,7 @@ export interface IUser {
     role: string;
     exp: number; 
 }
-export interface EmployeeData {
+export interface IEmployeeData {
     name: string;
     surname: string;
     email: string;

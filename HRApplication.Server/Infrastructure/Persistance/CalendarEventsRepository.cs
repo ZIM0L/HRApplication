@@ -11,10 +11,26 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             _dbContex = dbContex;
         }
-        public void CreateCalendar(TeamsCalendar teamsCalendar)
+        public void CreateCalendarEvent(CalendarEvent calendarEvent)
         {
-            _dbContex.Teams_Calendar.Add(teamsCalendar);
+            _dbContex.Calendar_Events.Add(calendarEvent);
             _dbContex.SaveChanges();
+        }
+
+        public void DeleteCalendarEvent(CalendarEvent calendarEventId)
+        {
+            _dbContex.Calendar_Events.Remove(calendarEventId);
+            _dbContex.SaveChanges();
+        }
+
+        public CalendarEvent? GetCalendarEvent(Guid calendarEventId)
+        {
+            return _dbContex.Calendar_Events.SingleOrDefault(x => x.CalendarEventId == calendarEventId);
+        }
+
+        public List<CalendarEvent>? GetCalendarEvents(Guid teamsCalendarId)
+        {
+            return _dbContex.Calendar_Events.Where(x => x.TeamsCalendarId == teamsCalendarId).ToList();
         }
     }
 }

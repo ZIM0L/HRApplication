@@ -1,8 +1,6 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { IJobPosition } from "../../types/JobPosition/IJobPosition";
-import { GetJobPositionsBasedOnTeams } from "../../api/JobPositionAPI";
-import { useAuth } from "../../contex/AuthContex";
+import { useAuth } from "../../contex/AppContex";
 import { InvitationInputs, SearchForUserInputs } from "../../types/Invitation/Invitation";
 import { InviteUserToTeam } from "../../api/InvitationAPI";
 import Notification from "../Notification/Notification";

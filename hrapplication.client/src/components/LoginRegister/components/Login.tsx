@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { LoginInputs } from '../../../types/Auth/AuthInputTypes'
 import { loginUser } from '../../../api/UserAPI'
-import { useAuth } from "../../../contex/AuthContex";
+import { useAuth } from "../../../contex/AppContex";
 import GoogleLoginButton from "../../GoogleAuthButton/GoogleAuthButton";
 import Notification from "../../Notification/Notification";
 import { useState } from "react";

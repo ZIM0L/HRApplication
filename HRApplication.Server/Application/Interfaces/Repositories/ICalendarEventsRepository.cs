@@ -4,6 +4,9 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
 {
     public interface ICalendarEventsRepository
     {
-        void CreateCalendar(TeamsCalendar teamsCalendar);
+        CalendarEvent? GetCalendarEvent(Guid calendarEventId);
+        void CreateCalendarEvent(CalendarEvent calendarEvent);
+        List<CalendarEvent>? GetCalendarEvents(Guid teamsCalendarId);
+        void DeleteCalendarEvent(CalendarEvent calendarEventId);
     }
 }
