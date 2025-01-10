@@ -9,7 +9,7 @@ export const eventTypes = {
         label: "Personal",
         description: "Events related to personal matters such as holidays, leave, and personal celebrations."
     },
-    Team: {
+    TeamEvents: {
         color: "#f6c9ab",
         label: "Team Events",
         description: "Team building, company events, and recruitment."

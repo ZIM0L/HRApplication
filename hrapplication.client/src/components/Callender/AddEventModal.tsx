@@ -138,7 +138,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ onAdd, onClose }) => {
                                     {...field}
                                 >
                                     {Object.entries(eventTypes).map(([key, type]) => (
-                                        <option key={key} value={key}>
+                                        <option key={key} value={type.label}>
                                             {type.label}
                                         </option>
                                     ))}

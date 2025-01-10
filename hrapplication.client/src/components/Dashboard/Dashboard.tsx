@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 const Dashboard: React.FC = () => {
     const { logOut, decodedToken, setSelectedTeamState, selectedTeam } = useAuth();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Stan dla zwijania paska
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
 
     const navigate = useNavigate();
     const { getAllTeamInformation, teamInformation } = useAuth();
@@ -49,7 +49,6 @@ const Dashboard: React.FC = () => {
             return "Good Evening"; 
         }
     }
-    // Funkcja fetchData będzie wywoływana tylko raz przy załadowaniu komponentu
     const fetchData = async () => {
         await getAllTeamInformation();
     };
@@ -57,7 +56,6 @@ const Dashboard: React.FC = () => {
         fetchData();
     }, []); 
 
-    // Działa tylko po załadowaniu teamInformation
     useEffect(() => {
     }, [teamInformation]);
 

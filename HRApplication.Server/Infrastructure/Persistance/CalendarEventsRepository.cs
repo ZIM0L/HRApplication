@@ -32,5 +32,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             return _dbContex.Calendar_Events.Where(x => x.TeamsCalendarId == teamsCalendarId).ToList();
         }
+
+        public void UpdateCalendarEvent(CalendarEvent calendarEvent)
+        {
+            _dbContex.Calendar_Events.Update(calendarEvent);
+            _dbContex.SaveChanges();
+        }
     }
 }

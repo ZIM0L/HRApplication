@@ -11,16 +11,20 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 description: "Provided category doesn't exist"
             ); 
             public static Error CalendarDoesNotExists = Error.Conflict(
-                code: "Calendar.CategoryDoesNotExists",
+                code: "Calendar.CalendarDoesNotExists",
                 description: "Calendar doesn't exist"
             ); 
             public static Error WrongPermission = Error.Conflict(
-                code: "Calendar.CategoryDoesNotExists",
+                code: "Calendar.WrongPermission",
                 description: "Wrong permission has been given"
             ); 
             public static Error EventDoesNotExists = Error.Conflict(
-                code: "Calendar.CategoryDoesNotExists",
+                code: "Calendar.EventDoesNotExists",
                 description: "Provided event doesn't exist"
+            );
+            public static Error InvalidaDateProvided = Error.Conflict(
+               code: "Calendar.InvalidaDateProvided",
+               description: "End date can't be earlier than start date"
             );
         }
     }

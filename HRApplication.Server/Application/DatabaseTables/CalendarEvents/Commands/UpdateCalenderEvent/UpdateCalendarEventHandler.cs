@@ -4,35 +4,36 @@ using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Enum;
 using HRApplication.Server.Domain.Models;
 using MediatR;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.CreateCalendarEvents
+namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.UpdateCalenderEvent
 {
-    public class CreateCalendarEventsHandler : IRequestHandler<CreateCalendarEventsRequest, ErrorOr<CalendarEventResult>>
+    public class UpdateCalendarEventHandler : IRequestHandler<UpdateCalendarEventRequest, ErrorOr<CalendarEventResult>>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICalendarEventsRepository _calendarEventsRepository;
         private readonly ITeamsCalendarRepository _teamsCalendarRepository;
         private readonly ITeamMemberRepository _teamMemberRepository;
-        public CreateCalendarEventsHandler(IHttpContextAccessor httpContextAccessor, ICalendarEventsRepository calendarEventsRepository, ITeamsCalendarRepository teamsCalendarRepository, ITeamMemberRepository teamMemberRepository)
+        public UpdateCalendarEventHandler(IHttpContextAccessor httpContextAccessor, ICalendarEventsRepository calendarEventsRepository, ITeamsCalendarRepository teamsCalendarRepository, ITeamMemberRepository teamMemberRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _calendarEventsRepository = calendarEventsRepository;
             _teamsCalendarRepository = teamsCalendarRepository;
             _teamMemberRepository = teamMemberRepository;
         }
-        public async Task<ErrorOr<CalendarEventResult>> Handle(CreateCalendarEventsRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<CalendarEventResult>> Handle(UpdateCalendarEventRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
             var httpContext = _httpContextAccessor.HttpContext;
-            var teamId = Guid.Parse(request.teamId);
+            var calendarEventId = Guid.Parse(request.calendarEventId);
             var CheckIfTeamTaskIdNull = (string? teamTaskId) =>
             {
                 if (string.IsNullOrEmpty(teamTaskId) || teamTaskId == Guid.Empty.ToString())
                 {
-                    return (Guid?)null; 
+                    return (Guid?)null;
                 }
-                return Guid.Parse(teamTaskId); 
+                return Guid.Parse(teamTaskId);
             };
 
             if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
@@ -42,11 +43,6 @@ namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Command
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            var isUserPermittedToAction = IsAdministrator.CheckUser(_teamMemberRepository, teamId, BearerCheckerResult.Value.Payload.Sub);
-            if (isUserPermittedToAction.IsError)
-            {
-                return isUserPermittedToAction.Errors;
-            }
             var categories = EventType.EventTypeDescriptions.Keys.ToList();
             if (EventType.EventTypeDescriptions.Keys.ToList().Where((eventType) => eventType == request.category) is null)
             {
@@ -57,7 +53,11 @@ namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Command
             {
                 return CustomErrorOr.CustomErrors.Calendar.WrongPermission;
             }
-            if(_teamsCalendarRepository.GetTeamsCalendarByTeamId(teamId) is not TeamsCalendar teamCalendar)
+            if (_calendarEventsRepository.GetCalendarEvent(calendarEventId) is not CalendarEvent calendarEvent)
+            {
+                return CustomErrorOr.CustomErrors.Calendar.EventDoesNotExists;
+            }
+            if (_teamsCalendarRepository.GetTeamsCalendarByTeamCalendarId(calendarEvent.TeamsCalendarId) is not TeamsCalendar teamCalendar)
             {
                 return CustomErrorOr.CustomErrors.Calendar.CalendarDoesNotExists;
             }
@@ -65,22 +65,22 @@ namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Command
             {
                 return CustomErrorOr.CustomErrors.Calendar.InvalidaDateProvided;
             }
-            Guid? teamTaskId = CheckIfTeamTaskIdNull(request.teamTaskId);
+            var isUserPermittedToAction = IsAdministrator.CheckUser(_teamMemberRepository, teamCalendar.TeamId, BearerCheckerResult.Value.Payload.Sub);
+            if (isUserPermittedToAction.IsError)
+            {
+                return isUserPermittedToAction.Errors;
+            }
+            calendarEvent.Permission = permission;
+            calendarEvent.StartDate = request.startDate;
+            calendarEvent.EndDate = request.endDate;
+            calendarEvent.Description = request.description;
+            calendarEvent.Category = request.category;
+            calendarEvent.Title = request.title;
+            calendarEvent.Location = request.location;
 
-            var calendarEvent = new CalendarEvent(
-                teamCalendar.TeamsCalendarId,
-                request.title,
-                request.description,
-                request.category,
-                request.startDate,
-                request.endDate,
-                request.permission,
-                request.location,
-                teamTaskId);
+            _calendarEventsRepository.UpdateCalendarEvent(calendarEvent);
 
-            _calendarEventsRepository.CreateCalendarEvent(calendarEvent);
-
-            var calendarEventResult = new CalendarEventResult(
+            return new CalendarEventResult(
                 calendarEvent.CalendarEventId,
                 calendarEvent.Title,
                 calendarEvent.Description,
@@ -88,11 +88,7 @@ namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Command
                 calendarEvent.StartDate,
                 calendarEvent.EndDate,
                 calendarEvent.Permission,
-                calendarEvent.Location
-                );
-
-            //teamtaskid later
-            return calendarEventResult;
+                calendarEvent.Location);
         }
     }
 }

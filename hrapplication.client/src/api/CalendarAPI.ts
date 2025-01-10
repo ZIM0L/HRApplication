@@ -51,6 +51,28 @@ export const CreateCalendarEvent = async (teamId : string, data : CalendarEventI
         throw new Error("Unexpected error occurred while adding new calendar event.");
     }
 };
+export const UpdateCalendarEvent = async (data: CalendarEventInputs): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post('/api/CalendarEvents/UpdateCalendarEvent', data);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error editing calendar event: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+        }
+
+        throw new Error("Unexpected error occurred while editing calendar event.");
+    }
+};
 export const DeleteCalendarEvent = async (calendarEventId : string): Promise<AxiosResponse | null> => {
     try {
         const response = await mainAxiosInstance.delete(`/api/CalendarEvents/DeleteCalendarEvent/${calendarEventId}`);

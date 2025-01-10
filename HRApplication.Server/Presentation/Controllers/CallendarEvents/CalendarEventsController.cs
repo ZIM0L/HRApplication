@@ -1,7 +1,9 @@
-﻿using ErrorOr;
+﻿using Azure.Core;
+using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.CreateCalendarEvents;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.DeleteCalendarEvent;
+using HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.UpdateCalenderEvent;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents.Queries;
 using HRApplication.Server.Application.DatabaseTables.Commands;
 using MediatR;
@@ -65,6 +67,28 @@ namespace HRApplication.Server.Presentation.Controllers.CallendarEvents
             var command = new DeleteCalendarEventRequest(calendareventid);
 
             ErrorOr<Unit> response = await _mediator.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("/api/[controller]/UpdateCalendarEvent")]
+        public async Task<IActionResult> UpdateCalendarEvent(UpdateCalendarEventRequest request)
+        {
+            var command = new UpdateCalendarEventRequest(
+                request.calendarEventId,
+                request.startDate,
+                request.endDate,
+                request.title,
+                request.description,
+                request.location,
+                request.category,
+                request.permission,
+                request.teamTaskId);
+
+            ErrorOr<CalendarEventResult> response = await _mediator.Send(command);
 
             return response.Match(
                 response => Ok(response),

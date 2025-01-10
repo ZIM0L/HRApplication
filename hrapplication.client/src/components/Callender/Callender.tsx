@@ -15,6 +15,7 @@ import DeleteModal from './DeleteEventModal';
 import EditModal from './EditEventModal';
 import { FormatDate } from '../../utils/functions/FormatData'; 
 import { ITeamInformation } from '../../types/Team/ITeam';
+import { ICalendarEvent } from '../../types/Calendar/ICalendar';
 function CalendarApp() {
     const eventsService = useState(() => createEventsServicePlugin())[0];
     const dragAndDropPlugin = useState(() => createDragAndDropPlugin())[0];
@@ -40,24 +41,24 @@ function CalendarApp() {
                     onContainer: '#000000',  // Ciemny tekst na jasnym tle
                 },
             },
-            workrelated: {
-                colorName: 'workrelated',
+            work_related: {
+                colorName: 'work_related',
                 lightColors: {
                     main: '#9bb3cb',  // Ciemniejsza wersja WorkRelated
                     container: eventTypes.WorkRelated.color,
                     onContainer: '#000000',  // Jasny tekst na ciemnym tle
                 },
             },
-            team: {
-                colorName: 'team',
+            team_events: {
+                colorName: 'team_events',
                 lightColors: {
                     main: '#ef9c66',  // Ciemniejsza wersja Team
-                    container: eventTypes.Team.color,
+                    container: eventTypes.TeamEvents.color,
                     onContainer: '#000000',  // Jasny tekst na ciemnym tle
                 },
             },
-            healthandwellness: {
-                colorName: 'healthandwellness',
+            health: {
+                colorName: 'health',
                 lightColors: {
                     main: '#ab886d',  // Ciemniejsza wersja HealthAndWellness
                     container: eventTypes.HealthAndWellness.color,
@@ -134,10 +135,10 @@ function CalendarApp() {
                 id: event.calendareventid || '',
                 description: event.description || '',
                 location: event.location || '',
-                title: event.title + " - " + event.category || '',
+                title: event.title || '',
                 start: FormatDate(event.startDate) || '',
                 end: FormatDate(event.endDate) || '',
-                calendarId: event.category.toLowerCase() || '',
+                calendarId: event.category.toLowerCase().replace(" ","_") || '',
             }));
             setInitEvents(events); 
             setSelectedCategories([])
@@ -171,12 +172,18 @@ function CalendarApp() {
         setIsDeleteModalOpen(false);
     };
 
-    const handleEditEvent = (updatedEvent: CalendarEventExternal) => {
-        console.log(updatedEvent)
-        setInitEvents((prevEvents) =>
-            prevEvents.map((event) => (event.id === updatedEvent.id ? updatedEvent : event))
-        );
-        eventsService.update(updatedEvent)
+    const handleEditEvent = (updatedEvent: ICalendarEvent) => {
+        setTeamInformation((prev: ITeamInformation) => {
+            const indexOfEventToUpdate = prev.CalendarEvents.findIndex((event) => event.calendareventid == updatedEvent.calendareventid)
+            if (indexOfEventToUpdate != -1) {
+                const updatedCalendarEvents = [...prev.CalendarEvents];
+                updatedCalendarEvents[indexOfEventToUpdate] = updatedEvent;
+                return {
+                    ...prev,
+                    CalendarEvents: updatedCalendarEvents
+                }
+            };
+        });
         setIsEditModalOpen(false);
     };
 
@@ -195,6 +202,7 @@ function CalendarApp() {
 
 
     const handleCategoryChange = (category: keyof typeof eventTypes) => {
+        console.log(category)
         setSelectedCategories((prevSelectedCategories) => {
             if (prevSelectedCategories.includes(category)) {
                 return prevSelectedCategories.filter((item) => item.charAt(0).toUpperCase() + item.slice(1) !== category);
@@ -292,7 +300,6 @@ function CalendarApp() {
 
                     {isEditModalOpen && (
                         <EditModal
-                            events={initEvents}
                             onSave={handleEditEvent}
                             onClose={() => setIsEditModalOpen(false)}
                         />
