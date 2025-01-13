@@ -1,13 +1,6 @@
 ﻿import React, { useState } from "react";
 import { Shift, ShiftInputs } from "../../types/Shift/Shift";
 
-// Helper function to convert a time string (HH:MM) into a Date object
-const convertTo24HourFormat = (time: string): Date => {
-    const [hours, minutes] = time.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0); // Set time in 24-hour format
-    return date;
-};
 //temp solution
 function uuidv4() {
     return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
@@ -30,7 +23,14 @@ const AddNewShift: React.FC<AddNewShiftProps> = ({ teamShifts, addNewTeamShift }
             setErrorMessage("Both start and end times are required.");
             return;
         }
+        const isDuplicate = teamShifts.some(
+            (shift) => shift.start === customTime.start && shift.end === customTime.end
+        );
 
+        if (isDuplicate) {
+            setErrorMessage("This shift already exists.");
+            return;
+        }
         const newShift: Shift = {
             shiftId: uuidv4(),
             start: customTime.start,
@@ -43,50 +43,65 @@ const AddNewShift: React.FC<AddNewShiftProps> = ({ teamShifts, addNewTeamShift }
     };
 
     return (
-        <div className="w-1/2">
-            <h3 className="mb-4 text-xl font-semibold">Add New Shift</h3>
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Shift Time:</label>
-                <div className="flex space-x-4">
-                    <input
-                        type="time"
-                        value={customTime.start}
-                        onChange={(e) => setCustomTime({ ...customTime, start: e.target.value })}
-                        className="p-2 w-1/2 border rounded-md"
-                    />
-                    <input
-                        type="time"
-                        value={customTime.end}
-                        onChange={(e) => setCustomTime({ ...customTime, end: e.target.value })}
-                        className="p-2 w-1/2 border rounded-md"
-                    />
+        <div className="flex w-full flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+            {/* Left Column: Add New Shift */}
+            <div className="w-full md:w-1/3">
+                <h3 className="mb-4 text-xl font-semibold">Add New Shift</h3>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Shift Time:</label>
+                    <div className="flex space-x-4">
+                        <input
+                            type="time"
+                            value={customTime.start}
+                            onChange={(e) => setCustomTime({ ...customTime, start: e.target.value })}
+                            className="w-1/2 rounded-md border p-2"
+                        />
+                        <input
+                            type="time"
+                            value={customTime.end}
+                            onChange={(e) => setCustomTime({ ...customTime, end: e.target.value })}
+                            className="w-1/2 rounded-md border p-2"
+                        />
+                    </div>
+                </div>
+                <button
+                    onClick={handleAddShift}
+                    className="w-full rounded-md bg-cyan-blue py-2 text-white hover:bg-cyan-blue-hover"
+                >
+                    Add Shift
+                </button>
+
+                {errorMessage && <div className="mb-4 text-red-600">{errorMessage}</div>}
+            </div>
+
+            {/* Right Column: Display Existing Shifts */}
+            <div className="w-full md:w-2/3">
+                <h4 className="mb-4 text-lg font-semibold">Existing Shifts</h4>
+                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                    {teamShifts.map((shift, index) => (
+                        <div
+                            key={index}
+                            className="min-w-fit rounded-lg border border-gray-300 bg-gray-100 p-4 shadow-sm"
+                        >
+                            <p className="mb-2 text-sm text-gray-500">Shift {index + 1}</p>
+                            <div className="flex items-center justify-between">
+                                <div className="mb-2">
+                                    <p className="text-sm text-gray-500">Start</p>
+                                    <p className="text-lg font-medium text-gray-800">{shift.start}</p>
+                                </div>
+                                {/* Separator with dots */}
+                                <div className="mx-2 text-gray-500">•••</div>
+                                <div>
+                                    <p className="text-sm text-gray-500">End</p>
+                                    <p className="text-lg font-medium text-gray-800">{shift.end}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
-
-            {errorMessage && <div className="mb-4 text-red-600">{errorMessage}</div>}
-
-            <button
-                onClick={handleAddShift}
-                className="w-full rounded-md bg-green-500 py-2 text-white hover:bg-green-600"
-            >
-                Add Shift
-            </button>
-
-            {/* Display the added shifts */}
-            <div className="mt-6">
-                <h4 className="mb-4 text-lg font-semibold">Existing Shifts</h4>
-                {teamShifts.map((shift, index) => (
-                    <div key={index} className="shift-item mb-2 rounded-md border p-4">
-                        <div className="shift-time">
-                            <span className="font-semibold">Start:</span> {shift.start}
-                        </div>
-                        <div className="shift-time">
-                            <span className="font-semibold">End:</span> {shift.end}
-                        </div>
-                    </div>
-                ))}
-            </div>
         </div>
+
     );
 };
 

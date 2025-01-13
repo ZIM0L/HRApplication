@@ -42,50 +42,60 @@ const WeekSchedule: React.FC<WeekScheduleProps> = ({ employeeAssignments }) => {
         return shiftDateObj.getTime() === weekDateObj.getTime();
     };
     useEffect(() => {
-        console.log("Employee Assignments in WeekSchedule:", employeeAssignments);
+
     }, [employeeAssignments]);
 
     return (
-        <div className="container mx-auto p-4">
-            <h3 className="mb-4 text-center text-xl font-semibold">Employee Schedule</h3>
-
-            {/* Navigation buttons */}
-            <div className="mb-4 text-center">
-                <button onClick={goToPrevWeek} className="mr-4 rounded bg-gray-500 p-2 text-white">
-                    &lt; Previous Week
-                </button>
-                <button onClick={goToNextWeek} className="rounded bg-blue-500 p-2 text-white">
-                    Next Week &gt;
-                </button>
+        <div className=" mt-4 flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4">
+                {/* Navigation buttons */}
+                <div className="flex justify-start space-x-4">
+                    <button
+                        onClick={goToPrevWeek}
+                        className="border-2 rounded-md border-gray-100 px-2 py-1 text-lg text-gray-500 transition-colors hover:text-black hover:border-gray-400"
+                    >
+                        &lt; Previous Week
+                    </button>
+                    <button
+                        onClick={goToNextWeek}
+                        className="border-2 rounded-md border-gray-100 px-2 py-1 text-lg text-gray-500 transition-colors hover:text-black hover:border-gray-400"
+                    >
+                        Next Week &gt;
+                    </button>
+                </div>
             </div>
 
             {/* Week Schedule Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-lg bg-white shadow-md">
                 <table className="w-full table-auto border-collapse">
-                    <thead>
+                    <thead className="bg-gray-100">
                         <tr>
-                            <th className="min-w-[200] max-w-[220px] border px-4 py-2 text-left text-sm">Employee</th>
+                            <th className="min-w-[200px] max-w-[220px] border px-4 py-2 text-left text-sm font-medium text-gray-600">
+                                Employees
+                            </th>
                             {weekDates.map((date, index) => (
-                                <th key={index} className="border px-4 py-2 text-center">
-                                    <p className="text-sm font-bold">
+                                <th key={index} className="border text-center text-sm text-gray-600">
+                                    <p className="font-bold text-gray-700">
                                         {new Date(date).toLocaleDateString("en-US", { weekday: "short" })}
                                     </p>
-                                    <p className="text-xs text-gray-600">{date}</p>
+                                    <p className="text-xs text-gray-500">{date}</p>
                                 </th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
                         {employeeAssignments.map((assignment) => (
-                            <tr key={assignment.employee.email}>
-                                <td className="border px-4 py-2 text-sm">{assignment.employee.name}</td>
+                            <tr key={assignment.employee.email} className="hover:bg-gray-50">
+                                <td className="border px-4 py-3 text-sm font-medium text-gray-800">
+                                    {assignment.employee.name}
+                                </td>
                                 {weekDates.map((date, index) => {
                                     // Używamy funkcji compareDates do porównania
-                                    const shift = assignment.shifts.find(shift => compareDates(shift.date, date));
+                                    const shift = assignment.shifts.find((shift) => compareDates(shift.date, date));
                                     return (
                                         <td
                                             key={index}
-                                            className={`border px-4 py-2 text-sm text-center ${shift ? "bg-green-200" : ""}`}
+                                            className={`border px-4 py-3 text-sm text-center ${shift ? "bg-green-200" : ""}`}
                                         >
                                             {shift ? `${shift.shift.start} - ${shift.shift.end}` : "No Shift"}
                                         </td>
@@ -97,6 +107,7 @@ const WeekSchedule: React.FC<WeekScheduleProps> = ({ employeeAssignments }) => {
                 </table>
             </div>
         </div>
+
     );
 };
 

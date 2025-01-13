@@ -1,5 +1,5 @@
 ﻿import React, { useState } from "react";
-import { EmployeeShiftsAssignment, Shift, ShiftsAssignmentInMonth } from "../../types/Shift/Shift";
+import { EmployeeShiftsAssignment, Shift } from "../../types/Shift/Shift";
 import { IEmployeeData } from "../../types/User/IUser";
 
 type AssignShiftModalProps = {
@@ -35,7 +35,7 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, availabl
     // Helper function to get all dates in a given range
     const getDatesInRange = (startDate: string, endDate: string) => {
         const dates = [];
-        let currentDate = new Date(startDate);
+        const currentDate = new Date(startDate);
         const end = new Date(endDate);
 
         while (currentDate <= end) {
@@ -109,7 +109,6 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, availabl
 
         // Aktualizacja stanu zespołu
         setTeamUsersShifts((prev: EmployeeShiftsAssignment[]) => {
-            console.log("Previous state:", prev);
 
             const updatedAssignments = prev.map((assignment) => {
                 if (assignment.employee.email === employee.email) {

@@ -4,6 +4,8 @@ import AddNewShift from "./AddNewShift";
 import { EmployeeShiftsAssignment, Shift } from "../../types/Shift/Shift";
 import AssignShiftModal from "./AssignShiftModal";
 import { useAuth } from "../../contex/AppContex";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import InfoModal from "./InfoModal";
 
 const Shifts: React.FC = () => {
    
@@ -41,21 +43,40 @@ const Shifts: React.FC = () => {
         }, [teamInformation?.UserData])
 
     useEffect(() => {
-        console.log("Updated employeeShiftsAssignment:", employeeShiftsAssignment);
+
     }, [employeeShiftsAssignment])
     return (
-        <div className="overflow-y-auto px-4">
+        <div className="h-screen overflow-y-auto bg-gray-100 px-4">
+            <div className="border-b-2 flex items-center justify-between">
+                <p className="border-b-2 border-dark-blue-ligher py-2 text-start text-xl font-semibold text-gray-800">Employee Schedule</p>
+                <div className="group relative">
+                    <QuestionMarkCircleIcon className="group-hover:opacity-100 h-7 w-7 cursor-pointer text-gray-500" />
+                    <div className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200">
+                        <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
+                            <div className="mb-4 flex items-center justify-between">
+                                <h2 className="text-xl font-semibold">Information</h2>
+                                <button className="text-gray-500 hover:text-black">&times;</button>
+                            </div>
+                            <div>
+                                <p>Add Shift: Allows you to add new shifts to the system.</p>
+                                <p>Edit Shift: Lets you modify the details of an existing shift.</p>
+                                <p>Assign Shifts: Enables you to assign shifts to team members.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="">
                 <WeekSchedule employeeAssignments={employeeShiftsAssignment} />
             </div>
-            <div className="my-4 flex space-x-5">
+            <div className="my-4 flex space-x-1">
                 {actions.map((action) => (
                     <div
                         key={action.id}
                         onClick={() => setSelectedAction(action.id)}
-                        className={`cursor-pointer rounded px-4 py-2 text-white ${selectedAction === action.id
-                                ? "bg-blue-700"
-                                : "bg-blue-500 hover:bg-blue-600"
+                        className={`cursor-pointer border-2 rounded-md border-gray-100 px-2 py-1 text-lg transition-colors hover:text-black hover:border-gray-400  ${selectedAction === action.id
+                                ? "border-gray-600 text-black"
+                            : "text-gray-500"
                             }`}
                     >
                         {action.label}

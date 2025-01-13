@@ -1,4 +1,5 @@
 ﻿using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Domain.Models.User;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -16,6 +17,8 @@ namespace HRApplication.Server.Infrastructure.DBContex
         public DbSet<Invitation> Invitations { get; set; }
         public DbSet<TeamsCalendar> Teams_Calendar { get; set; }
         public DbSet<CalendarEvent> Calendar_Events { get; set; }
+        public DbSet<TeamShift> Team_Shifts { get; set; }
+        public DbSet<TeamMemberShift> Team_Member_Shifts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
