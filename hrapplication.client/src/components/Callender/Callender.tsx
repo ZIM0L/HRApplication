@@ -189,25 +189,21 @@ function CalendarApp() {
 
     const handleFilter = () => {
         const filteredEvents = initEvents.filter((event) => {
-            const normalizedCategoryId = event?.calendarId
-                ? event.calendarId.charAt(0).toUpperCase() + event.calendarId.slice(1)
-                : ''; 
-
-            return selectedCategories.length === 0 || selectedCategories.includes(normalizedCategoryId);
+            return (
+                selectedCategories.length === 0 || 
+                selectedCategories.includes(event.calendarId.toLowerCase()) 
+            );
         });
-
         calendar.events.set(filteredEvents);
     };
 
-
-
-    const handleCategoryChange = (category: keyof typeof eventTypes) => {
-        console.log(category)
+    const handleCategoryChange = (label: string) => {
         setSelectedCategories((prevSelectedCategories) => {
-            if (prevSelectedCategories.includes(category)) {
-                return prevSelectedCategories.filter((item) => item.charAt(0).toUpperCase() + item.slice(1) !== category);
+            const normalizedLabel = label.toLowerCase().replace(" ","_"); 
+            if (prevSelectedCategories.includes(normalizedLabel)) {
+                return prevSelectedCategories.filter((item) => item !== normalizedLabel);
             } else {
-                return [...prevSelectedCategories, category];
+                return [...prevSelectedCategories, normalizedLabel];
             }
         });
     };
@@ -256,9 +252,9 @@ function CalendarApp() {
                                         <input
                                             type="checkbox"
                                             id={category}
-                                            checked={selectedCategories.includes(category)}
-                                            onChange={() => handleCategoryChange(category as keyof typeof eventTypes)}
-                                            className="mr-2 h-2 w-2 appearance-none border-2 border-gray-300 text-nowrap rounded-md checked:bg-cyan-blue checked:border-cyan-blue focus:ring-2 focus:ring-cyan-blue focus:ring-offset-2 hover:cursor-pointer"
+                                            checked={selectedCategories.includes(eventTypes[category as keyof typeof eventTypes].label.toLowerCase().replace(" ", "_"))}
+                                            onChange={() => handleCategoryChange(eventTypes[category as keyof typeof eventTypes].label)}
+                                            className="mr-2 h-4 w-4 rounded-md border-gray-300 text-cyan-blue focus:ring-2 focus:ring-cyan-blue hover:cursor-pointer checked:bg-cyan-500"
                                         />
                                         <label htmlFor={category}>{eventTypes[category as keyof typeof eventTypes].label}</label>
                                     </div>

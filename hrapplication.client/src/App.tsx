@@ -13,6 +13,7 @@ import Team from './components/Team/Team';
 import JobPositions from './components/JobPositions/JobPositions';
 import Callender from './components/Callender/Callender';
 import SessionExpired from './components/ErrorComponents/SessionExpired';
+import Shifts from './components/Shift/Shifts';
 
 const App = () => {
     return (
@@ -35,7 +36,8 @@ const App = () => {
                                 <Route path="calendar" element={<Callender />} />
                                 <Route path="organization" element={<Organization />} />
                                 <Route path="team" element={<Team />} />
-                                <Route path="job_positions" element={<JobPositions />} />
+                            <Route path="job_positions" element={<JobPositions />} />
+                            <Route path="shifts" element={<Shifts /> }/>
                             </Route>
                     </Route>
                 </Routes>
