@@ -4,20 +4,20 @@
     {
 
         // Konstruktor
-        public TeamMemberShift(Guid teamMemberId, Guid teamShiftId, DateTime shiftDate)
+        public TeamMemberShift(Guid userId, Guid teamShiftId, DateTime shiftDate)
         {
             TeamMemberShiftId = Guid.NewGuid();
-            TeamMemberId = teamMemberId;
+            UserId = userId;
             TeamShiftId = teamShiftId;
             ShiftDate = shiftDate;
             CheckInTime = null;  
             CheckOutTime = null;  
         }
         public Guid TeamMemberShiftId { get; set; } 
-        public Guid TeamMemberId { get; set; }      
+        public Guid UserId { get; set; }      
         public Guid TeamShiftId { get; set; }       
         public DateTime ShiftDate { get; set; }     
-        public DateTime? CheckInTime { get; set; }    
-        public DateTime? CheckOutTime { get; set; }   
+        public TimeSpan? CheckInTime { get; set; }    
+        public TimeSpan? CheckOutTime { get; set; }   
     }
 }

@@ -24,6 +24,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
+        public TeamShift? GetTeamShiftById(Guid teamShiftId)
+        {
+            return _dbContex.Team_Shifts.SingleOrDefault(x => x.TeamShiftId == teamShiftId);
+        }
+
         public TeamShift? GetTeamShiftByTeamShiftId(Guid teamShiftId)
         {
             return _dbContex.Team_Shifts.SingleOrDefault(x => x.TeamShiftId == teamShiftId);

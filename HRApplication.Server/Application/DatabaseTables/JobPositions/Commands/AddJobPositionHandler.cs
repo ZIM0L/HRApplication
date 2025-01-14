@@ -22,7 +22,7 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
         public async Task<ErrorOr<JobPositionsResult>> Handle(JobPositionRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
-
+            var teamId = Guid.Parse(request.teamId);
             var httpContext = _httpContextAccessor.HttpContext;
 
             if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
@@ -30,24 +30,23 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
                 return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
             }
 
-            var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
-
-            if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId.ToLower())) is not Domain.Models.Team)
+            if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId.ToLower())) is not Domain.Models.Team team)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
-            var UsersteamMembers = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(Guid.Parse(request.teamId), Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
-
-            if (UsersteamMembers == null)
+            // new
+            if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
             {
-                return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
+                return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
             }
-            var isUserAdministrator = UsersteamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
+            var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (isUserAdministrator == null)
+            var isAdminResult = IsAdministrator.CheckUser(_teamMemberRepository, team.TeamId, BearerCheckerResult.Value.Payload.Sub);
+            if (isAdminResult.IsError)
             {
-                return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
+                return isAdminResult.Errors;
             }
+
             var jobPosition = new Domain.Models.JobPosition
                 (
                     request.title.ToLower(),

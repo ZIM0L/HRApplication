@@ -42,7 +42,6 @@ const WeekSchedule: React.FC<WeekScheduleProps> = ({ employeeAssignments }) => {
         return shiftDateObj.getTime() === weekDateObj.getTime();
     };
     useEffect(() => {
-
     }, [employeeAssignments]);
 
     return (

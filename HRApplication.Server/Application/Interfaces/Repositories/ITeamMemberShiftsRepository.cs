@@ -1,6 +1,12 @@
-﻿namespace HRApplication.Server.Application.Interfaces.Repositories
+﻿using HRApplication.Server.Domain.Models;
+
+namespace HRApplication.Server.Application.Interfaces.Repositories
 {
     public interface ITeamMemberShiftsRepository
     {
+        List<TeamMemberShift>? GetTeamMemberShiftsByUserIdAndDates(Guid userId, List<DateTime> dates);
+        List<TeamMemberShift>? GetTeamMemberShiftsByUsersId(List<Guid> UsersIds);
+        void RemoveTeamMemberShifts(List<TeamMemberShift> shifts);
+        void AddTeamMemberShifts(List<TeamMemberShift> teamMemberShift);
     }
 }

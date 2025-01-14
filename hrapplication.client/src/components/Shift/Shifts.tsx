@@ -27,6 +27,7 @@ const Shifts: React.FC = () => {
     };
 
     useEffect(() => {
+        console.log(teamInformation?.TeamMembersShifts)
         if (teamInformation?.UserData) {
             const updatedEmployeeAssignments = teamInformation.UserData.map(user => {
                 const userShiftsAssignment: EmployeeShiftsAssignment = {
@@ -45,7 +46,6 @@ const Shifts: React.FC = () => {
         }, [teamInformation?.UserData])
 
     useEffect(() => {
-
     }, [employeeShiftsAssignment])
     return (
         <div className="h-screen overflow-y-auto bg-gray-100 px-4">

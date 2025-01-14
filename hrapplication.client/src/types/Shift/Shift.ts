@@ -5,6 +5,14 @@ export interface Shift{
     shiftStart: string; 
     shiftEnd: string; 
 }
+export interface TeamMemberShift {
+    email: string,
+    shiftDate: string,
+    startShift: string,
+    endShift: string,
+    checkInTime?: string,
+    checkOutTime?: string,
+}
 export interface ShiftInputs {
     shiftStart: string; 
     shiftEnd: string; 
@@ -12,6 +20,11 @@ export interface ShiftInputs {
 export type ShiftsAssignmentInMonth = {
     shift: Shift,
     date: string
+}
+export type TeamMemberShiftsToSend = {
+    email: string,
+    teamShiftId: string,
+    teamMemberShiftsDates : string[]
 }
 export type EmployeeShiftsAssignment = {
     employee: IEmployeeData;

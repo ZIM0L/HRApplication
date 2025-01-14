@@ -6,7 +6,7 @@ import { JwtPayload } from 'jwt-decode';
 import { HttpStatusCode } from 'axios';
 import { IContext } from '../types/Contex/IContex';
 import { ITeamInformation, ITeamWithUserPermission, TeamInputs } from '../types/Team/ITeam';
-import { GetTeamShifts, GetTeamsUsers } from '../api/TeamAPI';
+import { GetTeamMembersShifts, GetTeamShifts, GetTeamsUsers } from '../api/TeamAPI';
 import { GetJobPositionsBasedOnTeams } from '../api/JobPositionAPI';
 import { INotifications } from '../types/Notification/INotification';
 import { GetUserInvitation } from '../api/NotificationAPI';
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: IProvider) => {
         const storedTeam = localStorage.getItem("selectedTeam");
         return storedTeam ? JSON.parse(storedTeam) : null;
     });
-    const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [], CalendarEvents: [], TeamShifts: [] });
+    const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [], CalendarEvents: [], TeamShifts: [], TeamMembersShifts : [] });
     const [notifications, setNotifications] = useState<INotifications | null>(null);
 
     // Funkcja do sprawdzania tokenu
@@ -97,18 +97,20 @@ export const AuthProvider = ({ children }: IProvider) => {
         if (!selectedTeam) return;
 
         try {
-            const [usersResponse, jobPositionsResponse, calendarEventsResponse, teamShiftsResponse] = await Promise.all([
+            const [usersResponse, jobPositionsResponse, calendarEventsResponse, teamShiftsResponse, teamMembersShifts] = await Promise.all([
                 GetTeamsUsers(selectedTeam.team.teamId), 
                 GetJobPositionsBasedOnTeams(selectedTeam.team.teamId), 
                 GetCalendarEvents(selectedTeam.team.teamId),
-                GetTeamShifts(selectedTeam.team.teamId)
+                GetTeamShifts(selectedTeam.team.teamId),
+                GetTeamMembersShifts(selectedTeam.team.teamId)
             ]);
 
             setTeamInformation({
                 UserData: usersResponse?.data,
                 JobPositions: jobPositionsResponse?.data,
                 CalendarEvents: calendarEventsResponse?.data,
-                TeamShifts: teamShiftsResponse?.data
+                TeamShifts: teamShiftsResponse?.data,
+                TeamMembersShifts: teamMembersShifts?.data
             });
         } catch (error) {
             console.error("Error fetching team information:", error);
@@ -116,7 +118,8 @@ export const AuthProvider = ({ children }: IProvider) => {
                 UserData: [],
                 JobPositions: [],
                 CalendarEvents: [],
-                TeamShifts: []
+                TeamShifts: [],
+                TeamMembersShifts: []
             });
         }
     };

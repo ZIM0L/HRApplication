@@ -30,8 +30,13 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.A
             {
                 return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
             }
-
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
+
+            var isAdminResult = IsAdministrator.CheckUser(_teamMemberRepository, request.teamId, BearerCheckerResult.Value.Payload.Sub);
+            if (isAdminResult.IsError)
+            {
+                return isAdminResult.Errors;
+            }
 
             var newTeamMember = new TeamMember(request.userId, request.teamId, request.jobPositionId, request.roleName);
 

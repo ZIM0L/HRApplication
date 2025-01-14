@@ -99,7 +99,7 @@ const AddNewShift: React.FC<AddNewShiftProps> = ({ addNewTeamShift }) => {
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                         {teamInformation?.TeamShifts.map((shift, index) => (
                             <div
-                                key={index}
+                                key={shift.teamShiftId}
                                 className="min-w-fit rounded-lg border border-gray-300 bg-gray-100 p-4 shadow-sm"
                             >
                                 <div className="mb-4 flex items-end justify-between">

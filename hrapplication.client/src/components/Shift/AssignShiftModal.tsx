@@ -1,7 +1,9 @@
 ﻿import React, { useState } from "react";
-import { EmployeeShiftsAssignment, Shift } from "../../types/Shift/Shift";
+import { EmployeeShiftsAssignment, Shift, TeamMemberShiftsToSend } from "../../types/Shift/Shift";
 import { IEmployeeData } from "../../types/User/IUser";
 import { useAuth } from "../../contex/AppContex";
+import { CreateTeamMemberShifts } from "../../api/TeamAPI";
+import Notification from "../Notification/Notification";
 
 type AssignShiftModalProps = {
     teamUsers?: EmployeeShiftsAssignment[];
@@ -24,6 +26,9 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
         Sunday: false,
     });
     const { teamInformation } = useAuth()
+    const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
+    const [showNotification, setShowNotification] = useState(false);
+    const [isError, setIsError] = useState(false)
 
     // Helper function to format date as "dd-MM-yyyy"
     const formatDate = (date: Date): string => {
@@ -72,7 +77,9 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
         return datesToAssign;
     };
 
-    const handleAssignShift = (employee: IEmployeeData) => {
+    const handleAssignShift = async (employee: IEmployeeData) => {
+        try {
+
         if (!selectedShift) {
             return;
         }
@@ -101,45 +108,64 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
         if (datesToAssign.length === 0) {
             return;
         }
-
-        // Tworzenie przypisań zmian na wybrane daty
+       
         const newShiftsAssignments = datesToAssign.map((date) => ({
-            shift: selectedShift!, // Wybrana zmiana
-            date: date,            // Dla każdej daty
+            shift: selectedShift!, 
+            date: date,           
         }));
 
-        // Aktualizacja stanu zespołu
-        setTeamUsersShifts((prev: EmployeeShiftsAssignment[]) => {
+        console.log(newShiftsAssignments)
 
-            const updatedAssignments = prev.map((assignment) => {
-                if (assignment.employee.email === employee.email) {
-                    // Nadpisz zmiany dla tych samych dat
-                    const filteredShifts = assignment.shifts.filter(
-                        (existingShift) => !datesToAssign.includes(existingShift.date)
-                    );
+        const shiftsToSend: TeamMemberShiftsToSend = {
+            email: employee.email,
+            teamShiftId: selectedShift.teamShiftId,
+            teamMemberShiftsDates: newShiftsAssignments.map(x => x.date)
+        }
+        const response = await CreateTeamMemberShifts(shiftsToSend)
+        if (response?.status == 200) {
+            setNotificationMessage(["New shifts have been assigned"])
+            setIsError(false)
+            setShowNotification(true)
+            // Aktualizacja stanu zespołu
+            setTeamUsersShifts((prev: EmployeeShiftsAssignment[]) => {
 
-                    return {
-                        ...assignment,
-                        shifts: [...filteredShifts, ...newShiftsAssignments], // Nadpisz daty nowymi zmianami
-                    };
-                }
-                return assignment; // Nie zmieniaj innych pracowników
-            });
+                const updatedAssignments = prev.map((assignment) => {
+                    if (assignment.employee.email === employee.email) {
+                        // Nadpisz zmiany dla tych samych dat
+                        const filteredShifts = assignment.shifts.filter(
+                            (existingShift) => !datesToAssign.includes(existingShift.date)
+                        );
 
-            // Jeśli pracownik nie istnieje w `teamUsers`, dodaj go jako nowy element
-            const isEmployeeInList = prev.some(
-                (assignment) => assignment.employee.email === employee.email
-            );
-
-            if (!isEmployeeInList) {
-                updatedAssignments.push({
-                    employee: employee, // Nowy pracownik
-                    shifts: newShiftsAssignments, // Nowe przypisania
+                        return {
+                            ...assignment,
+                            shifts: [...filteredShifts, ...newShiftsAssignments], // Nadpisz daty nowymi zmianami
+                        };
+                    }
+                    return assignment; // Nie zmieniaj innych pracowników
                 });
-            }
 
-            return updatedAssignments; // Zwróć zaktualizowaną listę
-        });
+                // Jeśli pracownik nie istnieje w `teamUsers`, dodaj go jako nowy element
+                const isEmployeeInList = prev.some(
+                    (assignment) => assignment.employee.email === employee.email
+                );
+
+                if (!isEmployeeInList) {
+                    updatedAssignments.push({
+                        employee: employee, // Nowy pracownik
+                        shifts: newShiftsAssignments, // Nowe przypisania
+                    });
+                }
+
+                return updatedAssignments; // Zwróć zaktualizowaną listę
+            });
+        }
+        } catch(err) {
+            setIsError(true);
+            setShowNotification(true);
+            if (err instanceof Error) {
+                setNotificationMessage(err.message.split(" | "))
+            }
+        }
     };
 
     let previewDates: string[] = [];
@@ -314,9 +340,14 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
                     </div>
                 ))}
             </div>
-
+            {showNotification && (
+                <Notification
+                    messages={notificationMessage}
+                    onClose={() => setShowNotification(false)}
+                    isError={isError}
+                />
+            )}
         </div>
-
     );
 };
 

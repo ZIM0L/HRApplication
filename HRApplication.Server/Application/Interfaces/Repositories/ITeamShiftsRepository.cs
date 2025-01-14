@@ -6,6 +6,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
     {
         void AddNewTeamShift(TeamShift teamShift);
         List<TeamShift>? GetTeamShifts(Guid teamId);
+        TeamShift? GetTeamShiftById(Guid teamShiftId);
         TeamShift? GetTeamShiftByTeamShiftId(Guid teamShiftId);
         void DeleteTeamShift(TeamShift teamShift);
     }
