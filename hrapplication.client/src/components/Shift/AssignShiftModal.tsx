@@ -1,14 +1,14 @@
 ﻿import React, { useState } from "react";
 import { EmployeeShiftsAssignment, Shift } from "../../types/Shift/Shift";
 import { IEmployeeData } from "../../types/User/IUser";
+import { useAuth } from "../../contex/AppContex";
 
 type AssignShiftModalProps = {
     teamUsers?: EmployeeShiftsAssignment[];
-    availableShifts?: Shift[];
     setTeamUsersShifts: (newAssignments: EmployeeShiftsAssignment[]) => void;
 };
 
-const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, availableShifts, setTeamUsersShifts }) => {
+const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamUsersShifts }) => {
     const [selectedMode, setSelectedMode] = useState<'day' | 'range' | 'month'>('day');
     const [selectedShift, setSelectedShift] = useState<Shift | null>(null);
     const [selectedDate, setSelectedDate] = useState<string>(''); // For single day
@@ -23,6 +23,7 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, availabl
         Saturday: false,
         Sunday: false,
     });
+    const { teamInformation } = useAuth()
 
     // Helper function to format date as "dd-MM-yyyy"
     const formatDate = (date: Date): string => {
@@ -141,119 +142,181 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, availabl
         });
     };
 
-
+    let previewDates: string[] = [];
+    if (selectedMode === 'day' && selectedDate) {
+        previewDates = [selectedDate];
+    } else if (selectedMode === 'range' && selectedRangeStart && selectedRangeEnd) {
+        previewDates = getDatesInRange(selectedRangeStart, selectedRangeEnd);
+    } else if (selectedMode === 'month') {
+        previewDates = getMonthDatesFromToday();
+    }
+    previewDates = previewDates.filter((date) => !isFreeDay(date));
 
     return (
-        <div className="p-6">
-            {/* Mode selection */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Select Assignment Mode:</label>
-                <div className="flex space-x-4">
-                    <button
-                        onClick={() => setSelectedMode('day')}
-                        className={`btn ${selectedMode === 'day' ? 'bg-blue-700' : 'bg-blue-500'}`}
-                    >
-                        Single Day
-                    </button>
-                    <button
-                        onClick={() => setSelectedMode('range')}
-                        className={`btn ${selectedMode === 'range' ? 'bg-blue-700' : 'bg-blue-500'}`}
-                    >
-                        Custom Date Range
-                    </button>
-                    <button
-                        onClick={() => setSelectedMode('month')}
-                        className={`btn ${selectedMode === 'month' ? 'bg-blue-700' : 'bg-blue-500'}`}
-                    >
-                        Entire Month
-                    </button>
-                </div>
-            </div>
+        <div className="flex flex-col border p-4 md:space-x-5 md:flex-row">
+            <div className="w-1/2">
+                <h3 className="mb-6 text-xl font-semibold">Assign Shifts</h3>
 
-            {/* Shift Selection */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Select Shift:</label>
-                <select
-                    className="rounded-md border p-2"
-                    onChange={(e) => setSelectedShift(availableShifts?.find(shift => shift.shiftId === e.target.value) || null)}
-                >
-                    <option value="">Select a Shift</option>
-                    {availableShifts?.map((shift) => (
-                        <option key={shift.shiftId} value={shift.shiftId}>
-                            {shift.start} - {shift.end}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            {/* Single Day Input */}
-            {selectedMode === 'day' && (
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Select Date:</label>
-                    <input
-                        type="date"
-                        className="rounded-md border p-2"
-                        onChange={(e) => {
-                            const formattedDate = formatDate(new Date(e.target.value)); // Formatowanie daty
-                            setSelectedDate(formattedDate);
-                        }}
-                    />
-                </div>
-            )}
-
-            {/* Date Range Input */}
-            {selectedMode === 'range' && (
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Select Date Range:</label>
+                {/* Mode Selection */}
+                <div className="mb-6">
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                        Select Assignment Mode:
+                    </label>
                     <div className="flex space-x-4">
-                        <input
-                            type="date"
-                            className="rounded-md border p-2"
-                            onChange={(e) => setSelectedRangeStart(e.target.value)}
-                        />
-                        <input
-                            type="date"
-                            className="rounded-md border p-2"
-                            onChange={(e) => setSelectedRangeEnd(e.target.value)}
-                        />
-                    </div>
-                </div>
-            )}
-
-            {/* Free Days Selection (Only available for Entire Month) */}
-            {selectedMode === 'month' && (
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Select Free Days:</label>
-                    <div className="flex space-x-4">
-                        {Object.keys(freeDays).map((day) => (
-                            <div key={day} className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    id={day}
-                                    checked={freeDays[day]}
-                                    onChange={() => setFreeDays({ ...freeDays, [day]: !freeDays[day] })}
-                                    className="mr-2"
-                                />
-                                <label htmlFor={day} className="text-sm">{day}</label>
-                            </div>
+                        {['day', 'range', 'month'].map((mode) => (
+                            <button
+                                key={mode}
+                                onClick={() => setSelectedMode(mode)}
+                                className={`px-3 py-2 rounded ${selectedMode === mode
+                                        ? 'border-2 border-gray-600'
+                                        : 'bg-gray-100 hover:bg-gray-200'
+                                    }`}
+                            >
+                                {mode === 'day' && 'Single Day'}
+                                {mode === 'range' && 'Custom Date Range'}
+                                {mode === 'month' && 'Entire Month'}
+                            </button>
                         ))}
                     </div>
                 </div>
-            )}
 
-            {/* Assign Shift Button */}
-            <div>
-                {teamUsers?.map((employee) => (
-                    <button
-                        key={employee.employee.email}
-                        onClick={() => handleAssignShift(employee.employee)}
-                        className="w-full rounded-md bg-green-500 py-2 text-white hover:bg-green-600 mb-2"
+                {/* Shift Selection */}
+                <div className="mb-6">
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                        Select Shift:
+                    </label>
+                    <select
+                        className="w-full rounded-md border p-2"
+                        onChange={(e) =>
+                            setSelectedShift(
+                                teamInformation?.TeamShifts?.find(
+                                    (shift) => shift.teamShiftId === e.target.value
+                                ) || null
+                            )
+                        }
                     >
-                        Assign Shift to {employee.employee.name}
-                    </button>
+                        <option value="">Select a Shift</option>
+                        {teamInformation?.TeamShifts?.map((shift) => (
+                            <option key={shift.teamShiftId} value={shift.teamShiftId}>
+                                {shift.shiftStart.slice(0, 5)} - {shift.shiftEnd.slice(0, 5)}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Input Fields Based on Mode */}
+                <div className="mb-6">
+                    {selectedMode === 'day' && (
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Select Date:
+                            </label>
+                            <input
+                                type="date"
+                                className="w-full rounded-md border p-2"
+                                onChange={(e) => {
+                                    const formattedDate = formatDate(new Date(e.target.value));
+                                    setSelectedDate(formattedDate);
+                                }}
+                            />
+                        </div>
+                    )}
+
+                    {selectedMode === 'range' && (
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Select Date Range:
+                            </label>
+                            <div className="flex space-x-4">
+                                <input
+                                    type="date"
+                                    className="w-full rounded-md border p-2"
+                                    onChange={(e) => setSelectedRangeStart(e.target.value)}
+                                />
+                                <input
+                                    type="date"
+                                    className="w-full rounded-md border p-2"
+                                    onChange={(e) => setSelectedRangeEnd(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {selectedMode === 'month' && (
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Select Free Days:
+                            </label>
+                            <div className="flex flex-wrap gap-4">
+                                {Object.keys(freeDays).map((day) => (
+                                    <div key={day} className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id={day}
+                                            checked={freeDays[day]}
+                                            onChange={() =>
+                                                setFreeDays({
+                                                    ...freeDays,
+                                                    [day]: !freeDays[day],
+                                                })
+                                            }
+                                            className="mr-2"
+                                        />
+                                        <label htmlFor={day} className="text-sm">
+                                            {day}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+                {/* Preview Section */}
+                <div className="border-2 mb-6 rounded border-gray-300 bg-gray-200 p-4">
+                    <h4 className="mb-4 text-lg font-semibold">Shift Preview</h4>
+                    {selectedShift && (
+                        <>
+                            <p>
+                                <span className="font-medium">Shift:</span>{" "}
+                                {selectedShift.shiftStart.slice(0, 5)} - {selectedShift.shiftEnd.slice(0, 5)}
+                            </p>
+                            <p>
+                                <span className="font-medium">Date Range:</span>{" "}
+                                {previewDates.length > 0
+                                    ? `${previewDates[0]} - ${previewDates[previewDates.length - 1]}`
+                                    : "No valid range selected"}
+                            </p>
+                        </>
+                    )}
+                    {!selectedShift && <p className="text-gray-500">No shift selected.</p>}
+                </div>
+            </div>
+            {/* Assign Shift Buttons */}
+            <div className="flex flex-col space-y-4">
+                {teamUsers?.map((employee) => (
+                    <div
+                        key={employee.employee.email}
+                        className="flex items-center justify-between space-x-8 rounded-md border border-gray-300 p-4 shadow-sm hover:bg-gray-100"
+                    >
+                        {/* Employee Name */}
+                        <div>
+                            <p className="text-sm font-medium text-gray-700">{employee.employee.name}</p>
+                            <p className="text-sm font-medium text-gray-700">{employee.employee.surname}</p>
+                        </div>
+
+                        {/* Assign Button */}
+                        <button
+                            onClick={() => handleAssignShift(employee.employee)}
+                            className="flex items-center justify-center text-gray-300 transform transition-all duration-200 hover:scale-110  hover:text-gray-600"
+                        >
+                            Assign
+                        </button>
+                    </div>
                 ))}
             </div>
+
         </div>
+
     );
 };
 

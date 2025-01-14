@@ -1,5 +1,6 @@
 import { ICalendarEvent } from "../Calendar/ICalendar";
 import { IJobPosition } from "../JobPosition/IJobPosition";
+import { Shift } from "../Shift/Shift";
 import { IEmployeeData } from "../User/IUser";
 
 export interface ITeam {
@@ -37,4 +38,5 @@ export interface ITeamInformation {
     UserData: IEmployeeData[],
     JobPositions: IJobPosition[],
     CalendarEvents: ICalendarEvent[]
+    TeamShifts: Shift[]
 }

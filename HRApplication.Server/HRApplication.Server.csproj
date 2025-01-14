@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <Folder Include="Application\DatabaseTables\TeamMembers\Commands\RemoveTeamMember\" />
+    <Folder Include="Application\DatabaseTables\TeamShifts\Commands\EditTeamShift\" />
   </ItemGroup>
 
 </Project>

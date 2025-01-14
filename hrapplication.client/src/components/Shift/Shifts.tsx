@@ -5,23 +5,25 @@ import { EmployeeShiftsAssignment, Shift } from "../../types/Shift/Shift";
 import AssignShiftModal from "./AssignShiftModal";
 import { useAuth } from "../../contex/AppContex";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-import InfoModal from "./InfoModal";
+import { ITeamInformation } from "../../types/Team/ITeam";
 
 const Shifts: React.FC = () => {
    
     const [selectedAction, setSelectedAction] = useState("");
-    const [teamShifts, setTeamShifts] = useState<Shift[]>([])
     const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[]>([])
-    const { teamInformation } = useAuth()
+    const { teamInformation, setTeamInformation } = useAuth()
     const actions = [
         { id: "add-shift", label: "Add Shift" },
         { id: "edit-shift", label: "Edit Shift" },
         { id: "assign-shift", label: "Assign Shifts" },
     ];
     const handleNewTeamShift = (newShift: Shift) => {
-        setTeamShifts((prev) => {
-            return [...prev, newShift]; 
-        });
+        setTeamInformation((prev: ITeamInformation) => {
+            return {
+                ...prev,
+                TeamShifts: [...prev.TeamShifts, newShift]
+            }
+        })
     };
 
     useEffect(() => {
@@ -87,7 +89,7 @@ const Shifts: React.FC = () => {
             {/* Display the selected action's content */}
             <div className="mt-4">
                 {selectedAction === "add-shift" && (
-                    <AddNewShift teamShifts={teamShifts} addNewTeamShift={handleNewTeamShift} />
+                    <AddNewShift addNewTeamShift={handleNewTeamShift} />
                 )}
                 {selectedAction === "edit-shift" && (
                     <div className="rounded border bg-gray-100 p-4">
@@ -97,7 +99,7 @@ const Shifts: React.FC = () => {
                     </div>
                 )}
                 {selectedAction === "assign-shift" && (
-                    <AssignShiftModal teamUsers={employeeShiftsAssignment} availableShifts={teamShifts} setTeamUsersShifts={setEmployeeShiftsAssignment} />
+                    <AssignShiftModal teamUsers={employeeShiftsAssignment} setTeamUsersShifts={setEmployeeShiftsAssignment} />
                 )}
                 {!selectedAction && (
                     <p className="text-gray-500">Please select an action to perform.</p>

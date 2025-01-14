@@ -97,7 +97,7 @@ const WeekSchedule: React.FC<WeekScheduleProps> = ({ employeeAssignments }) => {
                                             key={index}
                                             className={`border px-4 py-3 text-sm text-center ${shift ? "bg-green-200" : ""}`}
                                         >
-                                            {shift ? `${shift.shift.start} - ${shift.shift.end}` : "No Shift"}
+                                            {shift ? `${shift.shift.shiftStart.slice(0, 5)} - ${shift.shift.shiftEnd.slice(0, 5)}` : "No Shift"}
                                         </td>
                                     );
                                 })}
