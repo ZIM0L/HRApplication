@@ -1,16 +1,13 @@
 ﻿import React, { useState } from "react";
-import { EmployeeShiftsAssignment, Shift, TeamMemberShiftsToSend } from "../../types/Shift/Shift";
+import { EmployeeShiftsAssignment, Shift, TeamMemberShift, TeamMemberShiftsToSend } from "../../types/Shift/Shift";
 import { IEmployeeData } from "../../types/User/IUser";
 import { useAuth } from "../../contex/AppContex";
 import { CreateTeamMemberShifts } from "../../api/TeamAPI";
 import Notification from "../Notification/Notification";
+import { ITeamInformation } from "../../types/Team/ITeam";
 
-type AssignShiftModalProps = {
-    teamUsers?: EmployeeShiftsAssignment[];
-    setTeamUsersShifts: (newAssignments: EmployeeShiftsAssignment[]) => void;
-};
 
-const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamUsersShifts }) => {
+const AssignShiftModal= () => {
     const [selectedMode, setSelectedMode] = useState<'day' | 'range' | 'month'>('day');
     const [selectedShift, setSelectedShift] = useState<Shift | null>(null);
     const [selectedDate, setSelectedDate] = useState<string>(''); // For single day
@@ -25,7 +22,7 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
         Saturday: false,
         Sunday: false,
     });
-    const { teamInformation } = useAuth()
+    const { teamInformation, setTeamInformation, employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
@@ -35,7 +32,11 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
+        return `${year}-${month}-${day}`;
+    };
+    const parseDate = (dateString: string): Date => {
+        const [year, month, day] = dateString.split('-').map((part) => parseInt(part, 10));
+        return new Date(year, month - 1, day); // Month w obiekcie Date jest 0-indexowany, stąd `month - 1`
     };
 
     // Helper function to get all dates in a given range
@@ -97,8 +98,7 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
 
         if (selectedMode === 'month') {
             datesToAssign = getMonthDatesFromToday(); // Wszystkie daty od dziś do końca miesiąca
-        }
-
+            }
         // Filtracja dni wolnych
         datesToAssign = datesToAssign.filter((date) => {
             const isDayFree = isFreeDay(date);
@@ -107,57 +107,55 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
 
         if (datesToAssign.length === 0) {
             return;
-        }
-       
+            }
         const newShiftsAssignments = datesToAssign.map((date) => ({
-            shift: selectedShift!, 
-            date: date,           
+            shift: selectedShift!,
+            date: formatDate(parseDate(date)),           
         }));
-
-        console.log(newShiftsAssignments)
 
         const shiftsToSend: TeamMemberShiftsToSend = {
             email: employee.email,
             teamShiftId: selectedShift.teamShiftId,
-            teamMemberShiftsDates: newShiftsAssignments.map(x => x.date)
+            teamMemberShiftsDates: newShiftsAssignments.map(x => x.date + "T00:00:00")
         }
         const response = await CreateTeamMemberShifts(shiftsToSend)
         if (response?.status == 200) {
-            setNotificationMessage(["New shifts have been assigned"])
+            setNotificationMessage(["Applaying changes..."])
             setIsError(false)
             setShowNotification(true)
-            // Aktualizacja stanu zespołu
-            setTeamUsersShifts((prev: EmployeeShiftsAssignment[]) => {
+            setTimeout(() => {
+                setEmployeeShiftsAssignment((prev: EmployeeShiftsAssignment[]) => {
 
-                const updatedAssignments = prev.map((assignment) => {
-                    if (assignment.employee.email === employee.email) {
-                        // Nadpisz zmiany dla tych samych dat
-                        const filteredShifts = assignment.shifts.filter(
-                            (existingShift) => !datesToAssign.includes(existingShift.date)
-                        );
-
-                        return {
-                            ...assignment,
-                            shifts: [...filteredShifts, ...newShiftsAssignments], // Nadpisz daty nowymi zmianami
-                        };
-                    }
-                    return assignment; // Nie zmieniaj innych pracowników
-                });
-
-                // Jeśli pracownik nie istnieje w `teamUsers`, dodaj go jako nowy element
-                const isEmployeeInList = prev.some(
-                    (assignment) => assignment.employee.email === employee.email
-                );
-
-                if (!isEmployeeInList) {
-                    updatedAssignments.push({
-                        employee: employee, // Nowy pracownik
-                        shifts: newShiftsAssignments, // Nowe przypisania
+                    const updatedAssignments = prev.map((assignment) => {
+                        if (assignment.employee.email === employee.email) {
+                            const filteredShifts = assignment.shifts.filter(
+                                (existingShift) =>
+                                    !datesToAssign.some((newDate) => newDate === existingShift.date)
+                            );
+                            return {
+                                ...assignment,
+                                shifts: [...filteredShifts, ...newShiftsAssignments], 
+                            };
+                        }
+                        return assignment; // Nie zmieniaj innych pracowników
                     });
-                }
 
-                return updatedAssignments; // Zwróć zaktualizowaną listę
-            });
+                    // Jeśli pracownik nie istnieje w `teamUsers`, dodaj go jako nowy element
+                    const isEmployeeInList = prev.some(
+                        (assignment) => assignment.employee.email === employee.email
+                    );
+
+                    if (!isEmployeeInList) {
+                        updatedAssignments.push({
+                            employee: employee, // Nowy pracownik
+                            shifts: newShiftsAssignments, // Nowe przypisania
+                        });
+                    }
+
+                    return updatedAssignments; // Zwróć zaktualizowaną listę
+                });
+                window.location.reload();
+            },3500)
         }
         } catch(err) {
             setIsError(true);
@@ -319,7 +317,7 @@ const AssignShiftModal: React.FC<AssignShiftModalProps> = ({ teamUsers, setTeamU
             </div>
             {/* Assign Shift Buttons */}
             <div className="flex flex-col space-y-4">
-                {teamUsers?.map((employee) => (
+                {employeeShiftsAssignment?.map((employee) => (
                     <div
                         key={employee.employee.email}
                         className="flex items-center justify-between space-x-8 rounded-md border border-gray-300 p-4 shadow-sm hover:bg-gray-100"

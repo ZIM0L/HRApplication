@@ -25,6 +25,7 @@ namespace Infrastructure
             services.AddScoped<ICalendarEventsRepository, CalendarEventsRepository>();
             services.AddScoped<ITeamMemberShiftsRepository, TeamMemberShiftsRepository>();
             services.AddScoped<ITeamShiftsRepository, TeamShiftsRepository>();
+            services.AddScoped<ITeamMemberRequestsRepository, TeamMemberRequestsRepository>();
             return services;
         }
     }

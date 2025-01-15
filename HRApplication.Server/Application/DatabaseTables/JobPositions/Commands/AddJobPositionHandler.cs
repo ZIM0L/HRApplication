@@ -25,11 +25,6 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
             var teamId = Guid.Parse(request.teamId);
             var httpContext = _httpContextAccessor.HttpContext;
 
-            if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
-            {
-                return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
-            }
-
             if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId.ToLower())) is not Domain.Models.Team team)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;

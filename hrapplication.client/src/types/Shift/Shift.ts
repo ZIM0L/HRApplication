@@ -6,6 +6,7 @@ export interface Shift{
     shiftEnd: string; 
 }
 export interface TeamMemberShift {
+    teamShiftId: string
     email: string,
     shiftDate: string,
     startShift: string,

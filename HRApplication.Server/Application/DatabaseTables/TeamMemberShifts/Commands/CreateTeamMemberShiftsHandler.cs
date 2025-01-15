@@ -52,7 +52,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Comma
                 return CustomErrorOr.CustomErrors.User.UserNotFound;
             }
             var existingShifts = _teamMemberShiftsRepository
-                .GetTeamMemberShiftsByUserIdAndDates(user.UserId, request.teamMemberShiftsDates.Select(tsd => DateTime.ParseExact(tsd, "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList());
+                .GetTeamMemberShiftsByUserIdAndDates(user.UserId, request.teamMemberShiftsDates.Select(tsd => DateTime.Parse(tsd)).ToList());
 
             // Usuń istniejące zmiany dla tych dat (nadpisywanie)
             if (existingShifts != null && existingShifts.Any())
@@ -64,7 +64,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Comma
                 .Select(tsd => new TeamMemberShift(
                 user.UserId,
                 teamShift.TeamShiftId,
-                DateTime.ParseExact(tsd, "dd-MM-yyyy", CultureInfo.InvariantCulture)
+                DateTime.Parse(tsd)
                 ))
                 .ToList();
 
@@ -72,6 +72,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Comma
 
             return teamMemberShifts
                 .Select(shift => new TeamMemberShiftResult(
+                    teamShiftId: shift.TeamShiftId,
                     email: user.Email,
                     shiftDate: shift.ShiftDate,
                     startShift: teamShift.ShiftStart,

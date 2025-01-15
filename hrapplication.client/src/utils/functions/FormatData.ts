@@ -8,3 +8,16 @@ export const FormatDate = (isoDate : string) => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
+// Funkcja do formatowania daty na "dd-mm-yyyy"
+export const formatDate = (date: Date): string => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`; // Zwracamy datê w formacie dd-mm-yyyy
+};
+
+// Funkcja do formatowania daty na "yyyy-mm-dd" (do zapisu)
+export const formatDateToDatabase = (date: string): string => {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Zwracamy datê w formacie yyyy-mm-dd
+};

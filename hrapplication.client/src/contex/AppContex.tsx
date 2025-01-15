@@ -11,6 +11,7 @@ import { GetJobPositionsBasedOnTeams } from '../api/JobPositionAPI';
 import { INotifications } from '../types/Notification/INotification';
 import { GetUserInvitation } from '../api/NotificationAPI';
 import { GetCalendarEvents } from '../api/CalendarAPI';
+import { EmployeeShiftsAssignment } from '../types/Shift/Shift';
 
 interface IProvider {
     children: React.ReactNode;
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }: IProvider) => {
     });
     const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [], CalendarEvents: [], TeamShifts: [], TeamMembersShifts : [] });
     const [notifications, setNotifications] = useState<INotifications | null>(null);
+    const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[] | null>([])
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -158,7 +160,25 @@ export const AuthProvider = ({ children }: IProvider) => {
   
 
     return (
-        <AppContext.Provider value={{ authToken, decodedToken, isCheckingToken, SetAuthenticationToken, logOut, checkToken, setSelectedTeamState, selectedTeam, updateSelectedTeam, getAllTeamInformation, teamInformation, setTeamInformation, notifications, setNotifications, getUserInvitations }}>
+        <AppContext.Provider value={{
+            authToken,
+            decodedToken,
+            isCheckingToken,
+            SetAuthenticationToken,
+            logOut,
+            checkToken,
+            setSelectedTeamState,
+            selectedTeam,
+            updateSelectedTeam,
+            getAllTeamInformation,
+            teamInformation,
+            setTeamInformation,
+            notifications,
+            setNotifications,
+            getUserInvitations,
+            employeeShiftsAssignment,
+            setEmployeeShiftsAssignment
+        }}>
             {children}
         </AppContext.Provider>
     );

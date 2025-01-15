@@ -137,7 +137,7 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                                        <Link to="request" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <RectangleStackIcon className="h-6 w-6" />
                                                 <span className="z-10 relative text-sm">Requests</span>

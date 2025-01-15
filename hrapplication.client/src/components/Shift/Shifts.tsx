@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useState } from "react";
 import WeekSchedule from "./WeekSchedule";
 import AddNewShift from "./AddNewShift";
-import { EmployeeShiftsAssignment, Shift } from "../../types/Shift/Shift";
+import { EmployeeShiftsAssignment, Shift, ShiftsAssignmentInMonth } from "../../types/Shift/Shift";
 import AssignShiftModal from "./AssignShiftModal";
 import { useAuth } from "../../contex/AppContex";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
@@ -10,8 +10,7 @@ import { ITeamInformation } from "../../types/Team/ITeam";
 const Shifts: React.FC = () => {
    
     const [selectedAction, setSelectedAction] = useState("");
-    const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[]>([])
-    const { teamInformation, setTeamInformation } = useAuth()
+    const { teamInformation, setTeamInformation, employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
     const actions = [
         { id: "add-shift", label: "Add Shift" },
         { id: "edit-shift", label: "Edit Shift" },
@@ -27,15 +26,27 @@ const Shifts: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log(teamInformation?.TeamMembersShifts)
+        if (!teamInformation?.TeamMembersShifts || teamInformation.TeamMembersShifts.length === 0) return;
         if (teamInformation?.UserData) {
             const updatedEmployeeAssignments = teamInformation.UserData.map(user => {
+                const userShifts: ShiftsAssignmentInMonth[] = teamInformation.TeamMembersShifts
+                    .filter(shift => shift.email === user.email) // Tylko zmiany dla danego użytkownika
+                    .map(shift => ({
+                        shift: {
+                            teamShiftId: shift.teamShiftId,
+                            shiftStart: shift.startShift,
+                            shiftEnd: shift.endShift,
+                        },
+                        date: shift.shiftDate.split("T")[0], // Przekształcenie daty na format bez godziny
+                    }));
+
                 const userShiftsAssignment: EmployeeShiftsAssignment = {
                     employee: user,
-                    shifts: [],
+                    shifts: userShifts,
                 };
                 return userShiftsAssignment;
             });
+
             const distinctAssignments = updatedEmployeeAssignments.filter(
                 (assignment, index, self) =>
                     index === self.findIndex(a => a.employee.email === assignment.employee.email)
@@ -43,14 +54,12 @@ const Shifts: React.FC = () => {
 
             setEmployeeShiftsAssignment(distinctAssignments);
         }
-        }, [teamInformation?.UserData])
+    }, [teamInformation?.UserData, teamInformation?.TeamMembersShifts]);
 
-    useEffect(() => {
-    }, [employeeShiftsAssignment])
     return (
         <div className="h-screen overflow-y-auto bg-gray-100 px-4">
             <div className="border-b-2 flex items-center justify-between">
-                <p className="border-b-2 border-dark-blue-ligher py-2 text-start text-xl font-semibold text-gray-800">Employee Schedule</p>
+                <p className=" border-dark-blue-ligher py-2 text-start text-xl font-semibold text-gray-800">Employee Schedule</p>
                 <div className="group relative">
                     <QuestionMarkCircleIcon className="group-hover:opacity-100 h-7 w-7 cursor-pointer text-gray-500" />
                     <div className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200">
@@ -69,7 +78,7 @@ const Shifts: React.FC = () => {
                 </div>
             </div>
             <div className="">
-                <WeekSchedule employeeAssignments={employeeShiftsAssignment} />
+                <WeekSchedule />
             </div>
             <div className="my-4 flex space-x-1">
                 {actions.map((action) => (
@@ -99,7 +108,7 @@ const Shifts: React.FC = () => {
                     </div>
                 )}
                 {selectedAction === "assign-shift" && (
-                    <AssignShiftModal teamUsers={employeeShiftsAssignment} setTeamUsersShifts={setEmployeeShiftsAssignment} />
+                    <AssignShiftModal teamUsers={employeeShiftsAssignment!} setTeamUsersShifts={setEmployeeShiftsAssignment} />
                 )}
                 {!selectedAction && (
                     <p className="text-gray-500">Please select an action to perform.</p>
