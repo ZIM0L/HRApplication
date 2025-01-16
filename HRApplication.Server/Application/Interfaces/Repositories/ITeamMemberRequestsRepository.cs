@@ -4,12 +4,12 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
 {
     public interface ITeamMemberRequestsRepository
     {
-        List<TeamsMemberRequest>? GetTeamMemberRequestsByTeamId(Guid teamId);
-        List<TeamsMemberRequest>? GetTeamMemberRequestsByUserId(Guid userId);
-        void AddTeamMemberRequest(TeamsMemberRequest teamMemberRequest);
-        void DeleteTeamMemberRequest(TeamsMemberRequest teamMemberRequest);
-        TeamsMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId);
-        void UpdateTeamMemberRequest(TeamsMemberRequest teamMemberRequest);
+        List<TeamMemberRequest>? GetTeamMemberRequestsByTeamId(Guid teamId);
+        List<TeamMemberRequest>? GetTeamMemberRequestsByUserId(Guid userId);
+        void AddTeamMemberRequest(TeamMemberRequest teamMemberRequest);
+        void DeleteTeamMemberRequest(TeamMemberRequest teamMemberRequest);
+        TeamMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId);
+        void UpdateTeamMemberRequest(TeamMemberRequest teamMemberRequest);
 
     }
 }

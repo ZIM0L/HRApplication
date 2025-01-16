@@ -101,17 +101,17 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
 
             // Uzyskanie tokenu dostępowego z kontekstu
-            var accessToken = info.Properties.GetTokenValue("access_token");
-            var accessTokentest = info.Properties.GetTokens();
-            var googleRefreshToken = info.Properties.GetTokenValue("refresh_token");
-            var googleAccessTokenExpiry = info.Properties.ExpiresUtc?.UtcDateTime;
+            var accessToken = info.Properties!.GetTokenValue("access_token");
+            var accessTokentest = info.Properties!.GetTokens();
+            var googleRefreshToken = info.Properties!.GetTokenValue("refresh_token");
+            var googleAccessTokenExpiry = info.Properties!.ExpiresUtc?.UtcDateTime;
 
             if (string.IsNullOrEmpty(accessToken))
             {
                 return BadRequest("Access token is missing.");
             }
 
-            var existingUser = _userRepository.GetUserByEmail(email);
+            var existingUser = _userRepository.GetUserByEmail(email!);
             string token;
             string refreshToken;
 
@@ -119,9 +119,9 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             {
                 // Rejestracja nowego użytkownika
                 var newUser = new User(
-                    name: firstName,
-                    surname: lastName,
-                    email: email,
+                    name: firstName!,
+                    surname: lastName!,
+                    email: email!,
                     password: null,
                     phoneNumber: null
                 );

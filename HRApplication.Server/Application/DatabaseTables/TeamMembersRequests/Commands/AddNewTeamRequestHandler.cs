@@ -36,19 +36,21 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
             {
                 return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
-            var userRequest = new TeamsMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), teamId, request.requestContent, request.title);
-           
+            var userRequest = new TeamMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), teamId, request.requestContent, request.title);
+
 
             var isUserAdministrator = userTeamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
             if (isUserAdministrator == null)
             {
                 _teamRequestsRepository.AddTeamMemberRequest(userRequest);
                 return new TeamRequestsResult(
-                    userRequest.TeamsMembersRequestId,
+                    userRequest.TeamMemberRequestId,
                     userRequest.Title,
                     userRequest.RequestContent,
                     userRequest.Status);
             }
+            //temp
+            return CustomErrorOr.CustomErrors.Team.TeamAlreadyExistsInUserCollection;
         }
     }
 }

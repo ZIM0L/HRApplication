@@ -1,16 +1,16 @@
 ﻿namespace HRApplication.Server.Domain.Models
 {
-    public class TeamsMemberRequest
+    public class TeamMemberRequest
     {
-        public TeamsMemberRequest(Guid userid, Guid teamId, string requestContent, string title)
+        public TeamMemberRequest(Guid userId, Guid teamId, string requestContent, string title)
         {
-            TeamsMembersRequestId = Guid.NewGuid();
-            UserId = userid;
+            TeamMemberRequestId = Guid.NewGuid();
+            UserId = userId;
             TeamId = teamId;
             RequestContent = requestContent;
             Title = title;
         }
-        public Guid TeamsMembersRequestId { get; set; }
+        public Guid TeamMemberRequestId { get; set; }
         public Guid UserId { get; set; }
         public Guid TeamId { get; set; }
         public string Title { get; set; }

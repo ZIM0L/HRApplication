@@ -40,13 +40,13 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
             {
                 return _teamRequestsRepository?.GetTeamMemberRequestsByTeamId(teamId)?
                     .Select(request => new TeamRequestsResult(
-                        request.TeamsMembersRequestId,
+                        request.TeamMemberRequestId,
                         request.Title,
                         request.RequestContent,
                         request.Status)).ToList();
             }
             var userRequests = _teamRequestsRepository.GetTeamMemberRequestsByUserId(Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
-            return userRequests?.Select(request => new TeamRequestsResult(request.TeamsMembersRequestId, request.Title, request.RequestContent, request.Status)).ToList();
+            return userRequests?.Select(request => new TeamRequestsResult(request.TeamMemberRequestId, request.Title, request.RequestContent, request.Status)).ToList();
         }
     }
 }

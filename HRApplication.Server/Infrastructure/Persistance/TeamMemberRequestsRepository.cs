@@ -13,32 +13,32 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex = dbContex;
         }
 
-        public void AddTeamMemberRequest(TeamsMemberRequest teamMemberRequest)
+        public void AddTeamMemberRequest(TeamMemberRequest teamMemberRequest)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteTeamMemberRequest(TeamsMemberRequest teamMemberRequest)
+        public void DeleteTeamMemberRequest(TeamMemberRequest teamMemberRequest)
         {
             throw new NotImplementedException();
         }
 
-        public TeamsMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId)
+        public TeamMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId)
         {
             throw new NotImplementedException();
         }
 
-        public List<TeamsMemberRequest> GetTeamMemberRequestsByTeamId(Guid teamId)
+        public List<TeamMemberRequest> GetTeamMemberRequestsByTeamId(Guid teamId)
         {
             return _dbContex.Team_Memebers_Requests.Where(x => x.TeamId == teamId).ToList();
         }
 
-        public List<TeamsMemberRequest>? GetTeamMemberRequestsByUserId(Guid userId)
+        public List<TeamMemberRequest>? GetTeamMemberRequestsByUserId(Guid userId)
         {
             return _dbContex.Team_Memebers_Requests.Where(x => x.UserId == userId).ToList();
         }
 
-        public void UpdateTeamMemberRequest(TeamsMemberRequest teamMemberRequest)
+        public void UpdateTeamMemberRequest(TeamMemberRequest teamMemberRequest)
         {
             throw new NotImplementedException();
         }
