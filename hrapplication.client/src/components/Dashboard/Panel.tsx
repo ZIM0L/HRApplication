@@ -4,7 +4,7 @@ import UpcomingEventsAlert from './UpcomingEventsAlert';
 import WorkSchedule from './WorkSchedule';
 
 function Panel() {
-    const { decodedToken, isCheckingToken } = useAuth();
+    const { decodedToken, isCheckingToken, userProfileSrc } = useAuth();
 
     if (isCheckingToken) {
         return (
@@ -24,8 +24,9 @@ function Panel() {
             <div className="mt-10 flex p-4">
                 <div className="z-0 mr-6 flex w-1/4 flex-col space-y-4">
                     <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow">
+                        
                         <img
-                            src="https://via.placeholder.com/80"
+                            src={userProfileSrc ? userProfileSrc : ""}
                             alt="User"
                             className="mb-4 h-20 w-20 rounded-full"
                         />

@@ -19,11 +19,9 @@ namespace ReactApp1.Server.Infrastructure.Authentication
 
         public string GenerateToken(User user)
         {
-
-            //maybe change
             var secretKey = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("JwtSettings")["SecretKey"];
             var signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)),
                     SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -47,7 +45,7 @@ namespace ReactApp1.Server.Infrastructure.Authentication
         }
         public string GenerateRefreshToken(string token)
         {
-            var randomNumber = new byte[32]; // Użyj 64 bajtów dla lepszego bezpieczeństwa
+            var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(randomNumber);

@@ -12,6 +12,7 @@ import { INotifications } from '../types/Notification/INotification';
 import { GetUserInvitation } from '../api/NotificationAPI';
 import { GetCalendarEvents } from '../api/CalendarAPI';
 import { EmployeeShiftsAssignment } from '../types/Shift/Shift';
+import { GetUserImage } from '../api/UserAPI';
 
 interface IProvider {
     children: React.ReactNode;
@@ -27,9 +28,16 @@ export const AuthProvider = ({ children }: IProvider) => {
         const storedTeam = localStorage.getItem("selectedTeam");
         return storedTeam ? JSON.parse(storedTeam) : null;
     });
-    const [teamInformation, setTeamInformation] = useState<ITeamInformation | null>({ UserData: [], JobPositions: [], CalendarEvents: [], TeamShifts: [], TeamMembersShifts : [] });
+    const [teamInformation, setTeamInformation] = useState<ITeamInformation>({
+        UserData: [],
+        JobPositions: [],
+        CalendarEvents: [],
+        TeamShifts: [],
+        TeamMembersShifts: []
+    });
     const [notifications, setNotifications] = useState<INotifications | null>(null);
     const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[] | null>([])
+    const [userProfileSrc, setUserProfileSrc] = useState<string | null>(null)
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -39,6 +47,7 @@ export const AuthProvider = ({ children }: IProvider) => {
                 logOut();
                 return;
             }
+            await getUserProfileImage()
             const decoded = ReadLocalStorageUserFromToken();
             setDecodedToken(decoded);
         } catch (error) {
@@ -90,11 +99,17 @@ export const AuthProvider = ({ children }: IProvider) => {
                 Invitations: [],
             };
 
-            setNotifications(emptyNotifications); // Ustaw pusty stan w przypadku b³êdu
-            return emptyNotifications; // Zwrot pustych danych
+            setNotifications(emptyNotifications); 
+            return emptyNotifications;
         }
     };
-
+    const getUserProfileImage = async () => {
+            const response = await GetUserImage();
+        if (response.status == 200) {
+            const imgSrc = `data:${'application/octet-stream'};base64,${response.data.fileContents}`
+            setUserProfileSrc(imgSrc)
+            } 
+    }
     const getAllTeamInformation = async () => {
         if (!selectedTeam) return;
 
@@ -104,25 +119,19 @@ export const AuthProvider = ({ children }: IProvider) => {
                 GetJobPositionsBasedOnTeams(selectedTeam.team.teamId), 
                 GetCalendarEvents(selectedTeam.team.teamId),
                 GetTeamShifts(selectedTeam.team.teamId),
-                GetTeamMembersShifts(selectedTeam.team.teamId)
+                GetTeamMembersShifts(selectedTeam.team.teamId),
             ]);
 
             setTeamInformation({
-                UserData: usersResponse?.data,
-                JobPositions: jobPositionsResponse?.data,
-                CalendarEvents: calendarEventsResponse?.data,
-                TeamShifts: teamShiftsResponse?.data,
-                TeamMembersShifts: teamMembersShifts?.data
+                UserData: usersResponse?.data || [],
+                JobPositions: jobPositionsResponse?.data || [],
+                CalendarEvents: calendarEventsResponse?.data || [],
+                TeamShifts: teamShiftsResponse?.data || [],
+                TeamMembersShifts: teamMembersShifts?.data || []
             });
         } catch (error) {
             console.error("Error fetching team information:", error);
-            setTeamInformation({
-                UserData: [],
-                JobPositions: [],
-                CalendarEvents: [],
-                TeamShifts: [],
-                TeamMembersShifts: []
-            });
+           
         }
     };
 
@@ -131,10 +140,8 @@ export const AuthProvider = ({ children }: IProvider) => {
         setSelectedTeam(team);
 
         if (team) {
-            // Zapisanie dru¿yny do localStorage
             localStorage.setItem('selectedTeam', JSON.stringify(team));
         } else {
-            // Usuniêcie dru¿yny z localStorage, jeœli wybrano null
             localStorage.removeItem('selectedTeam');
         }
     };
@@ -151,9 +158,17 @@ export const AuthProvider = ({ children }: IProvider) => {
     const logOut = () => {
         setAuthTokenState(null);
         setDecodedToken(null);
-        setSelectedTeam(null);
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('selectedTeam');
+        setSelectedTeamState(null);
+        setTeamInformation({
+            UserData: [],
+            JobPositions: [],
+            CalendarEvents: [],
+            TeamShifts: [],
+            TeamMembersShifts: []
+        });
+        setNotifications(null);
+        setEmployeeShiftsAssignment([]);
+        localStorage.clear();
         document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         setAuthToken(null); // Usuniêcie tokenu w API
     };
@@ -177,7 +192,9 @@ export const AuthProvider = ({ children }: IProvider) => {
             setNotifications,
             getUserInvitations,
             employeeShiftsAssignment,
-            setEmployeeShiftsAssignment
+            setEmployeeShiftsAssignment,
+            getUserProfileImage,
+            userProfileSrc
         }}>
             {children}
         </AppContext.Provider>
@@ -185,6 +202,7 @@ export const AuthProvider = ({ children }: IProvider) => {
 };
 
 // Hook do korzystania z kontekstu
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
     const context = useContext(AppContext);
     if (!context) {

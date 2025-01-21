@@ -16,7 +16,6 @@ namespace Infrastructure
             services.AddHttpContextAccessor();
             services.Configure<JwtSetting>(configuration.GetSection("JwtSetting"));
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRolesRepository, RolesRepository>();
             services.AddScoped<IJobPositionsRepository, JobPositionsRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();

@@ -21,7 +21,7 @@
     public DateTime? UpdatedAt { get; set; }
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime RefreshTokenExpiryTime { get; set; }
-    public string? GoogleRefreshToken{ get; set; } = string.Empty;
     public DateTime? GoogleRefreshTokenExpiryTime { get; set; }
     public Boolean? IsGoogleLoggedIn { get; set; } = false;
+    public string? UserProfilePathImage { get; set; }
 }

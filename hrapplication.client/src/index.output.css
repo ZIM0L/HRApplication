@@ -640,12 +640,20 @@ video {
   right: 0px;
 }
 
+.right-2 {
+  right: 0.5rem;
+}
+
 .right-5 {
   right: 1.25rem;
 }
 
 .top-0\.5 {
   top: 0.125rem;
+}
+
+.top-2 {
+  top: 0.5rem;
 }
 
 .top-5 {
@@ -828,8 +836,16 @@ video {
   height: 2.25rem;
 }
 
+.h-\[650px\] {
+  height: 650px;
+}
+
 .h-\[80px\] {
   height: 80px;
+}
+
+.h-auto {
+  height: auto;
 }
 
 .h-fit {
@@ -1005,6 +1021,10 @@ video {
 
 .max-w-\[550px\] {
   max-width: 550px;
+}
+
+.max-w-full {
+  max-width: 100%;
 }
 
 .max-w-lg {

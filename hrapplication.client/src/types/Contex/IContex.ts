@@ -7,7 +7,7 @@ export interface IContext {
     teamInformation: ITeamInformation | null;
     notifications: INotifications | null;
     setNotifications: (notifications: INotifications) => void
-    setTeamInformation: (updatedTeam: ITeamInformation | null) => void;
+    setTeamInformation: (updatedTeam: ITeamInformation) => void;
     authToken: string | null;
     decodedToken: JwtPayload | null;
     isCheckingToken: boolean;
@@ -20,5 +20,7 @@ export interface IContext {
     updateSelectedTeam: (updateTeam: TeamInputs) => void;
     setSelectedTeamState: (team: ITeamWithUserPermission | null) => void
     employeeShiftsAssignment: EmployeeShiftsAssignment[] | null
-    setEmployeeShiftsAssignment: (employeeShiftsAssignment: EmployeeShiftsAssignment[] | null) => void
+    setEmployeeShiftsAssignment: (employeeShiftsAssignment: EmployeeShiftsAssignment[] | null) => void,
+    getUserProfileImage: () => void,
+    userProfileSrc: string | null
 }

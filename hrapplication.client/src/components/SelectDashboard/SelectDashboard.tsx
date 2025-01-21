@@ -71,7 +71,7 @@ const SelectDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="h-screen bg-gray-100">
             <div className="flex flex-col-reverse justify-between bg-dark-blue p-4 text-white shadow-md md:flex-row">
                 <div className="mt-4 flex items-center md:mt-0">
                     <button
@@ -98,14 +98,15 @@ const SelectDashboard = () => {
                 <p className="border-b px-6 py-1 text-gray-500">
                     Select the system you want to access.
                 </p>
-                <div className="divide-y">
+                <div className="h-[650px] overflow-y-auto">
                     {teams?.length == 0 ?
                         <div className=" px-6 py-5 text-center">You are not part of any team yet. Please wait for an invitation or create your own team to get started.</div>
                         :
-                    teams?.map((org, index) => (
+                        teams?.map((org, index) => (
+                        <>
                         <div
                             key={index}
-                            className="flex flex-col items-center justify-between px-6 py-2 hover:bg-gray-50 md:flex-row"
+                            className="flex flex-col items-center justify-between border-b px-6 py-2 hover:bg-gray-50 md:flex-row"
                         >
                             <div className="flex items-center gap-4">
                                 <img
@@ -124,6 +125,7 @@ const SelectDashboard = () => {
                                         Country - {org.team.country}
                                     </p>
                                 </div>
+
                             </div>
                             <div className="mt-4 flex space-x-4 md:mt-0">
                                 <span className="flex items-center gap-2 text-sm text-gray-600">
@@ -134,7 +136,9 @@ const SelectDashboard = () => {
                                 </button>
                             </div>
                         </div>
+                        </>
                     ))}
+
                 </div>
                 <CreateNewTeamModal
                     isOpen={isCreateNewTeamModalOpen}

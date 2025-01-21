@@ -1,6 +1,7 @@
 ﻿using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
+using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Infrastructure.Persistance
 {
@@ -16,6 +17,17 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             _dbContex.Team_Member_Shifts.AddRange(teamMemberShift);
             _dbContex.SaveChanges();
+        }
+
+        public void DeleteTeamMemerShfits(List<TeamMemberShift> teamMemberShifts)
+        {
+            _dbContex.Team_Member_Shifts.RemoveRange(teamMemberShifts);
+            _dbContex.SaveChanges();
+        }
+
+        public List<TeamMemberShift>? GetTeamMemberShiftsByTeamShiftId(Guid teamShiftId)
+        {
+            return _dbContex.Team_Member_Shifts.Where(shift => teamShiftId == shift.TeamShiftId).ToList();
         }
 
         public List<TeamMemberShift>? GetTeamMemberShiftsByUserIdAndDates(Guid userId, List<DateTime> dates)

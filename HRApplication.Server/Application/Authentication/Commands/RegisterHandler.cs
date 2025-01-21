@@ -15,7 +15,6 @@ namespace HRApplication.Server.Application.Authentication.Commands
         public RegisterHandler(IUserRepository userRepository,
                                IJwtTokenGenerator jwtTokenGenerator,
                                IHttpContextAccessor httpContextAccessor,
-                               IRolesRepository rolesRepository,
                                IMediator mediator)
         {
             _httpContextAccessor = httpContextAccessor;

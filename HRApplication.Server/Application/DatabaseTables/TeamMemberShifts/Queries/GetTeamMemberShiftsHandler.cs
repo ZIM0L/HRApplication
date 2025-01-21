@@ -82,28 +82,6 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Queri
                     startShift: teamShift.ShiftStart,
                     endShift: teamShift.ShiftEnd
                 )).ToList();
-            //.Join(teamShifts,
-            //member => member.TeamId,
-            //teamShift => teamShift.TeamId,
-            //(member, teamShift) => new
-            //{
-            //    Email = member.Email,
-            //    UserId = member.UserId,
-            //    TeamId = member.TeamId,
-            //    ShiftStart = teamShift.ShiftStart,
-            //    ShiftEnd = teamShift.ShiftEnd,
-            //})
-            //.Join(teamMembershifts,
-            //member => member.UserId,
-            //teamMemberShift => teamMemberShift.UserId,
-            //(member, teamMemberShift) => new TeamMemberShiftResult(
-            //    email: member.Email,
-            //    shiftDate: teamMemberShift.ShiftDate,
-            //    startShift: member.ShiftStart,
-            //    endShift: member.ShiftEnd,
-            //    checkInTime: teamMemberShift.CheckInTime,
-            //    checkOutTime: teamMemberShift.CheckOutTime
-            //)).ToList();
 
             return teamMemebersShifts;
         }

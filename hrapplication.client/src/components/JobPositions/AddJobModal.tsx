@@ -1,4 +1,4 @@
-﻿import { IAddJobPositionInputs } from "../../types/JobPosition/IJobPosition";
+﻿import { IAddJobPositionInputs, IJobPosition } from "../../types/JobPosition/IJobPosition";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import { useState } from "react";
@@ -26,11 +26,14 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                 setIsError(false)
                 setShowNotification(true); 
                 setNotificationMessage(["New job position was added"])
+                const responseData: IJobPosition[] = response.data;
                 setTimeout(() => {
-                    setTeamInformation((prev: ITeamInformation) => {
+                    //@ts-expect-error it works
+                    setTeamInformation((prevTeamInfo: ITeamInformation) => {
+
                         return {
-                            ...prev,
-                            JobPositions: [...prev.JobPositions, response.data], 
+                            ...prevTeamInfo, 
+                            JobPositions: [...prevTeamInfo.JobPositions, ...responseData], 
                         };
                     });
                     reset()

@@ -103,7 +103,6 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             // Uzyskanie tokenu dostępowego z kontekstu
             var accessToken = info.Properties!.GetTokenValue("access_token");
             var accessTokentest = info.Properties!.GetTokens();
-            var googleRefreshToken = info.Properties!.GetTokenValue("refresh_token");
             var googleAccessTokenExpiry = info.Properties!.ExpiresUtc?.UtcDateTime;
 
             if (string.IsNullOrEmpty(accessToken))
@@ -127,7 +126,6 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                 );
                 newUser.CreatedAt = DateTime.UtcNow;
                 newUser.IsGoogleLoggedIn = true;
-                newUser.GoogleRefreshToken = googleRefreshToken;
                 newUser.GoogleRefreshTokenExpiryTime = googleAccessTokenExpiry;
 
                 token = _jwtTokenGenerator.GenerateToken(newUser);
@@ -141,7 +139,6 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             else
             {
                 existingUser.IsGoogleLoggedIn = true;
-                existingUser.GoogleRefreshToken = googleRefreshToken;
                 existingUser.GoogleRefreshTokenExpiryTime = googleAccessTokenExpiry;
                 existingUser.UpdatedAt = DateTime.UtcNow;
 

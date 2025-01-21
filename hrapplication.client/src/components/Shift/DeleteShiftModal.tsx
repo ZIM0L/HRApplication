@@ -23,7 +23,7 @@ const DeleteShiftModal: React.FC<DeleteShiftModalProps> = ({ isOpen, onClose, sh
             if (!selectedTeam) return
             const response = await DeleteTeamShift(shiftToDelete.teamShiftId)
             if (response?.status == 200) {
-                setNotificationMessage(["Shift has been deleted"])
+                setNotificationMessage(["Applaying changes..."])
                 setIsError(false)
                 setShowNotification(true)
                 setTimeout(() => {
@@ -34,6 +34,7 @@ const DeleteShiftModal: React.FC<DeleteShiftModalProps> = ({ isOpen, onClose, sh
                         }
                     })
                     onClose()
+                    window.location.reload();
                 },3500)
             }
         } catch(err) {

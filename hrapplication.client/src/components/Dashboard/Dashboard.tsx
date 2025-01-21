@@ -17,11 +17,14 @@ import {
 import { useAuth } from "../../contex/AppContex";
 import LogoSVG from "../LogoSVG/LogoSVG";
 import { useEffect, useState } from "react";
+import { Cog8ToothIcon } from "@heroicons/react/24/outline";
+import UserSettings from "../UserSettings/UserSettings";
 
 const Dashboard: React.FC = () => {
     const { logOut, decodedToken, setSelectedTeamState, selectedTeam } = useAuth();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+    const [isModalOpen, setIsModalOpen] = useState(false); 
 
     const navigate = useNavigate();
     const { getAllTeamInformation, teamInformation } = useAuth();
@@ -79,7 +82,6 @@ const Dashboard: React.FC = () => {
             >
                 {isSidebarOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
             </button>
-
             {/* Pasek boczny */}
             <div
                 className={`${isSidebarOpen ? "translate-y-0" : "-translate-y-full "
@@ -193,7 +195,7 @@ const Dashboard: React.FC = () => {
                                 <button onClick={() => onChangeTeam()}>
                                     <ArrowsRightLeftIcon className="h-5 w-5 hover:cursor-pointer" />
                                 </button>
-                                <span className="opacity-0 group-hover:opacity-100 absolute top-8 whitespace-nowrap bg-dark-blue px-2 py-1 text-sm text-white transition-opacity">
+                                <span className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute top-8 whitespace-nowrap bg-dark-blue px-2 py-1 text-sm text-white transition-opacity">
                                     Change Team
                                 </span>
                             </div>
@@ -205,13 +207,33 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                 )}
-                <div className="border-2 flex w-full px-2 py-2 text-sm text-gray-500">
-                    <span className="border-r-2 px-2">{selectedTeam?.team.name}</span>
-                    <Link to="calendar" className="flex space-x-2 px-2 transition-all hover:text-gray-900 hover:scale-105 hover:hover:cursor-pointer">
-                        <span>Callender</span>
-                        <CalendarDaysIcon className="h-5 w-5" />
-                    </Link>
+                <div className="border-2 flex w-full justify-between px-2 py-2 text-sm text-gray-500">
+                    <div className="flex">
+                        <span className="border-r-2 px-2">{selectedTeam?.team.name}</span>
+                        <Link to="calendar" className="flex space-x-2 px-2 transition-all hover:text-gray-900 hover:scale-105 hover:hover:cursor-pointer">
+                            <span>Callender</span>
+                            <CalendarDaysIcon className="h-5 w-5" />
+                        </Link>
+                    </div>
+                    <div className="border-r-2 flex space-x-2 px-2 transition-all hover:scale-105 hover:text-gray-900 hover:hover:cursor-pointer" onClick={() => setIsModalOpen(true)}>
+                        <span className="">User Settings</span>
+                        <Cog8ToothIcon className="h-5 w-5" />
+                    </div>
                 </div>
+                {/* Modal - Ustawienia użytkownika */}
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="max-w-md rounded-lg bg-white p-6">
+                            <UserSettings /> {/* Nasz komponent UserSettings */}
+                            <button
+                                onClick={() => setIsModalOpen(false)} // Zamknięcie modala
+                                className="absolute top-2 right-2 text-xl"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                )}
                 {/* Zawartość */}
                 <Outlet />
             </div>

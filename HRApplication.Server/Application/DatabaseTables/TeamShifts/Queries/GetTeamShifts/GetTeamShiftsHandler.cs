@@ -2,7 +2,9 @@
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
+using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Queries.GetTeamShifts
 {
@@ -29,10 +31,11 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Queries.Get
             }
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            var isAdminResult = IsAdministrator.CheckUser(_teamMemberRepository, teamId, BearerCheckerResult.Value.Payload.Sub);
-            if (isAdminResult.IsError)
+            var userTeamMembers = _teamMemberRepository.GetTeamMembersByTeamIdAndUserId(teamId, Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
+
+            if (userTeamMembers == null)
             {
-                return isAdminResult.Errors;
+                return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
             return _teamShiftRepository?.GetTeamShifts(teamId)
                 ?.Select(shift => new TeamShiftResult(shift.TeamShiftId, shift.ShiftStart, shift.ShiftEnd)).ToList();

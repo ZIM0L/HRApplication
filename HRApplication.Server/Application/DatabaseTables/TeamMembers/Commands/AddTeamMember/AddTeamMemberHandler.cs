@@ -37,7 +37,10 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.A
             {
                 return isAdminResult.Errors;
             }
-
+            if (request.roleName != "Employee")
+            {
+                return CustomErrorOr.CustomErrors.Role.NoRoleExists;
+            }
             var newTeamMember = new TeamMember(request.userId, request.teamId, request.jobPositionId, request.roleName);
 
             if (_teamMemberRepository.GetTeamMemberFromCollection(newTeamMember) is TeamMember)

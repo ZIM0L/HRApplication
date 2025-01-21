@@ -2,6 +2,7 @@
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Commands.DeleteTeamShift
@@ -11,11 +12,13 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Commands.De
         private readonly ITeamShiftsRepository _teamShiftRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ITeamMemberRepository _teamMemberRepository;
-        public DeleteTeamShiftHandler(ITeamShiftsRepository teamShiftRepository, IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository)
+        private readonly ITeamMemberShiftsRepository _teamMemberShiftsRepository;
+        public DeleteTeamShiftHandler(ITeamShiftsRepository teamShiftRepository, IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository, ITeamMemberShiftsRepository teamMemberShiftsRepository)
         {
             _teamShiftRepository = teamShiftRepository;
             _httpContextAccessor = httpContextAccessor;
             _teamMemberRepository = teamMemberRepository;
+            _teamMemberShiftsRepository = teamMemberShiftsRepository;
         }
         public async Task<ErrorOr<Unit>> Handle(DeleteTeamShiftRequest request, CancellationToken cancellationToken)
         {
@@ -39,7 +42,8 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Commands.De
             {
                 return isAdminResult.Errors;
             }
-
+            var teamMembersShiftsToRemove = _teamMemberShiftsRepository.GetTeamMemberShiftsByTeamShiftId(Guid.Parse(request.teamShiftId));
+            _teamMemberShiftsRepository.DeleteTeamMemerShfits(teamMembersShiftsToRemove!);
             _teamShiftRepository.DeleteTeamShift(teamShift);
 
             return Unit.Value;

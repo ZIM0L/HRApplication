@@ -26,9 +26,9 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
 
         public ValidateAuthTokenController(IConfiguration configuration, IMediator mediator)
         {
-            _secretKey = configuration["JwtSettings:SecretKey"];
-            _issuer = configuration["JwtSettings:Issuer"];
-            _audience = configuration["JwtSettings:Audience"];
+            _secretKey = configuration["JwtSettings:SecretKey"]!;
+            _issuer = configuration["JwtSettings:Issuer"]!;
+            _audience = configuration["JwtSettings:Audience"]!;
             _mediator = mediator;
         }
         [HttpGet]
@@ -53,10 +53,10 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
 
                 var result = await _mediator.Send(new ValidateUserRequest(
                     new Guid(BearerCheckerResult.Value.Payload.Sub),
-                    BearerCheckerResult.Value.Payload["given_name"].ToString(),
-                    BearerCheckerResult.Value.Payload["family_name"].ToString(),
-                    BearerCheckerResult.Value.Payload["email"].ToString(),
-                    BearerCheckerResult.Value.Payload["phonenumber"].ToString()));
+                    BearerCheckerResult.Value.Payload["given_name"].ToString()!,
+                    BearerCheckerResult.Value.Payload["family_name"].ToString()!,
+                    BearerCheckerResult.Value.Payload["email"].ToString()!,
+                    BearerCheckerResult.Value.Payload["phonenumber"].ToString()!));
 
                 if (result.IsError)
                 {
