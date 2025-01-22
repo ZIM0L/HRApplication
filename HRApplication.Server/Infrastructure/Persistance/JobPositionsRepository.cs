@@ -53,5 +53,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             return _dbContex.Job_Positions.Where(x => x.TeamId.Equals(teamId)).ToList(); 
         }
+
+        public void UpdateJobPosition(JobPosition jobPosition)
+        {
+            _dbContex.Job_Positions.Update(jobPosition);
+            _dbContex.SaveChanges();
+        }
     }
 }

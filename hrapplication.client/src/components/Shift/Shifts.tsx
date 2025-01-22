@@ -10,13 +10,13 @@ import { ITeamInformation } from "../../types/Team/ITeam";
 const Shifts: React.FC = () => {
    
     const [selectedAction, setSelectedAction] = useState("");
-    const { teamInformation, setTeamInformation, employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
+    const { teamInformation, setTeamInformation, setEmployeeShiftsAssignment, selectedTeam } = useAuth()
     const actions = [
         { id: "add-shift", label: "Add Shift" },
-        { id: "edit-shift", label: "Edit Shift" },
         { id: "assign-shift", label: "Assign Shifts" },
     ];
     const handleNewTeamShift = (newShift: Shift) => {
+        //@ts-expect-error works
         setTeamInformation((prev: ITeamInformation) => {
             return {
                 ...prev,
@@ -54,7 +54,7 @@ const Shifts: React.FC = () => {
 
             setEmployeeShiftsAssignment(distinctAssignments);
         }
-    }, [teamInformation?.UserData, teamInformation?.TeamMembersShifts]);
+    }, [teamInformation?.UserData!, teamInformation?.TeamMembersShifts]);
 
     return (
         <div className="h-screen overflow-y-auto bg-gray-100 px-4">
@@ -80,6 +80,8 @@ const Shifts: React.FC = () => {
             <div className="">
                 <WeekSchedule />
             </div>
+            {selectedTeam?.roleName == "Administrator" ? 
+            <>
             <div className="my-4 flex space-x-1">
                 {actions.map((action) => (
                     <div
@@ -94,26 +96,19 @@ const Shifts: React.FC = () => {
                     </div>
                 ))}
             </div>
-
-            {/* Display the selected action's content */}
             <div className="mt-4">
                 {selectedAction === "add-shift" && (
                     <AddNewShift addNewTeamShift={handleNewTeamShift} />
                 )}
-                {selectedAction === "edit-shift" && (
-                    <div className="rounded border bg-gray-100 p-4">
-                        <h3 className="text-lg font-bold">Edit Shift</h3>
-                        <p>Select a shift to edit its details.</p>
-                        {/* Add your form or functionality here */}
-                    </div>
-                )}
                 {selectedAction === "assign-shift" && (
-                    <AssignShiftModal teamUsers={employeeShiftsAssignment!} setTeamUsersShifts={setEmployeeShiftsAssignment} />
+                    <AssignShiftModal />
                 )}
                 {!selectedAction && (
                     <p className="text-gray-500">Please select an action to perform.</p>
                 )}
             </div>
+            </>
+            : null}
         </div>
     );
 };

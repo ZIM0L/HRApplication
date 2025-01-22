@@ -4,5 +4,5 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands
 {
-    public record DeclineInvitationRequest(Invitation invitation) : IRequest<ErrorOr<Unit>>;
+    public record DeclineInvitationRequest(string invitationId) : IRequest<ErrorOr<Unit>>;
 }

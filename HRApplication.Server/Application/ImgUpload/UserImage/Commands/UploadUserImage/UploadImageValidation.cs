@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace HRApplication.Server.Application.ImgUpload.UploadUserImage
+namespace HRApplication.Server.Application.ImgUpload.UserImage.Commands.UploadUserImage
 {
-    public class UploadImageValidation : AbstractValidator<IFormFile>
+    public class UploadTeamImageValidation : AbstractValidator<IFormFile>
     {
-        public UploadImageValidation()
+        public UploadTeamImageValidation()
         {
             RuleFor(x => x)
                 .NotNull().WithMessage("File is needed")

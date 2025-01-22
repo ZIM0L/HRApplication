@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetUserInvitations
 {
-    public class GetUserInvitationsHandler : IRequestHandler<GetUserInvitationsRequest, ErrorOr<List<InvitationResult>>>
+    public class GetUserInvitationsHandler : IRequestHandler<GetUserInvitationsRequest, ErrorOr<List<InvitationResult>?>>
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -15,7 +15,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Queries.Ge
             _invitationRepository = invitationRepository;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<ErrorOr<List<InvitationResult>>> Handle(GetUserInvitationsRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<List<InvitationResult>?>> Handle(GetUserInvitationsRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 

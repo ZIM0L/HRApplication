@@ -19,9 +19,13 @@ namespace HRApplication.Server.Application.CustomErrorOr
                description: "An invitation do not exists"
            );
             public static Error UserAlreadyOccupyingPosition = Error.Conflict(
-                code: "Invitation.InvitationAlreadyCreated",
+                code: "Invitation.UserAlreadyOccupyingPosition",
                 description: "This position is already occupied by the user"
             );
+            public static Error WrongAccess = Error.Conflict(
+               code: "Invitation.InvitationAlreadyCreated",
+               description: "The invitation can only be deleted by the recipient"
+           );
         }
 
     }

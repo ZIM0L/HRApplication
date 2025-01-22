@@ -1,8 +1,9 @@
 ﻿import { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { AcceptInvitation } from "../../api/InvitationAPI";
+import { AcceptInvitation, DeclineInvitation } from "../../api/InvitationAPI";
 import Notification from "./Notification";
 import { useAuth } from "../../contex/AppContex";
+import { INotifications } from "../../types/Notification/INotification";
 
 interface NotificationModalProps {
     isOpen: boolean; 
@@ -17,7 +18,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
-    const { notifications, getUserInvitations } = useAuth()
+    const { notifications, getUserInvitations, setNotifications } = useAuth()
 
 
     const AcceptInvitationHandle = async (invitaitonId: string, jobPositionId: string) => {
@@ -36,6 +37,22 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
             getUserInvitations()
             onClose();  
         },3500)
+    };
+    const DeclineInvitationHandle = async (invitaitonId: string) => {
+        const result = await DeclineInvitation(invitaitonId);
+        if (result?.status === 200) {
+            setShowNotification(true);
+            setIsError(false);
+            const changedInv = notifications?.Invitations.filter((inv) => inv.invitationId != invitaitonId)
+            //@ts-expect-error works
+            setNotifications((prev: INotifications) => {
+                return {
+                    ...prev,
+                    Invitations: changedInv
+                }
+            })
+            setNotificationMessage(["You decline invitation"]);
+        }
     };
 
 
@@ -89,7 +106,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                                     </div>
                                     <div className="flex w-[110px] flex-col justify-between space-y-4 px-2">
                                         <button
-                                            onClick={() => console.log("Dismiss invitation")}
+                                            onClick={() => DeclineInvitationHandle(invitation.invitationId)}
                                         >
                                             <div className="flex w-full items-center justify-center space-x-2 rounded-md text-gray-600 hover:bg-red-100 hover:text-red-800">
                                                 <span>✕</span>

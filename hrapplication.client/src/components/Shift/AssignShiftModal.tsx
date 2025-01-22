@@ -1,10 +1,9 @@
-﻿import React, { useState } from "react";
-import { EmployeeShiftsAssignment, Shift, TeamMemberShift, TeamMemberShiftsToSend } from "../../types/Shift/Shift";
+﻿import { useState } from "react";
+import { EmployeeShiftsAssignment, Shift, TeamMemberShiftsToSend } from "../../types/Shift/Shift";
 import { IEmployeeData } from "../../types/User/IUser";
 import { useAuth } from "../../contex/AppContex";
 import { CreateTeamMemberShifts } from "../../api/TeamAPI";
 import Notification from "../Notification/Notification";
-import { ITeamInformation } from "../../types/Team/ITeam";
 
 
 const AssignShiftModal= () => {
@@ -22,7 +21,7 @@ const AssignShiftModal= () => {
         Saturday: false,
         Sunday: false,
     });
-    const { teamInformation, setTeamInformation, employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
+    const { teamInformation,  employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
@@ -124,6 +123,7 @@ const AssignShiftModal= () => {
             setIsError(false)
             setShowNotification(true)
             setTimeout(() => {
+                //@ts-expect-error works
                 setEmployeeShiftsAssignment((prev: EmployeeShiftsAssignment[]) => {
 
                     const updatedAssignments = prev.map((assignment) => {
@@ -190,6 +190,7 @@ const AssignShiftModal= () => {
                         {['day', 'range', 'month'].map((mode) => (
                             <button
                                 key={mode}
+                                //@ts-expect-error works
                                 onClick={() => setSelectedMode(mode)}
                                 className={`px-3 py-2 rounded ${selectedMode === mode
                                         ? 'border-2 border-gray-600'

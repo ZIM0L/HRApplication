@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
-namespace HRApplication.Server.Application.ImgUpload.GetUserImage
+namespace HRApplication.Server.Application.ImgUpload.UserImage.Queries.GetUserImage
 {
     public class GetUserImageHandler : IRequestHandler<GetUserImageRequest, ErrorOr<FileResult>>
     {
@@ -49,11 +49,11 @@ namespace HRApplication.Server.Application.ImgUpload.GetUserImage
 
             byte[] fileBytes = File.ReadAllBytes(filePath);
 
-                return new FileContentResult(fileBytes, "application/octet-stream")
-                {
-                    FileDownloadName = fileName 
-                };
-          
+            return new FileContentResult(fileBytes, "application/octet-stream")
+            {
+                FileDownloadName = fileName
+            };
+
         }
 
     }

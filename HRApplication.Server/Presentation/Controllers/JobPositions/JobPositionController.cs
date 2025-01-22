@@ -1,7 +1,8 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.JobPosition.Queries.GetJobPositionsBasedOnTeams;
 using HRApplication.Server.Application.DatabaseTables.JobPositions;
-using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands;
+using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.AddJobPosition;
+using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.EditJobPosition;
 using HRApplication.Server.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,7 +23,7 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
             _mediator = mediator;
         }
         [HttpPost]
-        [Route("/api/[controller]/addJobPosition")]
+        [Route("AddJobPosition")]
         public async Task<IActionResult> AddJobPosition([FromBody] JobPositionRequest request)
         {
             var command = new JobPositionRequest(
@@ -39,12 +40,29 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
         }
         
         [HttpPost]
-        [Route("/api/[controller]/GetJobPositionsBasedOnTeams")]
+        [Route("GetJobPositionsBasedOnTeams")]
         public async Task<IActionResult> GetJobPositionsBasedOnTeams([FromBody] GetJobPositionsBasedOnTeamsRequest request)
         {
             var query = new GetJobPositionsBasedOnTeamsRequest(request.teamId);
 
             ErrorOr<List<JobPositionsResult>> response = await _mediator.Send(query);
+
+            return response.Match(
+            response => Ok(response),
+            errors => Problem(errors));
+        }   
+        [HttpPost]
+        [Route("UpdateJobPosition")]
+        public async Task<IActionResult> UpdateJobPosition([FromBody] EditJobPositionRequest request)
+        {
+            var query = new EditJobPositionRequest(
+                request.jobPositionId,
+                request.title,
+                request.description,
+                request.isActive,
+                request.isRecruiting);
+
+            ErrorOr<JobPositionsResult> response = await _mediator.Send(query);
 
             return response.Match(
             response => Ok(response),

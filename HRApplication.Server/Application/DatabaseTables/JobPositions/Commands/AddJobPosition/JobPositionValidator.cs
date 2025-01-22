@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HRApplication.Server.Application.Utilities;
 
-namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
+namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.AddJobPosition
 {
     public class JobPositionValidator : AbstractValidator<JobPositionRequest>
     {

@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
+using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
 using MediatR;
 
@@ -18,9 +19,22 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands
         {
             await Task.CompletedTask;
 
-            if(_invitationRepository.GetInvitationById(request.invitation.InvitationId) is not Invitation invitation)
+            var httpContext = _httpContextAccessor.HttpContext;
+
+            if (httpContext == null || string.IsNullOrEmpty(BearerChecker.CheckBearerToken(httpContext).Value.Token))
+            {
+                return CustomErrorOr.CustomErrors.Token.InvalidFormatError;
+            }
+
+            var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
+
+            if (_invitationRepository.GetInvitationById(Guid.Parse(request.invitationId)) is not Invitation invitation)
             {
                 return CustomErrorOr.CustomErrors.Invitation.InvitationDoesNotExist;
+            }
+            if(invitation.UserId != Guid.Parse(BearerCheckerResult.Value.Payload.Sub))
+            {
+                return CustomErrorOr.CustomErrors.Invitation.WrongAccess;
             }
 
             _invitationRepository.DeleteUserInvitation(invitation);

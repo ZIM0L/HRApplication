@@ -3,20 +3,20 @@ using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using MediatR;
 
-namespace HRApplication.Server.Application.ImgUpload.UploadUserImage
+namespace HRApplication.Server.Application.ImgUpload.UserImage.Commands.UploadUserImage
 {
-    public class UploadUserImageHandler : IRequestHandler<UploadImageRequest, ErrorOr<Unit>>
+    public class UploadTeamImageHandler : IRequestHandler<UploadUserImageRequest, ErrorOr<Unit>>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
 
-        public UploadUserImageHandler(IHttpContextAccessor httpContextAccessor, IUserRepository userRepository)
+        public UploadTeamImageHandler(IHttpContextAccessor httpContextAccessor, IUserRepository userRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
         }
 
-        public async Task<ErrorOr<Unit>> Handle(UploadImageRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Unit>> Handle(UploadUserImageRequest request, CancellationToken cancellationToken)
         {
             if (request.Image == null || request.Image.Length == 0)
             {

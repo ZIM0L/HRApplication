@@ -5,8 +5,12 @@ import { UploadUserImage } from '../../api/UserAPI';
 interface IFormInput {
     image: FileList;
 }
+interface UserSettingsProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
 
-const UserSettings: React.FC = () => {
+const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose }) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -16,10 +20,9 @@ const UserSettings: React.FC = () => {
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const file = data.image[0];
 
-        // Sprawdzenie typu pliku
         const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         if (!validTypes.includes(file.type)) {
-            setErrorMessage('Nieprawidłowy format pliku. Dozwolone są tylko pliki JPG, JPEG i PNG.');
+            setErrorMessage('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
             return;
         }
 
@@ -27,78 +30,78 @@ const UserSettings: React.FC = () => {
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
 
-        // Tworzymy FormData, by wysłać obrazek do API
         const formData = new FormData();
         formData.append('image', file);
 
-        setUploading(true); // Zmieniamy stan na 'uploading'
+        setUploading(true);
 
         try {
-            // Wywołanie funkcji UploadUserImage, aby wysłać obraz
             const response = await UploadUserImage(formData);
             if (response.status === 200) {
                 setErrorMessage(null);
-                alert('Obrazek został pomyślnie wysłany!');
+                alert('Image uploaded successfully!');
             }
         } catch (error) {
-            setErrorMessage('Błąd podczas wysyłania obrazu. Spróbuj ponownie.');
+            setErrorMessage('Error uploading image. Please try again.');
             console.error(error);
         } finally {
-            setUploading(false); // Przywrócenie stanu 'uploading' do false
+            setUploading(false);
         }
     };
 
     return (
-        <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-lg">
-            <h2 className="mb-4 text-xl font-semibold">Wybierz obrazek</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                    <input
-                        type="file"
-                        {...register('image', {
-                            required: 'Plik jest wymagany',
-                            validate: (files) => {
-                                const file = files?.[0];
-                                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                                return (
-                                    file &&
-                                    validTypes.includes(file.type) ||
-                                    'Dozwolone są tylko pliki JPG, JPEG i PNG.'
-                                );
-                            }
-                        })}
-                        className="w-full rounded border border-gray-300 p-2"
-                    />
-                    {errors.image && <p className="text-sm text-red-500">{errors.image.message}</p>}
-                </div>
+        <div
+            className={`fixed justify-center md:justify-end inset-0 z-50 flex items-center ${isOpen ? "opacity-100" : "opacity-0"
+                } bg-gray-900 bg-opacity-50 transition-all duration-500`}
+        >
+            <div
+                className={`md:h-full bg-white px-4 py-2 shadow-lg rounded-none transition-transform md:rounded-l-lg transform duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+            >
+                <h2 className="mb-4 text-xl font-semibold">Select User Image</h2>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <div>
+                        <input
+                            type="file"
+                            {...register('image', {
+                                required: 'File is required',
+                                validate: (files) => {
+                                    const file = files?.[0];
+                                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                                    return (
+                                        file &&
+                                        validTypes.includes(file.type) ||
+                                        'Only JPG, JPEG, and PNG files are allowed.'
+                                    );
+                                }
+                            })}
+                            className="w-full rounded border border-gray-300 p-2"
+                        />
+                        {errors.image && (
+                            <p className="text-sm text-red-500">{errors.image.message}</p>
+                        )}
+                    </div>
+                    <div className="flex justify-end space-x-2">
+                        <button
+                            type="button"
+                            className="rounded-md bg-gray-400 px-2 py-1 text-white transition hover:bg-gray-600"
+                            onClick={() => onClose()}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="rounded-md bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
+                            disabled={uploading}
+                        >
+                            {uploading ? 'Uploading...' : 'Upload Image'}
+                        </button>
+                    </div>
+                </form>
 
-                <button
-                    type="submit"
-                    className="w-full rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600"
-                    disabled={uploading} // Disable button when uploading
-                >
-                    {uploading ? 'Wysyłanie...' : 'Wybierz obraz'}
-                </button>
-            </form>
-
-            {/* Wyświetlanie podglądu obrazu */}
-            {imagePreview && (
-                <div className="mt-4">
-                    <p className="text-sm text-gray-600">Podgląd wybranego obrazu:</p>
-                    <img
-                        src={imagePreview}
-                        alt="Podgląd obrazu"
-                        className="mt-2 h-auto max-w-full rounded-md"
-                    />
-                </div>
-            )}
-
-            {/* Wyświetlanie błędu, jeśli wystąpił */}
-            {errorMessage && (
-                <div className="mt-4 text-sm text-red-500">
-                    {errorMessage}
-                </div>
-            )}
+                {errorMessage && (
+                    <div className="mt-4 text-sm text-red-500">{errorMessage}</div>
+                )}
+            </div>
         </div>
     );
 };

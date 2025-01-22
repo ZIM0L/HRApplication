@@ -40,4 +40,5 @@ export interface ITeamInformation {
     CalendarEvents: ICalendarEvent[]
     TeamShifts: Shift[]
     TeamMembersShifts: TeamMemberShift[]
+    TeamProfileSrc: string;
 }

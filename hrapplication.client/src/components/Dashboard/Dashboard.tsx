@@ -200,7 +200,7 @@ const Dashboard: React.FC = () => {
                                 </span>
                             </div>
                             <img
-                                src="https://via.placeholder.com/40"
+                                src={teamInformation?.TeamProfileSrc}
                                 alt="User"
                                 className="h-8 w-8 rounded-full"
                             />
@@ -222,17 +222,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 {/* Modal - Ustawienia użytkownika */}
                 {isModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="max-w-md rounded-lg bg-white p-6">
-                            <UserSettings /> {/* Nasz komponent UserSettings */}
-                            <button
-                                onClick={() => setIsModalOpen(false)} // Zamknięcie modala
-                                className="absolute top-2 right-2 text-xl"
-                            >
-                                &times;
-                            </button>
-                        </div>
-                    </div>
+                    <UserSettings isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
                 )}
                 {/* Zawartość */}
                 <Outlet />

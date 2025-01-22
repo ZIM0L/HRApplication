@@ -1,7 +1,7 @@
 ﻿import { IAddJobPositionInputs, IJobPosition } from "../../types/JobPosition/IJobPosition";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Notification from "../Notification/Notification";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddJobPosition } from "../../api/JobPositionAPI";
 import { useAuth } from "../../contex/AppContex";
 import { ITeamInformation } from "../../types/Team/ITeam";
@@ -26,14 +26,12 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                 setIsError(false)
                 setShowNotification(true); 
                 setNotificationMessage(["New job position was added"])
-                const responseData: IJobPosition[] = response.data;
                 setTimeout(() => {
                     //@ts-expect-error it works
                     setTeamInformation((prevTeamInfo: ITeamInformation) => {
-
                         return {
                             ...prevTeamInfo, 
-                            JobPositions: [...prevTeamInfo.JobPositions, ...responseData], 
+                            JobPositions: [...prevTeamInfo.JobPositions, response.data], 
                         };
                     });
                     reset()
@@ -50,6 +48,14 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
         }
     };
 
+    useEffect(() => {
+        if (isOpen) {
+            setNotificationMessage([]);
+            setShowNotification(false);
+            setIsError(false);
+        }
+    }, [isOpen]);
+
     if (!isOpen) return null; 
 
     return (
@@ -65,13 +71,13 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                             {...register("title", { required: "Position name is required.", maxLength: 255 })}
                             type="text"
                             placeholder="Position name"
-                            className="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+                            className="w-full rounded-md border border-gray-300 px-4 py-2"
                         />
 
                         <textarea
                             {...register("description", { required: "Description is required.", maxLength: 500 })}
                             placeholder="Description"
-                            className="h-24 w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+                            className="h-50 max-h-32 w-full resize-none rounded-md border border-gray-300 px-4 py-2" 
                         />
 
                         <div className="flex items-center space-x-2">
@@ -90,7 +96,7 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                         <div className="mt-4 flex justify-end space-x-2">
                             <button
                                 type="submit"
-                                className="rounded-md bg-blue-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-700"
+                                className="rounded-md bg-cyan-blue px-4 py-2 text-white transition-colors duration-200 hover:bg-cyan-blue-hover"
                             >
                                 Add
                             </button>

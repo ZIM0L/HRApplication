@@ -1,11 +1,11 @@
-﻿import { PencilSquareIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
+﻿import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import ModifyOrganizationModal from "./ModifyOrganizationModal";
 import { useState } from "react";
 import { useAuth } from "../../contex/AppContex";
 
 function Organization() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { selectedTeam } = useAuth();
+    const { selectedTeam, teamInformation } = useAuth();
 
     return (
         <>
@@ -15,7 +15,7 @@ function Organization() {
                     <h1 className="text-2xl font-semibold text-gray-800">Organization Information</h1>
                     {selectedTeam?.roleName == "Administrator" ? 
                         <button
-                            className="rounded-full bg-blue-500 p-2 text-white transition hover:bg-blue-600"
+                            className="border-2 rounded-lg border-white p-2 transition hover:border-gray-500"
                             onClick={() => setIsModalOpen(true)}
                         >
                             <PencilSquareIcon className="h-6 w-6" />
@@ -26,9 +26,11 @@ function Organization() {
                 {/* Basic Info Section */}
                 <div className="flex flex-col items-center space-y-4 rounded-lg bg-gray-50 p-6 md:flex-row md:space-y-0 md:space-x-6">
                     {/* Icon */}
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
-                        <BuildingOffice2Icon className="h-10 w-10 text-gray-600" />
-                    </div>
+                        <img
+                            src={teamInformation?.TeamProfileSrc ? teamInformation?.TeamProfileSrc : ""}
+                            alt="User"
+                            className="mb-4 h-20 w-20 rounded-full"
+                        />
 
                     {/* Organizational Info */}
                     <div className="text-center md:text-left">
@@ -81,7 +83,7 @@ function Organization() {
                     onClose={() => { setIsModalOpen(false); }}
                     team={selectedTeam?.team} // Pass team info as a prop
                 />
-            : null}
+                : null}
         </>
     );
 }

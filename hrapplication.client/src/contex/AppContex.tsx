@@ -6,7 +6,7 @@ import { JwtPayload } from 'jwt-decode';
 import { HttpStatusCode } from 'axios';
 import { IContext } from '../types/Contex/IContex';
 import { ITeamInformation, ITeamWithUserPermission, TeamInputs } from '../types/Team/ITeam';
-import { GetTeamMembersShifts, GetTeamShifts, GetTeamsUsers } from '../api/TeamAPI';
+import { GetTeamMembersShifts, GetTeamProfilePicture, GetTeamShifts, GetTeamsUsers } from '../api/TeamAPI';
 import { GetJobPositionsBasedOnTeams } from '../api/JobPositionAPI';
 import { INotifications } from '../types/Notification/INotification';
 import { GetUserInvitation } from '../api/NotificationAPI';
@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }: IProvider) => {
         JobPositions: [],
         CalendarEvents: [],
         TeamShifts: [],
-        TeamMembersShifts: []
+        TeamMembersShifts: [],
+        TeamProfileSrc: ""
     });
     const [notifications, setNotifications] = useState<INotifications | null>(null);
     const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[] | null>([])
@@ -114,12 +115,13 @@ export const AuthProvider = ({ children }: IProvider) => {
         if (!selectedTeam) return;
 
         try {
-            const [usersResponse, jobPositionsResponse, calendarEventsResponse, teamShiftsResponse, teamMembersShifts] = await Promise.all([
+            const [usersResponse, jobPositionsResponse, calendarEventsResponse, teamShiftsResponse, teamMembersShifts, teamProfilePicture] = await Promise.all([
                 GetTeamsUsers(selectedTeam.team.teamId), 
                 GetJobPositionsBasedOnTeams(selectedTeam.team.teamId), 
                 GetCalendarEvents(selectedTeam.team.teamId),
                 GetTeamShifts(selectedTeam.team.teamId),
                 GetTeamMembersShifts(selectedTeam.team.teamId),
+                GetTeamProfilePicture(selectedTeam.team.teamId)
             ]);
 
             setTeamInformation({
@@ -127,7 +129,8 @@ export const AuthProvider = ({ children }: IProvider) => {
                 JobPositions: jobPositionsResponse?.data || [],
                 CalendarEvents: calendarEventsResponse?.data || [],
                 TeamShifts: teamShiftsResponse?.data || [],
-                TeamMembersShifts: teamMembersShifts?.data || []
+                TeamMembersShifts: teamMembersShifts?.data || [],
+                TeamProfileSrc: `data:${'application/octet-stream'};base64,${teamProfilePicture?.data.fileContents}`
             });
         } catch (error) {
             console.error("Error fetching team information:", error);
@@ -164,11 +167,13 @@ export const AuthProvider = ({ children }: IProvider) => {
             JobPositions: [],
             CalendarEvents: [],
             TeamShifts: [],
-            TeamMembersShifts: []
+            TeamMembersShifts: [],
+            TeamProfileSrc: ""
         });
         setNotifications(null);
         setEmployeeShiftsAssignment([]);
-        localStorage.clear();
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('selectedTeam');
         document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         setAuthToken(null); // Usuniêcie tokenu w API
     };

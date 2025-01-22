@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
-using HRApplication.Server.Application.ImgUpload.UploadUserImage;
-using HRApplication.Server.Application.ImgUpload.GetUserImage;
+using HRApplication.Server.Application.ImgUpload.UserImage.Commands.UploadUserImage;
+using HRApplication.Server.Application.ImgUpload.TeamImage.Commands.TeamUserImage;
+using HRApplication.Server.Application.ImgUpload.UserImage.Queries.GetUserImage;
+using HRApplication.Server.Application.ImgUpload.TeamImage.Queries;
 
 namespace HRApplication.Server.Presentation.Controllers.ImgUpload
 {
@@ -19,10 +21,38 @@ namespace HRApplication.Server.Presentation.Controllers.ImgUpload
         {
             _mediator = mediator;
         }
-        [HttpPost("UploadUserImage")]
-        public async Task<IActionResult> UploadUserImage([FromForm] UploadImageRequest request)
+        [HttpPost]
+        [Route("UploadTeamImage")]
+        public async Task<IActionResult> UploadUserImage([FromForm] UploadTeamImageRequest request)
         {
-            var command = new UploadImageRequest(
+            var command = new UploadTeamImageRequest(
+            request.image, request.teamId);
+
+            ErrorOr<Unit> response = await _mediator.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+            );
+        }
+        [HttpPost]
+        [Route("GetTeamImage")]
+        public async Task<IActionResult> GetTeamImage([FromBody] GetTeamImageRequest request)
+        {
+            var command = new GetTeamImageRequest(
+            request.teamId);
+
+            ErrorOr<FileResult> response = await _mediator.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+            );
+        }
+        [HttpPost("UploadUserImage")]
+        public async Task<IActionResult> UploadUserProfileImage([FromForm] UploadUserImageRequest request)
+        {
+            var command = new UploadUserImageRequest(
             request.Image);
 
             ErrorOr<Unit> response = await _mediator.Send(command);

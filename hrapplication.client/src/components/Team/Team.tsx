@@ -180,7 +180,7 @@ const Team: React.FC = () => {
                     isOpen={isModalOpen}
                     onClose={() => handleCloseModal()}
                     />
-            : null}
+                : null}
         </div>
     );
 };

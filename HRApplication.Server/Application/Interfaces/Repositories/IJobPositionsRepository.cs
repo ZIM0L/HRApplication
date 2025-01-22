@@ -13,5 +13,6 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         List<JobPosition> GetAllJobPositions();
         JobPosition? GetJobPositionByTeamIdAndTitle(Guid teamId, string title);
         void DeleteAllJobPositions(List<JobPosition> jobPosition);
+        void UpdateJobPosition(JobPosition jobPosition);
     }
 }

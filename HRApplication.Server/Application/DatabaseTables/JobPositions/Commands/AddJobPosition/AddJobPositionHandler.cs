@@ -4,7 +4,7 @@ using HRApplication.Server.Application.Utilities;
 using MediatR;
 
 
-namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
+namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.AddJobPosition
 {
     public class AddJobPositionHandler : IRequestHandler<JobPositionRequest, ErrorOr<JobPositionsResult>>
     {
@@ -64,7 +64,7 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands
                 return CustomErrorOr.CustomErrors.JobPosition.PositionAlreadyInTeam;
             }
 
-             _jobPositionsRepository.AddJobPosition(jobPosition);
+            _jobPositionsRepository.AddJobPosition(jobPosition);
 
             return jobPositionDTO;
         }

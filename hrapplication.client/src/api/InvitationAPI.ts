@@ -71,3 +71,28 @@ export const AcceptInvitation = async (data: AcceptInvitationInputs): Promise<Ax
         throw new Error("Unexpected error occurred while accepting invitation user to team.");
     }
 };
+export const DeclineInvitation = async (invitationId: string): Promise<AxiosResponse | null> => {
+    try {
+        // Wys³anie zaproszenia
+        const response = await mainAxiosInstance.delete(`api/Invitation/DeclineInvitation/${invitationId}`);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error declining invitation: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+
+            throw new Error(errorMessage);
+        }
+
+        throw new Error("Unexpected error occurred while declining invitation.");
+    }
+};
+

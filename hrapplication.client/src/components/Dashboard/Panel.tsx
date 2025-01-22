@@ -20,7 +20,6 @@ function Panel() {
  
     return (
         <div className="min-h-screen w-full overflow-y-auto bg-gray-100">
-           
             <div className="mt-10 flex p-4">
                 <div className="z-0 mr-6 flex w-1/4 flex-col space-y-4">
                     <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow">

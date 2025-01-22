@@ -4,9 +4,9 @@ export interface IJobPosition {
   title: string,
   description: string,
   isActive: boolean,
-  isRecruting: string,
+  isRecruiting: boolean,
   createdDate: string,
-  updatedDate: string
+  updatedDate?: string
 }
 export interface IAddJobPositionInputs {
     title: string,

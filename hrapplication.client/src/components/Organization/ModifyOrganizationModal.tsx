@@ -7,6 +7,7 @@ import { useAuth } from "../../contex/AppContex";
 import { useNavigate } from "react-router-dom";
 import Notification from "../Notification/Notification";
 import ConfirmChangeModal from "./ConfirmChangesModal";
+import UploadTeamPicture from "./UploadTeamPicture";
 
 interface ModifyOrganizationProp {
     isOpen: boolean;
@@ -25,6 +26,7 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
     const [changes, setChanges] = useState<{ [key: string]: string }>({});
     const { updateSelectedTeam, setTeamInformation } = useAuth()
     const navigate = useNavigate();
+    const [isTeamProfileOpen, setIsTeamProfileOpen] = useState(false);
 
     const onSubmit: SubmitHandler<TeamInputs> = async (data) => {
         try {
@@ -85,6 +87,7 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
 
         Object.keys(formData).forEach((key) => {
             if (formData[key as keyof TeamInputs] !== team?.[key as keyof ITeam]) {
+                //@ts-expect-error works
                 newChanges[key] = formData[key as keyof TeamInputs];
             }
         });
@@ -97,6 +100,7 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
 
         Object.keys(formData).forEach((key) => {
             if (formData[key as keyof TeamInputs] !== team?.[key as keyof ITeam]) {
+                //@ts-expect-error works
                 newChanges[key] = formData[key as keyof TeamInputs];
             }
         });
@@ -119,7 +123,14 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
         try {
             const result = await DeleteTeamPermanently(selectedTeam.team.teamId);
             if (result?.status == 200) {
-                setTeamInformation(null)
+                setTeamInformation({
+                    UserData: [],
+                    JobPositions: [],
+                    CalendarEvents: [],
+                    TeamShifts: [],
+                    TeamMembersShifts: [],
+                    TeamProfileSrc: ""
+                })
                 setShowNotification(true);
                 setNotificationMessage(["You will be redirected to organization tab"]);
                 setTimeout(() => {
@@ -295,14 +306,20 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
 
                 <div className="mt-4 flex justify-end space-x-3">
                     <button
-                        type="button"
-                        className="text-flex-nowrap rounded-md bg-cyan-blue px-4 text-white hover:bg-cyan-blue-hover"
-                        onClick={handleSaveChanges} 
+                        onClick={() => setIsTeamProfileOpen(true)}
+                        className="rounded border-2 border-white px-2 py-1 transition hover:border-gray-600"
                     >
-                        Save Changes
+                       Upload logo
                     </button>
                     <button
-                        className="rounded-md bg-gray-400 px-4 py-2 text-white hover:bg-gray-600"
+                        type="button"
+                        className="text-flex-nowrap rounded-md bg-cyan-blue px-2 py-1 text-white transition hover:bg-cyan-blue-hover"
+                        onClick={handleSaveChanges} 
+                    >
+                        Save changes
+                    </button>
+                    <button
+                        className="rounded-md bg-gray-400 px-2 py-1 text-white transition hover:bg-gray-600"
                         onClick={handleClose}
                     >
                         Cancel
@@ -310,17 +327,21 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                 </div>
                 <div className="mt-2 w-full text-right">
                     <button
-                        className="rounded-lg bg-light-red px-2 py-1 text-sm text-white hover:bg-red-600"
+                        className="rounded-lg bg-light-red px-2 py-1 text-sm text-white transition hover:bg-red-600"
                         type="button"
                         onClick={() => setIsDeleteModalOpen(true)}
                     >
-                        Disband Team
+                        Disband team
                     </button>
                 </div>
             </div>
 
             {selectedTeam?.roleName == "Administrator" ? 
-            <>
+                <>
+                <UploadTeamPicture
+                    isOpen={isTeamProfileOpen}
+                    onClose={() => setIsTeamProfileOpen(false)}
+                />
                 <DeleteTeamModal
                     isOpen={isDeleteModalOpen}
                     onClose={() => setIsDeleteModalOpen(false)}

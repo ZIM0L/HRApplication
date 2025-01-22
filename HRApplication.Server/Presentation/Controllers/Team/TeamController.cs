@@ -28,7 +28,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         }
 
         [HttpPost]
-        [Route("/api/[controller]/AddNewTeam")]
+        [Route("AddNewTeam")]
         public async Task<IActionResult> AddNewTeam([FromBody] TeamAddRequest request)
         {
             var command = new TeamAddRequest(request.name, request.country, request.industry, request.email, request.city,request.zipCode, request.url, request.address, request.phoneNumber);
@@ -41,7 +41,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 );
         }
         [HttpGet]
-        [Route("/api/[controller]/GetUsersTeams")]
+        [Route("GetUsersTeams")]
         public async Task<IActionResult> GetTeams()
         {
             var command = new GetUsersTeamsRequest();
@@ -54,7 +54,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 );
         }
         [HttpPost]
-        [Route("/api/[controller]/GetTeamsUsers")]
+        [Route("GetTeamsUsers")]
         public async Task<IActionResult> GetTeamsUsers([FromBody] GetTeamsUsersRequest request)
         {
             var command = new GetTeamsUsersRequest(request.teamId);
@@ -67,7 +67,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 );
         }
         [HttpPost]
-        [Route("/api/[controller]/GetTeam")]
+        [Route("GetTeam")]
         public async Task<IActionResult> GetTeam([FromBody] GetTeamRequest request)
         {
             var command = new GetTeamRequest(request.teamId);
@@ -80,7 +80,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 );
         }   
         [HttpPut]
-        [Route("/api/[controller]/UpdateTeam/{teamId}")]
+        [Route("UpdateTeam/{teamId}")]
         public async Task<IActionResult> GetTeam([FromBody] UpdateTeamRequest request, string teamId)
         {
             var command = new UpdateTeamRequest(
@@ -103,7 +103,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
                 );
         }  
         [HttpDelete]
-        [Route("/api/[controller]/DisbandTeam/{teamId}")]
+        [Route("DisbandTeam/{teamId}")]
         public async Task<IActionResult> DisbandTeam(string teamId)
         {
             var command = new DisbandTeamRequest(teamId);

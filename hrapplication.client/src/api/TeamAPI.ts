@@ -232,3 +232,47 @@ export const GetTeamMembersShifts = async (teamId: string): Promise<AxiosRespons
         throw new Error("Unexpected error occurred while creating team member shifts.");
     }
 };
+export const GetTeamProfilePicture = async (teamId: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post("/api/Images/GetTeamImage", {
+            teamId : teamId
+        });
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error getting team profile picture: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while getting team profile picture.");
+    }
+};
+export const UploadTeamProfilePicture = async (data: FormData): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post("/api/Images/UploadTeamImage", data);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error uploading team profile picture: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while uploading team profile picture.");
+    }
+};

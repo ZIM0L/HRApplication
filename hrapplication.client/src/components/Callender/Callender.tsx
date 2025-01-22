@@ -154,6 +154,7 @@ function CalendarApp() {
 
     const handleAddEvent = (event: CalendarEventExternal) => { 
         setInitEvents((prevEvents) => [...prevEvents, event]);
+        // ts-error
         setTeamInformation((prev: ITeamInformation) => {
             return {
                 ...prev,

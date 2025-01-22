@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { mainAxiosInstance } from "./Axios";
-import { IAddJobPositionInputs } from "../types/JobPosition/IJobPosition";
+import { IAddJobPositionInputs, IJobPosition } from "../types/JobPosition/IJobPosition";
 import { ExtractErrorsFromAPI } from "../utils/functions/ExtractErrorsFromAPI";
 
 export const GetJobPositionsBasedOnTeams = async (teamId: string): Promise<AxiosResponse | null> => {
@@ -31,7 +31,7 @@ export const AddJobPosition = async (
     data: IAddJobPositionInputs
 ): Promise<AxiosResponse> => {
     try {
-        const response = await mainAxiosInstance.post('/api/JobPosition/addJobPosition', {
+        const response = await mainAxiosInstance.post('/api/JobPosition/AddJobPosition', {
             teamId: id,
             title: data.title,
             description: data.description,
@@ -54,5 +54,27 @@ export const AddJobPosition = async (
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred while adding the job position.");
+    }
+};
+export const UpdateJobPosition = async (data: IJobPosition): Promise<AxiosResponse> => {
+    try {
+        const response = await mainAxiosInstance.post('/api/JobPosition/UpdateJobPosition', data);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error editing job position: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+
+            if (extractedErrors.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while editing job position.");
     }
 };

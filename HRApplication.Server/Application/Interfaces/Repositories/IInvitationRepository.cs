@@ -9,7 +9,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         Invitation? GetInvitationById(Guid invitationId);
         bool CheckIfAnyInvitationForUser(Guid userId);
         Invitation? IsInvitationAlreadyCreated(Invitation invitation);
-        List<InvitationResult> GetAllUserInvitations(Guid userId);
+        List<InvitationResult>? GetAllUserInvitations(Guid userId);
         void DeleteUserInvitation(Invitation invitation);
     }
 }

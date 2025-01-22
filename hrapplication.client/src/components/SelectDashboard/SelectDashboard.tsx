@@ -93,19 +93,18 @@ const SelectDashboard = () => {
                     </div>
             </div>
             <p className="border-b-2 mb-8 p-2 text-sm text-gray-500">Logged as {decodedToken?.email}</p>
-            <div className="mx-auto w-3/4 rounded-lg bg-white shadow-md">
+            <div className="mx-auto max-h-[75%] w-3/4 overflow-y-auto rounded-lg bg-white shadow-md">
                 <h1 className="px-6 py-1 text-2xl font-bold">Welcome {decodedToken?.given_name} !</h1>
                 <p className="border-b px-6 py-1 text-gray-500">
                     Select the system you want to access.
                 </p>
-                <div className="h-[650px] overflow-y-auto">
                     {teams?.length == 0 ?
                         <div className=" px-6 py-5 text-center">You are not part of any team yet. Please wait for an invitation or create your own team to get started.</div>
                         :
-                        teams?.map((org, index) => (
+                        teams?.map((org, key) => (
                         <>
                         <div
-                            key={index}
+                            key={key}
                             className="flex flex-col items-center justify-between border-b px-6 py-2 hover:bg-gray-50 md:flex-row"
                         >
                             <div className="flex items-center gap-4">
@@ -135,11 +134,10 @@ const SelectDashboard = () => {
                                     <ArrowTopRightOnSquareIcon className="h-5 w-5 transform transition-all duration-300 hover:text-cyan-blue-hover hover:scale-110" />
                                 </button>
                             </div>
+
                         </div>
                         </>
                     ))}
-
-                </div>
                 <CreateNewTeamModal
                     isOpen={isCreateNewTeamModalOpen}
                     onClose={() => {

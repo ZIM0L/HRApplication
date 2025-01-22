@@ -27,7 +27,7 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
         }
 
         [HttpPost]
-        [Route("/api/[controller]/SendInvitation")]
+        [Route("SendInvitation")]
         public async Task<IActionResult> AddJobPosition([FromBody] SendInvitationRequest request)
         {
             var command = new SendInvitationRequest(
@@ -44,7 +44,7 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             errors => Problem(errors));
         }
         [HttpPost]
-        [Route("/api/[controller]/SeachForUser")]
+        [Route("SeachForUser")]
         public async Task<IActionResult> SeachForUser([FromBody] GetUserBySearchRequest request)
         {
             var command = new GetUserBySearchRequest(
@@ -59,7 +59,7 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             errors => Problem(errors));
         }
         [HttpGet]
-        [Route("/api/[controller]/GetUserInvitation")]
+        [Route("GetUserInvitation")]
         public async Task<IActionResult> GetUserInvitation()
         {
             var command = new GetUserInvitationsRequest();
@@ -71,7 +71,7 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             errors => Problem(errors));
         }  
         [HttpGet]
-        [Route("/api/[controller]/CheckIfAnyInvitationForUser")]
+        [Route("CheckIfAnyInvitationForUser")]
         public async Task<IActionResult> CheckIfAnyInvitationForUser()
         {
             var command = new CheckIfAnyInvitationForUserRequest();
@@ -83,7 +83,7 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             errors => Problem(errors));
         }
         [HttpPost]
-        [Route("/api/[controller]/AcceptInvitation")]
+        [Route("AcceptInvitation")]
         public async Task<IActionResult> AcceptInvitation([FromBody] AcceptInvitationRequest request)
         {
             var command = new AcceptInvitationRequest(request.invitaitonId);
@@ -95,10 +95,10 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
             errors => Problem(errors));
         }  
         [HttpDelete]
-        [Route("/api/[controller]/DeclineInvitation")]
-        public async Task<IActionResult> DeclineInvitation([FromBody] DeclineInvitationRequest request)
+        [Route("DeclineInvitation/{invitationId}")]
+        public async Task<IActionResult> DeclineInvitation(string invitationId)
         {
-            var command = new DeclineInvitationRequest(request.invitation);
+            var command = new DeclineInvitationRequest(invitationId);
 
             ErrorOr<Unit> response = await _mediator.Send(command);
 

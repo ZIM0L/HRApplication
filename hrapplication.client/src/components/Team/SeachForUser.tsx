@@ -15,7 +15,7 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
     const [notificationMessages, setNotificationMessages] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<SearchForUserInputs | null>(null); // Wybrany u�ytkownik
+    const [selectedUser, setSelectedUser] = useState<SearchForUserInputs | null>(null); 
 
     const handleUserSearch = async () => {
         setIsLoadingUsers(true);
@@ -46,15 +46,15 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
     };
 
     const handleSelectUser = (user: SearchForUserInputs) => {
-        setSelectedUser(user); // Ustawienie wybranego u�ytkownika
-        onSelectUser(user); // Przekazanie u�ytkownika do nadrz�dnego komponentu
-        setUserSuggestions([]); // Wyczy�� sugestie
+        setSelectedUser(user); 
+        onSelectUser(user); 
+        setUserSuggestions([]); 
     };
 
     const handleResetSelection = () => {
-        setSelectedUser(null); // Wyczyszczenie wybranego u�ytkownika
-        setSearchQuery(''); // Reset pola wyszukiwania
-        setEmailQuery(''); // Reset pola e-mail
+        setSelectedUser(null); 
+        setSearchQuery('');
+        setEmailQuery(''); 
     };
 
     return (

@@ -60,7 +60,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
                 return resultAddTeamMemberCommand.Errors;
             }
 
-            var resultDeleteInvitationCommand = await _mediator.Send(new DeclineInvitationRequest(invitation));
+            var resultDeleteInvitationCommand = await _mediator.Send(new DeclineInvitationRequest(invitation.InvitationId.ToString()));
             
             if (resultDeleteInvitationCommand.IsError)
             {
