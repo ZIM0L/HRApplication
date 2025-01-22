@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="ScheduleId" id="01E3C305-825F-B577-E711-9E8E1792730F">
+<Attribute name="Team_Members_Requests" id="01E3C305-825F-B577-E711-9E8E1792730F">
 <createdBy>sylzy</createdBy>
 <createdTime>2024-10-28 11:48:24 UTC</createdTime>
 <ownerDesignName>Database Model</ownerDesignName>

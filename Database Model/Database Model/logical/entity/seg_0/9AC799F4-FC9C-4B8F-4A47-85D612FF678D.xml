@@ -105,6 +105,47 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="RefreshToken" id="3F551161-E902-54EF-66BE-E82935A309F5">
+<createdBy>sylzy</createdBy>
+<createdTime>2025-01-17 17:56:54 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="RefreshTokenExpiryTime" id="E507FA40-267A-A311-CDED-7F199D325DE5">
+<createdBy>sylzy</createdBy>
+<createdTime>2025-01-17 17:56:57 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="GoogleRefreshTokenExpiryTime" id="8AB2E9F5-E60E-CCDA-9019-9D172BC3C0E2">
+<createdBy>sylzy</createdBy>
+<createdTime>2025-01-17 17:57:04 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="IsGoogleLoggedIn" id="8BA456EF-2000-4C0F-0917-85C9D4456E17">
+<createdBy>sylzy</createdBy>
+<createdTime>2025-01-17 17:57:12 UTC</createdTime>
+<ownerDesignName>Database Model</ownerDesignName>
+<engineerTo>
+<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="78905A2A-E853-5F02-16D8-B414121649BC" name="Users PK">
