@@ -19,7 +19,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCre
     const [isCountryDropdownVisible, setIsCountryDropdownVisible] = useState(false);
     const [isIndustryDropdownVisible, setIsIndustryDropdownVisible] = useState(false);
     const [showResultNotification, setShowResultNotification] = useState(false);
-    const [isError, seIsError] = useState(false);
+    const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
     // Refs to detect clicks outside the dropdown
@@ -48,14 +48,14 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCre
             if (result?.status == 200) {
                 setErrorMessage(["Team has been Created"]);
                 setShowResultNotification(true);
-                seIsError(false);
+                setIsError(false);
                 setTimeout(() => {
                     reset();
                     onCreate();
                 }, 3000);
             }
         } catch (error) {
-            seIsError(true);
+            setIsError(true);
             setShowResultNotification(true);
             if (error instanceof Error) {
                 setErrorMessage(error.message.split(" | "));

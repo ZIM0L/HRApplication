@@ -129,7 +129,8 @@ const ModifyOrganizationModal = ({ isOpen, onClose, team }: ModifyOrganizationPr
                     CalendarEvents: [],
                     TeamShifts: [],
                     TeamMembersShifts: [],
-                    TeamProfileSrc: ""
+                    TeamProfileSrc: "",
+                    UsersRequests: []
                 })
                 setShowNotification(true);
                 setNotificationMessage(["You will be redirected to organization tab"]);

@@ -38,7 +38,6 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
             }
             var userRequest = new TeamMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), teamId, request.requestContent, request.title);
 
-
             var isUserAdministrator = userTeamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
             if (isUserAdministrator == null)
             {
@@ -50,7 +49,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
                     userRequest.Status);
             }
             //temp
-            return CustomErrorOr.CustomErrors.Team.TeamAlreadyExistsInUserCollection;
+            return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;
         }
     }
 }

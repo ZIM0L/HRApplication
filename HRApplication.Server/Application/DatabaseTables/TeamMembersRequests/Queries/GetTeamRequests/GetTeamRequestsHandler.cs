@@ -36,6 +36,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
             }
             var isUserAdministrator = userTeamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
 
+            // if admin
             if (isUserAdministrator != null)
             {
                 return _teamRequestsRepository?.GetTeamMemberRequestsByTeamId(teamId)?
@@ -44,8 +45,8 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
                         request.Title,
                         request.RequestContent,
                         request.Status)).ToList();
-            }
-            var userRequests = _teamRequestsRepository.GetTeamMemberRequestsByUserId(Guid.Parse(BearerCheckerResult.Value.Payload.Sub));
+            } 
+            var userRequests = _teamRequestsRepository.GetTeamMemberRequestsByUserIdAndTeamId(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(request.teamId));
             return userRequests?.Select(request => new TeamRequestsResult(request.TeamMemberRequestId, request.Title, request.RequestContent, request.Status)).ToList();
         }
     }

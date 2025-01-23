@@ -1,5 +1,6 @@
 import { ICalendarEvent } from "../Calendar/ICalendar";
 import { IJobPosition } from "../JobPosition/IJobPosition";
+import { IRequest } from "../Request/IRequest";
 import { Shift, TeamMemberShift } from "../Shift/Shift";
 import { IEmployeeData } from "../User/IUser";
 
@@ -40,5 +41,6 @@ export interface ITeamInformation {
     CalendarEvents: ICalendarEvent[]
     TeamShifts: Shift[]
     TeamMembersShifts: TeamMemberShift[]
-    TeamProfileSrc: string;
+    TeamProfileSrc: string,
+    UsersRequests: IRequest[]
 }

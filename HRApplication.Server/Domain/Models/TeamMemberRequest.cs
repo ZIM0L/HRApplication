@@ -14,7 +14,7 @@
         public Guid UserId { get; set; }
         public Guid TeamId { get; set; }
         public string Title { get; set; }
-        public string Status { get; set; } = "Pending";
+        public string Status { get; set; } = "pending";
         public string RequestContent { get; set; } = string.Empty;
         
     }

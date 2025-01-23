@@ -1,7 +1,6 @@
 ﻿using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Infrastructure.DBContex;
-using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Infrastructure.Persistance
 {
@@ -15,32 +14,40 @@ namespace HRApplication.Server.Infrastructure.Persistance
 
         public void AddTeamMemberRequest(TeamMemberRequest teamMemberRequest)
         {
-            throw new NotImplementedException();
+            _dbContex.Team_Members_Requests.Add(teamMemberRequest);
+            _dbContex.SaveChanges();
         }
 
         public void DeleteTeamMemberRequest(TeamMemberRequest teamMemberRequest)
         {
-            throw new NotImplementedException();
+            _dbContex.Team_Members_Requests.Remove(teamMemberRequest);
+            _dbContex.SaveChanges();
         }
 
         public TeamMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId)
         {
-            throw new NotImplementedException();
+            return _dbContex.Team_Members_Requests.SingleOrDefault(x => x.TeamMemberRequestId == teamMemberRequestId);
         }
 
         public List<TeamMemberRequest> GetTeamMemberRequestsByTeamId(Guid teamId)
         {
-            return _dbContex.Team_Memebers_Requests.Where(x => x.TeamId == teamId).ToList();
+            return _dbContex.Team_Members_Requests.Where(x => x.TeamId == teamId).ToList();
         }
 
         public List<TeamMemberRequest>? GetTeamMemberRequestsByUserId(Guid userId)
         {
-            return _dbContex.Team_Memebers_Requests.Where(x => x.UserId == userId).ToList();
+            return _dbContex.Team_Members_Requests.Where(x => x.UserId == userId).ToList();
+        }
+
+        public List<TeamMemberRequest>? GetTeamMemberRequestsByUserIdAndTeamId(Guid userId, Guid teamId)
+        {
+            return _dbContex.Team_Members_Requests.Where(x => x.UserId == userId && x.TeamId == teamId).ToList();
         }
 
         public void UpdateTeamMemberRequest(TeamMemberRequest teamMemberRequest)
         {
-            throw new NotImplementedException();
+            _dbContex.Team_Members_Requests.Update(teamMemberRequest);
+            _dbContex.SaveChanges();
         }
     }
 }

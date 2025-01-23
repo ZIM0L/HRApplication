@@ -14,7 +14,7 @@ import JobPositions from './components/JobPositions/JobPositions';
 import Callender from './components/Callender/Callender';
 import SessionExpired from './components/ErrorComponents/SessionExpired';
 import Shifts from './components/Shift/Shifts';
-import Request from './components/Request/Request';
+import RequestDashboard from './components/Request/RequestDashboard';
 
 const App = () => {
     return (
@@ -39,7 +39,7 @@ const App = () => {
                                 <Route path="team" element={<Team />} />
                             <Route path="job_positions" element={<JobPositions />} />
                             <Route path="shifts" element={<Shifts />} />
-                            <Route path="request" element={<Request />} />
+                            <Route path="request" element={<RequestDashboard />} />
                             </Route>
                     </Route>
                 </Routes>

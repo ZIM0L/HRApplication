@@ -3,6 +3,7 @@ import { mainAxiosInstance } from "./Axios";
 import { TeamInputs } from "../types/Team/ITeam";
 import { ExtractErrorsFromAPI } from "../utils/functions/ExtractErrorsFromAPI";
 import { ShiftInputs, TeamMemberShiftsToSend } from "../types/Shift/Shift";
+import { IRequestInputs } from "../types/Request/IRequest";
 
 export const GetUsersTeams = async (): Promise<AxiosResponse | null> => {
     try {
@@ -276,3 +277,51 @@ export const UploadTeamProfilePicture = async (data: FormData): Promise<AxiosRes
         throw new Error("Unexpected error occurred while uploading team profile picture.");
     }
 };
+export const GetUsersRequests = async (teamId: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post("api/TeamMemberRequest/GetTeamMemberRequests", {
+            teamId: teamId
+        });
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error uploading fetching users requests: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while fetching users requests.");
+    }
+}
+export const AddUserRequest = async ( RequestInputs : IRequestInputs ,teamId: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post("api/TeamMemberRequest/AddTeamMemberRequest", {
+            ...RequestInputs,
+            teamId: teamId
+        });
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error uploading adding new user request: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while adding new user request.");
+    }
+}
+

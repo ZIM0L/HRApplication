@@ -66,7 +66,6 @@ const Shifts: React.FC = () => {
                         <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
                             <div className="mb-4 flex items-center justify-between">
                                 <h2 className="text-xl font-semibold">Information</h2>
-                                <button className="text-gray-500 hover:text-black">&times;</button>
                             </div>
                             <div>
                                 <p>Add Shift: Allows you to add new shifts to the system.</p>
