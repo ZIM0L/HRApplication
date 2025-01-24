@@ -13,7 +13,7 @@ export interface IEmployeeData {
     email: string;
     jobPosition: string;
     permission: string;
-    leftAt: Date | null;
+    leftAt?: Date ;
     joinedAt: string;
     isActive: boolean;
     phoneNumber: string;

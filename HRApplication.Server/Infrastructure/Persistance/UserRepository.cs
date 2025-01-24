@@ -41,6 +41,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Users.SingleOrDefault(x => x.RefreshToken == refreshToken);
         }
 
+        public List<User>? GetUsersAllUsers()
+        {
+            return _dbContex.Users.Where(x => x != null).ToList();
+        }
+
         public List<User>? GetUsersByIds(List<Guid> id)
         {
             return _dbContex.Users.Where(x => id.Contains(x.UserId)).ToList();

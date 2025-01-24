@@ -109,7 +109,7 @@ const SelectDashboard = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <img
-                                    src="https://via.placeholder.com/40"
+                                    src=""
                                     alt="Zoho Logo"
                                     className="h-10 w-10"
                                 />

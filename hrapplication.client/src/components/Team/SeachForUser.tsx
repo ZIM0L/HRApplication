@@ -20,12 +20,7 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
     const handleUserSearch = async () => {
         setIsLoadingUsers(true);
         try {
-            if (searchQuery.length === 0) {
-                setIsError(true);
-                setNotificationMessages(["Full name cannot be empty"]);
-                setShowNotification(true);
-                return null;
-            }
+          
 
             const result = await SeachForUser({ fullName: searchQuery, email: emailQuery });
             if (result?.status === 200) {
@@ -80,7 +75,6 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
-                                setUserSuggestions([]);
                             }}
                             placeholder="Enter first and last name"
                             className="w-full rounded-md border px-4 py-2"

@@ -16,6 +16,8 @@
         public string Title { get; set; }
         public string Status { get; set; } = "pending";
         public string RequestContent { get; set; } = string.Empty;
+        public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? AlteredAt { get; set; }
         
     }
 }

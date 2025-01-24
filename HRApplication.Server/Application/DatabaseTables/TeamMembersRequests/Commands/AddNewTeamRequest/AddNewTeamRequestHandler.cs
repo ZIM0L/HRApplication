@@ -2,10 +2,9 @@
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
-using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
-namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands
+namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands.AddNewTeamRequest
 {
 
     public class AddNewTeamRequestHandler : IRequestHandler<AddNewTeamRequestRequest, ErrorOr<TeamRequestsResult>>
@@ -13,11 +12,13 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ITeamMemberRepository _teamMemberRepository;
         private readonly ITeamMemberRequestsRepository _teamRequestsRepository;
-        public AddNewTeamRequestHandler(IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository, ITeamMemberRequestsRepository teamRequestsRepository)
+        private readonly IUserRepository _userRepository;
+        public AddNewTeamRequestHandler(IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository, ITeamMemberRequestsRepository teamRequestsRepository, IUserRepository userRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _teamMemberRepository = teamMemberRepository;
             _teamRequestsRepository = teamRequestsRepository;
+            _userRepository = userRepository;
         }
         public async Task<ErrorOr<TeamRequestsResult>> Handle(AddNewTeamRequestRequest request, CancellationToken cancellationToken)
         {
@@ -38,6 +39,11 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
             }
             var userRequest = new TeamMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), teamId, request.requestContent, request.title);
 
+            if (_userRepository.GetUserById(Guid.Parse(BearerCheckerResult.Value.Payload.Sub)) is not User user)
+            {
+                return CustomErrorOr.CustomErrors.User.UserNotFound;
+            }
+
             var isUserAdministrator = userTeamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
             if (isUserAdministrator == null)
             {
@@ -46,7 +52,12 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
                     userRequest.TeamMemberRequestId,
                     userRequest.Title,
                     userRequest.RequestContent,
-                    userRequest.Status);
+                    userRequest.Status,
+                    user.Name,
+                    user.Surname,
+                    user.Email,
+                    userRequest.SubmittedAt,
+                    userRequest.AlteredAt);
             }
             //temp
             return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;

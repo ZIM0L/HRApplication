@@ -2,6 +2,7 @@
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using MediatR;
+using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Queries.GetTeamRequests
 {
@@ -10,12 +11,16 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ITeamMemberRepository _teamMemberRepository;
         private readonly ITeamMemberRequestsRepository _teamRequestsRepository;
-        public GetTeamRequestsHandler(IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository, ITeamMemberRequestsRepository teamRequestsRepository)
+        private readonly IUserRepository _userRepository;
+
+        public GetTeamRequestsHandler(IHttpContextAccessor httpContextAccessor, ITeamMemberRepository teamMemberRepository, ITeamMemberRequestsRepository teamRequestsRepository, IUserRepository userRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _teamMemberRepository = teamMemberRepository;
             _teamRequestsRepository = teamRequestsRepository;
+            _userRepository = userRepository;
         }
+
         public async Task<ErrorOr<List<TeamRequestsResult>?>> Handle(GetTeamRequestsRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
@@ -35,19 +40,63 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
                 return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
             var isUserAdministrator = userTeamMembers.FirstOrDefault(x => x.RoleName == "Administrator");
-
+            var teamUsersIds = _teamMemberRepository.GetTeamMembersByTeamIdFromCollection(teamId).Select(user => user.UserId).Distinct();
             // if admin
             if (isUserAdministrator != null)
             {
-                return _teamRequestsRepository?.GetTeamMemberRequestsByTeamId(teamId)?
-                    .Select(request => new TeamRequestsResult(
-                        request.TeamMemberRequestId,
-                        request.Title,
-                        request.RequestContent,
-                        request.Status)).ToList();
-            } 
-            var userRequests = _teamRequestsRepository.GetTeamMemberRequestsByUserIdAndTeamId(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(request.teamId));
-            return userRequests?.Select(request => new TeamRequestsResult(request.TeamMemberRequestId, request.Title, request.RequestContent, request.Status)).ToList();
+                return _teamRequestsRepository?.GetTeamMemberRequestsByTeamId(teamId)!
+                    .Join(teamUsersIds,
+                    userRequest => userRequest.UserId,
+                    UserTeamId => UserTeamId,
+                    (userRequest, UserTeamId) =>
+                    new
+                    {
+                        userRequest.UserId,
+                        userRequest.TeamMemberRequestId,
+                        userRequest.Title,
+                        userRequest.RequestContent,
+                        userRequest.Status,
+                        userRequest.AlteredAt,
+                        userRequest.SubmittedAt
+                    }
+                    )
+                    .Join(_userRepository.GetUsersAllUsers()!,
+                        UsersRequests => UsersRequests.UserId,
+                        AllUsers => AllUsers.UserId,
+                        (UsersRequests, AllUsers) =>
+                        new TeamRequestsResult
+                        (
+                             UsersRequests.TeamMemberRequestId,
+                             UsersRequests.Title,
+                             UsersRequests.RequestContent,
+                             UsersRequests.Status,
+                             AllUsers.Name,
+                             AllUsers.Surname,
+                             AllUsers.Email,
+                             UsersRequests.SubmittedAt,
+                             UsersRequests.AlteredAt
+                        )
+                    ).ToList();
+            }
+
+            var userRequests = _teamRequestsRepository!.GetTeamMemberRequestsByUserIdAndTeamId(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), Guid.Parse(request.teamId));
+            return userRequests!.Join(_userRepository.GetUsersAllUsers()!,
+                       UsersRequests => UsersRequests.UserId,
+                       AllUsers => AllUsers.UserId,
+                       (UsersRequests, AllUsers) =>
+                       new TeamRequestsResult
+                       (
+                            UsersRequests.TeamMemberRequestId,
+                            UsersRequests.Title,
+                            UsersRequests.RequestContent,
+                            UsersRequests.Status,
+                            AllUsers.Name,
+                            AllUsers.Surname,
+                            AllUsers.Email,
+                            UsersRequests.SubmittedAt,
+                            UsersRequests.AlteredAt
+                       )
+                   ).ToList();
         }
     }
 }

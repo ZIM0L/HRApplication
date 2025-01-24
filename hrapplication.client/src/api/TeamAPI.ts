@@ -285,7 +285,7 @@ export const GetUsersRequests = async (teamId: string): Promise<AxiosResponse | 
         return response;
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Error uploading fetching users requests: ", error);
+            console.error("Error fetching users requests: ", error);
 
             const extractedErrors = ExtractErrorsFromAPI(error);
 
@@ -309,7 +309,7 @@ export const AddUserRequest = async ( RequestInputs : IRequestInputs ,teamId: st
         return response;
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Error uploading adding new user request: ", error);
+            console.error("Error adding new user request: ", error);
 
             const extractedErrors = ExtractErrorsFromAPI(error);
 
@@ -324,4 +324,28 @@ export const AddUserRequest = async ( RequestInputs : IRequestInputs ,teamId: st
         throw new Error("Unexpected error occurred while adding new user request.");
     }
 }
+export const DeleteUserRequest = async (teamMemberRequestId: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.delete(`api/TeamMemberRequest/DeleteTeamMemberRequest/${teamMemberRequestId}`);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error deleting user request: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while deleting user request.");
+    }
+}
+
+
+
 

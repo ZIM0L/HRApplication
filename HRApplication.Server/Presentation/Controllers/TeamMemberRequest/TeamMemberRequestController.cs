@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
-using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands;
 using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests;
 using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Queries.GetTeamRequests;
 using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands.AddNewTeamRequest;
+using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands.DeleteTeamRequest;
 
 namespace HRApplication.Server.Presentation.Controllers.TeamMemberRequest
 {
@@ -44,6 +45,19 @@ namespace HRApplication.Server.Presentation.Controllers.TeamMemberRequest
             var command = new AddNewTeamRequestRequest(request.teamId,request.title,request.requestContent);
 
             ErrorOr<TeamRequestsResult> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpDelete]
+        [Route("DeleteTeamMemberRequest/{teammemberrequestid}")]
+        public async Task<IActionResult> DeleteTeamMemberRequest(string teammemberrequestid)
+        {
+            var command = new DeleteTeamRequestRequest(teammemberrequestid);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
 
             return response.Match(
                 response => Ok(response),
