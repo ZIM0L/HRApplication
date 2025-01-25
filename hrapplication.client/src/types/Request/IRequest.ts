@@ -7,7 +7,8 @@ export interface IRequest {
     surname: string,
     email: string,
     submittedAt: Date,
-    alteredAt? : Date
+    alteredAt?: Date,
+    answerContent?: string
 }
 export interface IRequestInputs {
     title: string;

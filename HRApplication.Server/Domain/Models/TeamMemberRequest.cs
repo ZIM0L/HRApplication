@@ -18,6 +18,7 @@
         public string RequestContent { get; set; } = string.Empty;
         public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
         public DateTime? AlteredAt { get; set; }
+        public string? AnswerContent { get; set; }
         
     }
 }

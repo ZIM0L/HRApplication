@@ -2,7 +2,6 @@
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using MediatR;
-using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Queries.GetTeamRequests
 {
@@ -57,7 +56,8 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
                         userRequest.RequestContent,
                         userRequest.Status,
                         userRequest.AlteredAt,
-                        userRequest.SubmittedAt
+                        userRequest.SubmittedAt,
+                        userRequest.AnswerContent
                     }
                     )
                     .Join(_userRepository.GetUsersAllUsers()!,
@@ -74,7 +74,8 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
                              AllUsers.Surname,
                              AllUsers.Email,
                              UsersRequests.SubmittedAt,
-                             UsersRequests.AlteredAt
+                             UsersRequests.AlteredAt,
+                             UsersRequests.AnswerContent
                         )
                     ).ToList();
             }
@@ -94,7 +95,8 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Qu
                             AllUsers.Surname,
                             AllUsers.Email,
                             UsersRequests.SubmittedAt,
-                            UsersRequests.AlteredAt
+                            UsersRequests.AlteredAt, 
+                            UsersRequests.AnswerContent
                        )
                    ).ToList();
         }

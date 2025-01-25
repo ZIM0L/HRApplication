@@ -366,10 +366,11 @@ export const DeleteUserRequest = async (teamMemberRequestId: string): Promise<Ax
         throw new Error("Unexpected error occurred while deleting user request.");
     }
 }
-export const ResolveUserRequest = async (data: string): Promise<AxiosResponse | null> => {
+export const ResolveUserRequest = async (teammemberrequestid: string, answerContent? :string): Promise<AxiosResponse | null> => {
     try {
         const response = await mainAxiosInstance.post(`api/TeamMemberRequest/ResolveTeamMemberRequest`, {
-            teammemberrequestid: data
+            teammemberrequestid: teammemberrequestid,
+            ...(answerContent && { answerContent: answerContent })
         });
         return response;
     } catch (error) {

@@ -69,7 +69,7 @@ namespace HRApplication.Server.Presentation.Controllers.TeamMemberRequest
         [Route("ResolveTeamMemberRequest")]
         public async Task<IActionResult> ResolveTeamMemberRequest(ResolveTeamRequestRequest request)
         {
-            var command = new ResolveTeamRequestRequest(request.teamMemberRequestId);
+            var command = new ResolveTeamRequestRequest(request.teamMemberRequestId, request.answerContent);
 
             ErrorOr<Unit> response = await _mediatR.Send(command);
 

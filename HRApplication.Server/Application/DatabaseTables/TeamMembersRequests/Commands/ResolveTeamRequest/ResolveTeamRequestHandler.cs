@@ -42,8 +42,12 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
             {
                 return isAdminResult.Errors;
             }
-
+            if(teamMemberRequest.Status == "resolved")
+            {
+                return CustomErrorOr.CustomErrors.TeamRequest.CannotResolve;
+            }
             teamMemberRequest.Status = "resolved";
+            teamMemberRequest.AnswerContent = request?.answerContent;
             _teamRequestsRepository.UpdateTeamMemberRequest(teamMemberRequest);
 
             return Unit.Value;

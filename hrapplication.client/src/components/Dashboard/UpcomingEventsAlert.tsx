@@ -2,115 +2,11 @@
 import { useAuth } from "../../contex/AppContex";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { ICalendarEvent } from "../../types/Calendar/ICalendar";
 
 const UpcomingEventsAlert = () => {
     const { teamInformation } = useAuth();
 
-    const fakeCalendarEvents: ICalendarEvent[] = [
-        {
-            calendareventid: "1",
-            title: "Team Meeting",
-            description: "Monthly team sync to discuss project progress and goals.",
-            category: "Meeting",
-            startDate: "2025-02-01T09:00:00",
-            endDate: "2025-02-01T10:00:00",
-            permission: "Public",
-            location: "Conference Room A",
-        },
-        {
-            calendareventid: "2",
-            title: "Quarterly Review",
-            description: "Review of quarterly performance and business strategy.",
-            category: "Review",
-            startDate: "2025-02-05T14:00:00",
-            endDate: "2025-02-05T16:00:00",
-            permission: "Private",
-            location: "Main Office",
-        },
-        {
-            calendareventid: "3",
-            title: "Product Launch",
-            description: "Launch event for the new product release.",
-            category: "Launch",
-            startDate: "2025-02-10T11:00:00",
-            endDate: "2025-02-10T12:30:00",
-            permission: "Public",
-            location: "Virtual Event",
-        },
-        {
-            calendareventid: "4",
-            title: "Team Building",
-            description: "Outdoor team-building activities to improve collaboration.",
-            category: "Team Building",
-            startDate: "2025-02-15T08:00:00",
-            endDate: "2025-02-15T17:00:00",
-            permission: "Public",
-            location: "Park Event Space",
-        },
-        {
-            calendareventid: "5",
-            title: "Client Meeting",
-            description: "Meeting with client to discuss new partnership opportunities.",
-            category: "Meeting",
-            startDate: "2025-02-17T10:00:00",
-            endDate: "2025-02-17T11:00:00",
-            permission: "Private",
-            location: "Client's Office",
-        },
-        {
-            calendareventid: "6",
-            title: "Leadership Training",
-            description: "Training session for senior management on leadership skills.",
-            category: "Training",
-            startDate: "2025-02-20T09:00:00",
-            endDate: "2025-02-20T12:00:00",
-            permission: "Private",
-            location: "Online",
-        },
-        {
-            calendareventid: "7",
-            title: "Annual Conference",
-            description: "Annual conference with keynotes, panels, and networking events.",
-            category: "Conference",
-            startDate: "2025-03-01T08:00:00",
-            endDate: "2025-03-01T18:00:00",
-            permission: "Public",
-            location: "Convention Center",
-        },
-        {
-            calendareventid: "8",
-            title: "Design Sprint",
-            description: "Collaborative sprint to finalize design prototypes.",
-            category: "Workshop",
-            startDate: "2025-03-03T09:00:00",
-            endDate: "2025-03-03T17:00:00",
-            permission: "Private",
-            location: "Creative Lab",
-        },
-        {
-            calendareventid: "9",
-            title: "Company Retreat",
-            description: "Weekend retreat for the entire company to relax and bond.",
-            category: "Retreat",
-            startDate: "2025-03-10T12:00:00",
-            endDate: "2025-03-12T12:00:00",
-            permission: "Private",
-            location: "Mountain Resort",
-        },
-        {
-            calendareventid: "10",
-            title: "End of Year Party",
-            description: "Celebration of the year's achievements with food, drinks, and entertainment.",
-            category: "Celebration",
-            startDate: "2025-12-20T18:00:00",
-            endDate: "2025-12-20T22:00:00",
-            permission: "Public",
-            location: "Company Headquarters",
-        }
-    ];
-
-    const upcomingEvents = fakeCalendarEvents
+    const upcomingEvents = teamInformation?.CalendarEvents
         ?.filter(event => new Date(event.startDate) > new Date())
         .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
         .slice(0, 10); // Display only first 10 events

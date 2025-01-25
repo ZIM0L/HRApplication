@@ -7,6 +7,7 @@ import Notification from "../Notification/Notification";
 import { AddUserRequest, DeleteUserRequest, ResolveUserRequest } from "../../api/TeamAPI";
 import DeleteRequest from "./DeleteRequest";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { useForm } from "react-hook-form";
 
 const RequestDashboard: React.FC = () => {
     const [selectedRequest, setSelectedRequest] = useState<IRequest | null>(null);
@@ -18,6 +19,7 @@ const RequestDashboard: React.FC = () => {
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { register, setValue, watch, reset } = useForm();
 
     const toggleView = (isForm: boolean) => {
         setIsAdding(isForm);
@@ -98,11 +100,13 @@ const RequestDashboard: React.FC = () => {
         }
     }
     const resolveRequest = async (request: IRequest) => {
-        if (!selectedTeam) return;
+        if (!selectedTeam || !selectedRequest) return;
+        const answerContent = watch("answerContent");
         try {
-            const response = await ResolveUserRequest(request.teamMemberRequestId);
+            const response = await ResolveUserRequest(request.teamMemberRequestId, answerContent);
+
             if (response?.status === 200) {
-                setIsModalOpen(false)
+                setIsModalOpen(false);
                 setNotificationMessage(["Request has been resolved"]);
                 setIsError(false);
                 setShowNotification(true);
@@ -111,12 +115,12 @@ const RequestDashboard: React.FC = () => {
                     ...prev,
                     UsersRequests: prev.UsersRequests.map((req: IRequest) =>
                         req.teamMemberRequestId === request.teamMemberRequestId
-                            ? { ...req, status: "resolved" } // Zmiana statusu dla wybranego zgłoszenia
+                            ? { ...req, status: "resolved", answerContent: answerContent }
                             : req
                     ),
                 }));
                 setSelectedRequest(null);
-                setIsModalOpen(false);
+                reset()
             }
         } catch (error) {
             setIsError(true);
@@ -125,7 +129,7 @@ const RequestDashboard: React.FC = () => {
                 setNotificationMessage(error.message.split(" | "));
             }
         }
-    }
+    };
 
     useEffect(() => {
     }, [teamInformation?.UsersRequests, isAdding])
@@ -155,22 +159,22 @@ const RequestDashboard: React.FC = () => {
                 {/* Górny panel z przyciskami */}
                 <div className="flex flex-col md:w-1/3">
                     <div className="mb-4 flex items-center justify-around space-x-2">
+                        <button
+                            onClick={() => toggleView(false)}
+                            className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${!isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
+                            disabled={!isAdding}
+                        >
+                            View Requests
+                        </button>
+                        {selectedTeam?.roleName != "Administrator" ?
                             <button
-                                onClick={() => toggleView(false)}
-                                className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${!isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
-                                disabled={!isAdding}
+                                onClick={() => toggleView(true)}
+                                className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
+                                disabled={isAdding}
                             >
-                                View Requests
+                                Add Request
                             </button>
-                            {selectedTeam?.roleName != "Administrator" ?
-                                <button
-                                    onClick={() => toggleView(true)}
-                                    className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
-                                    disabled={isAdding}
-                                >
-                                    Add Request
-                                </button>
-                                : null}
+                            : null}
                     </div>
 
                     {/* Główna sekcja */}
@@ -180,46 +184,61 @@ const RequestDashboard: React.FC = () => {
                         {isAdding ? (
                             <RequestForm onSubmit={addNewUserRequest} />
                         ) : (
-                            <>
-                                <h2 className="p-4 text-xl font-semibold text-gray-800">Your Submitted Requests</h2>
-                                <div className="h-[400px] overflow-y-auto p-2 md:h-full md:max-h-[85%]">
-                                    {teamInformation.UsersRequests.length === 0 ? (
-                                        <div className="flex items-center justify-center px-2 text-gray-500">
-                                            No requests have been created by the user.
-                                        </div>
-                                    ) : (
-                                        <ul className="space-y-4 py-2">
-                                            {teamInformation.UsersRequests.map((request, key) => (
-                                                <li
-                                                    onClick={() => { setSelectedRequest(request); setselectedRequestToDelete(request); selectRequest(request); }}
-                                                    key={key}
-                                                    className="rounded-lg border bg-gray-50 p-4 hover:cursor-pointer shadow-md transition-shadow duration-300 hover:shadow-lg"
-                                                >
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex w-1/2 flex-col items-start space-y-2 overflow-hidden">
-                                                            <p className="truncate text-lg font-medium">{request.title}</p>
-                                                            <span className="break-words text-sm font-medium text-gray-400">Request {key + 1}</span>
+                                <>
+                                    <h2 className="p-4 text-xl font-semibold text-gray-800">Your Submitted Requests</h2>
+                                    <div className="h-[400px] overflow-y-auto p-2 md:h-full md:max-h-[85%]">
+                                        {teamInformation.UsersRequests.length === 0 ? (
+                                            <div className="flex items-center justify-center px-2 text-gray-500">
+                                                No requests have been created by the user.
+                                            </div>
+                                        ) : (
+                                            <ul className="space-y-4 py-2">
+                                                {teamInformation.UsersRequests.map((request, index) => (
+                                                    <li
+                                                        key={index}
+                                                        onClick={() => {
+                                                            setSelectedRequest(request);
+                                                            setselectedRequestToDelete(request);
+                                                            selectRequest(request);
+                                                        }}
+                                                        className="rounded-lg border bg-gray-50 p-4 shadow-md transition-shadow duration-300 hover:cursor-pointer hover:shadow-lg"
+                                                    >
+                                                        <div className="flex items-center justify-between">
+                                                            {/* Left Section */}
+                                                            <div className="flex w-1/2 flex-col space-y-1 overflow-hidden">
+                                                                <p className="truncate text-lg font-medium">{request.title}</p>
+                                                                <p className="truncate text-sm font-medium text-gray-400">
+                                                                    Requested by: {request.name} {request.surname}
+                                                                </p>
+                                                            </div>
+
+                                                            {/* Right Section */}
+                                                            <div className="flex flex-col items-end space-y-2">
+                                                                <TrashIcon
+                                                                    className="h-5 w-5 text-gray-600 transition-colors hover:text-red-500"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation(); // Prevent triggering the parent click
+                                                                        setSelectedRequest(null);
+                                                                        setIsModalOpen(true);
+                                                                    }}
+                                                                />
+                                                                <span
+                                                                    className={`rounded px-2 py-1 text-sm ${request.status === "resolved"
+                                                                            ? "bg-green-100 text-green-600"
+                                                                            : "bg-yellow-100 text-yellow-600"
+                                                                        }`}
+                                                                >
+                                                                    {request.status}
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                        <div className="flex flex-col items-end space-y-2">
-                                                            <TrashIcon className="h-5 w-5"
-                                                                onClick={() => { setSelectedRequest(null); setIsModalOpen(true); }}
-                                                            />
-                                                            <span
-                                                                className={`rounded px-2 py-1 text-sm ${request.status === "resolved"
-                                                                    ? "bg-green-100 text-green-600"
-                                                                    : "bg-yellow-100 text-yellow-600"
-                                                                    }`}
-                                                            >
-                                                                {request.status}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </div>
-                            </>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+                                </>
+
                         )}
                     </div>
 
@@ -263,11 +282,50 @@ const RequestDashboard: React.FC = () => {
                                     Status: {selectedRequest.status}
                                 </div>
                             )}
-                            <span className="text-sm text-gray-500">Submitted at: {selectedRequest.submittedAt.toLocaleString().slice(0, 16).replace("T", " ")}</span>
+                            {selectedRequest.answerContent != null && selectedRequest.status == "resolved" && selectedTeam?.roleName != "Administrator" ?
+                                <>
+                                    <p className="text-xl">Provided answer by system admin: </p>
+                                    <div className="border-l-4 pl-4">
+                                        <span className="mb-4 border-gray-300 leading-relaxed text-gray-700" style={{ wordBreak: "break-word" }}>
+                                            {selectedRequest.answerContent}
+                                        </span>
+                                    </div>
+                                </>
+                                : null}
+                            <div>
+                                <p className="text-sm text-gray-500">Submitted by: {selectedRequest.name} {selectedRequest.surname}</p>
+                                <p className="text-sm text-gray-500">Submitted at: {selectedRequest.submittedAt.toLocaleString().slice(0, 16).replace("T", " ")}</p>
+                            </div>
 
                             {/* Admin options */}
-                            {selectedTeam?.roleName === "Administrator" ? (
+                            {selectedTeam?.roleName === "Administrator" && selectedRequest.status == "pending" ? (
                                 <>
+                                    <div className="flex flex-col space-y-4">
+                                        {/* Checkbox - kontrola wyświetlania pola tekstowego */}
+                                        <div className="flex items-center space-x-2">
+                                            <input
+                                                type="checkbox"
+                                                id="showAnswer"
+                                                {...register("showAnswer")}
+                                                onChange={(e) => setValue("showAnswer", e.target.checked)}
+                                            />
+                                            <label htmlFor="showAnswer" className="text-gray-700">Provide an answer</label>
+                                        </div>
+
+                                        {/* Jeśli checkbox jest zaznaczony, pokaż input */}
+                                        {watch("showAnswer") && (
+                                            <div className="flex flex-col space-y-2">
+                                                <label htmlFor="answerContent" className="text-gray-700">Answer</label>
+                                                <textarea
+                                                    id="answerContent"
+                                                    {...register("answerContent", { required: "Answer is required if checkbox is checked" })}
+                                                    className="w-full resize-none rounded-md border px-4 py-2"
+                                                    rows={4}
+                                                    placeholder="Type your response here..."
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
                                     {selectedRequest.status === "pending" && (
                                         <button
                                             onClick={() => { resolveRequest(selectedRequest) }}
@@ -277,7 +335,23 @@ const RequestDashboard: React.FC = () => {
                                         </button>
                                     )}
                                 </>
-                            ) : null}
+                            ) :
+                                <>
+                                    {selectedRequest.answerContent != null && (
+                                        <>
+                                            <p className="text-xl">Provided answer:</p>
+                                            <div className="border-l-4 pl-4">
+                                                <span
+                                                    className="mb-4 border-gray-300 leading-relaxed text-gray-700"
+                                                    style={{ wordBreak: "break-word" }}
+                                                >
+                                                    {selectedRequest.answerContent}
+                                                </span>
+                                            </div>
+                                        </>
+                                    )}
+                                </>
+                            }
                         </div>
                     ) : null}
                 </div>

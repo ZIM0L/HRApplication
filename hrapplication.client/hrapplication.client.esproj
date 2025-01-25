@@ -12,6 +12,7 @@
     <Folder Include="public\fonts\" />
     <Folder Include="src\components\GoogleAuthButton\" />
     <Folder Include="src\components\CookieFooter\" />
+    <Folder Include="src\components\Questions\" />
     <Folder Include="src\components\UserSettings\" />
     <Folder Include="src\components\Notification\" />
     <Folder Include="src\routes\" />

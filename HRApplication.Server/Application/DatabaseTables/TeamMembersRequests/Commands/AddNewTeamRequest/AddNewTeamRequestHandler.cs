@@ -57,7 +57,8 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Co
                     user.Surname,
                     user.Email,
                     userRequest.SubmittedAt,
-                    userRequest.AlteredAt);
+                    userRequest.AlteredAt,
+                    userRequest.AnswerContent);
             }
             //temp
             return CustomErrorOr.CustomErrors.Team.UserForbiddenAction;

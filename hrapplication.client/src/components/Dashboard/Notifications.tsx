@@ -2,121 +2,13 @@
 import { useAuth } from "../../contex/AppContex";
 import { Link } from "react-router-dom";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
-import { IRequest } from "../../types/Request/IRequest";
 
 const Notifications = () => {
     const { teamInformation } = useAuth();
    const [currentPage, setCurrentPage] = useState(1);
     const [messagesPerPage, setMessagesPerPage] = useState(8); 
 
-    const asd: IRequest[] = [
-        {
-            teamMemberRequestId: "1",
-            title: "Request for Time Off",
-            requestContent: "I would like to request a day off on March 5th for personal reasons.",
-            status: "pending",
-            name: "John",
-            surname: "Doe",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-20T10:00:00Z"),
-        },
-        {
-            teamMemberRequestId: "2",
-            title: "Change of Working Hours",
-            requestContent: "I am requesting to change my working hours from 9 AM to 3 PM.",
-            status: "resolved",
-            name: "Jane",
-            surname: "Smith",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-21T09:30:00Z"),
-            alteredAt: new Date("2025-01-22T14:00:00Z"),
-        },
-        {
-            teamMemberRequestId: "3",
-            title: "Equipment Request",
-            requestContent: "I need a new laptop for my project as the current one is outdated.",
-            status: "pending",
-            name: "Chris",
-            surname: "Johnson",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-22T11:15:00Z"),
-        },
-        {
-            teamMemberRequestId: "4",
-            title: "Access to New Software",
-            requestContent: "Requesting access to Adobe Photoshop for graphic design purposes.",
-            status: "resolved",
-            name: "Emily",
-            surname: "Davis",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-23T08:45:00Z"),
-            alteredAt: new Date("2025-01-23T12:00:00Z"),
-        },
-        {
-            teamMemberRequestId: "5",
-            title: "Conference Attendance",
-            requestContent: "I would like to attend the Web Development Conference on February 10th.",
-            status: "pending",
-            name: "Michael",
-            surname: "Brown",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-24T13:30:00Z"),
-        },
-        {
-            teamMemberRequestId: "6",
-            title: "Remote Work Request",
-            requestContent: "I am requesting to work remotely for the next two weeks.",
-            status: "resolved",
-            name: "Sarah",
-            surname: "Miller",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-25T10:00:00Z"),
-            alteredAt: new Date("2025-01-26T09:00:00Z"),
-        },
-        {
-            teamMemberRequestId: "7",
-            title: "Training Request",
-            requestContent: "Requesting approval to attend a Python programming course.",
-            status: "pending",
-            name: "David",
-            surname: "Wilson",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-26T11:00:00Z"),
-        },
-        {
-            teamMemberRequestId: "8",
-            title: "Vacation Request",
-            requestContent: "Requesting approval for two weeks of vacation from March 1st to March 14th.",
-            status: "resolved",
-            name: "Olivia",
-            surname: "Martinez",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-27T14:30:00Z"),
-            alteredAt: new Date("2025-01-28T08:45:00Z"),
-        },
-        {
-            teamMemberRequestId: "9",
-            title: "Equipment Upgrade",
-            requestContent: "Requesting an upgrade to a dual monitor setup for improved productivity.",
-            status: "pending",
-            name: "Sophia",
-            surname: "Taylor",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-28T09:00:00Z"),
-        },
-        {
-            teamMemberRequestId: "10",
-            title: "Annual Leave Request",
-            requestContent: "I would like to request 3 days of leave for personal reasons in March.",
-            status: "resolved",
-            name: "Daniel",
-            surname: "Anderson",
-            email: "ejemplo@ejemplo.mx",
-            submittedAt: new Date("2025-01-29T16:00:00Z"),
-            alteredAt: new Date("2025-01-30T10:00:00Z"),
-        }
-    ];
-    const notifications = asd;
+    const notifications = teamInformation?.UsersRequests;
 
     useEffect(() => {
         const handleResize = () => {
