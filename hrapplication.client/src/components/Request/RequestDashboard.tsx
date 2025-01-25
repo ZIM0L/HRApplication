@@ -4,16 +4,16 @@ import RequestForm from "./RequestForm";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { IRequest, IRequestInputs } from "../../types/Request/IRequest";
 import Notification from "../Notification/Notification";
-import { AddUserRequest, DeleteUserRequest } from "../../api/TeamAPI";
+import { AddUserRequest, DeleteUserRequest, ResolveUserRequest } from "../../api/TeamAPI";
 import DeleteRequest from "./DeleteRequest";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 const RequestDashboard: React.FC = () => {
     const [selectedRequest, setSelectedRequest] = useState<IRequest | null>(null);
     const [selectedRequestToDelete, setselectedRequestToDelete] = useState<IRequest>();
-    const [isClosing, setIsClosing] = useState(false); // Kontroluje animację wychodzenia
+    const [isClosing, setIsClosing] = useState(false);
     const { selectedTeam, teamInformation, setTeamInformation } = useAuth();
-    const [isAdding, setIsAdding] = useState(false); // Kontroluje widok listy/formularza
+    const [isAdding, setIsAdding] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -38,11 +38,11 @@ const RequestDashboard: React.FC = () => {
     };
 
     const closeRequestDetails = async () => {
-        setIsClosing(true); // Uruchamiamy animację zamykania
+        setIsClosing(true);
         setTimeout(() => {
-            setSelectedRequest(null); // Po zakończeniu animacji ustawiamy null
-            setIsClosing(false); // Kończymy animację
-        }, 300); // Czas trwania animacji (w ms)
+            setSelectedRequest(null);
+            setIsClosing(false);
+        }, 300);
     };
 
     const addNewUserRequest = async (data: IRequestInputs) => {
@@ -83,7 +83,36 @@ const RequestDashboard: React.FC = () => {
                 setTeamInformation((prev: ITeamInformation) => ({
                     ...prev,
                     UsersRequests: prev.UsersRequests.filter(
-                        (r: IRequest) => r.teamMemberRequestId !== request.teamMemberRequestId
+                        (req: IRequest) => req.teamMemberRequestId !== request.teamMemberRequestId
+                    ),
+                }));
+                setSelectedRequest(null);
+                setIsModalOpen(false);
+            }
+        } catch (error) {
+            setIsError(true);
+            setShowNotification(true);
+            if (error instanceof Error) {
+                setNotificationMessage(error.message.split(" | "));
+            }
+        }
+    }
+    const resolveRequest = async (request: IRequest) => {
+        if (!selectedTeam) return;
+        try {
+            const response = await ResolveUserRequest(request.teamMemberRequestId);
+            if (response?.status === 200) {
+                setIsModalOpen(false)
+                setNotificationMessage(["Request has been resolved"]);
+                setIsError(false);
+                setShowNotification(true);
+                //@ts-expect-error works
+                setTeamInformation((prev: ITeamInformation) => ({
+                    ...prev,
+                    UsersRequests: prev.UsersRequests.map((req: IRequest) =>
+                        req.teamMemberRequestId === request.teamMemberRequestId
+                            ? { ...req, status: "resolved" } // Zmiana statusu dla wybranego zgłoszenia
+                            : req
                     ),
                 }));
                 setSelectedRequest(null);
@@ -99,181 +128,180 @@ const RequestDashboard: React.FC = () => {
     }
 
     useEffect(() => {
+    }, [teamInformation?.UsersRequests, isAdding])
 
-        }, [teamInformation?.UsersRequests, isAdding])
-
-        if (!teamInformation) return null
-        return (
-            <>
-                <div className="border-b-2 flex items-center justify-between px-4 py-2">
-                    <p className=" border-dark-blue-lighertext-start text-xl font-semibold text-gray-800">Request Dashboard</p>
-                    <div className="z-10 group relative">
-                        <QuestionMarkCircleIcon className="group-hover:opacity-100 h-7 w-7 cursor-pointer text-gray-500" />
-                        <div className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200">
-                            <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
-                                <div className="mb-4 flex items-center justify-between">
-                                    <h2 className="text-xl font-semibold">Information</h2>
-                                </div>
-                                <div>
-                                    <p>View Requests: Display all off the users sent requests.</p>
-                                    <p>Add Request: Allows you to send a request to system admin.</p>
-                                </div>
+    if (!teamInformation) return null
+    return (
+        <>
+            <div className="border-b-2 flex items-center justify-between px-4 py-2">
+                <p className=" border-dark-blue-lighertext-start text-xl font-semibold text-gray-800">Request Dashboard</p>
+                <div className="z-10 group relative">
+                    <QuestionMarkCircleIcon className="group-hover:opacity-100 h-7 w-7 cursor-pointer text-gray-500" />
+                    <div className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200">
+                        <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
+                            <div className="mb-4 flex items-center justify-between">
+                                <h2 className="text-xl font-semibold">Information</h2>
+                            </div>
+                            <div>
+                                <p>View Requests: Display all off the users sent requests.</p>
+                                <p>Add Request: Allows you to send a request to system admin.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="flex min-h-screen w-full flex-col space-y-2 bg-gray-100 px-4 py-4 md:flex-row md:space-x-4">
-                    
-                    {/* Górny panel z przyciskami */}
-                    <div className="flex flex-col md:w-1/3">
-                        <div className="mb-4 flex items-center justify-between space-x-2">
-                            <div className="space-x-4">
+            </div>
+            <div className="flex min-h-screen w-full flex-col space-y-2 bg-gray-100 px-4 py-4 md:flex-row md:space-x-4">
+
+                {/* Górny panel z przyciskami */}
+                <div className="flex flex-col md:w-1/3">
+                    <div className="mb-4 flex items-center justify-between space-x-2">
+                        <div className="space-x-4">
+                            <button
+                                onClick={() => toggleView(false)}
+                                className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${!isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
+                                disabled={!isAdding}
+                            >
+                                View Requests
+                            </button>
+                            {selectedTeam?.roleName != "Administrator" ?
                                 <button
-                                    onClick={() => toggleView(false)}
-                                    className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${!isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
-                                    disabled={!isAdding}
+                                    onClick={() => toggleView(true)}
+                                    className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
+                                    disabled={isAdding}
                                 >
-                                    View Requests
+                                    Add Request
                                 </button>
-                                {selectedTeam?.roleName != "Administrator" ?
-                                    <button
-                                        onClick={() => toggleView(true)}
-                                        className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
-                                        disabled={isAdding}
-                                    >
-                                        Add Request
-                                    </button>
                                 : null}
-                            </div>
                         </div>
-
-                        {/* Główna sekcja */}
-                        <div
-                            className={` h-[75%] w-full rounded-lg bg-white shadow-md transition-transform duration-500 transform`}
-                        >
-                            {isAdding ? (
-                                <RequestForm onSubmit={addNewUserRequest} />
-                            ) : (
-                                <>
-                                    <h2 className="p-4 text-xl font-semibold text-gray-800">Your Submitted Requests</h2>
-                                    <div className="h-[400px] overflow-y-auto p-2 md:h-full md:max-h-[85%]">
-                                        {teamInformation.UsersRequests.length === 0 ? (
-                                            <div className="flex items-center justify-center px-2 text-gray-500">
-                                                No requests have been created by the user.
-                                            </div>
-                                        ) : (
-                                            <ul className="space-y-4 py-2">
-                                                {teamInformation.UsersRequests.map((request, key) => (
-                                                    <li
-                                                        onClick={() => { setSelectedRequest(request); setselectedRequestToDelete(request); selectRequest(request); }}
-                                                        key={key}
-                                                        className="rounded-lg border bg-gray-50 p-4 hover:cursor-pointer shadow-md transition-shadow duration-300 hover:shadow-lg"
-                                                    >
-                                                        <div className="flex items-center justify-between">
-                                                            <div className="flex w-1/2 flex-col items-start space-y-2 overflow-hidden">
-                                                                <p className="truncate text-lg font-medium">{request.title}</p>
-                                                                <span className="break-words text-sm font-medium text-gray-400">Request {key + 1}</span>
-                                                            </div>
-                                                            <div className="flex flex-col items-end space-y-2">
-                                                                <TrashIcon className="h-5 w-5"
-                                                                    onClick={() => { setSelectedRequest(null); setIsModalOpen(true); }}
-                                                                />
-                                                                <span
-                                                                    className={`rounded px-2 py-1 text-sm ${request.status === "resolved"
-                                                                        ? "bg-green-100 text-green-600"
-                                                                        : "bg-yellow-100 text-yellow-600"
-                                                                        }`}
-                                                                >
-                                                                    {request.status}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                </>
-                            )}
-                        </div>
-
                     </div>
 
-                    {/* Separator pionowy */}
-                    <div className="h-[83%] w-[2px] bg-gray-300"></div>
-
-                    {/* Panel szczegółów requestu z animacją */}
+                    {/* Główna sekcja */}
                     <div
-                        className={`top-0 left-0 h-full bg-white shadow-lg transition-transform duration-300 md:relative md:h-[82%] md:w-2/3 ${selectedRequest ? (isClosing ? "transform translate-x-[105%]" : "transform translate-x-0") : "transform translate-x-[105%]"}`}
+                        className={` h-[75%] w-full rounded-lg bg-white shadow-md transition-transform duration-500 transform`}
                     >
-                        {selectedRequest && !isClosing ? (
-                            <div className="flex w-full flex-col space-y-4 p-6">
-                                <div className="flex items-center justify-between">
-                                    <h2 className="text-2xl font-bold text-gray-800">{selectedRequest.title}</h2>
-                                    <button
-                                        onClick={closeRequestDetails}
-                                        className="border-2 mb-4 self-end rounded-md border-gray-300 px-3 py-2 text-gray-500 transition-colors hover:text-gray-800 hover:border-gray-700"
-                                    >
-                                        Close
-                                    </button>
+                        {isAdding ? (
+                            <RequestForm onSubmit={addNewUserRequest} />
+                        ) : (
+                            <>
+                                <h2 className="p-4 text-xl font-semibold text-gray-800">Your Submitted Requests</h2>
+                                <div className="h-[400px] overflow-y-auto p-2 md:h-full md:max-h-[85%]">
+                                    {teamInformation.UsersRequests.length === 0 ? (
+                                        <div className="flex items-center justify-center px-2 text-gray-500">
+                                            No requests have been created by the user.
+                                        </div>
+                                    ) : (
+                                        <ul className="space-y-4 py-2">
+                                            {teamInformation.UsersRequests.map((request, key) => (
+                                                <li
+                                                    onClick={() => { setSelectedRequest(request); setselectedRequestToDelete(request); selectRequest(request); }}
+                                                    key={key}
+                                                    className="rounded-lg border bg-gray-50 p-4 hover:cursor-pointer shadow-md transition-shadow duration-300 hover:shadow-lg"
+                                                >
+                                                    <div className="flex items-center justify-between">
+                                                        <div className="flex w-1/2 flex-col items-start space-y-2 overflow-hidden">
+                                                            <p className="truncate text-lg font-medium">{request.title}</p>
+                                                            <span className="break-words text-sm font-medium text-gray-400">Request {key + 1}</span>
+                                                        </div>
+                                                        <div className="flex flex-col items-end space-y-2">
+                                                            <TrashIcon className="h-5 w-5"
+                                                                onClick={() => { setSelectedRequest(null); setIsModalOpen(true); }}
+                                                            />
+                                                            <span
+                                                                className={`rounded px-2 py-1 text-sm ${request.status === "resolved"
+                                                                    ? "bg-green-100 text-green-600"
+                                                                    : "bg-yellow-100 text-yellow-600"
+                                                                    }`}
+                                                            >
+                                                                {request.status}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </div>
-
-                                {/* Treść requestu */}
-                                <div className="border-l-4 pl-4">
-                                    <span className="mb-4 border-gray-300 leading-relaxed text-gray-700" style={{ wordBreak: "break-word" }}>
-                                        {selectedRequest.requestContent}
-                                    </span>
-                                </div>
-
-                                {/* Status */}
-                                {selectedRequest.status === "pending" && (
-                                    <div className="rounded-lg bg-yellow-100 px-4 py-2 text-sm font-medium text-yellow-700">
-                                        Status: {selectedRequest.status}
-                                    </div>
-                                )}
-                                <span className="text-sm text-gray-500">Submitted at: {selectedRequest.submittedAt.toLocaleString().slice(0, 16).replace("T", " ")}</span>
-
-                                {/* Admin options */}
-                                {selectedTeam?.roleName === "Administrator" ? (
-                                    <>
-                                        {selectedRequest.status === "pending" && (
-                                            <button
-                                                className="w-full rounded-md bg-green-500 py-2 font-medium text-white transition hover:bg-green-600"
-                                            >
-                                                Mark as Resolved
-                                            </button>
-                                        )}
-                                        {selectedRequest.status === "resolved" && (
-                                            <button
-                                                className="w-full rounded-md bg-yellow-500 py-2 font-medium text-white transition hover:bg-yellow-600"
-                                            >
-                                                Undo Resolution
-                                            </button>
-                                        )}
-                                    </>
-                                ) : null}
-                            </div>
-                        ) : null}
+                            </>
+                        )}
                     </div>
 
-                    {/* Notification */}
-                    {showNotification && (
-                        <Notification
-                            messages={notificationMessage}
-                            onClose={() => setShowNotification(false)}
-                            isError={isError}
-                        />
-                    )}
                 </div>
-                {isModalOpen && (
-                    <DeleteRequest
-                        request={selectedRequestToDelete!}
-                        onConfirm={deleteRequest}
-                        onCancel={() => setIsModalOpen(false)}
+
+                {/* Separator pionowy */}
+                <div className="h-[83%] w-[2px] bg-gray-300"></div>
+
+                {/* Panel szczegółów requestu z animacją */}
+                <div
+                    className={`top-0 left-0 h-full bg-white shadow-lg transition-transform duration-300 md:relative md:h-[82%] md:w-2/3 ${selectedRequest ? (isClosing ? "transform translate-x-[105%]" : "transform translate-x-0") : "transform translate-x-[105%]"}`}
+                >
+                    {selectedRequest && !isClosing ? (
+                        <div className="flex w-full flex-col space-y-4 p-6">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-2xl font-bold text-gray-800">{selectedRequest.title}</h2>
+                                <button
+                                    onClick={closeRequestDetails}
+                                    className="border-2 mb-4 self-end rounded-md border-gray-300 px-3 py-2 text-gray-500 transition-colors hover:text-gray-800 hover:border-gray-700"
+                                >
+                                    Close
+                                </button>
+                            </div>
+
+                            {/* Treść requestu */}
+                            <div className="border-l-4 pl-4">
+                                <span className="mb-4 border-gray-300 leading-relaxed text-gray-700" style={{ wordBreak: "break-word" }}>
+                                    {selectedRequest.requestContent}
+                                </span>
+                            </div>
+
+                            {/* Status */}
+                            {selectedRequest.status === "pending" && (
+                                <div className="rounded-lg bg-yellow-100 px-4 py-2 text-sm font-medium text-yellow-700">
+                                    Status: {selectedRequest.status}
+                                </div>
+                            )}
+                            {/* Status */}
+                            {selectedRequest.status === "resolved" && (
+                                <div className="rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-600">
+                                    Status: {selectedRequest.status}
+                                </div>
+                            )}
+                            <span className="text-sm text-gray-500">Submitted at: {selectedRequest.submittedAt.toLocaleString().slice(0, 16).replace("T", " ")}</span>
+
+                            {/* Admin options */}
+                            {selectedTeam?.roleName === "Administrator" ? (
+                                <>
+                                    {selectedRequest.status === "pending" && (
+                                        <button
+                                            onClick={() => { resolveRequest(selectedRequest) }}
+                                            className="rounded-md bg-green-500 py-2 font-medium text-white transition hover:bg-green-600"
+                                        >
+                                            Mark as Resolved
+                                        </button>
+                                    )}
+                                </>
+                            ) : null}
+                        </div>
+                    ) : null}
+                </div>
+
+                {/* Notification */}
+                {showNotification && (
+                    <Notification
+                        messages={notificationMessage}
+                        onClose={() => setShowNotification(false)}
+                        isError={isError}
                     />
                 )}
-            </>
-        );
-    };
+            </div>
+            {isModalOpen && (
+                <DeleteRequest
+                    request={selectedRequestToDelete!}
+                    onConfirm={deleteRequest}
+                    onCancel={() => setIsModalOpen(false)}
+                />
+            )}
+        </>
+    );
+};
 
-    export default RequestDashboard;
+export default RequestDashboard;

@@ -12,6 +12,7 @@ using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Querie
 using HRApplication.Server.Domain.Models;
 using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands.AddNewTeamRequest;
 using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands.DeleteTeamRequest;
+using HRApplication.Server.Application.DatabaseTables.TeamMembersRequests.Commands.ResolveTeamRequest;
 
 namespace HRApplication.Server.Presentation.Controllers.TeamMemberRequest
 {
@@ -56,6 +57,19 @@ namespace HRApplication.Server.Presentation.Controllers.TeamMemberRequest
         public async Task<IActionResult> DeleteTeamMemberRequest(string teammemberrequestid)
         {
             var command = new DeleteTeamRequestRequest(teammemberrequestid);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("ResolveTeamMemberRequest")]
+        public async Task<IActionResult> ResolveTeamMemberRequest(ResolveTeamRequestRequest request)
+        {
+            var command = new ResolveTeamRequestRequest(request.teamMemberRequestId);
 
             ErrorOr<Unit> response = await _mediatR.Send(command);
 
