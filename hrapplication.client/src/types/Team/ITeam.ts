@@ -44,3 +44,6 @@ export interface ITeamInformation {
     TeamProfileSrc: string,
     UsersRequests: IRequest[]
 }
+export interface IUsersTeamProfilesPictures {
+    teamImage: Record<string, string>;
+}

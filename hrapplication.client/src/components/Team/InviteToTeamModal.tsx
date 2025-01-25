@@ -5,6 +5,7 @@ import { InvitationInputs, SearchForUserInputs } from "../../types/Invitation/In
 import { InviteUserToTeam } from "../../api/InvitationAPI";
 import Notification from "../Notification/Notification";
 import UserSearch from "./SeachForUser";
+import { IJobPosition } from "../../types/JobPosition/IJobPosition";
 
 interface InviteToTeamModalProps {
     isOpen: boolean;
@@ -20,7 +21,7 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
     const [isDisabledInvite, setIsDisabledInvite] = useState(true);
 
     useEffect(() => {
-        setIsDisabledInvite(teamInformation?.JobPositions.length === 0);
+        setIsDisabledInvite(teamInformation?.JobPositions.filter((job) => job.isRecruiting).length == 0);
     }, [teamInformation?.JobPositions]);
 
     const handleUserSelect = (user: SearchForUserInputs) => {
@@ -63,20 +64,22 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
                     {/* Pozycja w zespole */}
                     <div>
                         <label className="mb-1 block text-sm font-medium text-gray-700">Job Position</label>
-                        {teamInformation?.JobPositions.length === 0 ? (
+                        {teamInformation?.JobPositions.filter((job) => job.isRecruiting).length == 0 ? (
                             <select
                                 disabled
                                 className="w-full cursor-not-allowed rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-gray-500"
                             >
-                                <option value="">No positions available</option>
+                                <option value="">Currently no positions are open for recruitment</option>
                             </select>
                         ) : (
                             <select
                                 {...register("jobPositionId", { required: "Job position is required" })}
                                 className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 focus:border-cyan-500 focus:ring-cyan-500"
                             >
-                                <option disabled value="">Select a job position</option>
-                                {teamInformation?.JobPositions.map((job, index) => (
+                                    <option disabled value="">Select a job position</option>
+                                    {teamInformation?.JobPositions
+                                        .filter((job: IJobPosition) => job.isRecruiting)
+                                        .map((job, index) => (
                                     <option key={index} value={job.jobPositionId}>
                                         {job.title}
                                     </option>
@@ -96,7 +99,7 @@ const InviteToTeamModal: React.FC<InviteToTeamModalProps> = ({ isOpen, onClose }
                     <div className="mt-4 flex flex-col items-center space-y-2 sm:flex-row sm:justify-end sm:space-y-0 sm:space-x-4">
                         <button
                             type="submit"
-                            className={`w-full sm:w-auto rounded-md ${isDisabledInvite ? "bg-cyan-blue-hover" : "bg-cyan-blue"} px-6 py-2 text-white hover:bg-cyan-blue-hover`}
+                            className={`w-full sm:w-auto rounded-md ${isDisabledInvite ? "bg-cyan-blue-hover text-gray-500 cursor-not-allowed" : "bg-cyan-blue"} px-6 py-2 text-white hover:bg-cyan-blue-hover`}
                             disabled={isDisabledInvite}
                         >
                             Invite

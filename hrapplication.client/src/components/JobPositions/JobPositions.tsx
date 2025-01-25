@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+﻿import {  useState } from "react";
 import { ArrowRightCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { IJobPosition } from "../../types/JobPosition/IJobPosition";
 import AddJobModal from "./AddJobModal";

@@ -1,28 +1,23 @@
 ﻿import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../contex/AppContex';
 
-interface EnvelopeIconNotificationProps {
-    isRed: boolean; 
-}
-
-const EnvelopeIconNotification: React.FC<EnvelopeIconNotificationProps> = ({ isRed }) => {
+const EnvelopeIconNotification: React.FC = () => {
     const [showRed, setShowRed] = useState(false);
+    const { notifications } = useAuth()
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
-
-        if (isRed) {
-            interval = setInterval(() => {
-                setShowRed((prev) => !prev); 
-            }, 1500); 
-        } else {
-            setShowRed(false);
+        if (notifications?.Invitations.length != 0) {
+                interval = setInterval(() => {
+                    setShowRed((prev) => !prev); 
+                }, 1500); 
+                setShowRed(false);
         }
-
         return () => {
             if (interval) clearInterval(interval); 
         };
-    }, [isRed]);
+    }, [notifications]);
 
     return (
         <div className="flex items-center space-x-2">

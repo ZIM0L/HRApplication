@@ -1,4 +1,4 @@
-﻿import { IAddJobPositionInputs, IJobPosition } from "../../types/JobPosition/IJobPosition";
+﻿import { IAddJobPositionInputs } from "../../types/JobPosition/IJobPosition";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import { useEffect, useState } from "react";

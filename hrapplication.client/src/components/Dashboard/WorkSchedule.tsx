@@ -72,11 +72,9 @@ const WeekSchedule = () => {
             setEmployeeShiftsAssignment(distinctAssignments);
         }
     }, [teamInformation]);
-    useEffect(() => {
 
-    }, [employeeShiftsAssignment])
     return (
-        <div className="mt-4 rounded-xl bg-white p-6 shadow-lg">
+        <div className="h-1/3 rounded-xl bg-white p-2 shadow-lg">
             {/* Work Schedule Title */}
             <div className="flex items-center justify-between text-lg font-semibold text-gray-800">
                 <div className="flex items-center space-x-2">
@@ -106,43 +104,41 @@ const WeekSchedule = () => {
             </div>
 
             {/* Week Schedule Table */}
-            <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
-                <table className="w-full table-auto border-collapse">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            {weekDates.map((date, index) => (
-                                <th key={index} className="border text-center text-sm text-gray-700">
-                                    <p className="font-semibold text-gray-700">
-                                        {new Date(date).toLocaleDateString("en-US", { weekday: "short" })}
-                                    </p>
-                                    <p className="text-xs text-gray-500">{date}</p>
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {employeeShiftsAssignment!
-                            .filter(shift => shift.employee.email === decodedToken?.email)
-                            .map((assignment) => (
-                                <tr key={assignment.employee.email} className="hover:bg-gray-50">
-                                    {weekDates.map((date, index) => {
-                                        const shift = assignment.shifts.find(s => compareDates(s.date, date));
-                                        return (
-                                            <td
-                                                key={index}
-                                                className={`border px-4 py-3 text-sm text-center ${shift ? "bg-green-200" : ""}`}
-                                            >
-                                                {shift
-                                                    ? `${shift.shift.shiftStart.slice(0, 5)} - ${shift.shift.shiftEnd.slice(0, 5)}`
-                                                    : "No Shift"}
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
-            </div>
+            <table className="mt-4 w-full table-auto border-collapse">
+                <thead className="bg-gray-100">
+                    <tr>
+                        {weekDates.map((date, index) => (
+                            <th key={index} className="border px-2 py-3 text-center text-sm text-gray-700">
+                                <p className="font-semibold text-gray-700">
+                                    {new Date(date).toLocaleDateString("en-US", { weekday: "short" })}
+                                </p>
+                                <p className="text-xs text-gray-500">{date}</p>
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {employeeShiftsAssignment!
+                        .filter(shift => shift.employee.email === decodedToken?.email)
+                        .map((assignment) => (
+                            <tr key={assignment.employee.email} className="hover:bg-gray-50">
+                                {weekDates.map((date, index) => {
+                                    const shift = assignment.shifts.find(s => compareDates(s.date, date));
+                                    return (
+                                        <td
+                                            key={index}
+                                            className={`border text-center px-2 py-3 text-sm ${shift ? "bg-green-200" : ""}`}
+                                        >
+                                            {shift
+                                                ? `${shift.shift.shiftStart.slice(0, 5)} - ${shift.shift.shiftEnd.slice(0, 5)}`
+                                                : "No Shift"}
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                </tbody>
+            </table>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../contex/AppContex";
+import Loading from "../components/ErrorComponents/Loading";
 
 const ProtectedRoutes = () => {
     const location = useLocation();
@@ -15,7 +16,7 @@ const ProtectedRoutes = () => {
     }, [authToken]);
 
     if (isCheckingToken) {
-        return <div>Loading...</div>;
+        return <Loading />
     }
     if (!decodedToken) {
         return <Navigate to="/accessdenied" state={{ from: location }} replace />;

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HRApplication.Server.Application.Utilities;
 
-namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries
+namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamImage
 {
     public class GetTeamImageValidation : AbstractValidator<GetTeamImageRequest>
     {

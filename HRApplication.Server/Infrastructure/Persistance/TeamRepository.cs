@@ -40,7 +40,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Teams.ToList();
         }
 
-        public List<Team>? GetTeamsByUserId(List<Guid> teamsId)
+        public List<Team>? GetTeamsByTeamIds(List<Guid> teamsId)
         {
             return _dbContex.Teams.Where(x => teamsId.Contains(x.TeamId)).ToList();   
         }

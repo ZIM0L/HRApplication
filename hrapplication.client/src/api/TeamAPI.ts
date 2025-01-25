@@ -241,7 +241,7 @@ export const GetTeamProfilePicture = async (teamId: string): Promise<AxiosRespon
         return response;
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Error getting team profile picture: ", error);
+            console.error("Error fetching team profile picture: ", error);
 
             const extractedErrors = ExtractErrorsFromAPI(error);
 
@@ -253,8 +253,29 @@ export const GetTeamProfilePicture = async (teamId: string): Promise<AxiosRespon
             }
             throw new Error(errorMessage);
         }
-        throw new Error("Unexpected error occurred while getting team profile picture.");
-    }
+        throw new Error("Unexpected error occurred while fetching team profile picture.");
+    } 
+};
+export const GetTeamsProfilePictures = async (): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.get("/api/Images/GetTeamsImages");
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error fetching teams profile pictures: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while fetching teams profile pictures.");
+    } 
 };
 export const UploadTeamProfilePicture = async (data: FormData): Promise<AxiosResponse | null> => {
     try {

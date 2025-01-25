@@ -154,8 +154,7 @@ const RequestDashboard: React.FC = () => {
 
                 {/* Górny panel z przyciskami */}
                 <div className="flex flex-col md:w-1/3">
-                    <div className="mb-4 flex items-center justify-between space-x-2">
-                        <div className="space-x-4">
+                    <div className="mb-4 flex items-center justify-around space-x-2">
                             <button
                                 onClick={() => toggleView(false)}
                                 className={`rounded  px-2 py-1 border-2 border-gray-100 transition hover:border-gray-600 ${!isAdding && "hover:border-gray-100 opacity-50 cursor-not-allowed"}`}
@@ -172,7 +171,6 @@ const RequestDashboard: React.FC = () => {
                                     Add Request
                                 </button>
                                 : null}
-                        </div>
                     </div>
 
                     {/* Główna sekcja */}

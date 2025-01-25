@@ -5,7 +5,7 @@ using HRApplication.Server.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries
+namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamImage
 {
     public class GetTeamImageHandler : IRequestHandler<GetTeamImageRequest, ErrorOr<FileResult>>
     {
@@ -35,7 +35,7 @@ namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries
             {
                 return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
-            
+
             if (_teamRepository.GetTeamByTeamId(Guid.Parse(request.teamId)) is not Team team)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
@@ -57,8 +57,8 @@ namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries
 
             return new FileContentResult(fileBytes, "application/octet-stream")
             {
-                FileDownloadName = fileName
+                FileDownloadName = fileName ?? "default-teamprofile-photo.jpg"
             };
-        }
+        }                             
     }
 }

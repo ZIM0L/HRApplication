@@ -15,13 +15,11 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
     const [notificationMessages, setNotificationMessages] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<SearchForUserInputs | null>(null); 
+    const [selectedUser, setSelectedUser] = useState<SearchForUserInputs | null>(null);
 
     const handleUserSearch = async () => {
         setIsLoadingUsers(true);
         try {
-          
-
             const result = await SeachForUser({ fullName: searchQuery, email: emailQuery });
             if (result?.status === 200) {
                 setUserSuggestions(result.data);
@@ -32,7 +30,7 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
             setIsError(true);
             setShowNotification(true);
             if (error instanceof Error) {
-                setNotificationMessages(error.message.split(" | "));
+                setNotificationMessages(["Full name cannot be empty"]);
             }
             setUserSuggestions([]);
         } finally {
@@ -41,15 +39,15 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
     };
 
     const handleSelectUser = (user: SearchForUserInputs) => {
-        setSelectedUser(user); 
-        onSelectUser(user); 
-        setUserSuggestions([]); 
+        setSelectedUser(user);
+        onSelectUser(user);
+        setUserSuggestions([]);
     };
 
     const handleResetSelection = () => {
-        setSelectedUser(null); 
+        setSelectedUser(null);
         setSearchQuery('');
-        setEmailQuery(''); 
+        setEmailQuery('');
     };
 
     return (

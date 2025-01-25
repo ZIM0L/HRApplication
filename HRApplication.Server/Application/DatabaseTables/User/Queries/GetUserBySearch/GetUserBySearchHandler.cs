@@ -19,7 +19,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearc
         {
             await Task.CompletedTask;
 
-            List<UserSearchDTO> UserList = [];
+            List<UserSearchDTO> UserList = new List<UserSearchDTO>();
 
             var httpContext = _httpContextAccessor.HttpContext;
 
@@ -30,7 +30,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearc
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if (request.fullName.Length == 0 && request.email == null)
+            if (string.IsNullOrEmpty(request.fullName) && string.IsNullOrEmpty(request.email))
             {
                 return new List<UserSearchDTO>(); 
             }
@@ -39,7 +39,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearc
             {
                 if (_userRepository.GetUserByEmail(request.email) is User user)
                 {
-                    if (user.UserId != Guid.Parse(BearerCheckerResult.Value.Payload.Sub))
+                    if (user != null && user.UserId != Guid.Parse(BearerCheckerResult.Value.Payload.Sub))
                     {
                         UserList.Add(new UserSearchDTO(user.Name,user.Surname,user.Email));
                         return UserList;

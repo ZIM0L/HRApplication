@@ -23,7 +23,7 @@ const Notification: React.FC<NotificationProps> = ({ messages, onClose, isError 
 
     return (
         <div
-            className={`fixed right-5 top-5 z-50 rounded-lg ${isError ? 'bg-red-500' : 'bg-green-500'} px-4 py-2 text-white shadow-lg ${notificationClass}`}
+            className={`fixed right-5 md:top-5 top-14 z-50 rounded-lg ${isError ? 'bg-red-500' : 'bg-green-500'} px-4 py-2 text-white shadow-lg ${notificationClass}`}
             onTransitionEnd={isVisible ? undefined : onClose}
         >
             {messages.map((message, index) => (

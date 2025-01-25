@@ -5,8 +5,8 @@ import { ReadLocalStorageUserFromToken } from '../services/LocalStorageTokenServ
 import { JwtPayload } from 'jwt-decode';
 import { HttpStatusCode } from 'axios';
 import { IContext } from '../types/Contex/IContex';
-import { ITeamInformation, ITeamWithUserPermission, TeamInputs } from '../types/Team/ITeam';
-import { GetTeamMembersShifts, GetTeamProfilePicture, GetTeamShifts, GetTeamsUsers, GetUsersRequests } from '../api/TeamAPI';
+import { ITeamInformation, ITeamWithUserPermission, IUsersTeamProfilesPictures, TeamInputs } from '../types/Team/ITeam';
+import { GetTeamMembersShifts, GetTeamProfilePicture, GetTeamShifts, GetTeamsProfilePictures, GetTeamsUsers, GetUsersRequests } from '../api/TeamAPI';
 import { GetJobPositionsBasedOnTeams } from '../api/JobPositionAPI';
 import { INotifications } from '../types/Notification/INotification';
 import { GetUserInvitation } from '../api/NotificationAPI';
@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }: IProvider) => {
     const [notifications, setNotifications] = useState<INotifications | null>(null);
     const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[] | null>([])
     const [userProfileSrc, setUserProfileSrc] = useState<string | null>(null)
+    const [userTeamsProfilesSrc, setUserTeamsProfilesSrc] = useState<IUsersTeamProfilesPictures | null>(null)
 
     // Funkcja do sprawdzania tokenu
     const checkToken = async () => {
@@ -92,8 +93,8 @@ export const AuthProvider = ({ children }: IProvider) => {
                 Invitations: invitationResponse?.data || [],
             };
 
-            setNotifications(newNotifications); // Ustaw nowy stan
-            return newNotifications; // Zwrot nowych danych
+            setNotifications(newNotifications);
+            return newNotifications;
         } catch (error) {
             console.error("Error fetching notifications:", error);
 
@@ -111,6 +112,12 @@ export const AuthProvider = ({ children }: IProvider) => {
             const imgSrc = `data:${'application/octet-stream'};base64,${response.data.fileContents}`
             setUserProfileSrc(imgSrc)
             } 
+    }
+    const fetchTeamsProfilePictures = async () => {
+        const response = await GetTeamsProfilePictures()
+        if (response?.status == 200) {
+            setUserTeamsProfilesSrc(response.data)
+        } 
     }
     const getAllTeamInformation = async () => {
         if (!selectedTeam) return;
@@ -203,7 +210,10 @@ export const AuthProvider = ({ children }: IProvider) => {
             employeeShiftsAssignment,
             setEmployeeShiftsAssignment,
             getUserProfileImage,
-            userProfileSrc
+            userProfileSrc,
+            fetchTeamsProfilePictures,
+            userTeamsProfilesSrc,
+            setUserTeamsProfilesSrc
         }}>
             {children}
         </AppContext.Provider>

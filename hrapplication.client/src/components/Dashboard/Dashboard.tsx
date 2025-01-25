@@ -1,6 +1,5 @@
 ﻿import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
-    ArrowLeftStartOnRectangleIcon,
     Bars3Icon,
     XMarkIcon,
     Squares2X2Icon,
@@ -17,25 +16,14 @@ import {
 import { useAuth } from "../../contex/AppContex";
 import LogoSVG from "../LogoSVG/LogoSVG";
 import { useEffect, useState } from "react";
-import { Cog8ToothIcon } from "@heroicons/react/24/outline";
-import UserSettings from "../UserSettings/UserSettings";
 
 const Dashboard: React.FC = () => {
-    const { logOut, decodedToken, setSelectedTeamState, selectedTeam } = useAuth();
-    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const { decodedToken, setSelectedTeamState, selectedTeam } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
-    const [isModalOpen, setIsModalOpen] = useState(false); 
 
     const navigate = useNavigate();
     const { getAllTeamInformation, teamInformation } = useAuth();
 
-    const LogOutOfSystem = () => {
-        setIsLoggingOut(true);
-        setTimeout(() => {
-            logOut();
-            navigate("/auth", { replace: true });
-        }, 1000);
-    };
 
     const onChangeTeam = () => {
         setSelectedTeamState(null);
@@ -65,14 +53,6 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
     }, [teamInformation]);
 
-    if (isLoggingOut) {
-        return (
-            <div className="flex h-screen items-center justify-center bg-gray-100">
-                <h1 className="text-xl font-bold text-gray-600">Logging out...</h1>
-            </div>
-        );
-    }
- 
     return (
         <div className="flex h-fit w-full flex-col overflow-x-hidden bg-gray-100 md:h-[100vh] md:overflow-y-hidden md:flex-row">
             {/* Przycisk mobilny do otwierania/zamykania */}
@@ -155,7 +135,8 @@ const Dashboard: React.FC = () => {
                                                 <div className="translate-x-[-120%] group-hover:translate-x-6 absolute inset-0 transform bg-gray-200 transition-transform duration-300 dark:bg-gray-700"></div>
                                             </div>
                                         </Link>
-                                    </div> <div>
+                                    </div>
+                                    <div>
                                         <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <QuestionMarkCircleIcon className="h-6 w-6" />
@@ -164,19 +145,26 @@ const Dashboard: React.FC = () => {
                                             </div>
                                         </Link>
                                     </div>
+                                    <div className="group relative flex items-center space-x-2 hover:cursor-pointer md:hidden" onClick={() => onChangeTeam()}>
+                                        <img
+                                            src={teamInformation?.TeamProfileSrc}
+                                            alt="User"
+                                            className="h-8 w-8 rounded-full"
+                                        />
+                                        <span className="text-gray-200">{selectedTeam?.team.name}</span>
+                                        <div className="flex flex-col items-center">
+                                            <button >
+                                                <ArrowsRightLeftIcon className="h-5 w-5" />
+                                            </button>
+                                            <span className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute left-44 top-1 whitespace-nowrap bg-dark-blue px-2 py-1 text-sm text-white transition-opacity">
+                                                Change Team
+                                            </span>
+                                        </div>
+                                    </div>
                                 </>
                             )
                         }
                     </div>
-                </div>
-                <div className="mt-6 text-center">
-                    <button
-                        className="my-4 flex w-full items-center justify-center space-x-4 rounded-md border border-dark-blue p-1 transition-colors duration-200 hover:border-white"
-                        onClick={() => LogOutOfSystem()}
-                    >
-                        <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
-                        <span className="text-sm font-semibold">Log out</span>
-                    </button>
                 </div>
             </div>
 
@@ -215,15 +203,7 @@ const Dashboard: React.FC = () => {
                             <CalendarDaysIcon className="h-5 w-5" />
                         </Link>
                     </div>
-                    <div className="border-r-2 flex space-x-2 px-2 transition-all hover:scale-105 hover:text-gray-900 hover:hover:cursor-pointer" onClick={() => setIsModalOpen(true)}>
-                        <span className="">User Settings</span>
-                        <Cog8ToothIcon className="h-5 w-5" />
-                    </div>
                 </div>
-                {/* Modal - Ustawienia użytkownika */}
-                {isModalOpen && (
-                    <UserSettings isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-                )}
                 {/* Zawartość */}
                 <Outlet />
             </div>

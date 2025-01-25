@@ -44,7 +44,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.Ge
 
             var teamsIds = UsersTeams.Select(x => x.TeamId).ToList();
 
-            var teams = _teamRepository.GetTeamsByUserId(teamsIds);
+            var teams = _teamRepository.GetTeamsByTeamIds(teamsIds);
 
             if (teams is null)
             {

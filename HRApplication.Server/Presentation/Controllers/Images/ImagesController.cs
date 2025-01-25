@@ -7,7 +7,8 @@ using ReactApp1.Server.Presentation.Api.Controllers;
 using HRApplication.Server.Application.ImgUpload.UserImage.Commands.UploadUserImage;
 using HRApplication.Server.Application.ImgUpload.TeamImage.Commands.TeamUserImage;
 using HRApplication.Server.Application.ImgUpload.UserImage.Queries.GetUserImage;
-using HRApplication.Server.Application.ImgUpload.TeamImage.Queries;
+using HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamImage;
+using HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamsImages;
 
 namespace HRApplication.Server.Presentation.Controllers.ImgUpload
 {
@@ -47,6 +48,19 @@ namespace HRApplication.Server.Presentation.Controllers.ImgUpload
             return response.Match(
                 response => Ok(response),
                 errors => Problem(errors)
+            );
+        }
+        [HttpGet]
+        [Route("GetTeamsImages")]
+        public async Task<IActionResult> GetTeamsImages()
+        {
+            var command = new GetTeamsImagesRequest();
+
+            ErrorOr<TeamsImagesResult?> response = await _mediator.Send(command);
+
+            return response.Match(
+                result => Ok(result), 
+                errors => Problem(errors) 
             );
         }
         [HttpPost("UploadUserImage")]

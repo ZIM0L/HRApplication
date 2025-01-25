@@ -36,92 +36,82 @@ function CalendarApp() {
             personal: {
                 colorName: 'personal',
                 lightColors: {
-                    main: '#e16a54',  // Ciemniejsza wersja Personal
+                    main: '#e16a54',  
                     container: eventTypes.Personal.color,
-                    onContainer: '#000000',  // Ciemny tekst na jasnym tle
+                    onContainer: '#000000',  
                 },
             },
             work_related: {
                 colorName: 'work_related',
                 lightColors: {
-                    main: '#9bb3cb',  // Ciemniejsza wersja WorkRelated
+                    main: '#9bb3cb', 
                     container: eventTypes.WorkRelated.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000', 
                 },
             },
             team_events: {
                 colorName: 'team_events',
                 lightColors: {
-                    main: '#ef9c66',  // Ciemniejsza wersja Team
+                    main: '#ef9c66', 
                     container: eventTypes.TeamEvents.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000', 
                 },
             },
             health: {
                 colorName: 'health',
                 lightColors: {
-                    main: '#ab886d',  // Ciemniejsza wersja HealthAndWellness
+                    main: '#ab886d',  
                     container: eventTypes.HealthAndWellness.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000',  
                 },
             },
             meetings: {
                 colorName: 'meetings',
                 lightColors: {
-                    main: '#6d5898',  // Ciemniejsza wersja Meetings
+                    main: '#6d5898', 
                     container: eventTypes.Meetings.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000', 
                 },
             },
             celebrations: {
                 colorName: 'celebrations',
                 lightColors: {
-                    main: '#fcde89',  // Ciemniejsza wersja Celebrations
+                    main: '#fcde89', 
                     container: eventTypes.Celebrations.color,
-                    onContainer: '#000000',  // Ciemny tekst na jasnym tle
+                    onContainer: '#000000', 
                 },
             },
             financial: {
                 colorName: 'financial',
                 lightColors: {
-                    main: '#8ca98b',  // Ciemniejsza wersja Financial
+                    main: '#8ca98b', 
                     container: eventTypes.Financial.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000', 
                 },
             },
             admin: {
                 colorName: 'admin',
                 lightColors: {
-                    main: '#dbc36d',  // Ciemniejsza wersja Admin
+                    main: '#dbc36d', 
                     container: eventTypes.Admin.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000', 
                 },
             },
             projects: {
                 colorName: 'projects',
                 lightColors: {
-                    main: '#6b92bd',  // Ciemniejsza wersja Projects
+                    main: '#6b92bd', 
                     container: eventTypes.Projects.color,
-                    onContainer: '#000000',  // Jasny tekst na ciemnym tle
+                    onContainer: '#000000',  
                 },
             },
         },
-        backgroundEvents: [
-            {
-                title: 'Out of office',
-                start: '2025-01-16',
-                end: '2025-01-16',
-                style: {
-                    backgroundImage: 'repeating-linear-gradient(45deg, #ccc, #ccc 5px, transparent 5px, transparent 10px)',
-                    opacity: 0.5,
-                }
-            }
-        ],
+        backgroundEvents: [],
         events: initEvents,
         plugins: [eventsService, eventModal, dragAndDropPlugin, resizePlugin],
         firstDayOfWeek: 1,
         defaultView: viewMonthGrid.name,
-        dayBoundaries: { start: '06:00', end: '22:00' },
+        dayBoundaries: { start: '05:00', end: '23:00' },
         weekOptions: { gridHeight: 800 },
         monthGridOptions: { nEventsPerDay: 8 },
         callbacks: {
@@ -154,7 +144,7 @@ function CalendarApp() {
 
     const handleAddEvent = (event: CalendarEventExternal) => { 
         setInitEvents((prevEvents) => [...prevEvents, event]);
-        // ts-error
+        //@ts-expect-error works
         setTeamInformation((prev: ITeamInformation) => {
             return {
                 ...prev,
@@ -164,6 +154,7 @@ function CalendarApp() {
     };
     const handleDeleteEvent = (deleteCalendarEvent: CalendarEventExternal) => {
         setInitEvents((prevEvents) => prevEvents.filter((event) => event.id !== deleteCalendarEvent.id))
+        //@ts-expect-error works
         setTeamInformation((prev: ITeamInformation) => {
             return {
                 ...prev,
@@ -174,6 +165,7 @@ function CalendarApp() {
     };
 
     const handleEditEvent = (updatedEvent: ICalendarEvent) => {
+        //@ts-expect-error works
         setTeamInformation((prev: ITeamInformation) => {
             const indexOfEventToUpdate = prev.CalendarEvents.findIndex((event) => event.calendareventid == updatedEvent.calendareventid)
             if (indexOfEventToUpdate != -1) {
@@ -192,7 +184,7 @@ function CalendarApp() {
         const filteredEvents = initEvents.filter((event) => {
             return (
                 selectedCategories.length === 0 || 
-                selectedCategories.includes(event.calendarId.toLowerCase()) 
+                selectedCategories.includes(event.calendarId!.toLowerCase()) 
             );
         });
         calendar.events.set(filteredEvents);
@@ -213,8 +205,6 @@ function CalendarApp() {
         <div className={` mt-4 h-full bg-gray-100 md:overflow-auto`}>
             {/* Main Content */}
             <div className="flex w-full flex-col py-4 md:flex-row">
-                {/* Button to open/close sidebar */}
-
                 {/* Sidebar */}
                 <div className={`transition-all absolute md:static  px-4 md:pl-3  duration-500 ease-in-out transform mb-4 w-full ${sidebarOpen ? ' md:translate-x-0  md:w-40 ' : 'md:-translate-x-52 md:w-1'} md:overflow-hidden whitespace-nowrap `}>
                     <div className="relative flex flex-col-reverse md:flex-col">
