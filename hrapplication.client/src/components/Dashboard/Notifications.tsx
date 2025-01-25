@@ -26,10 +26,10 @@ const Notifications = () => {
         };
     }, []);
 
-    const totalPages = Math.ceil(notifications.length / messagesPerPage);
+    const totalPages = Math.ceil(notifications!.length / messagesPerPage);
     const startIndex = (currentPage - 1) * messagesPerPage;
     const endIndex = startIndex + messagesPerPage;
-    const currentMessages = notifications.slice(startIndex, endIndex);
+    const currentMessages = notifications!.slice(startIndex, endIndex);
 
     const goToPreviousPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);

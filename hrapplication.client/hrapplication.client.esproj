@@ -15,7 +15,6 @@
     <Folder Include="src\components\Questions\" />
     <Folder Include="src\components\UserSettings\" />
     <Folder Include="src\components\Notification\" />
-    <Folder Include="src\routes\" />
     <Folder Include="src\types\Contex\" />
     <Folder Include="src\types\Invitation\" />
     <Folder Include="src\types\Request\" />

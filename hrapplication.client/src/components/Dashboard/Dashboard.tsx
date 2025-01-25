@@ -137,10 +137,10 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                                        <Link to="Q&A" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <QuestionMarkCircleIcon className="h-6 w-6" />
-                                                <span className="z-10 relative text-sm">Questions</span>
+                                                <span className="z-10 relative text-sm tracking-wider">Q&A</span>
                                                 <div className="translate-x-[-120%] group-hover:translate-x-6 absolute inset-0 transform bg-gray-200 transition-transform duration-300 dark:bg-gray-700"></div>
                                             </div>
                                         </Link>

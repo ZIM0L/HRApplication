@@ -15,6 +15,7 @@ import Callender from './components/Callender/Callender';
 import SessionExpired from './components/ErrorComponents/SessionExpired';
 import Shifts from './components/Shift/Shifts';
 import RequestDashboard from './components/Request/RequestDashboard';
+import QAComponent from './components/Questions/QAComponent';
 
 const App = () => {
     return (
@@ -40,6 +41,8 @@ const App = () => {
                             <Route path="job_positions" element={<JobPositions />} />
                             <Route path="shifts" element={<Shifts />} />
                             <Route path="request" element={<RequestDashboard />} />
+                            <Route path="Q&A" element={<QAComponent />} />
+                            <Route path="Q&A" element={<QAComponent />} />
                             </Route>
                     </Route>
                 </Routes>
