@@ -81,11 +81,7 @@ function Panel() {
                         </div>
                     </div>
 
-                    {/* Team Section */}
-                    <div className="flex flex-col rounded-lg bg-white p-6 shadow-md">
-                        <p className="text-lg font-semibold">Team members</p>
-                        <p className="text-sm text-gray-400">No member has been found</p>
-                    </div>
+                   
                 </div>
 
                 {/* Main Content Section */}

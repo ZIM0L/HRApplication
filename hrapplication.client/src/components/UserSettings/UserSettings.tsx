@@ -12,8 +12,6 @@ interface UserSettingsProps {
 
 const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose }) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -25,10 +23,6 @@ const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose }) => {
             setErrorMessage('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
             return;
         }
-
-        setSelectedImage(file);
-        const previewUrl = URL.createObjectURL(file);
-        setImagePreview(previewUrl);
 
         const formData = new FormData();
         formData.append('image', file);

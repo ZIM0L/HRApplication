@@ -25,6 +25,8 @@ namespace Infrastructure
             services.AddScoped<ITeamMemberShiftsRepository, TeamMemberShiftsRepository>();
             services.AddScoped<ITeamShiftsRepository, TeamShiftsRepository>();
             services.AddScoped<ITeamMemberRequestsRepository, TeamMemberRequestsRepository>();
+            services.AddScoped<ITeamQuestionRepository, TeamQuestionRepository>();
+            services.AddScoped<ISubQuestionRepository, SubQuestionRepository>();
             return services;
         }
     }

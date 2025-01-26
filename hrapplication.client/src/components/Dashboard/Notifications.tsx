@@ -52,7 +52,7 @@ const Notifications = () => {
                 {/* Lista wiadomości */}
                 <div className="flex-1 flex flex-col gap-4 overflow-hidden py-2">
                     {currentMessages.length > 0 ? (
-                        currentMessages.map((message, index) => (
+                        currentMessages.filter(req => req.status == "pending").map((message, index) => (
                             <div key={message.teamMemberRequestId} className="border-l-4 flex items-center justify-between pl-2">
                                 <div>
                                     <p className="font-medium text-gray-800">
@@ -63,7 +63,7 @@ const Notifications = () => {
                                 <div className="flex justify-between space-x-4 text-xs text-gray-500">
                                     <span>{new Date(message.submittedAt).toLocaleDateString()}</span>
                                     <span className={`font-semibold text-yellow-500`}>
-                                        Pending
+                                        {message.status}
                                     </span>
                                 </div>
                             </div>

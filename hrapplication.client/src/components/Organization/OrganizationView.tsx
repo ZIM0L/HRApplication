@@ -24,12 +24,12 @@ function Organization() {
                 </div>
 
                 {/* Basic Info Section */}
-                <div className="flex flex-col items-center space-y-4 rounded-lg bg-gray-50 p-6 md:flex-row md:space-y-0 md:space-x-6">
+                <div className="border-2 flex flex-col items-center space-y-4 rounded-lg bg-gray-50 p-6 md:flex-row md:space-y-0 md:space-x-6">
                     {/* Icon */}
                         <img
                             src={teamInformation?.TeamProfileSrc ? teamInformation?.TeamProfileSrc : ""}
                             alt="User"
-                            className="mb-4 h-20 w-20 rounded-full"
+                            className="border-2 mb-4 h-20 w-20 rounded-full border-gray-400"
                         />
 
                     {/* Organizational Info */}
@@ -43,20 +43,22 @@ function Organization() {
                         </p>
                         <p className="text-sm text-gray-600">
                             Website:{" "}
+                            {selectedTeam?.team?.url ?
                             <a
                                 href={`${selectedTeam?.team?.url}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-500 underline"
-                            >
-                                {selectedTeam?.team?.url}
+                                >
+                                    {selectedTeam?.team?.url}
                             </a>
+                            : "Not provided"}
                         </p>
                     </div>
                 </div>
 
                 {/* Bottom Section - Contact Info */}
-                <div className="rounded-lg bg-gray-50 p-6">
+                <div className="border-2 rounded-lg bg-gray-50 p-6">
                     <h2 className="mb-4 text-lg font-semibold text-gray-800">Contact Information</h2>
                     <div className="grid-cols-1 grid gap-y-2 text-sm text-gray-600 md:grid-cols-2 md:gap-x-6">
                         <p>

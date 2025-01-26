@@ -1,10 +1,13 @@
 ﻿namespace HRApplication.Server.Domain.Models
 {
-    public class TeamsQuestion
+    public class TeamQuestion
     {
-        public TeamsQuestion(Guid teamid){
+        public TeamQuestion(Guid teamId, string title, string description)
+        {
             TeamQuestionId = Guid.NewGuid();
-            TeamId = teamid;
+            TeamId = teamId;
+            Title = title;
+            Description = description;
         }
         public Guid TeamQuestionId { get; set; }
         public Guid TeamId { get; set; }

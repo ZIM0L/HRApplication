@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
     }, [teamInformation]);
 
     return (
-        <div className="flex h-fit w-full flex-col overflow-x-hidden bg-gray-100 md:h-[100vh] md:overflow-y-hidden md:flex-row">
+        <div className="flex w-full flex-col overflow-x-hidden bg-gray-100 md:h-screen md:overflow-y-hidden md:flex-row">
             {/* Przycisk mobilny do otwierania/zamykania */}
             <button
                 className="z-20 flex items-center justify-center bg-dark-blue p-2 text-white md:hidden"
@@ -128,15 +128,6 @@ const Dashboard: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <Link to="organization" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                                            <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
-                                                <ListBulletIcon className="h-6 w-6" />
-                                                <span className="z-10 relative text-sm">Tasks</span>
-                                                <div className="translate-x-[-120%] group-hover:translate-x-6 absolute inset-0 transform bg-gray-200 transition-transform duration-300 dark:bg-gray-700"></div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                    <div>
                                         <Link to="Q&A" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <div className="group relative flex items-center space-x-4 overflow-hidden rounded-lg dark:text-white">
                                                 <QuestionMarkCircleIcon className="h-6 w-6" />
@@ -169,7 +160,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/* Główna zawartość */}
-            <div className={`flex absolute md:static w-full flex-col transition-all duration-500  md:translate-y-0 ${isSidebarOpen ? "translate-y-[526px]" : "translate-y-0"}`}
+            <div className={`flex absolute md:static w-full flex-col transition-all duration-500  md:translate-y-0 ${isSidebarOpen ? "translate-y-[500px]" : "translate-y-0"}`}
 >
                 {/* Pasek górny */}
                 {decodedToken && (

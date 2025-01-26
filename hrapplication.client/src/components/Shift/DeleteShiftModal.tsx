@@ -27,6 +27,7 @@ const DeleteShiftModal: React.FC<DeleteShiftModalProps> = ({ isOpen, onClose, sh
                 setIsError(false)
                 setShowNotification(true)
                 setTimeout(() => {
+                    //@ts-expect-error works
                     setTeamInformation((prev: ITeamInformation) => {
                         return {
                             ...prev,

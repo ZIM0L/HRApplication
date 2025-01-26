@@ -15,7 +15,6 @@ interface ModalProps {
 
 const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -34,7 +33,6 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             return;
         }
 
-        setSelectedImage(file);
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
 

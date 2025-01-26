@@ -19,6 +19,8 @@ namespace HRApplication.Server.Infrastructure.DBContex
         public DbSet<TeamShift> Team_Shifts { get; set; }
         public DbSet<TeamMemberShift> Team_Member_Shifts { get; set; }
         public DbSet<TeamMemberRequest> Team_Members_Requests { get; set; }
+        public DbSet<TeamQuestion> Team_Questions { get; set; }
+        public DbSet<SubQuestion> Sub_Questions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

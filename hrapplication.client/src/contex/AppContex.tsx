@@ -13,6 +13,7 @@ import { GetUserInvitation } from '../api/NotificationAPI';
 import { GetCalendarEvents } from '../api/CalendarAPI';
 import { EmployeeShiftsAssignment } from '../types/Shift/Shift';
 import { GetUserImage } from '../api/UserAPI';
+import { GetTeamQuestions } from '../api/TeamQuestionAPI';
 
 interface IProvider {
     children: React.ReactNode;
@@ -35,7 +36,8 @@ export const AuthProvider = ({ children }: IProvider) => {
         TeamShifts: [],
         TeamMembersShifts: [],
         TeamProfileSrc: "",
-        UsersRequests: []
+        UsersRequests: [],
+        TeamQuestions: []
     });
     const [notifications, setNotifications] = useState<INotifications | null>(null);
     const [employeeShiftsAssignment, setEmployeeShiftsAssignment] = useState<EmployeeShiftsAssignment[] | null>([])
@@ -123,14 +125,15 @@ export const AuthProvider = ({ children }: IProvider) => {
         if (!selectedTeam) return;
 
         try {
-            const [usersResponse, jobPositionsResponse, calendarEventsResponse, teamShiftsResponse, teamMembersShifts, teamProfilePicture, usersRequests] = await Promise.all([
+            const [usersResponse, jobPositionsResponse, calendarEventsResponse, teamShiftsResponse, teamMembersShifts, teamProfilePicture, usersRequests, teamQuestions] = await Promise.all([
                 GetTeamsUsers(selectedTeam.team.teamId), 
                 GetJobPositionsBasedOnTeams(selectedTeam.team.teamId), 
                 GetCalendarEvents(selectedTeam.team.teamId),
                 GetTeamShifts(selectedTeam.team.teamId),
                 GetTeamMembersShifts(selectedTeam.team.teamId),
                 GetTeamProfilePicture(selectedTeam.team.teamId),
-                GetUsersRequests(selectedTeam.team.teamId)
+                GetUsersRequests(selectedTeam.team.teamId),
+                GetTeamQuestions(selectedTeam.team.teamId)
             ]);
 
             setTeamInformation({
@@ -140,7 +143,8 @@ export const AuthProvider = ({ children }: IProvider) => {
                 TeamShifts: teamShiftsResponse?.data || [],
                 TeamMembersShifts: teamMembersShifts?.data || [],
                 TeamProfileSrc: `data:${'application/octet-stream'};base64,${teamProfilePicture?.data.fileContents}`,
-                UsersRequests: usersRequests?.data || []
+                UsersRequests: usersRequests?.data || [],
+                TeamQuestions: teamQuestions?.data || []
             });
         } catch (error) {
             console.error("Error fetching team information:", error);
@@ -179,7 +183,8 @@ export const AuthProvider = ({ children }: IProvider) => {
             TeamShifts: [],
             TeamMembersShifts: [],
             TeamProfileSrc: "",
-            UsersRequests: []
+            UsersRequests: [],
+            TeamQuestions: []
         });
         setNotifications(null);
         setEmployeeShiftsAssignment([]);

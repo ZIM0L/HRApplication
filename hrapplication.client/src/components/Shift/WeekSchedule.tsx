@@ -1,11 +1,11 @@
-﻿import React, { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useAuth } from "../../contex/AppContex";
 
 
 
 const WeekSchedule = () => {
     const [currentWeek, setCurrentWeek] = useState(new Date());
-    const { employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
+    const { employeeShiftsAssignment } = useAuth()
 
     // Get the start date of the week (Monday)
     const getStartOfWeek = (date: Date): Date => {

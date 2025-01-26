@@ -1,6 +1,6 @@
 ﻿import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "../../contex/AppContex";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { GetUsersTeams } from "../../api/TeamAPI";
 import { ITeamWithUserPermission } from "../../types/Team/ITeam";
 import { UsersIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";

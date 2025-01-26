@@ -282,23 +282,13 @@ const RequestDashboard: React.FC = () => {
                                     Status: {selectedRequest.status}
                                 </div>
                             )}
-                            {selectedRequest.answerContent != null && selectedRequest.status == "resolved" && selectedTeam?.roleName != "Administrator" ?
-                                <>
-                                    <p className="text-xl">Provided answer by system admin: </p>
-                                    <div className="border-l-4 pl-4">
-                                        <span className="mb-4 border-gray-300 leading-relaxed text-gray-700" style={{ wordBreak: "break-word" }}>
-                                            {selectedRequest.answerContent}
-                                        </span>
-                                    </div>
-                                </>
-                                : null}
                             <div>
                                 <p className="text-sm text-gray-500">Submitted by: {selectedRequest.name} {selectedRequest.surname}</p>
                                 <p className="text-sm text-gray-500">Submitted at: {selectedRequest.submittedAt.toLocaleString().slice(0, 16).replace("T", " ")}</p>
                             </div>
 
                             {/* Admin options */}
-                            {selectedTeam?.roleName === "Administrator" && selectedRequest.status == "pending" ? (
+                            {selectedTeam?.roleName == "Administrator" && selectedRequest.status == "pending" ? (
                                 <>
                                     <div className="flex flex-col space-y-4">
                                         {/* Checkbox - kontrola wyświetlania pola tekstowego */}
@@ -337,19 +327,16 @@ const RequestDashboard: React.FC = () => {
                                 </>
                             ) :
                                 <>
-                                    {selectedRequest.answerContent != null && (
+                                    {selectedRequest.answerContent != null && selectedRequest.status == "resolved" && selectedTeam?.roleName != "Administrator" ?
                                         <>
-                                            <p className="text-xl">Provided answer:</p>
+                                            <p className="text-xl">Provided answer by system admin: </p>
                                             <div className="border-l-4 pl-4">
-                                                <span
-                                                    className="mb-4 border-gray-300 leading-relaxed text-gray-700"
-                                                    style={{ wordBreak: "break-word" }}
-                                                >
+                                                <span className="mb-4 border-gray-300 leading-relaxed text-gray-700" style={{ wordBreak: "break-word" }}>
                                                     {selectedRequest.answerContent}
                                                 </span>
                                             </div>
                                         </>
-                                    )}
+                                        : null}
                                 </>
                             }
                         </div>
