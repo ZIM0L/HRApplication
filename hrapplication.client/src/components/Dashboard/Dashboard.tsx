@@ -8,7 +8,6 @@ import {
     NewspaperIcon,
     TableCellsIcon,
     RectangleStackIcon,
-    ListBulletIcon,
     QuestionMarkCircleIcon,
     CalendarDaysIcon,
     ArrowsRightLeftIcon,

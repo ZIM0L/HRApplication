@@ -37,7 +37,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Queries.Get
             {
                 return CustomErrorOr.CustomErrors.Team.UserDoesntBelongToTeam;
             }
-            return _teamShiftRepository?.GetTeamShifts(teamId)
+            return _teamShiftRepository?.GetTeamShiftsByTeamId(teamId)
                 ?.Select(shift => new TeamShiftResult(shift.TeamShiftId, shift.ShiftStart, shift.ShiftEnd)).ToList();
         }
     }

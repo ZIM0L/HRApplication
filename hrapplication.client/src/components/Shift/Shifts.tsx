@@ -3,26 +3,29 @@ import WeekSchedule from "./WeekSchedule";
 import AddNewShift from "./AddNewShift";
 import { EmployeeShiftsAssignment, Shift, ShiftsAssignmentInMonth } from "../../types/Shift/Shift";
 import AssignShiftModal from "./AssignShiftModal";
+import DeleteShiftModal from "./DeleteShiftModal"; // Zaimportuj DeleteShiftModal
 import { useAuth } from "../../contex/AppContex";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { ITeamInformation } from "../../types/Team/ITeam";
+import DeleteAssignShiftModal from "./DeleteAssignShiftModal";
 
 const Shifts: React.FC = () => {
-   
     const [selectedAction, setSelectedAction] = useState("");
-    const { teamInformation, setTeamInformation, setEmployeeShiftsAssignment, selectedTeam } = useAuth()
+    const { teamInformation, setTeamInformation, setEmployeeShiftsAssignment, selectedTeam } = useAuth();
     const actions = [
         { id: "add-shift", label: "Add Shift" },
         { id: "assign-shift", label: "Assign Shifts" },
+        { id: "delete-assign-shift", label: "Delete Assign Shift" },
     ];
+
     const handleNewTeamShift = (newShift: Shift) => {
         //@ts-expect-error works
         setTeamInformation((prev: ITeamInformation) => {
             return {
                 ...prev,
                 TeamShifts: [...prev.TeamShifts, newShift]
-            }
-        })
+            };
+        });
     };
 
     useEffect(() => {
@@ -76,38 +79,43 @@ const Shifts: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="">
+            <div className="my-4">
                 <WeekSchedule />
             </div>
-            {selectedTeam?.roleName == "Administrator" ? 
-            <>
-            <div className="my-4 flex space-x-1">
-                {actions.map((action) => (
-                    <div
-                        key={action.id}
-                        onClick={() => setSelectedAction(action.id)}
-                        className={`cursor-pointer border-2 rounded-md border-gray-100 px-2 py-1 text-lg transition-colors hover:text-black hover:border-gray-400  ${selectedAction === action.id
-                                ? "border-gray-600 text-black"
-                            : "text-gray-500"
-                            }`}
-                    >
-                        {action.label}
+            {selectedTeam?.roleName == "Administrator" ? (
+                <>
+                    <div className="my-4 flex space-x-1">
+                        {actions.map((action) => (
+                            <div
+                                key={action.id}
+                                onClick={() => setSelectedAction(action.id)}
+                                className={`cursor-pointer border-2 rounded-md border-gray-100 px-2 py-1 text-lg transition-colors hover:text-black hover:border-gray-400 ${selectedAction === action.id
+                                    ? "border-gray-600 text-black"
+                                    : "text-gray-500"
+                                    }`}
+                            >
+                                {action.label}
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            <div className="mt-4">
-                {selectedAction === "add-shift" && (
-                    <AddNewShift addNewTeamShift={handleNewTeamShift} />
-                )}
-                {selectedAction === "assign-shift" && (
-                    <AssignShiftModal />
-                )}
-                {!selectedAction && (
-                    <p className="text-gray-500">Please select an action to perform.</p>
-                )}
-            </div>
-            </>
-            : null}
+                    <div className="mt-4">
+                        {selectedAction === "add-shift" && (
+                            <AddNewShift addNewTeamShift={handleNewTeamShift} />
+                        )}
+                        {selectedAction === "assign-shift" && (
+                            <AssignShiftModal />
+                        )}
+                        {selectedAction === "delete-assign-shift" && (
+                         <DeleteAssignShiftModal
+                        />
+                        )}
+                        {!selectedAction && (
+                            <p className="text-gray-500">Please select an action to perform.</p>
+                        )}
+                    </div>
+                </>
+            ) : null}
+
         </div>
     );
 };

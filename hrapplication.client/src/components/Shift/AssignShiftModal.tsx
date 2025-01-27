@@ -21,7 +21,7 @@ const AssignShiftModal= () => {
         Saturday: false,
         Sunday: false,
     });
-    const { teamInformation,  employeeShiftsAssignment, setEmployeeShiftsAssignment } = useAuth()
+    const { teamInformation, setEmployeeShiftsAssignment } = useAuth()
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
@@ -119,10 +119,9 @@ const AssignShiftModal= () => {
         }
         const response = await CreateTeamMemberShifts(shiftsToSend)
         if (response?.status == 200) {
-            setNotificationMessage(["Applaying changes..."])
+            setNotificationMessage(["Changes applied"])
             setIsError(false)
             setShowNotification(true)
-            setTimeout(() => {
                 //@ts-expect-error works
                 setEmployeeShiftsAssignment((prev: EmployeeShiftsAssignment[]) => {
 
@@ -154,8 +153,6 @@ const AssignShiftModal= () => {
 
                     return updatedAssignments; // Zwróć zaktualizowaną listę
                 });
-                window.location.reload();
-            },3500)
         }
         } catch(err) {
             setIsError(true);
@@ -318,20 +315,21 @@ const AssignShiftModal= () => {
             </div>
             {/* Assign Shift Buttons */}
             <div className="flex flex-col space-y-4">
-                {employeeShiftsAssignment?.map((employee) => (
+                {teamInformation?.UserData.filter((user, index, self) =>
+                    index === self.findIndex((u) => u.email === user.email)).map((employee) => (
                     <div
-                        key={employee.employee.email}
+                        key={employee.email}
                         className="flex items-center justify-between space-x-8 rounded-md border border-gray-300 p-4 shadow-sm hover:bg-gray-100"
                     >
                         {/* Employee Name */}
                         <div>
-                            <p className="text-sm font-medium text-gray-700">{employee.employee.name}</p>
-                            <p className="text-sm font-medium text-gray-700">{employee.employee.surname}</p>
+                            <p className="text-sm font-medium text-gray-700">{employee.name}</p>
+                            <p className="text-sm font-medium text-gray-700">{employee.surname}</p>
                         </div>
 
                         {/* Assign Button */}
                         <button
-                            onClick={() => handleAssignShift(employee.employee)}
+                            onClick={() => handleAssignShift(employee)}
                             className="flex items-center justify-center text-gray-300 transform transition-all duration-200 hover:scale-110  hover:text-gray-600"
                         >
                             Assign

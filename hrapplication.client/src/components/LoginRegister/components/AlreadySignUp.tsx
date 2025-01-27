@@ -40,7 +40,7 @@ const AlreadySignUp = ({ isLoggedOn, setIsLoggedOn }: IAlreadySignUp) => {
                 />
             </div>
             <div className="flex flex-col items-center gap-4">
-                <h2 className="mb-4 text-4xl">{isLoggedOn ? "Already Signed up ?" : "Back to login"}</h2>
+                <h2 className="mb-4 text-4xl">{isLoggedOn ? "Already Signed up ?" : "Back to register"}</h2>
                 <button
                     className="w-full rounded-md border border-dark-blue p-1 px-10 py-3 text-2xl font-semibold transition-colors duration-200 hover:border-white md:w-auto"
                     onClick={() => setIsLoggedOn(!isLoggedOn)}

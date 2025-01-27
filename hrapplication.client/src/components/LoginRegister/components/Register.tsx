@@ -48,7 +48,7 @@ const Register = () => {
         <div className="flex w-full flex-col items-center justify-center bg-white px-8 md:ml-12 md:px-20">
             <h2 className="mb-4 px-2 text-3xl font-semibold">Sign up for an Account</h2>
             <p className="mb-6 px-2 text-center text-lg">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Create your free account and start exploring today.
             </p>
 
             <form className="flex w-full flex-col md:px-16" onSubmit={handleSubmit(onSubmit)}>
@@ -145,17 +145,10 @@ const Register = () => {
                     {passwordError && <p className="mt-1 text-sm text-red-500">Passwords do not match</p>}
                 </div>
 
-                <div className="mb-4 flex items-center self-center py-2 font-['PlayfairDisplay-SemiBold']">
-                    <input type="checkbox" className="mr-2" />
-                    <label className="text-gray-600">
-                        I agree on HrApplication <a href="#" className="text-cyan-blue">Terms & Conditions</a>
-                    </label>
-                </div>
-
                 <button className="mb-4 rounded-md bg-cyan-blue py-2 text-white hover:bg-teal-400" type="submit">Sign Up</button>
-                <div className="inline-flex w-full items-center justify-center">
+                <div className="mb-4 inline-flex w-full items-center justify-center">
                     <hr className="border-0 my-4 h-px w-64 bg-gray-200 dark:bg-gray-700" />
-                    <span className="absolute bg-white px-3 font-medium">or</span>
+                    <span className="absolute bg-white px-3 font-medium">or sign up using</span>
                 </div>
             </form>
 

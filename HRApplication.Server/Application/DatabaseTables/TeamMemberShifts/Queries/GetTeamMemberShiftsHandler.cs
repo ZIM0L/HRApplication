@@ -45,7 +45,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Queri
             var users = _userRepository.GetUsersByIds(userIds) ?? new List<User>();
             var teamMemberIds = teamMembers.Select(tm => tm.TeamMemberId).ToList();
             var teamMembershifts = _teamMemberShiftsRepository.GetTeamMemberShiftsByUsersId(userIds) ?? new List<TeamMemberShift>();
-            var teamShifts = _teamShiftsRepository.GetTeamShifts(teamId) ?? new List<TeamShift>();
+            var teamShifts = _teamShiftsRepository.GetTeamShiftsByTeamId(teamId) ?? new List<TeamShift>();
 
             var teamMemebersShifts = teamMembers
                 .Join(users,

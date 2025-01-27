@@ -25,6 +25,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
+        public TeamMemberShift? GetTeamMemberShiftByTeamMemberShiftId(Guid? teamMemberShiftId)
+        {
+            return _dbContex.Team_Member_Shifts.SingleOrDefault(x => x.TeamMemberShiftId == teamMemberShiftId);
+        }
+
         public List<TeamMemberShift>? GetTeamMemberShiftsByTeamShiftId(Guid teamShiftId)
         {
             return _dbContex.Team_Member_Shifts.Where(shift => teamShiftId == shift.TeamShiftId).ToList();
@@ -35,6 +40,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Team_Member_Shifts
                   .Where(shift => shift.UserId == userId && dates.Contains(shift.ShiftDate))
                   .ToList();
+        }
+
+        public TeamMemberShift? GetTeamMemberShiftsByUserIdAndShiftDate(Guid userId, DateTime shiftDate)
+        {
+            return _dbContex.Team_Member_Shifts.SingleOrDefault(x => x.UserId == userId && x.ShiftDate == shiftDate);
         }
 
         public List<TeamMemberShift>? GetTeamMemberShiftsByUsersId(List<Guid> UsersIds)

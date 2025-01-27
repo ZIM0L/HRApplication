@@ -31,3 +31,8 @@ export type EmployeeShiftsAssignment = {
     employee: IEmployeeData;
     shifts: ShiftsAssignmentInMonth[] | [];
 };
+export type DeleteTeamMemberShiftInputs = {
+    teamShiftId: string,
+    email: string,
+    date: string
+}

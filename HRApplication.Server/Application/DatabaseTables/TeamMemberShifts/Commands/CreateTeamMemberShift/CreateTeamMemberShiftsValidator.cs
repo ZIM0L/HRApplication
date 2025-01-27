@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HRApplication.Server.Application.Utilities;
 
-namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Commands
+namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Commands.CreateTeamMemberShift
 {
     public class CreateTeamMemberShiftsValidator : AbstractValidator<CreateTeamMemberShiftsRequest>
     {

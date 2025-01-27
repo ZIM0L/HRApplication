@@ -5,7 +5,7 @@ import { useAuth } from "../../contex/AppContex";
 
 const WeekSchedule = () => {
     const [currentWeek, setCurrentWeek] = useState(new Date());
-    const { employeeShiftsAssignment } = useAuth()
+    const { employeeShiftsAssignment, teamInformation } = useAuth()
 
     // Get the start date of the week (Monday)
     const getStartOfWeek = (date: Date): Date => {
@@ -90,29 +90,36 @@ const WeekSchedule = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {employeeShiftsAssignment!.map((assignment) => (
-                            <tr key={assignment.employee.email} className="hover:bg-gray-50">
+                        {teamInformation?.UserData.filter((user, index, self) =>
+                            index === self.findIndex((u) => u.email === user.email)).map((assignment) => (
+                            <tr key={assignment.email} className="hover:bg-gray-50">
                                 <td className="border px-4 py-3 text-sm font-medium text-gray-800">
-                                    {assignment.employee.name} {assignment.employee.surname}
+                                    {assignment.name} {assignment.surname}
                                 </td>
                                 {weekDates.map((date, index) => {
-                                    const shift = assignment.shifts.find((s) =>
-                                        compareDates(s.date, date)
-                                    );
+                                    // Szukamy przypisanej zmiany dla tego pracownika i daty
+                                    const shiftForDate = employeeShiftsAssignment?.find((employeeShift) => {
+                                        // Sprawdzamy, czy pracownik ma przypisaną zmianę na dany dzień
+                                        if (employeeShift.employee.email === assignment.email) {
+                                            return employeeShift.shifts.find((shift) => compareDates(shift.date, date));
+                                        }
+                                        return null;
+                                    })?.shifts.find((shift) => compareDates(shift.date, date));
+
                                     return (
                                         <td
                                             key={index}
-                                            className={`border px-4 py-3 text-sm text-center ${shift ? "bg-green-200" : ""
-                                                }`}
+                                            className={`border px-4 py-3 text-sm text-center ${shiftForDate ? "bg-green-200" : ""}`}
                                         >
-                                            {shift
-                                                ? `${shift.shift.shiftStart.slice(0, 5)} - ${shift.shift.shiftEnd.slice(0, 5)}`
+                                            {shiftForDate
+                                                ? `${shiftForDate.shift.shiftStart.slice(0, 5)} - ${shiftForDate.shift.shiftEnd.slice(0, 5)}`
                                                 : "No Shift"}
                                         </td>
                                     );
                                 })}
                             </tr>
                         ))}
+
                     </tbody>
                 </table>
             </div>

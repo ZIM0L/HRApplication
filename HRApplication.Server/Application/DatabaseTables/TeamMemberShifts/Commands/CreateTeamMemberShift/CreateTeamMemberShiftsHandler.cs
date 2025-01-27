@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
 
-namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Commands
+namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Commands.CreateTeamMemberShift
 {
     public class CreateTeamMemberShiftsHandler : IRequestHandler<CreateTeamMemberShiftsRequest, ErrorOr<List<TeamMemberShiftResult>>>
     {
@@ -77,7 +77,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Comma
                     shiftDate: shift.ShiftDate,
                     startShift: teamShift.ShiftStart,
                     endShift: teamShift.ShiftEnd,
-                    checkInTime: null, 
+                    checkInTime: null,
                     checkOutTime: null
                 ))
                 .ToList();

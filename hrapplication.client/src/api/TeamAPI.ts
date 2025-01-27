@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { mainAxiosInstance } from "./Axios";
 import { TeamInputs } from "../types/Team/ITeam";
 import { ExtractErrorsFromAPI } from "../utils/functions/ExtractErrorsFromAPI";
-import { ShiftInputs, TeamMemberShiftsToSend } from "../types/Shift/Shift";
+import { DeleteTeamMemberShiftInputs, ShiftInputs, TeamMemberShiftsToSend } from "../types/Shift/Shift";
 import { IRequestInputs } from "../types/Request/IRequest";
 
 export const GetUsersTeams = async (): Promise<AxiosResponse | null> => {
@@ -231,6 +231,27 @@ export const GetTeamMembersShifts = async (teamId: string): Promise<AxiosRespons
             throw new Error(errorMessage); 
         }
         throw new Error("Unexpected error occurred while creating team member shifts.");
+    }
+};
+export const DeleteTeamMemberShift = async (data: DeleteTeamMemberShiftInputs): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post("/api/TeamMemberShifts/DeleteTeamMemberShift", data);
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error deleting team member shift: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while deleting team member shift.");
     }
 };
 export const GetTeamProfilePicture = async (teamId: string): Promise<AxiosResponse | null> => {

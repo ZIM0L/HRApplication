@@ -39,7 +39,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Commands.Cr
                 TimeSpan.Parse(request.shiftStart),
                 TimeSpan.Parse(request.shiftEnd)
                 );
-            var teamShifts = _teamShiftRepository.GetTeamShifts(teamId)?.ToList();
+            var teamShifts = _teamShiftRepository.GetTeamShiftsByTeamId(teamId)?.ToList();
             if(teamShifts?.FirstOrDefault( x => x.ShiftStart == shift.ShiftStart && x.ShiftEnd == shift.ShiftEnd) is TeamShift)
             {
                 return CustomErrorOr.CustomErrors.Shift.ShiftAlreadyExists;

@@ -34,7 +34,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Team_Shifts.SingleOrDefault(x => x.TeamShiftId == teamShiftId);
         }
 
-        public List<TeamShift>? GetTeamShifts(Guid teamId)
+        public List<TeamShift>? GetTeamShiftsByTeamId(Guid teamId)
         {
             return _dbContex.Team_Shifts.Where(x => x.TeamId.Equals(teamId)).ToList();
         }
