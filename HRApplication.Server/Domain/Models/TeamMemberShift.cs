@@ -18,6 +18,9 @@
         public Guid TeamShiftId { get; set; }       
         public DateTime ShiftDate { get; set; }     
         public TimeSpan? CheckInTime { get; set; }    
-        public TimeSpan? CheckOutTime { get; set; }   
+        public TimeSpan? CheckOutTime { get; set; }
+        //
+        public User User { get; set; }
+        public TeamShift TeamShift { get; set; }
     }
 }

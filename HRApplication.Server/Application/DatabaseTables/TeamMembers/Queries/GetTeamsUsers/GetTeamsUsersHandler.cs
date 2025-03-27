@@ -1,10 +1,8 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
-using HRApplication.Server.Domain.Models;
-using HRApplication.Server.Domain.Models.User;
+using HRApplication.Server.Domain.Models.UserDTO;
 using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
-using System.Data.Entity.Core.Metadata.Edm;
 using static HRApplication.Server.Application.CustomErrorOr.CustomErrors;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTeamsUsers

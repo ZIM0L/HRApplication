@@ -36,6 +36,10 @@ builder.Host.UseSerilog((context, configuration) =>
 
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection("JwtSettings"));
 
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -43,14 +47,14 @@ builder.Services.AddAuthentication(options =>
 })
 .AddCookie("Cookies", options =>
 {
-    options.LoginPath = "/auth/google-login";  // Œcie¿ka logowania
+    options.LoginPath = "/auth/google-login";  // ÅšcieÅ¼ka logowania
 })
 .AddGoogle(options =>
 {
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
 
-    options.SaveTokens = true; // Zapisuje tokeny w kontekœcie autoryzacji
+    options.SaveTokens = true; // Zapisuje tokeny w kontekÅ›cie autoryzacji
 })
 .AddJwtBearer(options =>
 {
@@ -83,6 +87,15 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod()
               .AllowCredentials();
     });
+
+    //production
+    options.AddPolicy("AllowProductionFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:5000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
 
 //dbcontex added
@@ -102,11 +115,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 
+app.UseHsts();
 app.UseHttpsRedirection();
 
 // needed for cors also
 app.UseRouting();
 app.UseCors("AllowFrontend");
+app.UseCors("AllowProductionFrontend");
 app.UseStaticFiles();
 
 app.UseAuthentication();

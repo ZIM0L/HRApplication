@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using HRApplication.Server.Domain.Models.User;
+using HRApplication.Server.Domain.Models.UserDTO;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTeamsUsers

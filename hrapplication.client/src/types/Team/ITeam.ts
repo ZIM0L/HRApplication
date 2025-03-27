@@ -1,4 +1,5 @@
 import { ICalendarEvent } from "../Calendar/ICalendar";
+import { IInvitation } from "../Invitation/Invitation";
 import { IJobPosition } from "../JobPosition/IJobPosition";
 import { IQuestion } from "../Questions/ITeamQuestions";
 import { IRequest } from "../Request/IRequest";
@@ -44,7 +45,8 @@ export interface ITeamInformation {
     TeamMembersShifts: TeamMemberShift[]
     TeamProfileSrc: string,
     UsersRequests: IRequest[],
-    TeamQuestions: IQuestion[]
+    TeamQuestions: IQuestion[],
+    TeamInvitations: IInvitation[]
 }
 export interface IUsersTeamProfilesPictures {
     teamImage: Record<string, string>;

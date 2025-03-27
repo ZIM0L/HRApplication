@@ -26,5 +26,12 @@ namespace HRApplication.Server.Domain.Models
         public string? PhoneNumber { get; set; } = "";
         public string? ZipCode { get; set; } = "";
         public string? TeamProfilePathImage { get; set; }
+        //
+        public ICollection<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();
+        public ICollection<JobPosition> JobPositions { get; set; } = new List<JobPosition>();
+        public ICollection<TeamShift> TeamShifts { get; set; } = new List<TeamShift>();
+        public ICollection<TeamQuestion> TeamQuestions { get; set; } = new List<TeamQuestion>();
+        public ICollection<TeamMemberRequest> TeamMembersRequests { get; set; } = new List<TeamMemberRequest>();
+        public ICollection<TeamsCalendar> TeamsCalendars { get; set; } = new List<TeamsCalendar>(); 
     }
 }

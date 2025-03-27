@@ -15,5 +15,8 @@
         public Guid TeamId { get; set; }
         public TimeSpan ShiftStart { get; set; }
         public TimeSpan ShiftEnd { get; set; }
+        //
+        public ICollection<TeamMemberShift> TeamMemberShifts { get; set; } = new List<TeamMemberShift>();
+        public Team Team { get; set; }
     }
 }

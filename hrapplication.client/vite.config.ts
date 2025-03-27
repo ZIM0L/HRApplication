@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
 import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
@@ -15,6 +14,11 @@ const baseFolder =
 const certificateName = "hrapplication.client";
 const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
+
+// Tworzenie katalogu, jeœli nie istnieje
+if (!fs.existsSync(baseFolder)) {
+    fs.mkdirSync(baseFolder, { recursive: true });
+}
 
 if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
     if (0 !== child_process.spawnSync('dotnet', [

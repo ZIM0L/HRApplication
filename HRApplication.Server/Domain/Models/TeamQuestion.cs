@@ -13,7 +13,9 @@
         public Guid TeamId { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-
+        //
+        public Team Team { get; set; }
+        public ICollection<SubQuestion> SubQuestions { get; set; } = new List<SubQuestion>();
 
     }
 }

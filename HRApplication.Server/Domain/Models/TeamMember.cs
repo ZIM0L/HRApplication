@@ -1,4 +1,5 @@
-﻿namespace HRApplication.Server.Domain.Models
+﻿
+namespace HRApplication.Server.Domain.Models
 {
     public class TeamMember
     {
@@ -17,6 +18,10 @@
         public DateTime JoinedAt { get; set; } = DateTime.Now;
         public DateTime? LeftAt { get; set; } = null;
         public string RoleName { get; set; }
-        public Boolean IsActive { get; set; } = true;  
+        public Boolean IsActive { get; set; } = true;
+        //
+        public User User { get; set; }
+        public Team Team { get; set; }
+        public JobPosition JobPosition { get; set; }
     }
 }

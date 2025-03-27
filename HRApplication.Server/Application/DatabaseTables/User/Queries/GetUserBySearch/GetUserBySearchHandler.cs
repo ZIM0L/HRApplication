@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
-using HRApplication.Server.Domain.Models.User;
+using HRApplication.Server.Domain.Models.UserSearchDTO;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearch

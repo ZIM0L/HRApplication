@@ -10,5 +10,8 @@
         public Guid TeamsCalendarId { get; set; }
         public Guid TeamId { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        //
+        public Team Team { get; set; }
+        public ICollection<CalendarEvent> CalendarEvents { get; set; } = new List<CalendarEvent>();
     }
 }

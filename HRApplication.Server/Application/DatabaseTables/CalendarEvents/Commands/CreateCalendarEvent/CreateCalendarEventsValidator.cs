@@ -29,8 +29,8 @@ namespace HRApplication.Server.Application.DatabaseTables.CalendarEvents.Command
 
             RuleFor(x => x.category)
                 .NotEmpty().WithMessage("Category is required.")
-                .Matches("^(Personal|WorkRelated|Team|HealthAndWellness|Meetings|Celebrations|Financial|Admin|Projects)$")
-                .WithMessage("Category must be one of the following: Personal, WorkRelated, Team, HealthAndWellness, Meetings, Celebrations, Financial, Admin, Projects.");
+                .Matches("^(Personal|WorkRelated|Team Events|Health|Meetings|Celebrations|Financial|Admin|Projects)$")
+                .WithMessage("Category must be one of the following: Personal, WorkRelated, Team Events, Health, Meetings, Celebrations, Financial, Admin, Projects.");
 
             RuleFor(x => x.permission)
                 .NotEmpty().WithMessage("Permission is required.");

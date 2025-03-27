@@ -19,6 +19,9 @@
         public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
         public DateTime? AlteredAt { get; set; }
         public string? AnswerContent { get; set; }
-        
+        //
+        public Team Team { get; set; }
+        public User User { get; set; }
+
     }
 }

@@ -14,38 +14,6 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
-<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="TeamId" id="87B36D64-BFC2-F07F-4172-E55B36136A93">
-<createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 11:43:54 UTC</createdTime>
-<ownerDesignName>Database Model</ownerDesignName>
-<engineerTo>
-<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Name" id="AA423AFA-4901-90A4-5265-F986CFA58E83">
-<createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 11:43:59 UTC</createdTime>
-<ownerDesignName>Database Model</ownerDesignName>
-<engineerTo>
-<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="CreatedAt" id="36E1039C-F38E-F7BF-B981-63C0C7B48A8A">
-<createdBy>sylzy</createdBy>
-<createdTime>2024-10-28 11:44:06 UTC</createdTime>
-<ownerDesignName>Database Model</ownerDesignName>
-<engineerTo>
-<item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-</attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="5C30C7C4-E875-36A3-0319-B858FC11892B" name="Teams PK">
 <createdBy>sylzy</createdBy>
@@ -55,9 +23,6 @@
 <item key="9481B69A-12CA-F741-9058-1B57C95A5FFC" value="true"/>
 </engineerTo>
 <pk>true</pk>
-<usedAttributes>
-<attributeRef>87B36D64-BFC2-F07F-4172-E55B36136A93</attributeRef>
-</usedAttributes>
 </identifier>
 </identifiers>
 </Entity>

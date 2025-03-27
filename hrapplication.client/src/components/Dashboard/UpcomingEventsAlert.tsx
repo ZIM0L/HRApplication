@@ -73,7 +73,16 @@ const UpcomingEventsAlert = () => {
                                 {/* Event Info */}
                                 <div className="flex-1">
                                     <h3 className="text-md truncate font-semibold text-gray-800">{event.title}</h3>
-                                    <p className="truncate text-sm text-gray-600">{new Date(event.startDate).toLocaleString()}</p>
+                                    <p className="truncate text-sm text-gray-600">{new Date(event.startDate).toLocaleString([], {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })} - {new Date(event.endDate).toLocaleString([], {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}</p>
                                 </div>
 
                                 {/* Event Location */}

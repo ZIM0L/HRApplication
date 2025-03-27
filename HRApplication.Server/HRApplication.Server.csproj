@@ -7,10 +7,42 @@
     <SpaRoot>..\hrapplication.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
+    <UserSecretsId>7f0f0afb-cf49-4ed2-bcfc-7fbe25f0a270</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <Content Remove="wwwroot\src\index.css" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Black.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-BlackItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Bold.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-BoldItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-ExtraBold.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-ExtraBoldItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-ExtraLight.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-ExtraLightItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Italic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Light.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-LightItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Medium.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-MediumItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Regular.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-SemiBold.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-SemiBoldItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-Thin.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\Kanit-ThinItalic.ttf" />
+    <Content Remove="wwwroot\fonts\Kanit\OFL.txt" />
+    <Content Remove="wwwroot\index.html" />
+    <Content Remove="wwwroot\src\index.js" />
+    <Content Remove="wwwroot\vite.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ErrorOr" Version="2.0.1" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
@@ -22,6 +54,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
@@ -32,6 +65,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
@@ -44,10 +79,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\DatabaseTables\TeamMembers\Commands\RemoveTeamMember\" />
     <Folder Include="Application\DatabaseTables\TeamShifts\Commands\EditTeamShift\" />
+    <Folder Include="Migrations\" />
     <Folder Include="ProfilePictures\Default\" />
-    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\src\index.css" />
+    <None Include="wwwroot\src\index.js" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Black.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-BlackItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Bold.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-BoldItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-ExtraBold.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-ExtraBoldItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-ExtraLight.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-ExtraLightItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Italic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Light.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-LightItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Medium.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-MediumItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Regular.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-SemiBold.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-SemiBoldItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-Thin.ttf" />
+    <None Include="wwwroot\fonts\Kanit\Kanit-ThinItalic.ttf" />
+    <None Include="wwwroot\fonts\Kanit\OFL.txt" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\vite.svg" />
   </ItemGroup>
 
 </Project>

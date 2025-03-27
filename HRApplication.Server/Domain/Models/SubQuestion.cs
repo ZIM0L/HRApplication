@@ -13,5 +13,7 @@
         public string SubTitle { get; set; }
         public string SubDescription { get; set; }
         public Guid TeamQuestionId { get; set; }
+        //
+        public TeamQuestion TeamQuestion { get; set; }
     }
 }

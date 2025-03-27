@@ -47,5 +47,16 @@ namespace HRApplication.Server.Infrastructure.Persistance
         {
             return _dbContex.Team_Members.SingleOrDefault(x => x.JobPositionId == jobPositionId && x.UserId == userId);
         }
+
+        public List<TeamMember>? GetTeamMembersByjobPositionIdFromCollection(Guid jobPositionId)
+        {
+            return _dbContex.Team_Members.Where(x => x.JobPositionId == jobPositionId).ToList();
+        }
+
+        public void UpdateTeamMembersFromCollection(List<TeamMember> teamMembers)
+        {
+            _dbContex.Team_Members.UpdateRange(teamMembers);
+            _dbContex.SaveChanges();
+        }
     }
 }

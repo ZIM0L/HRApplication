@@ -1,13 +1,13 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.RemoveTeamMember;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTeamsUsers;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams;
 using HRApplication.Server.Application.DatabaseTables.Teams;
 using HRApplication.Server.Application.DatabaseTables.Teams.Commands;
-using HRApplication.Server.Application.DatabaseTables.Teams.Commands.AddNewTeam;
 using HRApplication.Server.Application.DatabaseTables.Teams.Commands.DisbandTeam;
 using HRApplication.Server.Application.DatabaseTables.Teams.Queries.GetTeamInfo;
-using HRApplication.Server.Domain.Models.User;
+using HRApplication.Server.Domain.Models.UserDTO;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -107,6 +107,19 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         public async Task<IActionResult> DisbandTeam(string teamId)
         {
             var command = new DisbandTeamRequest(teamId);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("DeleteTeamMember")]
+        public async Task<IActionResult> DeleteTeamMember(RemoveTeamMemberRequest removeTeamMemberRequest)
+        {
+            var command = new RemoveTeamMemberRequest(removeTeamMemberRequest.teamId, removeTeamMemberRequest.email);
 
             ErrorOr<Unit> response = await _mediatR.Send(command);
 

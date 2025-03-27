@@ -14,5 +14,8 @@
         public Guid SendByUserId { get; set; }
         public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
         public Boolean IsActive { get; set; } = true;
+        //
+        public User User { get; set; }
+        public JobPosition JobPosition { get; set; }
     }
 }

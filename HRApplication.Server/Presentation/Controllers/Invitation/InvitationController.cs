@@ -4,9 +4,10 @@ using HRApplication.Server.Application.DatabaseTables.Invitations.Commands;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.AcceptInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Commands.SendInvitation;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.CheckIfAnyInvitationForUser;
+using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetTeamPendingInvitations;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetUserInvitations;
 using HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearch;
-using HRApplication.Server.Domain.Models.User;
+using HRApplication.Server.Domain.Models.UserSearchDTO;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -104,6 +105,18 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
 
             return response.Match(
             response => Ok(),
+            errors => Problem(errors));
+        }
+        [HttpPost]
+        [Route("GetPendingInvitations")]
+        public async Task<IActionResult> GetPendingInvitations(GetTeamPendingInvitationsRequest request)
+        {
+            var command = new GetTeamPendingInvitationsRequest(request.teamId);
+
+            ErrorOr<List<InvitationResult>?> response = await _mediator.Send(command);
+
+            return response.Match(
+            response => Ok(response),
             errors => Problem(errors));
         }
     }

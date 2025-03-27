@@ -216,9 +216,8 @@ const RequestDashboard: React.FC = () => {
                                                             <div className="flex flex-col items-end space-y-2">
                                                                 <TrashIcon
                                                                     className="h-5 w-5 text-gray-600 transition-colors hover:text-red-500"
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation(); // Prevent triggering the parent click
-                                                                        setSelectedRequest(null);
+                                                                    onClick={() => {
+                                                                        setSelectedRequest(request);
                                                                         setIsModalOpen(true);
                                                                     }}
                                                                 />

@@ -94,5 +94,29 @@ export const DeclineInvitation = async (invitationId: string): Promise<AxiosResp
 
         throw new Error("Unexpected error occurred while declining invitation.");
     }
+}; export const GetPendingInvitations = async (teamId: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post(`api/Invitation/GetPendingInvitations`, {
+            teamId: teamId
+        });
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error fetching team invitations: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+
+            throw new Error(errorMessage);
+        }
+
+        throw new Error("Unexpected error occurred whilefetching team invitations.");
+    }
 };
 

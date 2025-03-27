@@ -2,6 +2,7 @@
 using HRApplication.Server.Application.DatabaseTables.JobPosition.Queries.GetJobPositionsBasedOnTeams;
 using HRApplication.Server.Application.DatabaseTables.JobPositions;
 using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.AddJobPosition;
+using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.DeleteJobPosition;
 using HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.EditJobPosition;
 using HRApplication.Server.Domain.Models;
 using MediatR;
@@ -50,7 +51,19 @@ namespace HRApplication.Server.Presentation.Controllers.JobPositions
             return response.Match(
             response => Ok(response),
             errors => Problem(errors));
-        }   
+        }
+        [HttpPost]
+        [Route("DeleteJobPosition")]
+        public async Task<IActionResult> DeleteJobPosition([FromBody] DeleteJobPositionRequest request)
+        {
+            var query = new DeleteJobPositionRequest(request.jobPositionId);
+
+            ErrorOr<Unit> response = await _mediator.Send(query);
+
+            return response.Match(
+            response => Ok(response),
+            errors => Problem(errors));
+        }
         [HttpPost]
         [Route("UpdateJobPosition")]
         public async Task<IActionResult> UpdateJobPosition([FromBody] EditJobPositionRequest request)

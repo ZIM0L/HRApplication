@@ -26,6 +26,12 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Invitations.Any(x => x.UserId == userId);
         }
 
+        public void DeleteInvitations(List<Invitation> invitations)
+        {
+            _dbContex.Invitations.RemoveRange(invitations);
+            _dbContex.SaveChanges();
+        }
+
         public void DeleteUserInvitation(Invitation invitation)
         {
             _dbContex.Invitations.Remove(invitation);
@@ -35,6 +41,35 @@ namespace HRApplication.Server.Infrastructure.Persistance
         public Invitation? GetInvitationById(Guid invitationId)
         {
             return _dbContex.Invitations.SingleOrDefault(x => x.InvitationId == invitationId);
+        }
+
+        public List<Invitation>? GetInvitatiosnByJobPositionId(Guid jobPositionId)
+        {
+            return _dbContex.Invitations.Where(x => x.JobPositionId == jobPositionId).ToList();
+        }
+
+        public List<InvitationResult>? GetTeamPendingInvitationsByTeamId(Guid teamId)
+        {
+            var invitations = _dbContex.Invitations
+                .Join(_dbContex.Job_Positions,
+                    invitation => invitation.JobPositionId,
+                    jobPosition => jobPosition.JobPositionId,
+                    (invitation, jobPosition) => new { invitation, jobPosition })
+                .Where(joined => joined.jobPosition.TeamId == teamId)
+                .Join(_dbContex.Users,
+                    joined => joined.invitation.UserId,
+                    user => user.UserId,
+                    (joined, user) => new InvitationResult(
+                        joined.invitation.InvitationId,
+                        user.Name,
+                        user.Surname,
+                        joined.jobPosition.Title,
+                        joined.jobPosition.Team.Name,
+                        joined.jobPosition.Team.Industry,
+                        joined.invitation.SubmittedAt))
+                .ToList();
+
+            return invitations;
         }
 
         public Invitation? IsInvitationAlreadyCreated(Invitation invitation)

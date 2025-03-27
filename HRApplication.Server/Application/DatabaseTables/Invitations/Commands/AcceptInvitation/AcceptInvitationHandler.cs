@@ -4,6 +4,7 @@ using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AddTe
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
+using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.AcceptInvitation
@@ -15,13 +16,15 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IJobPositionsRepository _jobPositionsRepository;
         private readonly ITeamRepository _teamRepository;
-        public AcceptInvitationHandler(IMediator mediator, IInvitationRepository invitationRepository, IHttpContextAccessor httpContextAccessor, IJobPositionsRepository jobPositionsRepository, ITeamRepository teamRepository)
+        private readonly ITeamMemberRepository _teamMemberRepository;
+        public AcceptInvitationHandler(IMediator mediator, IInvitationRepository invitationRepository, IHttpContextAccessor httpContextAccessor, IJobPositionsRepository jobPositionsRepository, ITeamRepository teamRepository, ITeamMemberRepository teamMemberRepository)
         {
             _mediator = mediator;
             _invitationRepository = invitationRepository;
             _httpContextAccessor = httpContextAccessor;
             _jobPositionsRepository = jobPositionsRepository;
             _teamRepository = teamRepository;
+            _teamMemberRepository = teamMemberRepository;
         }
         public async Task<ErrorOr<Unit>> Handle(AcceptInvitationRequest request, CancellationToken cancellationToken)
         {
@@ -51,14 +54,8 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
 
-            var AddTeamMemberCommand = new AddTeamMemberRequest(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), jobPosition.TeamId, jobPosition.JobPositionId, "Employee");
-
-            var resultAddTeamMemberCommand = await _mediator.Send(AddTeamMemberCommand);
-
-            if (resultAddTeamMemberCommand.IsError)
-            {
-                return resultAddTeamMemberCommand.Errors;
-            }
+            var AddTeamMember = new TeamMember(Guid.Parse(BearerCheckerResult.Value.Payload.Sub), jobPosition.TeamId, jobPosition.JobPositionId, "Employee");
+            _teamMemberRepository.AddNewTeamMemberToCollection(AddTeamMember);
 
             var resultDeleteInvitationCommand = await _mediator.Send(new DeclineInvitationRequest(invitation.InvitationId.ToString()));
             

@@ -901,6 +901,10 @@ video {
   max-height: 10rem;
 }
 
+.max-h-96 {
+  max-height: 24rem;
+}
+
 .max-h-\[75\%\] {
   max-height: 75%;
 }
@@ -911,10 +915,6 @@ video {
 
 .max-h-\[97vh\] {
   max-height: 97vh;
-}
-
-.max-h-96 {
-  max-height: 24rem;
 }
 
 .min-h-screen {
@@ -1024,10 +1024,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .min-w-\[200px\] {
@@ -1326,10 +1322,6 @@ video {
 
 .self-end {
   align-self: flex-end;
-}
-
-.self-center {
-  align-self: center;
 }
 
 .overflow-auto {
@@ -1775,10 +1767,6 @@ video {
   padding-top: 1rem;
 }
 
-.pr-4 {
-  padding-right: 1rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -1793,10 +1781,6 @@ video {
 
 .text-start {
   text-align: start;
-}
-
-.font-\[\'PlayfairDisplay-SemiBold\'\] {
-  font-family: 'PlayfairDisplay-SemiBold';
 }
 
 .text-2xl {
@@ -1976,6 +1960,11 @@ video {
 .text-yellow-700 {
   --tw-text-opacity: 1;
   color: rgb(161 98 7 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-800 {
+  --tw-text-opacity: 1;
+  color: rgb(133 77 14 / var(--tw-text-opacity, 1));
 }
 
 .underline {
@@ -2414,6 +2403,16 @@ hr {
   --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity, 1));
 }
 
+.focus\:ring-gray-400:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(156 163 175 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-red-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity, 1));
+}
+
 .group:hover .group-hover\:pointer-events-auto {
   pointer-events: auto;
 }
@@ -2603,16 +2602,16 @@ hr {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
+  .md\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .md\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .md\:flex-row {

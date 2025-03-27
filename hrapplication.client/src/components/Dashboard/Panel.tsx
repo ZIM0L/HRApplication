@@ -10,7 +10,7 @@ import { useState } from 'react';
 import UserSettings from '../UserSettings/UserSettings';
 
 function Panel() {
-    const { decodedToken, isCheckingToken, userProfileSrc, logOut, selectedTeam } = useAuth();
+    const { decodedToken, isCheckingToken, userProfileSrc, logOut, selectedTeam, teamInformation } = useAuth();
     const navigate = useNavigate();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isUserSettingsModalOpen, setIsUserSettingsModalOpen] = useState(false)
@@ -37,42 +37,48 @@ function Panel() {
 
     if (isLoggingOut) {
         return (
-            <div className="flex h-screen items-center justify-center bg-gray-100">
-                <h1 className="text-xl font-bold text-gray-600">Logging out...</h1>
+            <div className="bg-gray-100 flex h-screen items-center justify-center">
+                <h1 className="text-gray-600 text-xl font-bold">Logging out...</h1>
             </div>
         );
     }
 
     return (
         <>
-            <div className="flex h-full w-full flex-col gap-6 p-5 md:flex-row">
+            <div className="gap-6 p-5 flex h-full w-full flex-col md:flex-row">
                 {/* Profile Section */}
-                <div className="flex w-full flex-col space-y-6 md:w-1/4">
-                    <div className="border-2 flex flex-col items-center space-y-4 rounded-lg bg-gradient-to-br px-6 py-6 shadow-xl">
+                <div className="space-y-6 flex w-full flex-col md:w-1/4">
+                    <div className="space-y-4 px-6 py-6 flex flex-col items-center rounded-lg border-2 bg-gradient-to-br shadow-xl">
                         <img
                             src={userProfileSrc || ""}
                             alt="User"
-                            className="border-4 mb-4 h-24 w-24 rounded-full border-white shadow-xl transition-transform duration-300 hover:scale-105"
+                            className="mb-4 h-24 w-24 border-white rounded-full border-4 shadow-xl transition-transform duration-300 hover:scale-105"
                         />
                         <h2 className="text-center text-lg font-semibold">{decodedToken.given_name} {decodedToken.family_name}</h2>
                         <p className="text-center text-sm">{decodedToken.email}</p>
-                        <p className="rounded-full bg-gray-200 px-3 py-1 text-center text-sm shadow">
+                        <p className="bg-gray-200 px-3 py-1 rounded-full text-center text-sm shadow">
                             Role: {selectedTeam?.roleName}
                         </p>
                         <p className="text-center text-xs">
-                            Joined: {new Date().toLocaleDateString()}
+                            Joined: {
+                                teamInformation?.UserData
+                                    .filter(user => user.email === decodedToken.email) // Filtrujemy po emailu
+                                    .map(user => new Date(user.joinedAt)) // Mapujemy na daty
+                                    .sort() // Sortujemy daty rosnąco
+                                    .shift()?.toLocaleDateString() ?? 'No Date Available' // Zwracamy najwcześniejszą datę lub komunikat
+                            }
                         </p>
 
-                        <div className="w-full space-y-2">
+                        <div className="space-y-2 w-full">
                             <button
-                                className="border-2 flex w-full items-center justify-center space-x-4 rounded-md border-gray-300 py-1 text-gray-400 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
+                                className="space-x-4 border-gray-300 py-1 text-gray-400 flex w-full items-center justify-center rounded-md border-2 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
                                 onClick={() => setIsUserSettingsModalOpen(true)}
                             >
                                 <Cog8ToothIcon className="h-6 w-6" />
                                 <span className="text-sm font-semibold">Edit Profile</span>
                             </button>
                             <button
-                                className="border-2 flex w-full items-center justify-center space-x-4 rounded-md border-gray-300 py-1 text-gray-400 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
+                                className="space-x-4 border-gray-300 py-1 text-gray-400 flex w-full items-center justify-center rounded-md border-2 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
                                 onClick={() => LogOutOfSystem()}
                             >
                                 <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
@@ -85,9 +91,9 @@ function Panel() {
                 </div>
 
                 {/* Main Content Section */}
-                <div className="flex w-full flex-col space-y-2">
+                <div className="space-y-2 flex w-full flex-col">
                     <WorkSchedule />
-                    <div className=" flex h-full flex-col gap-4 overflow-auto md:flex-row lg:flex-row">
+                    <div className=" gap-4 flex h-full flex-col overflow-auto md:flex-row lg:flex-row">
                         {/* These components are now constrained within their container */}
                         <UpcomingEventsAlert />
                         <Notifications />

@@ -16,12 +16,14 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.AddNewT
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AddNewTeamHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator, IHttpContextAccessor httpContextAccessor, ITeamsCalendarRepository teamsCalendarRepository)
+        private readonly ITeamMemberRepository _teamMemberRepository;
+        public AddNewTeamHandler(ITeamRepository teamRepository, IUserRepository userRepository, IMediator mediator, IHttpContextAccessor httpContextAccessor, ITeamsCalendarRepository teamsCalendarRepository, ITeamMemberRepository teamMemberRepository)
         {
             _teamRepository = teamRepository;
             _userRepository = userRepository;
             _mediator = mediator;
             _httpContextAccessor = httpContextAccessor;
+            _teamMemberRepository = teamMemberRepository;
         }
         public async Task<ErrorOr<TeamResult>> Handle(TeamAddRequest request, CancellationToken cancellationToken)
         {
@@ -57,14 +59,9 @@ namespace HRApplication.Server.Application.DatabaseTables.Teams.Commands.AddNewT
 
             _teamRepository.AddNewTeam(team);
 
-            var command = new AddTeamMemberRequest(user.UserId, team.TeamId, null, "Administrator");
-            var addTeamMembertoCollectionResult = await _mediator.Send(command);
+            var teamAdmin = new TeamMember(user.UserId, team.TeamId, null, "Administrator");
+            _teamMemberRepository.AddNewTeamMemberToCollection(teamAdmin);
 
-            if (addTeamMembertoCollectionResult.IsError)
-            {
-                _teamRepository.DeleteTeamPermanently(team);
-                return addTeamMembertoCollectionResult.Errors;
-            }
             await _mediator.Send(new CreateCalendarRequest(team.TeamId));
 
             return new TeamResult(

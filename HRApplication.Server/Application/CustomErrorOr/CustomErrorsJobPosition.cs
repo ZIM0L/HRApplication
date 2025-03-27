@@ -19,6 +19,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "JobPosition.PositionAlreadyInTeam",
                 description: "Position with given name is already created in team"
             );
+            public static Error NoJobPositionExistsToModify = Error.Conflict(
+               code: "JobPosition.NoJobPositionExistsToModify",
+               description: "Given position cannot be modified"
+           );
         }
 
     }

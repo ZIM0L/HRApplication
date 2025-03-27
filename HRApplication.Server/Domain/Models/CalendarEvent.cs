@@ -25,6 +25,8 @@
         public DateTime EndDate { get; set; }
         public string? Location { get; set; }
         public string Permission {  get; set; }
+        //
+        public TeamsCalendar TeamsCalendar { get; set; }
 
     }
 }

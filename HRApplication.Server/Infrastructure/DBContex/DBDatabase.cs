@@ -24,8 +24,85 @@ namespace HRApplication.Server.Infrastructure.DBContex
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+            modelBuilder.Entity<TeamMember>()
+             .HasOne(user => user.User)
+             .WithMany(teamMember => teamMember.TeamMembers)
+             .HasForeignKey(user => user.UserId);
+
+            modelBuilder.Entity<TeamMember>()
+                .HasOne(team => team.Team)
+                .WithMany(teamMember => teamMember.TeamMembers)
+                .HasForeignKey(team => team.TeamId);
+
+            modelBuilder.Entity<TeamMemberShift>()
+                .HasOne(user => user.User)
+                .WithMany(teamMemberShift => teamMemberShift.TeamMemberShifts)
+                .HasForeignKey(user => user.UserId);
+
+            modelBuilder.Entity<TeamMemberShift>()
+                .HasOne(teamShift => teamShift.TeamShift)
+                .WithMany(teamMemberShift => teamMemberShift.TeamMemberShifts)
+                .HasForeignKey(teamShift => teamShift.TeamShiftId);
+
+            modelBuilder.Entity<JobPosition>()
+                .HasOne(team => team.Team)
+                .WithMany(jobPosition => jobPosition.JobPositions)
+                .HasForeignKey(team => team.TeamId);
+
+            modelBuilder.Entity<TeamMember>()
+                .HasOne(jobPosition => jobPosition.JobPosition)
+                .WithMany(teamMember => teamMember.TeamMembers)
+                .HasForeignKey(jobPosition => jobPosition.JobPositionId);
+
+            modelBuilder.Entity<Invitation>()
+                .HasOne(user => user.User)
+                .WithMany(invitation => invitation.Invitations)
+                .HasForeignKey(user => user.UserId);
+
+            modelBuilder.Entity<Invitation>()
+                .HasOne(jobPosition => jobPosition.JobPosition)
+                .WithMany(invitation => invitation.Invitations)
+                .HasForeignKey(jobPosition => jobPosition.InvitationId);
+
+            modelBuilder.Entity<TeamShift>()
+                .HasOne(team => team.Team)
+                .WithMany(teamShift => teamShift.TeamShifts)
+                .HasForeignKey(team => team.TeamId);
+
+            modelBuilder.Entity<TeamQuestion>()
+                .HasOne(team => team.Team)
+                .WithMany(teamQuestion => teamQuestion.TeamQuestions)
+                .HasForeignKey(team => team.TeamId);
+
+            modelBuilder.Entity<SubQuestion>()
+                .HasOne(teamQuestion => teamQuestion.TeamQuestion)
+                .WithMany(subQuestion => subQuestion.SubQuestions)
+                .HasForeignKey(teamQuestion => teamQuestion.TeamQuestionId);
+
+            modelBuilder.Entity<TeamMemberRequest>()
+                .HasOne(user => user.User)
+                .WithMany(teamMemberRequest => teamMemberRequest.TeamMemberRequests)
+                .HasForeignKey(user => user.UserId);
+
+            modelBuilder.Entity<TeamMemberRequest>()
+                .HasOne(team => team.Team)
+                .WithMany(teamMemberRequest => teamMemberRequest.TeamMembersRequests)
+                .HasForeignKey(team => team.TeamId);
+
+            modelBuilder.Entity<TeamsCalendar>()
+                .HasOne(team => team.Team)
+                .WithMany(teamsCalendar => teamsCalendar.TeamsCalendars)
+                .HasForeignKey(team => team.TeamId);
+
+            modelBuilder.Entity<CalendarEvent>()
+                .HasOne(teamsCalendar => teamsCalendar.TeamsCalendar)
+                .WithMany(calendarEvent => calendarEvent.CalendarEvents)
+                .HasForeignKey(teamsCalendar => teamsCalendar.TeamsCalendarId);
+
+
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 

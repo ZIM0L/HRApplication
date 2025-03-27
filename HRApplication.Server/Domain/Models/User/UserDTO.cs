@@ -1,4 +1,4 @@
-﻿namespace HRApplication.Server.Domain.Models.User
+﻿namespace HRApplication.Server.Domain.Models.UserDTO
 {
     public class UserDTO
     {

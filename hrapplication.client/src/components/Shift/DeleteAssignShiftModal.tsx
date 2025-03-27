@@ -3,7 +3,6 @@ import {  ShiftsAssignmentInMonth } from "../../types/Shift/Shift";
 import { useAuth } from "../../contex/AppContex";
 import { DeleteTeamMemberShift } from "../../api/TeamAPI";
 import Notification from "../Notification/Notification";
-import { ITeamInformation } from "../../types/Team/ITeam";
 
 const DeleteAssignShiftModal: React.FC = () => {
     const { employeeShiftsAssignment, teamInformation, setEmployeeShiftsAssignment } = useAuth(); // Pobranie danych o pracownikach i zmianach

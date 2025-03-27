@@ -46,7 +46,8 @@ namespace HRApplication.Server.Application.DatabaseTables.JobPositions.Commands.
                 (
                     request.title.ToLower(),
                     request.description,
-                    Guid.Parse(request.teamId)
+                    Guid.Parse(request.teamId),
+                    request.isRecruiting
                 );
 
             var jobPositionDTO = new JobPositionsResult

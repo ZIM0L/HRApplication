@@ -411,6 +411,31 @@ export const ResolveUserRequest = async (teammemberrequestid: string, answerCont
         throw new Error("Unexpected error occurred while deleting user request.");
     }
 }
+export const DeleteTeamMember = async (teamId: string, email: string): Promise<AxiosResponse | null> => {
+    try {
+        const response = await mainAxiosInstance.post(`api/Team/DeleteTeamMember`, {
+            teamId: teamId,
+            email: email
+        });
+        return response;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error deleting user: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while deleting user.");
+    }
+}
+
 
 
 

@@ -3,7 +3,6 @@ import WeekSchedule from "./WeekSchedule";
 import AddNewShift from "./AddNewShift";
 import { EmployeeShiftsAssignment, Shift, ShiftsAssignmentInMonth } from "../../types/Shift/Shift";
 import AssignShiftModal from "./AssignShiftModal";
-import DeleteShiftModal from "./DeleteShiftModal"; // Zaimportuj DeleteShiftModal
 import { useAuth } from "../../contex/AppContex";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { ITeamInformation } from "../../types/Team/ITeam";

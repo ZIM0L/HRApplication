@@ -28,7 +28,7 @@ namespace HRApplication.Server.Application.CustomErrorOr
             );
             public static Error UserNotFound = Error.NotFound(
                 code: "User.UserNotFound",
-                description: "User not found by Id"
+                description: "User not found"
             );
             public static Error UserNotAuthorized = Error.Forbidden(
                 code: "User.UserNotAuthorized",
