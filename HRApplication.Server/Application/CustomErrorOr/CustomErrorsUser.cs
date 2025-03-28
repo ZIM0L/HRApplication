@@ -38,6 +38,10 @@ namespace HRApplication.Server.Application.CustomErrorOr
                 code: "User.UserModified",
                 description: "Token has been modified"
             );
+            public static Error InvalidPassword = Error.Conflict(
+                code: "User.InvalidPassword",
+                description: "Invalid Password"
+            );
         }
     }
 }

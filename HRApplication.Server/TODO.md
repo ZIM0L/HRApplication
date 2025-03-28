@@ -10,10 +10,12 @@
 - [ x ] Pending invites
 - [ x ] Team responsywnosc
 - [ ] Usuwanie invitation podczas "pending"
-- [ ] Edit Profile 
+- [ x ] Edit Profile 
+- [  ] password change
+- [  ] password reset
 - [ ] add job position przyciski wylaczac po dodaniu
 - [ x ] uzytkownik na top liscie w teamie
-- [ ] Q&A jezeli nie ma niczego to pierwsze tworzenie
+- [ x ] Q&A jezeli nie ma niczego to pierwsze tworzenie
 - [ ] Posprawdzaj aby guziki cancle byly po tej samej stronie wszedzie
 - [ ] sprawdz czy jak tworzy druzyne, to ten kto tworzy jak job position dostaje
 - [ ] jak usuniety to niech cofnie go do strony glownej

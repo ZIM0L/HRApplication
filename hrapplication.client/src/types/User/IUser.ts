@@ -18,3 +18,10 @@ export interface IEmployeeData {
     isActive: boolean;
     phoneNumber: string;
 }
+export interface IUserToChangeCredentials {
+    email: string,
+    name: string,
+    password: string,
+    phoneNumber: string,
+    surname: string,
+}

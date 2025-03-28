@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.Commands.ChangeUserCredentials;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
@@ -17,7 +18,7 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
         }
 
         [HttpPost]
-        [Route("/api/[controller]/GetUsersRoleById")]
+        [Route("GetUsersRoleById")]
         public async Task<IActionResult> GetUsersRoleById([FromBody] GetUserByIdQuery request)
         {
 
@@ -25,6 +26,22 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
                 request.UserId);
 
             ErrorOr<User> response = await _mediator.Send(query);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+
+        }  
+        [HttpPost]
+        [Route("ChangeUserCredential")]
+        public async Task<IActionResult> ChangeUserCredential([FromBody] ChangeUserCredentialsRequest request)
+        {
+
+            var query = new ChangeUserCredentialsRequest(
+                request.name, request.surname, request.email, request.phoneNumber, request.password);
+
+            ErrorOr<Unit> response = await _mediator.Send(query);
 
             return response.Match(
                 response => Ok(response),

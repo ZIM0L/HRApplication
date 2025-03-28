@@ -37,26 +37,26 @@ function Panel() {
 
     if (isLoggingOut) {
         return (
-            <div className="bg-gray-100 flex h-screen items-center justify-center">
-                <h1 className="text-gray-600 text-xl font-bold">Logging out...</h1>
+            <div className="flex h-screen items-center justify-center bg-gray-100">
+                <h1 className="text-xl font-bold text-gray-600">Logging out...</h1>
             </div>
         );
     }
 
     return (
         <>
-            <div className="gap-6 p-5 flex h-full w-full flex-col md:flex-row">
+            <div className="flex h-full w-full flex-col gap-6 p-5 md:flex-row">
                 {/* Profile Section */}
-                <div className="space-y-6 flex w-full flex-col md:w-1/4">
-                    <div className="space-y-4 px-6 py-6 flex flex-col items-center rounded-lg border-2 bg-gradient-to-br shadow-xl">
+                <div className="flex w-full flex-col space-y-6 md:w-1/4">
+                    <div className="flex flex-col items-center space-y-4 rounded-lg border-2 bg-gradient-to-br px-6 py-6 shadow-xl">
                         <img
                             src={userProfileSrc || ""}
                             alt="User"
-                            className="mb-4 h-24 w-24 border-white rounded-full border-4 shadow-xl transition-transform duration-300 hover:scale-105"
+                            className="mb-4 h-24 w-24 rounded-full border-4 border-white shadow-xl transition-transform duration-300 hover:scale-105"
                         />
                         <h2 className="text-center text-lg font-semibold">{decodedToken.given_name} {decodedToken.family_name}</h2>
                         <p className="text-center text-sm">{decodedToken.email}</p>
-                        <p className="bg-gray-200 px-3 py-1 rounded-full text-center text-sm shadow">
+                        <p className="rounded-full bg-gray-200 px-3 py-1 text-center text-sm shadow">
                             Role: {selectedTeam?.roleName}
                         </p>
                         <p className="text-center text-xs">
@@ -69,16 +69,16 @@ function Panel() {
                             }
                         </p>
 
-                        <div className="space-y-2 w-full">
+                        <div className="w-full space-y-2">
                             <button
-                                className="space-x-4 border-gray-300 py-1 text-gray-400 flex w-full items-center justify-center rounded-md border-2 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
+                                className="flex w-full items-center justify-center space-x-4 rounded-md border-2 border-gray-300 py-1 text-gray-400 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
                                 onClick={() => setIsUserSettingsModalOpen(true)}
                             >
                                 <Cog8ToothIcon className="h-6 w-6" />
                                 <span className="text-sm font-semibold">Edit Profile</span>
                             </button>
                             <button
-                                className="space-x-4 border-gray-300 py-1 text-gray-400 flex w-full items-center justify-center rounded-md border-2 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
+                                className="flex w-full items-center justify-center space-x-4 rounded-md border-2 border-gray-300 py-1 text-gray-400 transition-all duration-300 hover:text-gray-800 hover:scale-105 hover:border-dark-blue"
                                 onClick={() => LogOutOfSystem()}
                             >
                                 <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
@@ -91,9 +91,9 @@ function Panel() {
                 </div>
 
                 {/* Main Content Section */}
-                <div className="space-y-2 flex w-full flex-col">
+                <div className="flex w-full flex-col space-y-2">
                     <WorkSchedule />
-                    <div className=" gap-4 flex h-full flex-col overflow-auto md:flex-row lg:flex-row">
+                    <div className=" flex h-full flex-col gap-4 overflow-auto md:flex-row lg:flex-row">
                         {/* These components are now constrained within their container */}
                         <UpcomingEventsAlert />
                         <Notifications />
@@ -106,6 +106,12 @@ function Panel() {
                 <UserSettings
                     isOpen={isUserSettingsModalOpen}
                     onClose={() => setIsUserSettingsModalOpen(false)}
+                    userData={{
+                        name: decodedToken.given_name!,
+                        surname: decodedToken.family_name!,
+                        phoneNumber: teamInformation?.UserData.find(u => u.email === decodedToken.email)?.phoneNumber || '',
+                        email: decodedToken.email!,
+                    }}
                 />
             )}
         </>

@@ -50,10 +50,10 @@ const Notifications = () => {
 
             <div className="flex flex-grow flex-col">
                 {/* Lista wiadomości */}
-                <div className="flex-1 flex flex-col gap-4 overflow-hidden py-2">
+                <div className="flex flex-1 flex-col gap-4 overflow-hidden py-2">
                     {currentMessages.length > 0 ? (
                         currentMessages.filter(req => req.status == "pending").map((message, index) => (
-                            <div key={message.teamMemberRequestId} className="border-l-4 flex items-center justify-between pl-2">
+                            <div key={message.teamMemberRequestId} className="flex items-center justify-between border-l-4 pl-2">
                                 <div>
                                     <p className="font-medium text-gray-800">
                                         {message.title || `Request #${index + 1}`}
@@ -91,7 +91,7 @@ const Notifications = () => {
                     <button
                         onClick={goToNextPage}
                         disabled={currentPage === totalPages}
-                        className={`px-3 py-1 rounded-md ${currentPage === totalPages
+                        className={`px-3 py-1 rounded-md text-white ${currentPage === totalPages
                             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                             : "bg-cyan-blue text-gray-800 hover:bg-cyan-blue-hover"
                             }`}
