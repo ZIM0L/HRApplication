@@ -2,6 +2,9 @@
 import { IEmployeeData } from "../../types/User/IUser";
 import { useAuth } from "../../contex/AppContex";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import AssignRoleModal from "./AssignRoleModal";
+import { AssignTeamMemberRole } from "../../api/TeamAPI";
+import Notification from "../Notification/Notification";
 
 // Typ komponentu
 interface UsersAndRolesTableProps {
@@ -15,8 +18,42 @@ const UsersAndRolesTable: React.FC<UsersAndRolesTableProps> = ({ dataToDisplay, 
         key: "name",
         direction: "asc",
     });
-    const { selectedTeam } = useAuth();
-    // Funkcja sortuj�ca
+    const { selectedTeam, setTeamInformation } = useAuth();
+    const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
+    const [showNotification, setShowNotification] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+
+    const handleOpenAssignModal = () => {
+        setIsAssignModalOpen(true);
+    };
+
+    const handleAssignRole = async (user: IEmployeeData, jobPosition: string) => {
+        try {
+            if (!selectedTeam) return;
+            const result = await AssignTeamMemberRole(user.email, selectedTeam.team.teamId, jobPosition);
+            if (result?.status === 200) {
+                setNotificationMessage([`Assigned ${jobPosition} to ${user.name} ${user.surname}`]);
+                setIsError(false)
+                setShowNotification(true);
+                const updatedUserData = result.data;
+                //@ts-expect-error works
+                setTeamInformation((prev: ITeamInformation) => {
+                    return { ...prev, UserData: [...prev.UserData, updatedUserData] };
+                });
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                setIsError(true)
+                setNotificationMessage(["Job position is already assigned to this user"]);
+                setShowNotification(true);
+            }
+        }
+    };
+
+
+
     const sortedData = dataToDisplay.sort((a, b) => {
         let aValue: string | null = "";
         let bValue: string | null = "";
@@ -50,6 +87,8 @@ const UsersAndRolesTable: React.FC<UsersAndRolesTableProps> = ({ dataToDisplay, 
         }
         setSortConfig({ key, direction });
     };
+
+
     if (!selectedTeam) {
         return <div>No team has been selected</div>;
     }
@@ -62,7 +101,7 @@ const UsersAndRolesTable: React.FC<UsersAndRolesTableProps> = ({ dataToDisplay, 
                 <div className="group relative flex items-center space-x-4">
                     {selectedTeam.roleName == "Administrator" ? (
                         <div className="relative">
-                            <PlusIcon onClick={() => { }} className="h-6 w-6 hover:cursor-pointer" />
+                            <PlusIcon onClick={handleOpenAssignModal} className="h-6 w-6 hover:cursor-pointer" />
                             <span className="-translate-x-1/2 absolute left-1/3 top-7 transform whitespace-nowrap bg-gray-800 px-2 py-1 text-sm text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
                                 Assign Role
                             </span>
@@ -158,6 +197,16 @@ const UsersAndRolesTable: React.FC<UsersAndRolesTableProps> = ({ dataToDisplay, 
                         ))}
                 </tbody>
             </table>
+         
+            <AssignRoleModal
+                isOpen={isAssignModalOpen}
+                onClose={() => setIsAssignModalOpen(false)}
+                onConfirm={handleAssignRole}
+                users={dataToDisplay}
+            />
+            {showNotification && (
+                <Notification messages={notificationMessage} onClose={() => setShowNotification(false)} isError={isError} />
+            )}
         </div>
     );
 };

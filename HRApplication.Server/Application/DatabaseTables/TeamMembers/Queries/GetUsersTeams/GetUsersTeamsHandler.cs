@@ -1,8 +1,6 @@
 ﻿using ErrorOr;
-using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
-using HRApplication.Server.Domain.Models;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams
@@ -42,7 +40,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.Ge
                 return CustomErrorOr.CustomErrors.Team.UserWithoutTeam;
             }
 
-            var teamsIds = UsersTeams.Select(x => x.TeamId).ToList();
+            var teamsIds = UsersTeams.Where(x => x.IsActive == true).Select(x => x.TeamId).ToList();
 
             var teams = _teamRepository.GetTeamsByTeamIds(teamsIds);
 

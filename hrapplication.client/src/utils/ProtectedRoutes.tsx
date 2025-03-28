@@ -5,7 +5,7 @@ import Loading from "../components/ErrorComponents/Loading";
 
 const ProtectedRoutes = () => {
     const location = useLocation();
-    const { authToken, decodedToken, isCheckingToken, checkToken } = useAuth();
+    const { authToken, decodedToken, isCheckingToken, checkToken, teamInformation } = useAuth();
 
     useEffect(() => {
         const check = async () => {
@@ -18,8 +18,8 @@ const ProtectedRoutes = () => {
     if (isCheckingToken) {
         return <Loading />
     }
-    if (!decodedToken) {
-        return <Navigate to="/accessdenied" state={{ from: location }} replace />;
+    if (!decodedToken || teamInformation?.UserData.find(user => user.email == decodedToken.email && user.isActive === false)) {  
+       return <Navigate to="/accessdenied" state={{ from: location }} replace />;  
     }
 
     return <Outlet />;

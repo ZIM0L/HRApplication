@@ -1,16 +1,19 @@
 ## TODO List
-- [ ] Po akceptacji, zespó³ powinien siê pojawiæ od razu, a nie po reloadzie strony
-- [ ] Deactive usera
+- [ x / 2] Po akceptacji, zespó³ powinien siê pojawiæ od razu, a nie po reloadzie strony (brak obrazka jeszcze)
+- [ x ] Deactive/ Active usera
 - [ x ] Kick usera
-- [ ] Fix Migration 
+- [ ] Fix Migration (optional)
 
-- [ ] Usuwanie pojedynczej roli userowi
-- [ ] Panel gdzie moge dodac od razu mu role
-- [ ] Powieksz accept decline w odbieraniu zaproszenia
+- [ x ] Usuwanie pojedynczej roli userowi
+- [ x ] Panel gdzie moge dodac od razu mu role
+- [ x ] Powieksz accept decline w odbieraniu zaproszenia
 - [ x ] Pending invites
 - [ x ] Team responsywnosc
 - [ ] Usuwanie invitation podczas "pending"
-- [ ] Job position dla admina 
-- [ ] Edit Profie 
+- [ ] Edit Profile 
 - [ ] add job position przyciski wylaczac po dodaniu
-- [ ] uzytkownik na top liscie w teamie
+- [ x ] uzytkownik na top liscie w teamie
+- [ ] Q&A jezeli nie ma niczego to pierwsze tworzenie
+- [ ] Posprawdzaj aby guziki cancle byly po tej samej stronie wszedzie
+- [ ] sprawdz czy jak tworzy druzyne, to ten kto tworzy jak job position dostaje
+- [ ] jak usuniety to niech cofnie go do strony glownej

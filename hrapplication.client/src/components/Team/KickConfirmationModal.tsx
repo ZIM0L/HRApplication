@@ -16,7 +16,7 @@ const KickConfirmationModal: React.FC<KickConfirmationModalProps> = ({
     if (!isOpen) return null; 
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-gray-800 bg-opacity-50">
             <div className="w-1/2 rounded-lg bg-white p-6 text-center">
                 <h1 className="mb-4 text-center text-xl font-bold text-gray-800">
                     Are you sure you want to remove {userName}?

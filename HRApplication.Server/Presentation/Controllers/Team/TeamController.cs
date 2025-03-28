@@ -1,5 +1,10 @@
-﻿using ErrorOr;
+﻿using Azure.Core;
+using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AssignTeamMemberRole;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AssignTeamRole;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.RemoveTeamMember;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.RemoveTeamMemberJobPosition;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.ToggleTeamMemberActivity;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetTeamsUsers;
 using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries.GetUsersTeams;
@@ -117,9 +122,48 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         }
         [HttpPost]
         [Route("DeleteTeamMember")]
-        public async Task<IActionResult> DeleteTeamMember(RemoveTeamMemberRequest removeTeamMemberRequest)
+        public async Task<IActionResult> DeleteTeamMember(RemoveTeamMemberRequest request)
         {
-            var command = new RemoveTeamMemberRequest(removeTeamMemberRequest.teamId, removeTeamMemberRequest.email);
+            var command = new RemoveTeamMemberRequest(request.teamId, request.email);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("DeleteTeamMemberRole")]
+        public async Task<IActionResult> DeleteTeamMemberRole(RemoveTeamMemberJobPositionRequest request)
+        {
+            var command = new RemoveTeamMemberJobPositionRequest(request.email, request.jobPosition, request.teamId);
+
+            ErrorOr<Unit> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("AssignTeamMemberRole")]
+        public async Task<IActionResult> DeleteTeamMemberRole(AssignTeamMemberRoleRequest request)
+        {
+            var command = new AssignTeamMemberRoleRequest(request.teamId, request.email, request.jobPosition);
+
+            ErrorOr<UserDTO> response = await _mediatR.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("ToggleTeamMemberActivity")]
+        public async Task<IActionResult> ToggleTeamMemberActivity(ToggleTeamMemberActivityRequest request)
+        {
+            var command = new ToggleTeamMemberActivityRequest(request.teamId, request.email);
 
             ErrorOr<Unit> response = await _mediatR.Send(command);
 

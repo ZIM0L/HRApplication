@@ -8,17 +8,17 @@ interface TeamMembersTableProps {
     data: IEmployeeData[];
     handleKick: (user: IEmployeeData) => void;
     setIsModalOpenInvite: () => void;
+    updateUserStatus: (user: IEmployeeData) => void;
 }
 
-const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, setIsModalOpenInvite }) => {
+const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, setIsModalOpenInvite, updateUserStatus }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [filterPermission, setFilterPermission] = useState<string>("");
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
         key: "name",
         direction: "asc",
     });
-    const { selectedTeam } = useAuth();
-    // Zgrupowanie użytkowników po emailu
+    const { selectedTeam, decodedToken, teamInformation } = useAuth();
     const groupedUsers = data.reduce<{ [key: string]: IEmployeeData[] }>((acc, user) => {
         if (!acc[user.email]) {
             acc[user.email] = [];
@@ -27,15 +27,12 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
         return acc;
     }, {});
 
-    // Zastosowanie filtrów
-    const filteredData = Object.entries(groupedUsers).filter(([email, userGroup]) => {
+    const filteredData = Object.entries(groupedUsers).filter(([,userGroup]) => {
         const firstUser = userGroup[0]; // Bierzemy pierwszy użytkownik z grupy (bo ma ten sam email)
 
-        // Filtracja po roli
         const permissionMatches =
             !filterPermission || userGroup.some(user => user.permission === filterPermission);
 
-        // Wyszukiwanie po imieniu, nazwisku, emailu
         const searchMatches =
             firstUser.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             firstUser.surname.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -44,7 +41,6 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
         return permissionMatches && searchMatches;
     });
 
-    // Funkcja sortująca
     const sortedData = filteredData.sort((a, b) => {
         const firstUserA = a[1][0]; // Pierwszy użytkownik w grupie
         const firstUserB = b[1][0]; // Pierwszy użytkownik w grupie
@@ -52,7 +48,6 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
         let aValue: string | Date | null = "";
         let bValue: string | Date | null = "";
 
-        // Zależnie od kolumny, przypisujemy wartości do porównania
         if (sortConfig.key === "name") {
             aValue = firstUserA.name;
             bValue = firstUserB.name;
@@ -70,7 +65,6 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
             bValue = firstUserB.leftAt ? new Date(firstUserB.leftAt) : null;
         }
 
-        // Sortowanie rosnąco lub malejąco
         if (aValue! < bValue!) {
             return sortConfig.direction === "asc" ? -1 : 1;
         } else if (aValue! > bValue!) {
@@ -79,7 +73,6 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
         return 0;
     });
 
-    // Funkcja zmieniająca sortowanie
     const handleSort = (key: string) => {
         let direction: "asc" | "desc" = "asc";
         if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -87,6 +80,9 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
         }
         setSortConfig({ key, direction });
     };
+
+
+
     if (!selectedTeam) return null;
     return (
         <div className="overflow-x-auto rounded-lg bg-white p-4 shadow">
@@ -172,7 +168,7 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
                         </th>
                         <th className="p-3 text-left text-sm font-bold text-gray-600">Status</th>
                         {selectedTeam.roleName == "Administrator" && 
-                        <th className="p-3 text-left text-sm font-bold text-gray-600">Actions</th>
+                        <th className="p-3 text-center text-sm font-bold text-gray-600">Actions</th>
                         }
                     </tr>
                 </thead>
@@ -191,7 +187,7 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
                                 </td>
                                 <td className="px-3 py-2 text-sm text-gray-700">
                                     <span
-                                        className={`rounded-full px-2 py-1 text-xs font-semibold ${firstUser.isActive
+                                        className={`rounded-full  px-2 py-1 text-xs font-semibold ${firstUser.isActive
                                             ? "bg-green-100 text-green-800"
                                             : "bg-red-100 text-red-800"
                                             }`}
@@ -199,11 +195,11 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
                                         {firstUser.isActive ? "Active" : "Inactive"}
                                     </span>
                                 </td>
-                                {selectedTeam.roleName == "Administrator" && (
-                                    <td className="flex space-x-2 px-3 py-2 text-sm">
-                                        <button className="rounded bg-blue-400 px-2 py-1 text-white hover:bg-blue-500">
-                                            Deactivate
-                                        </button>
+                                {selectedTeam.roleName == "Administrator" && firstUser.email != decodedToken?.email && (
+                                    <td className="flex justify-center space-x-2 px-3 py-2 text-sm">
+                                            <button onClick={() => updateUserStatus(firstUser)} className="rounded bg-blue-400 px-2 py-1 text-white hover:bg-blue-500">
+                                                {firstUser.isActive ? "Deactivate" : "Activate"}
+                                            </button>
                                         <button
                                             onClick={() => handleKick(firstUser)}
                                             className="ml-2 rounded bg-red-400 px-2 py-1 text-white hover:bg-red-500"
@@ -215,6 +211,27 @@ const TeamMembersTable: React.FC<TeamMembersTableProps> = ({ data, handleKick, s
                             </tr>
                         );
                     })}
+                    {teamInformation?.TeamInvitations.map((invitation) => (
+                        <tr key={invitation.invitationId} className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-sm text-gray-700">{invitation.fromUserName}</td>
+                            <td className="px-3 py-2 text-sm text-gray-700">{invitation.fromUserSurname}</td>
+                            <td className="px-3 py-2 text-sm text-gray-700">-</td>
+                            <td className="px-3 py-2 text-sm text-gray-700">-</td>
+                            <td className="px-3 py-2 text-sm text-gray-700">-</td>
+                            <td className="px-3 py-2 text-sm text-gray-700">
+                                <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">
+                                    Pending
+                                </span>
+                            </td>
+                            {selectedTeam.roleName == "Administrator" && (
+                                <td className="flex justify-center space-x-2 px-3 py-2 text-sm">
+                                    <button className="rounded bg-red-400 px-2 py-1 text-white hover:bg-red-500">
+                                        Cancel
+                                    </button>
+                                </td>
+                            )}
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

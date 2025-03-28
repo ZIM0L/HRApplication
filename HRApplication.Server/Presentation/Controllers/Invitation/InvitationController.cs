@@ -7,6 +7,7 @@ using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.CheckI
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetTeamPendingInvitations;
 using HRApplication.Server.Application.DatabaseTables.Invitations.Queries.GetUserInvitations;
 using HRApplication.Server.Application.DatabaseTables.Queries.GetUserBySearch;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries;
 using HRApplication.Server.Domain.Models.UserSearchDTO;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -89,10 +90,10 @@ namespace HRApplication.Server.Presentation.Controllers.Invitations
         {
             var command = new AcceptInvitationRequest(request.invitaitonId);
 
-            ErrorOr<Unit> response = await _mediator.Send(command);
+            ErrorOr<TeamResultWithUserPermission> response = await _mediator.Send(command);
 
             return response.Match(
-            response => Ok("User has join a team"),
+            response => Ok(response),
             errors => Problem(errors));
         }  
         [HttpDelete]

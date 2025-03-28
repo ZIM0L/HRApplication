@@ -1,15 +1,13 @@
 ﻿using ErrorOr;
-using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands;
-using HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.AddTeamMember;
+using HRApplication.Server.Application.DatabaseTables.TeamMembers.Queries;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
 using HRApplication.Server.Domain.Models;
-using HRApplication.Server.Infrastructure.Persistance;
 using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.AcceptInvitation
 {
-    public class AcceptInvitationHandler : IRequestHandler<AcceptInvitationRequest, ErrorOr<Unit>>
+    public class AcceptInvitationHandler : IRequestHandler<AcceptInvitationRequest, ErrorOr<TeamResultWithUserPermission>>
     {
         private readonly IMediator _mediator;
         private readonly IInvitationRepository _invitationRepository;
@@ -26,7 +24,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
             _teamRepository = teamRepository;
             _teamMemberRepository = teamMemberRepository;
         }
-        public async Task<ErrorOr<Unit>> Handle(AcceptInvitationRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<TeamResultWithUserPermission>> Handle(AcceptInvitationRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -39,7 +37,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
 
             var BearerCheckerResult = BearerChecker.CheckBearerToken(httpContext);
 
-            if(_invitationRepository.GetInvitationById(Guid.Parse(request.invitaitonId)) is not Invitation invitation)
+            if(_invitationRepository.GetInvitationById(Guid.Parse(request.invitaitonId)) is not Domain.Models.Invitation invitation)
             {
                 return CustomErrorOr.CustomErrors.Invitation.InvitationDoesNotExist;
             }
@@ -49,7 +47,7 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
                 return CustomErrorOr.CustomErrors.JobPosition.NoJobPositionExists;
             }
 
-            if(_teamRepository.GetTeamByTeamId(jobPosition.TeamId) is null)
+            if (_teamRepository.GetTeamByTeamId(jobPosition.TeamId) is not Team team)
             {
                 return CustomErrorOr.CustomErrors.Team.NoTeamFound;
             }
@@ -64,9 +62,10 @@ namespace HRApplication.Server.Application.DatabaseTables.Invitations.Commands.A
                 // pipiline to delete teammember later
                 return resultDeleteInvitationCommand.Errors;
             }
-
-
-            return Unit.Value;
-        }
+            return new TeamResultWithUserPermission(
+                team,
+                "Employee"
+            );
+    }
     }
 }

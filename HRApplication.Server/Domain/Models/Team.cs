@@ -27,11 +27,11 @@ namespace HRApplication.Server.Domain.Models
         public string? ZipCode { get; set; } = "";
         public string? TeamProfilePathImage { get; set; }
         //
-        public ICollection<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();
-        public ICollection<JobPosition> JobPositions { get; set; } = new List<JobPosition>();
-        public ICollection<TeamShift> TeamShifts { get; set; } = new List<TeamShift>();
-        public ICollection<TeamQuestion> TeamQuestions { get; set; } = new List<TeamQuestion>();
-        public ICollection<TeamMemberRequest> TeamMembersRequests { get; set; } = new List<TeamMemberRequest>();
-        public ICollection<TeamsCalendar> TeamsCalendars { get; set; } = new List<TeamsCalendar>(); 
+        internal ICollection<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();
+        internal ICollection<JobPosition> JobPositions { get; set; } = new List<JobPosition>();
+        internal ICollection<TeamShift> TeamShifts { get; set; } = new List<TeamShift>();
+        internal ICollection<TeamQuestion> TeamQuestions { get; set; } = new List<TeamQuestion>();
+        internal ICollection<TeamMemberRequest> TeamMembersRequests { get; set; } = new List<TeamMemberRequest>();
+        internal ICollection<TeamsCalendar> TeamsCalendars { get; set; } = new List<TeamsCalendar>(); 
     }
 }

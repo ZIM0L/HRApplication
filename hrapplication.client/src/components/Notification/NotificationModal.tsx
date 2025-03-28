@@ -4,14 +4,17 @@ import { AcceptInvitation, DeclineInvitation } from "../../api/InvitationAPI";
 import Notification from "./Notification";
 import { useAuth } from "../../contex/AppContex";
 import { INotifications } from "../../types/Notification/INotification";
+import { ITeamWithUserPermission } from "../../types/Team/ITeam";
 
 interface NotificationModalProps {
     isOpen: boolean; 
     onClose: () => void;
+    addNewTeam: (team: ITeamWithUserPermission) => void;
 }
 const NotificationModal: React.FC<NotificationModalProps> = ({
     isOpen,
     onClose,
+    addNewTeam
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const invitationsPerPage = 5;
@@ -31,8 +34,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
             setShowNotification(true);
             setIsError(false);
             setNotificationMessage(["You joined a new team"]);
+            addNewTeam(result.data)
         }
-
         setTimeout(() => {
             getUserInvitations()
             onClose();  
@@ -104,15 +107,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                                             {`${invitation.fromUserName} ${invitation.fromUserSurname}`}
                                         </p>
                                     </div>
-                                    <div className="flex w-[110px] flex-col justify-between space-y-4 px-2">
-                                        <button
-                                            onClick={() => DeclineInvitationHandle(invitation.invitationId)}
-                                        >
-                                            <div className="flex w-full items-center justify-center space-x-2 rounded-md text-gray-600 hover:bg-red-100 hover:text-red-800">
-                                                <span>✕</span>
-                                                <span className="text-sm">Decline</span>
-                                            </div>
-                                        </button>
+                                    <div className="text-md flex w-[110px] flex-col justify-between space-y-4 px-2">
                                         <button
                                             onClick={() =>
                                                 AcceptInvitationHandle(
@@ -123,7 +118,15 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                                         >
                                             <div className="flex w-full items-center justify-center space-x-2 rounded-md text-gray-600 hover:bg-green-100 hover:text-green-600">
                                                 <span>✓</span>
-                                                <span className="text-sm">Accept</span>
+                                                <span className="">Accept</span>
+                                            </div>
+                                        </button>
+                                        <button
+                                            onClick={() => DeclineInvitationHandle(invitation.invitationId)}
+                                        >
+                                            <div className="flex w-full items-center justify-center space-x-2 rounded-md text-gray-600 hover:bg-red-100 hover:text-red-800">
+                                                <span>✕</span>
+                                                <span className="">Decline</span>
                                             </div>
                                         </button>
                                     </div>

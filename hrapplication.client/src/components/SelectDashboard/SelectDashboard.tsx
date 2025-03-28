@@ -32,7 +32,6 @@ const SelectDashboard = () => {
     const fetchStarterPanel = async () => {
        await getUserInvitations();
     }
-
     useEffect(() => {
         fetchStarterPanel().then(() => {
             fetchTeams();
@@ -53,6 +52,16 @@ const SelectDashboard = () => {
         setSelectedTeamState(team)
         navigate(`/dashboard/${team.team.name.replace(/\s/g, '')}/${decodedToken?.given_name}`);
     }
+
+    const AddNewTeam = (team: ITeamWithUserPermission) => {
+        setTeams((prev) => {
+            if (prev) {
+                return [...prev, team]
+            }
+            return [team]
+        })
+    }
+
 
     if (isLoggingOut) {
         return (
@@ -88,7 +97,7 @@ const SelectDashboard = () => {
                     </button>
                 </div>
             </div>
-            <p className="border-b-2 mb-8 p-2 text-sm text-gray-500">Logged as {decodedToken?.email}</p>
+            <p className="mb-8 border-b-2 p-2 text-sm text-gray-500">Logged as {decodedToken?.email}</p>
             <div className="mx-auto max-h-[75%] w-3/4 overflow-y-auto rounded-lg bg-white shadow-md">
                 <h1 className="px-6 py-1 text-2xl font-bold">Welcome {decodedToken?.given_name} !</h1>
                 <p className="border-b px-6 py-1 text-gray-500">Select the system you want to access.</p>
@@ -134,6 +143,7 @@ const SelectDashboard = () => {
                 <NotificationModal
                     isOpen={isNotificationModalOpen}
                     onClose={() => setIsNotificationModalOpen(false)}
+                    addNewTeam={AddNewTeam}
                 />
             </div>
         </div>

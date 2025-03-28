@@ -1,21 +1,20 @@
-﻿import React, { useState } from 'react';
-import { FunnelIcon } from '@heroicons/react/24/solid';
+﻿
+import React, { useState } from 'react';
 import { useAuth } from '../../contex/AppContex';
-import { PlusIcon } from '@heroicons/react/24/solid';
 import InviteToTeamModal from './InviteToTeamModal';
 import { IEmployeeData } from '../../types/User/IUser';
 import KickConfirmationModal from './KickConfirmationModal';
 import Notification from '../Notification/Notification';
-import { DeleteTeamMember } from '../../api/TeamAPI';
+import { DeleteTeamMember, DeleteTeamMemberRole, ToggleTeamMemberActivity } from '../../api/TeamAPI';
 import { ITeamInformation } from '../../types/Team/ITeam';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import TeamMembersTable from './TeamMembersInfo';
 import UsersAndRolesTable from './UsersAndRoles';
 
 const Team: React.FC = () => {
-    const [sortBy, setSortBy] = useState<string>('');
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [sortBy] = useState<string>('');
+    const [sortOrder] = useState<'asc' | 'desc'>('asc');
+    const [searchQuery] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { selectedTeam, teamInformation, setTeamInformation } = useAuth();
 
@@ -26,7 +25,6 @@ const Team: React.FC = () => {
     const [isKickModalOpen, setIsKickModalOpen] = useState(false);
     const [userToKick, setUserToKick] = useState<IEmployeeData>();
 
-    // Nowy stan do przechowywania wybranego widoku tabeli
     const [selectedTable, setSelectedTable] = useState<'usersAndRoles' | 'teamMembers'>('usersAndRoles');
 
     if (!selectedTeam) {
@@ -40,20 +38,15 @@ const Team: React.FC = () => {
     const processedData = () => {
         if (!teamInformation?.UserData || teamInformation?.UserData.length === 0) return [];
 
-        let filteredData = teamInformation?.UserData;
+        let filteredData = teamInformation.UserData;
 
         if (searchQuery.trim() !== '') {
-            filteredData = filteredData.filter((employee) => {
-                const query = searchQuery.toLowerCase();
-                return (
-                    employee.name.toLowerCase().includes(query) ||
-                    employee.surname.toLowerCase().includes(query) ||
-                    employee.email.toLowerCase().includes(query) ||
-                    employee.jobPosition.toLowerCase().includes(query) ||
-                    employee.permission.toLowerCase().includes(query) ||
-                    employee.phoneNumber.toLowerCase().includes(query)
-                );
-            });
+            const query = searchQuery.toLowerCase();
+            filteredData = filteredData.filter((employee) =>
+                ['name', 'surname', 'email', 'jobPosition', 'permission', 'phoneNumber'].some((key) =>
+                    employee[key as keyof IEmployeeData]?.toString().toLocaleLowerCase().includes(query)
+                )
+            );
         }
 
         if (sortBy) {
@@ -83,11 +76,63 @@ const Team: React.FC = () => {
         setIsKickModalOpen(true);
     };
 
+    const handleRemoveRole = async (employee: IEmployeeData) => {
+        try {
+            if (!selectedTeam) return;
+            const result = await DeleteTeamMemberRole(selectedTeam.team.teamId, employee.jobPosition, employee.email);
+            if (result?.status === 200) {
+                setIsError(false);
+                setNotificationMessage([`Role removed for ${employee.name} ${employee.surname}`]);
+                setShowNotification(true);
+                //@ts-expect-error works
+                setTeamInformation((prev: ITeamInformation) => {
+                    const updatedUserData = prev.UserData.filter(
+                        user => user.email !== employee.email || user.jobPosition !== employee.jobPosition
+                    );
+                    return { ...prev, UserData: updatedUserData };
+                });
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                setIsError(true);
+                setNotificationMessage([error.message]);
+                setShowNotification(true);
+            }
+        }
+    };
+
+    const toggleDeactivate = async (user: IEmployeeData) => {
+        try {
+            if (!selectedTeam && !user) return;
+            const result = await ToggleTeamMemberActivity(user.email, selectedTeam.team.teamId);
+            if (result?.status === 200) {
+                setIsError(false);
+                setNotificationMessage([`${user.name} ${user.surname} has been modified`]);
+                setShowNotification(true);
+                //@ts-expect-error works
+                setTeamInformation((prev: ITeamInformation) => {
+                    return {
+                        ...prev,
+                        UserData: prev.UserData.map(u => 
+                            u.email === user.email ? { ...u, isActive: !u.isActive } : u
+                        )
+                    };
+                });
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                setIsError(true);
+                setNotificationMessage([error.message]);
+                setShowNotification(true);
+            }
+        }
+    };
+
     const handleConfirmKick = async (userToKick: IEmployeeData) => {
         try {
             if (!selectedTeam && !userToKick) return;
-            const result = await DeleteTeamMember(selectedTeam?.team.teamId, userToKick?.email);
-            if (result?.status == 200) {
+            const result = await DeleteTeamMember(userToKick.email, selectedTeam.team.teamId);
+            if (result?.status === 200) {
                 setIsError(false);
                 setNotificationMessage([`${userToKick.name} ${userToKick.surname} has been kicked`]);
                 setShowNotification(true);
@@ -95,9 +140,9 @@ const Team: React.FC = () => {
                 setTeamInformation((prev: ITeamInformation) => {
                     return {
                         ...prev,
-                        UserData: [...prev.UserData.filter(user => user.email != userToKick.email)]
-                    }
-                })
+                        UserData: prev.UserData.filter(user => user.email !== userToKick.email)
+                    };
+                });
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -113,7 +158,7 @@ const Team: React.FC = () => {
     return (
         <div className="px-4">
             <div className="flex items-center justify-between border-b-2 py-2">
-                <p className=" text-xl font-semibold text-gray-800">Team Management</p>
+                <p className="text-xl font-semibold text-gray-800">Team Management</p>
                 <div className="group relative z-10">
                     <QuestionMarkCircleIcon className="h-7 w-7 cursor-pointer text-gray-500 group-hover:opacity-100" />
                     <div className="pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
@@ -131,7 +176,6 @@ const Team: React.FC = () => {
                 </div>
             </div>
 
-            {/* Table Selection */}
             <div className="my-4 flex flex-col space-y-2">
                 <p className="text-sm text-gray-600">Select a table to view the relevant data</p>
                 <div className="flex space-x-4">
@@ -149,15 +193,14 @@ const Team: React.FC = () => {
                     </button>
                 </div>
             </div>
-            {/* Display Selected Table */}
-            {selectedTable === 'teamMembers' && <TeamMembersTable data={dataToDisplay} handleKick={handleKick} setIsModalOpenInvite={() => setIsModalOpen(true)}/>}
-            {selectedTable === 'usersAndRoles' && <UsersAndRolesTable dataToDisplay={dataToDisplay} handleRemoveRole={handleKick} />}
 
-            {/* Modals */}
-            {selectedTeam.roleName == "Administrator" && (
+            {selectedTable === 'teamMembers' && <TeamMembersTable data={dataToDisplay} handleKick={handleKick} setIsModalOpenInvite={() => setIsModalOpen(true)} updateUserStatus={toggleDeactivate} />}
+            {selectedTable === 'usersAndRoles' && <UsersAndRolesTable dataToDisplay={dataToDisplay} handleRemoveRole={handleRemoveRole} />}
+
+            {selectedTeam.roleName === "Administrator" && (
                 <InviteToTeamModal isOpen={isModalOpen} onClose={handleCloseModal} />
             )}
-            {selectedTeam.roleName == "Administrator" && (
+            {selectedTeam.roleName === "Administrator" && (
                 <KickConfirmationModal
                     isOpen={isKickModalOpen}
                     onClose={() => setIsKickModalOpen(false)}

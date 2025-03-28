@@ -83,14 +83,14 @@ const QAComponent = () => {
 
     return (
         <div className="flex h-screen flex-col bg-gray-100 px-4 pb-4">
-            <div className="border-b-2 flex items-center justify-between py-2">
+            <div className="flex items-center justify-between border-b-2 py-2">
                 <p className="text-xl font-semibold text-gray-800">Q&A Section</p>
                 <div className="group relative">
-                    <QuestionMarkCircleIcon className="group-hover:opacity-100 h-7 w-7 cursor-pointer text-gray-500" />
-                    <div className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200">
+                    <QuestionMarkCircleIcon className="h-7 w-7 cursor-pointer text-gray-500 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
                         <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
                             <h2 className="text-xl font-semibold">Information</h2>
-                            <p>Add Q&A with Live Preview: Create questions and view them live.</p>
+                            <p>Add Q&A with Preview: Create questions and view them live.</p>
                             <p>View Q&A List: See all saved questions and answers.</p>
                         </div>
                     </div>
@@ -103,7 +103,7 @@ const QAComponent = () => {
                         onClick={() => setIsAddingView(true)}
                         className={`p-2 border-2 transition-all border-gray-100 ${isAddingView ? "border-gray-500" : "bg-gray-200"} rounded`}
                     >
-                        Add Q&A with Live Preview
+                        Add Q&A with Preview
                     </button>
                 )}
                 <button
@@ -117,7 +117,7 @@ const QAComponent = () => {
             {isAddingView ? (
                 <div className="h-5/8 flex flex-col gap-4 py-4 md:flex-row">
                     {/* Form Section */}
-                    <div className="border-2 w-full max-w-md overflow-y-auto border-gray-200 bg-white px-3 pb-12 pt-4 md:w-1/3">
+                    <div className="w-full max-w-md overflow-y-auto border-2 border-gray-200 bg-white px-3 pb-12 pt-4 md:w-1/3">
                         <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="flex flex-col space-y-2">
                             <label className="text-lg">Main question topic:</label>
                             <input
@@ -138,14 +138,14 @@ const QAComponent = () => {
                                 <button
                                     type="button"
                                     onClick={handleResetSubquestions}
-                                    className="border-2 rounded border-gray-200 p-2 transition-all hover:text-white hover:bg-light-red"
+                                    className="rounded border-2 border-gray-200 p-2 transition-all hover:text-white hover:bg-light-red"
                                 >
                                     Reset Subquestions
                                 </button>
                                 <button
                                     type="button"
                                     onClick={handleUndoLastSubquestion}
-                                    className="border-2 rounded border-gray-200 p-2 transition-all hover:text-white hover:bg-light-red"
+                                    className="rounded border-2 border-gray-200 p-2 transition-all hover:text-white hover:bg-light-red"
                                 >
                                     Undo Last Subquestion
                                 </button>
@@ -191,8 +191,8 @@ const QAComponent = () => {
                     </div>
 
                     {/* Live Preview Section */}
-                    <div className="border-2 h-full overflow-y-auto break-all bg-white p-4 md:w-2/3">
-                        <h3 className="text-xl font-semibold text-gray-800">Live Preview</h3>
+                    <div className="h-full overflow-y-auto break-all border-2 bg-white p-4 md:w-2/3">
+                        <h3 className="text-xl font-semibold text-gray-800">Preview</h3>
                         <div className="mt-2">
                             <p className="font-semibold text-gray-800">{title || "Your question will appear here"}</p>
                             <p className="mt-2 text-gray-600">{description || "Your answer will appear here"}</p>
@@ -200,7 +200,7 @@ const QAComponent = () => {
                         <div className="mt-4">
                             <ul>
                                 {subQuestions.map((sub, index) => (
-                                    <li key={index} className="border-l-2 ml-6 mt-4 pl-2">
+                                    <li key={index} className="ml-6 mt-4 border-l-2 pl-2">
                                         <p className="font-semibold text-gray-800">{sub.key}</p>
                                         <p className="text-gray-600">{sub.value}</p>
                                     </li>

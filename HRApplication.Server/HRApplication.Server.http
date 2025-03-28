@@ -1,6 +1,0 @@
-@HRApplication.Server_HostAddress = http://localhost:5068
-
-GET {{HRApplication.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
