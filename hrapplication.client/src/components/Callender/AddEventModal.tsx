@@ -147,7 +147,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ onAdd, onClose }) => {
                         />
                     </label>
                     <label className="mb-2 block">
-                        Description:
+                        Description (optional):
                         <Controller
                             name="description"
                             control={control}
@@ -160,7 +160,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ onAdd, onClose }) => {
                         />
                     </label>
                     <label className="mb-2 block">
-                        Location:
+                        Location (optional):
                         <Controller
                             name="location"
                             control={control}
@@ -191,19 +191,19 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ onAdd, onClose }) => {
                             events with "Employee" permission.
                         </span>
                     </label>
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-end space-x-2">
+                        <button
+                            type="submit"
+                            className="rounded bg-cyan-blue px-4 py-2 text-white hover:bg-cyan-blue-hover"
+                        >
+                            Add new event
+                        </button>
                         <button
                             type="button"
                             className="mr-2 rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
                             onClick={onClose}
                         >
                             Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="rounded bg-cyan-blue px-4 py-2 text-white hover:bg-cyan-blue-hover"
-                        >
-                            Add new event
                         </button>
                     </div>
                 </form>

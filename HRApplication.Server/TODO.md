@@ -19,3 +19,4 @@
 - [ ] Posprawdzaj aby guziki cancle byly po tej samej stronie wszedzie
 - [ ] sprawdz czy jak tworzy druzyne, to ten kto tworzy jak job position dostaje
 - [ ] jak usuniety to niech cofnie go do strony glownej
+- [ ] check calender colors

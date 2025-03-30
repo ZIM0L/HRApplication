@@ -74,7 +74,7 @@ const WeekSchedule = () => {
     }, [teamInformation]);
 
     return (
-        <div className="h-1/3 rounded-xl bg-white p-2 shadow-lg">
+        <div className="h-fit rounded-xl bg-white p-2 shadow-lg">
             {/* Work Schedule Title */}
             <div className="flex items-center justify-between text-lg font-semibold text-gray-800">
                 <div className="flex items-center space-x-2">
@@ -91,13 +91,13 @@ const WeekSchedule = () => {
             <div className="mt-4 flex justify-between">
                 <button
                     onClick={goToPrevWeek}
-                    className="border-2 rounded-lg border-gray-200 px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
+                    className="rounded-lg border-2 border-gray-200 px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
                 >
                     &lt; Previous Week
                 </button>
                 <button
                     onClick={goToNextWeek}
-                    className="border-2 rounded-lg border-gray-200 px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
+                    className="rounded-lg border-2 border-gray-200 px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
                 >
                     Next Week &gt;
                 </button>

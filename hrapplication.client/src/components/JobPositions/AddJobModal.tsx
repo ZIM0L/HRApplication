@@ -20,6 +20,8 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
 
     // Watch the value of the checkbox
     const isRecruiting = watch("isRecruiting");
+    const title = watch("title");
+    const description = watch("description");
 
     const onSubmit: SubmitHandler<IAddJobPositionInputs> = async (data: IAddJobPositionInputs) => {
         try {
@@ -65,10 +67,12 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
 
     if (!isOpen) return null;
 
+    const isFormValid = title && description;
+
     return (
         <>
-            <div className="inset-0 bg-gray-900 fixed z-50 flex items-center justify-center bg-opacity-50">
-                <div className="w-96 bg-white p-6 rounded-lg shadow-lg">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
                     <h2 className="mb-4 text-lg font-semibold">Add Job Position</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -76,16 +80,16 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                             {...register("title", { required: "Position name is required.", maxLength: 255 })}
                             type="text"
                             placeholder="Position name"
-                            className="border-gray-300 px-4 py-2 w-full rounded-md border"
+                            className="w-full rounded-md border border-gray-300 px-4 py-2"
                         />
 
                         <textarea
                             {...register("description", { required: "Description is required.", maxLength: 500 })}
                             placeholder="Description"
-                            className="h-50 max-h-32 border-gray-300 px-4 py-2 w-full resize-none rounded-md border"
+                            className="h-50 max-h-32 w-full resize-none rounded-md border border-gray-300 px-4 py-2"
                         />
 
-                        <div className="space-x-2 flex items-center">
+                        <div className="flex items-center space-x-2">
                             <input
                                 {...register("isRecruiting")}
                                 type="checkbox"
@@ -99,16 +103,17 @@ const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
                             </label>
                         </div>
 
-                        <div className="mt-4 space-x-2 flex justify-end">
+                        <div className="mt-4 flex justify-end space-x-2">
                             <button
                                 type="submit"
-                                className="bg-cyan-blue px-4 py-2 text-white rounded-md transition-colors duration-200 hover:bg-cyan-blue-hover"
+                                className={`px-4 py-2 text-white rounded-md transition-colors duration-200 ${isFormValid ? 'bg-cyan-blue hover:bg-cyan-blue-hover' : 'bg-gray-300 cursor-not-allowed'}`}
+                                disabled={!isFormValid}
                             >
                                 Add
                             </button>
                             <button
                                 type="button"
-                                className="bg-gray-300 px-4 py-2 text-gray-700 rounded-md transition-colors duration-200 hover:bg-gray-400"
+                                className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-gray-400"
                                 onClick={() => {
                                     reset();
                                     onClose();

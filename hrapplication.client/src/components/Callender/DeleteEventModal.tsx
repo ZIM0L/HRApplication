@@ -50,19 +50,23 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ events, onDelete, onClose }) 
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-[400px] rounded bg-white p-6 shadow-lg">
                 <h2 className="mb-4 text-lg font-bold">Select Event to Delete</h2>
-                <ul className="max-h-90 mb-4 overflow-auto">
-                    {events.map((event: CalendarEventExternal) => (
-                        <li key={event.id} className="mb-2 flex justify-between">
-                            <span>{event.title}</span>
-                            <button
-                                className="rounded bg-light-red px-2 py-1 text-white hover:bg-red-800"
-                                onClick={() => handleDeleteClick(event)} 
-                            >
-                                Delete
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                {events.length === 0 ? (
+                    <p className="text-center text-gray-500">No events to delete</p>
+                ) : (
+                    <ul className="max-h-90 mb-4 overflow-auto">
+                        {events.map((event: CalendarEventExternal) => (
+                            <li key={event.id} className="mb-2 flex justify-between">
+                                <span>{event.title}</span>
+                                <button
+                                    className="rounded bg-light-red px-2 py-1 text-white hover:bg-red-800"
+                                    onClick={() => handleDeleteClick(event)} 
+                                >
+                                    Delete
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
                 <div className="flex justify-end">
                     <button
                         className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
@@ -75,27 +79,27 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ events, onDelete, onClose }) 
 
             {/* Potwierdzenie usunięcia */}
             {confirmationEvent && (
-                <div className="z-60 bg-opacity-60 fixed inset-0 flex items-center justify-center bg-black">
+                <div className="z-60 fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
                     <div className="w-1/2 min-w-[300px] max-w-[400px] rounded bg-white p-6 shadow-lg">
                         <h3 className="mb-4 text-lg font-semibold text-light-red">Confirm Deletion</h3>
                         <span className="mb-4 text-lg text-gray-800">
                             Are you sure you want to delete the event:
                         </span>
                         <p className="font-semibold text-red-600"> {confirmationEvent.title} </p>
-                        <p className="text-sm text-gray-500">This action cannot be undone.</p>
+                        <p className="py-2 text-sm text-gray-500">This action cannot be undone.</p>
 
                         <div className="flex justify-end space-x-2">
-                            <button
-                                className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
-                                onClick={() => setConfirmationEvent(null)} 
-                            >
-                                Cancel
-                            </button>
                             <button
                                 className="rounded bg-light-red px-4 py-2 text-white hover:bg-red-700"
                                 onClick={confirmDelete} 
                             >
                                 Confirm
+                            </button>
+                            <button
+                                className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
+                                onClick={() => setConfirmationEvent(null)} 
+                            >
+                                Cancel
                             </button>
                         </div>
                     </div>

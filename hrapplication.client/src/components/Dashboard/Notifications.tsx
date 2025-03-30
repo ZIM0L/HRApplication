@@ -5,8 +5,8 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 
 const Notifications = () => {
     const { teamInformation } = useAuth();
-   const [currentPage, setCurrentPage] = useState(1);
-    const [messagesPerPage, setMessagesPerPage] = useState(8); 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [messagesPerPage, setMessagesPerPage] = useState(8);
 
     const notifications = teamInformation?.UsersRequests;
 
@@ -18,7 +18,7 @@ const Notifications = () => {
         };
 
         window.addEventListener("resize", handleResize);
-        handleResize(); 
+        handleResize();
 
         // Cleanup
         return () => {
@@ -86,12 +86,12 @@ const Notifications = () => {
                         Previous
                     </button>
                     <span className="text-gray-500">
-                        Page {currentPage} of {totalPages}
+                        {totalPages > 0 ? `Page ${currentPage} of ${totalPages}` : "No pages"}
                     </span>
                     <button
                         onClick={goToNextPage}
-                        disabled={currentPage === totalPages}
-                        className={`px-3 py-1 rounded-md text-white ${currentPage === totalPages
+                        disabled={currentPage === totalPages || currentMessages.length === 0}
+                        className={`px-3 py-1 rounded-md text-gray-500 ${currentPage === totalPages || currentMessages.length === 0
                             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                             : "bg-cyan-blue text-gray-800 hover:bg-cyan-blue-hover"
                             }`}
@@ -101,7 +101,6 @@ const Notifications = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 

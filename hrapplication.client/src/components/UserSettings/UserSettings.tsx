@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { ChangeUserCredential, UploadUserImage } from '../../api/UserAPI';
+import { ChangeUserCredential, ChangeUserPassword, UploadUserImage } from '../../api/UserAPI';
 import { Cog8ToothIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contex/AppContex';
 import { IUserToChangeCredentials } from '../../types/User/IUser';
@@ -100,8 +100,31 @@ const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose, userData }
                 return;
             }
             if (data.newPassword !== data.confirmPassword) {
+                setIsError(true);
+                setNotificationMessage(["New password and confirm password do not match."]);
+                setShowNotification(true);
                 console.log('New password and confirm password do not match.');
                 return;
+            }
+            try {
+                if (!selectedTeam) return;
+                const result = await ChangeUserPassword(data.oldPassword, data.newPassword);
+                if (result?.status === 200) {
+                    setIsError(false);
+                    setNotificationMessage(["Applying changes...", "Logging off..."]);
+                    setShowNotification(true);
+                    setTimeout(() => {
+                        logOut();
+                        navigate('/auth');
+                    }, 3500);
+
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    setIsError(true);
+                    setNotificationMessage([error.message]);
+                    setShowNotification(true);
+                }
             }
         }
 

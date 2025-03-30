@@ -91,7 +91,7 @@ function Panel() {
                 </div>
 
                 {/* Main Content Section */}
-                <div className="flex w-full flex-col space-y-2">
+                <div className="flex w-full flex-col space-y-6">
                     <WorkSchedule />
                     <div className=" flex h-full flex-col gap-4 overflow-auto md:flex-row lg:flex-row">
                         {/* These components are now constrained within their container */}

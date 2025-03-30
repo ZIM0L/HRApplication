@@ -116,17 +116,19 @@ const SelectDashboard = () => {
                                 />
                                 <div>
                                     <h3 className="flex items-center text-lg font-semibold">{org.team.name}</h3>
-                                    <p className="text-sm text-gray-500">Organization ID - {org.team.teamId}</p>
                                     <p className="text-sm text-gray-500">Country - {org.team.country}</p>
                                 </div>
                             </div>
-                            <div className="mt-4 flex space-x-4 md:mt-0">
-                                <span className="flex items-center gap-2 text-sm text-gray-600">
-                                    <UsersIcon className="h-4 w-4" /> {org.roleName}
-                                </span>
-                                <button onClick={() => RedirectToDashboard(org)}>
-                                    <ArrowTopRightOnSquareIcon className="h-5 w-5 transform transition-all duration-300 hover:text-cyan-blue hover:scale-110" />
-                                </button>
+                            <div className="flex space-x-5">
+                                <div className="mt-4 flex flex-col md:mt-0">
+                                    <p className="text-sm text-gray-600">Role in system:</p>
+                                    <span className="flex items-center gap-2 text-sm text-gray-600">
+                                        <UsersIcon className="h-4 w-4" /> {org.roleName}
+                                    </span>
+                                </div>
+                                    <button onClick={() => RedirectToDashboard(org)}>
+                                        <ArrowTopRightOnSquareIcon className="h-6 w-6 transform transition-all duration-300 hover:text-cyan-blue hover:scale-110" />
+                                    </button>
                             </div>
                         </div>
                     ))

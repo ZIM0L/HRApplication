@@ -1,8 +1,9 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '../../contex/AppContex';
 import { UploadTeamProfilePicture } from '../../api/TeamAPI';
 import Notification from '../Notification/Notification';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface IFormInput {
     image: FileList;
@@ -14,7 +15,7 @@ interface ModalProps {
 }
 
 const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { register, handleSubmit, formState: { errors }, watch, reset } = useForm<IFormInput>();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -22,6 +23,18 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false);
+
+    useEffect(() => {
+        if (isOpen) {
+            reset();
+            setImagePreview(null);
+            setUploading(false);
+            setErrorMessage(null);
+            setNotificationMessage([]);
+            setShowNotification(false);
+            setIsError(false);
+        }
+    }, [isOpen, reset]);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         if (!selectedTeam) return;
@@ -66,15 +79,17 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     if (!isOpen) return null;
 
+    const image = watch('image');
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute right-2 top-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                    className="absolute right-2 top-2 text-2xl text-gray-400 hover:text-gray-600 focus:outline-none"
                 >
-                    &times;
+                    <XMarkIcon className="h-6 w-6" />
                 </button>
 
                 <h2 className="mb-4 text-center text-xl font-semibold">Select Team Image</h2>
@@ -101,8 +116,8 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
                     <button
                         type="submit"
-                        className="w-full rounded-md bg-cyan-blue py-2 text-white transition hover:bg-cyan-blue-hover"
-                        disabled={uploading}
+                        className={`w-full rounded-md py-2 text-white transition ${image ? 'bg-cyan-blue hover:bg-cyan-blue-hover' : 'bg-gray-400 cursor-not-allowed'}`}
+                        disabled={uploading || !image}
                     >
                         {uploading ? 'Uploading...' : 'Submit Image'}
                     </button>

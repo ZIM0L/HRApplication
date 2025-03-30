@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using HRApplication.Server.Application.DatabaseTables.Commands.ChangePassword;
 using HRApplication.Server.Application.DatabaseTables.Commands.ChangeUserCredentials;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,21 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
 
             var query = new ChangeUserCredentialsRequest(
                 request.name, request.surname, request.email, request.phoneNumber, request.password);
+
+            ErrorOr<Unit> response = await _mediator.Send(query);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+
+        }
+        [HttpPut]
+        [Route("ChangeUserPassword")]
+        public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePasswordRequest request)
+        {
+
+            var query = new ChangePasswordRequest(request.password, request.newPassword);
 
             ErrorOr<Unit> response = await _mediator.Send(query);
 

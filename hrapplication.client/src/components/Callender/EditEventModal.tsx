@@ -208,17 +208,18 @@ const EditModal: React.FC<EditModalProps> = ({ onSave, onClose }) => {
 
                     <div className="mt-4 flex justify-end">
                         <button
+                            type="submit"
+                            className={`mr-2 rounded px-4 py-2 text-white ${selectedUpdateEvent ? 'bg-cyan-blue hover:bg-cyan-blue-hover' : 'bg-gray-300 cursor-not-allowed'}`}
+                            disabled={!selectedUpdateEvent}
+                        >
+                            Save changes
+                        </button>
+                        <button
                             type="button"
-                            className="mr-2 rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
+                            className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
                             onClick={onClose}
                         >
                             Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="rounded bg-cyan-blue px-4 py-2 text-white hover:bg-cyan-blue-hover"
-                        >
-                            Save changes
                         </button>
                     </div>
                 </form>

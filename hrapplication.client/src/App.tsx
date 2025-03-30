@@ -16,6 +16,7 @@ import SessionExpired from './components/ErrorComponents/SessionExpired';
 import Shifts from './components/Shift/Shifts';
 import RequestDashboard from './components/Request/RequestDashboard';
 import QAComponent from './components/Questions/QAComponent';
+import Policy from './components/Policy/Policy';
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                     <Route path="/sessionexpired" element={<SessionExpired /> }/>
                     <Route path="/*" element={<NotFoundPage />} />
                     <Route path="/auth/google-handler" element={<GoogleAuthHandler />} />
+                    <Route path="/privacy-policy" element={<Policy />} />
 
                     <Route element={<ProtectedRoutes />}>
                     <Route path="/organizations" element={<SelectDashboard />} />

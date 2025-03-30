@@ -98,7 +98,7 @@ const UpcomingEventsAlert = () => {
             </div>
 
             {/* Pagination Controls at the bottom */}
-            <div className="mt-auto flex items-center justify-between">
+            <div className="mt-4 flex items-center justify-between">
                 <button
                     onClick={handlePreviousPage}
                     disabled={currentPage === 1}
@@ -107,12 +107,12 @@ const UpcomingEventsAlert = () => {
                     Previous
                 </button>
                 <span className="text-gray-500">
-                    Page {currentPage} of {totalPages}
+                    {upcomingEvents && upcomingEvents.length > 0 ? `Page ${currentPage} of ${totalPages}` : "No pages"}
                 </span>
                 <button
                     onClick={handleNextPage}
-                    disabled={currentPage === totalPages}
-                    className={`px-3 py-1 rounded-md transition-all ${currentPage === totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-cyan-blue text-white hover:bg-cyan-blue-hover"}`}
+                    disabled={currentPage === totalPages || upcomingEvents?.length === 0}
+                    className={`px-3 py-1 rounded-md transition-all ${currentPage === totalPages || upcomingEvents?.length === 0 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-cyan-blue text-white hover:bg-cyan-blue-hover"}`}
                 >
                     Next
                 </button>

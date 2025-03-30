@@ -109,5 +109,30 @@ export const ChangeUserCredential = async (data: IUserToChangeCredentials): Prom
         throw new Error("Unexpected error occurred while changing user credentials.");
     }
 }
+export const ChangeUserPassword = async (password : string, newPassword : string): Promise<AxiosResponse> => {
+    try {
+        return await mainAxiosInstance.put('api/User/ChangeUserPassword', {
+            password: password,
+            newPassword: newPassword
+        })
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error changing user password: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while changing user password.");
+    }
+}
+
 
 

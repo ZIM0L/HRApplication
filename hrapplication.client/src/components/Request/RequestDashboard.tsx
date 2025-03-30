@@ -137,11 +137,11 @@ const RequestDashboard: React.FC = () => {
     if (!teamInformation) return null
     return (
         <>
-            <div className="border-b-2 flex items-center justify-between px-4 py-2">
+            <div className="flex items-center justify-between border-b-2 px-4 py-2">
                 <p className=" border-dark-blue-lighertext-start text-xl font-semibold text-gray-800">Request Dashboard</p>
-                <div className="z-10 group relative">
-                    <QuestionMarkCircleIcon className="group-hover:opacity-100 h-7 w-7 cursor-pointer text-gray-500" />
-                    <div className="opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200">
+                <div className="group relative z-10">
+                    <QuestionMarkCircleIcon className="h-7 w-7 cursor-pointer text-gray-500 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute -right-full mr-4 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
                         <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
                             <div className="mb-4 flex items-center justify-between">
                                 <h2 className="text-xl font-semibold">Information</h2>
@@ -189,7 +189,7 @@ const RequestDashboard: React.FC = () => {
                                     <div className="h-[400px] overflow-y-auto p-2 md:h-full md:max-h-[85%]">
                                         {teamInformation.UsersRequests.length === 0 ? (
                                             <div className="flex items-center justify-center px-2 text-gray-500">
-                                                No requests have been created by the user.
+                                                No requests have been created by the employees.
                                             </div>
                                         ) : (
                                             <ul className="space-y-4 py-2">
@@ -256,7 +256,7 @@ const RequestDashboard: React.FC = () => {
                                 <h2 className="text-2xl font-bold text-gray-800">{selectedRequest.title}</h2>
                                 <button
                                     onClick={closeRequestDetails}
-                                    className="border-2 mb-4 self-end rounded-md border-gray-300 px-3 py-2 text-gray-500 transition-colors hover:text-gray-800 hover:border-gray-700"
+                                    className="mb-4 self-end rounded-md border-2 border-gray-300 px-3 py-2 text-gray-500 transition-colors hover:text-gray-800 hover:border-gray-700"
                                 >
                                     Close
                                 </button>

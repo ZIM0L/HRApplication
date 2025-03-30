@@ -30,7 +30,7 @@ const UserSearch: React.FC<UserSearchProps> = ({ onSelectUser }) => {
             setIsError(true);
             setShowNotification(true);
             if (error instanceof Error) {
-                setNotificationMessages(["Full name cannot be empty"]);
+                setNotificationMessages([error.message]);
             }
             setUserSuggestions([]);
         } finally {
