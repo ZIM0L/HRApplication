@@ -44,23 +44,28 @@ const Login = () => {
                         {...register("email", { required: true, maxLength: 255 })}
                         type="text"
                         placeholder="Your Email"
-                        className="flex-1 w-1/3 border border-gray-300 p-2"
+                        className="w-1/3 flex-1 border border-gray-300 p-2"
                     />
                     <input
                         {...register("password", { required: true, maxLength: 255 })}
                         type="password"
                         placeholder="Your Password"
-                        className="flex-1 w-1/3 border border-gray-300 p-2"
+                        className="w-1/3 flex-1 border border-gray-300 p-2"
                     />
                 </div>
-               
                 <button type="submit" className="mb-4 rounded-md bg-cyan-blue py-2 text-white hover:bg-teal-400">Log In</button>
                 <div className="mb-4 inline-flex w-full items-center justify-center">
-                    <hr className="border-0 my-4 h-px w-64 bg-gray-200 dark:bg-gray-700" />
+                    <hr className="my-4 h-px w-64 border-0 bg-gray-200 dark:bg-gray-700" />
                     <span className="absolute bg-white px-3 font-medium">or login using</span>
                 </div>
             </form>
-                <GoogleLoginButton />
+            <GoogleLoginButton />
+            <button 
+                className="mt-4 text-blue-500 hover:underline"
+                onClick={() => navigate('/forgetpassword')}
+            >
+                Forgot Password?
+            </button>
             {showNotificationModal ? 
                 <Notification
                     messages={errosMessage}

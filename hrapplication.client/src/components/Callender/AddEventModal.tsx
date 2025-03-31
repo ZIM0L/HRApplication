@@ -22,7 +22,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ onAdd, onClose }) => {
         defaultValues: {
             title: "",
             description: "",
-            category: "WorkRelated",
+            category: "Work Related",
             startDate: "",
             endDate: "",
             permission: "Employee",

@@ -12,6 +12,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         List<User>? GetUsersAllUsers();
         List<User>? GetUsersByNameAndSurname(List<string> query);
         User? GetUserByRefreshToken(string refreshToken); //TODO: move to different interface
+        User? GetUserByResetToken(string resetToken);
         void UpdateUser(User user);
 
     }

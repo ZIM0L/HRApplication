@@ -142,7 +142,7 @@ const EditModal: React.FC<EditModalProps> = ({ onSave, onClose }) => {
                                     control={control}
                                     render={({ field }) => (
                                         <textarea
-                                            className="w-full rounded border p-2"
+                                            className="w-full resize-none rounded border p-2"
                                             {...field}
                                         />
                                     )}

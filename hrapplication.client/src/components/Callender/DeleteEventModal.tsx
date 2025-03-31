@@ -6,34 +6,39 @@ import Notification from '../Notification/Notification';
 
 interface DeleteModalProps {
     events: CalendarEventExternal[];
-    onDelete: (CalenderEvent: CalendarEventExternal) => void;
+    onDelete: (CalenderEvent: CalendarEventExternal[]) => void;
     onClose: () => void;
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ events, onDelete, onClose }) => {
-    const [confirmationEvent, setConfirmationEvent] = useState<CalendarEventExternal | null>(null);
+    const [selectedEvents, setSelectedEvents] = useState<CalendarEventExternal[]>([]);
     const { selectedTeam } = useAuth()
     const [notificationMessage, setNotificationMessage] = useState<string[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [isError, setIsError] = useState(false)
 
-    const handleDeleteClick = (event: CalendarEventExternal) => {
-        setConfirmationEvent(event); 
+    const handleEventSelection = (event: CalendarEventExternal) => {
+        setSelectedEvents(prev => 
+            prev.includes(event) ? prev.filter(e => e !== event) : [...prev, event]
+        );
     };
 
     const confirmDelete = async () => {
         if (!selectedTeam?.team) return
-        if (confirmationEvent) {
+        if (selectedEvents.length > 0) {
             try {
-                const response = await DeleteCalendarEvent(confirmationEvent.id.toString());
-                if (response?.status === 200) {
+                const deletePromises = selectedEvents.map(event => DeleteCalendarEvent(event.id.toString()));
+                const responses = await Promise.all(deletePromises);
+                const allSuccessful = responses.every(response => response?.status === 200);
+
+                if (allSuccessful) {
                     setIsError(false);
-                    setNotificationMessage(["Event has been deleted"]);
+                    setNotificationMessage(["Events have been deleted"]);
                     setShowNotification(true);
 
                     setTimeout(() => {
-                        onDelete(confirmationEvent); 
-                        setConfirmationEvent(null); 
+                        onDelete(selectedEvents); 
+                        setSelectedEvents([]); 
                     }, 3500);
                 }
             } catch (error) {
@@ -49,7 +54,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ events, onDelete, onClose }) 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-[400px] rounded bg-white p-6 shadow-lg">
-                <h2 className="mb-4 text-lg font-bold">Select Event to Delete</h2>
+                <h2 className="mb-4 text-lg font-bold">Select Events to Delete</h2>
                 {events.length === 0 ? (
                     <p className="text-center text-gray-500">No events to delete</p>
                 ) : (
@@ -57,17 +62,22 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ events, onDelete, onClose }) 
                         {events.map((event: CalendarEventExternal) => (
                             <li key={event.id} className="mb-2 flex justify-between">
                                 <span>{event.title}</span>
-                                <button
-                                    className="rounded bg-light-red px-2 py-1 text-white hover:bg-red-800"
-                                    onClick={() => handleDeleteClick(event)} 
-                                >
-                                    Delete
-                                </button>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedEvents.includes(event)}
+                                    onChange={() => handleEventSelection(event)}
+                                />
                             </li>
                         ))}
                     </ul>
                 )}
-                <div className="flex justify-end">
+                <div className="flex justify-end space-x-3">
+                    <button
+                        className="rounded bg-light-red px-4 py-2 text-white hover:bg-red-800"
+                        onClick={confirmDelete}
+                    >
+                        Delete Selected
+                    </button>
                     <button
                         className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
                         onClick={onClose}
@@ -76,35 +86,6 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ events, onDelete, onClose }) 
                     </button>
                 </div>
             </div>
-
-            {/* Potwierdzenie usunięcia */}
-            {confirmationEvent && (
-                <div className="z-60 fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-                    <div className="w-1/2 min-w-[300px] max-w-[400px] rounded bg-white p-6 shadow-lg">
-                        <h3 className="mb-4 text-lg font-semibold text-light-red">Confirm Deletion</h3>
-                        <span className="mb-4 text-lg text-gray-800">
-                            Are you sure you want to delete the event:
-                        </span>
-                        <p className="font-semibold text-red-600"> {confirmationEvent.title} </p>
-                        <p className="py-2 text-sm text-gray-500">This action cannot be undone.</p>
-
-                        <div className="flex justify-end space-x-2">
-                            <button
-                                className="rounded bg-light-red px-4 py-2 text-white hover:bg-red-700"
-                                onClick={confirmDelete} 
-                            >
-                                Confirm
-                            </button>
-                            <button
-                                className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
-                                onClick={() => setConfirmationEvent(null)} 
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
             {showNotification && (
                 <Notification
                     messages={notificationMessage}

@@ -152,16 +152,20 @@ function CalendarApp() {
             };
         });
     };
-    const handleDeleteEvent = (deleteCalendarEvent: CalendarEventExternal) => {
-        setInitEvents((prevEvents) => prevEvents.filter((event) => event.id !== deleteCalendarEvent.id))
-        //@ts-expect-error works
-        setTeamInformation((prev: ITeamInformation) => {
-            return {
-                ...prev,
-                CalendarEvents: prev.CalendarEvents.filter((event) => event.calendareventid !== deleteCalendarEvent.id)
-            };
-        });
-        setIsDeleteModalOpen(false);
+    const handleDeleteEvent = (deleteCalendarEvents: CalendarEventExternal[]) => {  
+       setInitEvents((prevEvents) => {  
+           const updatedEvents = prevEvents.filter((event) => !deleteCalendarEvents.some((deleteEvent) => deleteEvent.id === event.id));  
+           calendar.events.set(updatedEvents);  
+           return updatedEvents;  
+       });  
+       //@ts-expect-error works  
+       setTeamInformation((prev: ITeamInformation) => {  
+           return {  
+               ...prev,  
+               CalendarEvents: prev.CalendarEvents.filter((event) => !deleteCalendarEvents.some((deleteEvent) => deleteEvent.id === event.calendareventid))  
+           };  
+       });  
+       setIsDeleteModalOpen(false);  
     };
 
     const handleEditEvent = (updatedEvent: ICalendarEvent) => {
@@ -211,17 +215,17 @@ function CalendarApp() {
                         {selectedTeam?.roleName == "Administrator" ?
                             <div className="flex space-x-3 md:space-x-0 md:flex-col">
                                 <button
-                                    className="border-2 mb-2 w-full rounded border-gray-100 bg-gray-100 px-1 py-2 transition-colors duration-200 hover:border-gray-400 md:py-0 md:text-left md:w-full"
+                                    className="mb-2 w-full rounded border-2 border-gray-100 bg-gray-100 px-1 py-2 transition-colors duration-200 hover:border-gray-400 md:py-0 md:text-left md:w-full"
                                     onClick={() => { setIsAddModalOpen(true); setSidebarOpen(false) }}>
                                     Add event
                                 </button>
                                 <button
-                                    className="border-2 mb-2 w-full rounded border-gray-100 bg-gray-100 px-1 py-2 transition-colors duration-200 hover:border-gray-400 md:py-0 md:text-left md:w-full"
+                                    className="mb-2 w-full rounded border-2 border-gray-100 bg-gray-100 px-1 py-2 transition-colors duration-200 hover:border-gray-400 md:py-0 md:text-left md:w-full"
                                     onClick={() => { setIsDeleteModalOpen(true); setSidebarOpen(false) }}>
                                     Delete events
                                 </button>
                                 <button
-                                    className="border-2 mb-2 w-full rounded border-gray-100 bg-gray-100 px-1 py-2 transition-colors duration-200 hover:border-gray-400 md:py-0 md:text-left"
+                                    className="mb-2 w-full rounded border-2 border-gray-100 bg-gray-100 px-1 py-2 transition-colors duration-200 hover:border-gray-400 md:py-0 md:text-left"
                                     onClick={() => { setIsEditModalOpen(true); setSidebarOpen(false) }}>
                                     Edit events
                                 </button>

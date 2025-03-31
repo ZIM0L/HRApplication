@@ -1,6 +1,8 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.Commands.ChangePassword;
 using HRApplication.Server.Application.DatabaseTables.Commands.ChangeUserCredentials;
+using HRApplication.Server.Application.DatabaseTables.Commands.ForgetPassword;
+using HRApplication.Server.Application.DatabaseTables.Commands.ResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ReactApp1.Server.Presentation.Api.Controllers;
@@ -58,6 +60,35 @@ namespace HRApplication.Server.Presentation.Controllers.Authentication
             var query = new ChangePasswordRequest(request.password, request.newPassword);
 
             ErrorOr<Unit> response = await _mediator.Send(query);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+
+        }
+        [HttpPost]
+        [Route("auth/ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgetPasswordRequest request)
+        {
+
+            var command = new ForgetPasswordRequest(request.email);
+
+            ErrorOr<bool> response = await _mediator.Send(command);
+
+            return response.Match(
+                response => Ok(response),
+                errors => Problem(errors)
+                );
+        }
+        [HttpPost]
+        [Route("auth/ResetPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ResetPasswordRequest request)
+        {
+
+            var command = new ResetPasswordRequest(request.token, request.newPassword);
+
+            ErrorOr<bool> response = await _mediator.Send(command);
 
             return response.Match(
                 response => Ok(response),

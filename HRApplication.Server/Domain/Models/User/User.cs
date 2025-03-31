@@ -26,6 +26,9 @@ public class User
     public DateTime? GoogleRefreshTokenExpiryTime { get; set; }
     public Boolean? IsGoogleLoggedIn { get; set; } = false;
     public string? UserProfilePathImage { get; set; }
+    public string? ResetToken { get; set; }
+    public DateTime? ResetTokenExpiry { get; set; }
+
     // 
     public ICollection<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();
     public ICollection<TeamMemberShift> TeamMemberShifts { get; set; } = new List<TeamMemberShift>();

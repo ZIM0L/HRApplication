@@ -17,6 +17,8 @@ import Shifts from './components/Shift/Shifts';
 import RequestDashboard from './components/Request/RequestDashboard';
 import QAComponent from './components/Questions/QAComponent';
 import Policy from './components/Policy/Policy';
+import ResetPassword from './utils/ResetPassword';
+import ForgetPassword from './utils/ForgetPassword';
 
 const App = () => {
     return (
@@ -30,6 +32,8 @@ const App = () => {
                     <Route path="/*" element={<NotFoundPage />} />
                     <Route path="/auth/google-handler" element={<GoogleAuthHandler />} />
                     <Route path="/privacy-policy" element={<Policy />} />
+                    <Route path="/resetpassword" element={<ResetPassword />} />
+                    <Route path="/forgetpassword" element={<ForgetPassword />} />
 
                     <Route element={<ProtectedRoutes />}>
                     <Route path="/organizations" element={<SelectDashboard />} />

@@ -9,7 +9,7 @@ const UpcomingEventsAlert = () => {
     const upcomingEvents = teamInformation?.CalendarEvents
         ?.filter(event => new Date(event.startDate) > new Date())
         .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
-        .slice(0, 10); // Display only first 10 events
+        .slice(0, 10); 
 
     const [currentPage, setCurrentPage] = useState(1);
     const [eventsPerPage, setEventsPerPage] = useState(5);
@@ -38,6 +38,7 @@ const UpcomingEventsAlert = () => {
             const availableHeight = window.innerHeight - 150; // Adjust for header and pagination
             const eventHeight = 120; 
             setEventsPerPage(Math.floor(availableHeight / eventHeight));
+            console.log(teamInformation?.CalendarEvents)
         };
 
         // Recalculate on window resize

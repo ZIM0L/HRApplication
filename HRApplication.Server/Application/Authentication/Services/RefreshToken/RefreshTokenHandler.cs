@@ -27,14 +27,14 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, ErrorOr<
 
         if (string.IsNullOrEmpty(refreshToken))
         {
-            return CustomErrors.User.InvalidRefreshToken; // Jeśli nie ma tokenu, zwróć błąd
+            return CustomErrors.User.InvalidToken; // Jeśli nie ma tokenu, zwróć błąd
         }
 
         var user = _userRepository.GetUserByRefreshToken(refreshToken);
 
         if (user == null)
         {
-            return CustomErrors.User.InvalidRefreshToken;
+            return CustomErrors.User.InvalidToken;
         }
         if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
         {

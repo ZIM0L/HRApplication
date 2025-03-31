@@ -133,6 +133,50 @@ export const ChangeUserPassword = async (password : string, newPassword : string
         throw new Error("Unexpected error occurred while changing user password.");
     }
 }
+export const ForgotPasswordRequest = async (email: string): Promise<AxiosResponse> => {
+    try {
+        return await mainAxiosInstance.post('api/User/auth/ForgotPassword', {
+            email: email
+        })
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error sending reset password link: ", error);
 
+            const extractedErrors = ExtractErrorsFromAPI(error);
 
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
 
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while sending reset password link.");
+    }
+}
+export const ResetPasswordRequest = async (newPassword: string, token : string): Promise<AxiosResponse> => {
+    try {
+        return await mainAxiosInstance.post('api/User/auth/ResetPassword', {
+            token: token,
+            newPassword: newPassword
+        })
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Error sending reseting password: ", error);
+
+            const extractedErrors = ExtractErrorsFromAPI(error);
+
+            const errorMessage = extractedErrors
+                .map(e => `${e.messages.join(", ")}`)
+                .join(" | ");
+            if (errorMessage.length == 0) {
+                throw new Error(error.response?.data.title);
+            }
+
+            throw new Error(errorMessage);
+        }
+        throw new Error("Unexpected error occurred while sending reseting password.");
+    }
+}
