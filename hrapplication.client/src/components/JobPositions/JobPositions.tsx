@@ -14,7 +14,7 @@ function JobPositions() {
     const { selectedTeam, teamInformation } = useAuth();
 
     const filteredJobPositions = teamInformation?.JobPositions.filter((job) =>
-        job.title.toLowerCase().includes(searchTerm.toLowerCase())
+        job.title.toLowerCase().includes(searchTerm.toLowerCase()) && job.title.toLowerCase() !== "unknown"
     );
 
     return (

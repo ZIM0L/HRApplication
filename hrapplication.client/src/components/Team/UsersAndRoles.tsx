@@ -54,7 +54,7 @@ const UsersAndRolesTable: React.FC<UsersAndRolesTableProps> = ({ dataToDisplay, 
 
 
 
-    const sortedData = dataToDisplay.sort((a, b) => {
+    const sortedData = dataToDisplay.filter(user => user.jobPosition.toLowerCase() != "unknown").sort((a, b) => {
         let aValue: string | null = "";
         let bValue: string | null = "";
 

@@ -8,7 +8,7 @@ namespace HRApplication.Server.Application.CustomErrorOr
         {
             public static Error RequestDoesNotExists = Error.Conflict(
                 code: "TeamRequest.RequestDoesNotExists",
-                description: "Team member request doesn't exists");
+                description: "This request no longer exists");
             public static Error ForbiddenAction = Error.Forbidden(
                 code: "TeamRequest.ForbiddenAction",
                 description: "User cannot edit others requests");

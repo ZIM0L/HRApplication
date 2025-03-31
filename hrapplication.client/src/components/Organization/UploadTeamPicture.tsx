@@ -123,18 +123,6 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     </button>
                 </form>
 
-                {/* Displaying image preview */}
-                {imagePreview && (
-                    <div className="mt-4">
-                        <p className="text-sm text-gray-600">Preview of the selected team image:</p>
-                        <img
-                            src={imagePreview}
-                            alt="Team Image Preview"
-                            className="mt-2 h-auto max-w-full rounded-md"
-                        />
-                    </div>
-                )}
-
                 {/* Displaying error message */}
                 {errorMessage && (
                     <div className="mt-4 text-sm text-red-500">

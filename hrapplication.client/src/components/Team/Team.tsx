@@ -113,8 +113,8 @@ const Team: React.FC = () => {
                 setTeamInformation((prev: ITeamInformation) => {
                     return {
                         ...prev,
-                        UserData: prev.UserData.map(u => 
-                            u.email === user.email ? { ...u, isActive: !u.isActive } : u
+                        UserData: prev.UserData.map(u =>
+                            u.email === user.email ? { ...u, isActive: !u.isActive} : u
                         )
                     };
                 });

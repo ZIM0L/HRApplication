@@ -5,7 +5,7 @@ using MediatR;
 
 namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.ToggleTeamMemberActivity
 {
-    public class ToggleTeamMemberActivityHandler : IRequestHandler<ToggleTeamMemberActivityRequest, ErrorOr<Unit>>
+    public class ToggleTeamMemberActivityHandler : IRequestHandler<ToggleTeamMemberActivityRequest, ErrorOr<DateTime>>
     {
         private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -17,7 +17,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.T
             _teamMemberRepository = teamMemberRepository;
         }
 
-        public async Task<ErrorOr<Unit>> Handle(ToggleTeamMemberActivityRequest request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<DateTime>> Handle(ToggleTeamMemberActivityRequest request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -50,10 +50,11 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMembers.Commands.T
             teamMembers.ForEach(teamMember =>
             {
                 teamMember.IsActive = !teamMember.IsActive;
+                teamMember.LeftAt = teamMember.IsActive ? null : DateTime.UtcNow;
             });
             _teamMemberRepository.UpdateTeamMembersFromCollection(teamMembers);
 
-            return Unit.Value;
+            return DateTime.UtcNow;
         }
     }
 }

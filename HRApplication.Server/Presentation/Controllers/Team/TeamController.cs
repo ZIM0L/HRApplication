@@ -165,7 +165,7 @@ namespace HRApplication.Server.Presentation.Controllers.Teams
         {
             var command = new ToggleTeamMemberActivityRequest(request.teamId, request.email);
 
-            ErrorOr<Unit> response = await _mediatR.Send(command);
+            ErrorOr<DateTime> response = await _mediatR.Send(command);
 
             return response.Match(
                 response => Ok(response),

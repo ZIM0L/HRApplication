@@ -26,7 +26,7 @@ interface UserSettingsProps {
         name: string;
         surname: string;
         phoneNumber: string;
-        email: string;  // Nowe pole email
+        email: string;  
     };
 }
 
@@ -44,7 +44,7 @@ const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose, userData }
 
     const handleSectionChange = (section: 'user' | 'password' | 'image') => {
         setActiveSection(section);
-        setErrorMessage(null); // Clear error message when section changes
+        setErrorMessage(null);
     };
 
     const handleUserChange = async (data: IUserToChangeCredentials) => {
@@ -142,7 +142,12 @@ const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose, userData }
                 const response = await UploadUserImage(formData);
                 if (response.status === 200) {
                     setErrorMessage(null);
-                    alert('Image uploaded successfully!');
+                    setIsError(false);
+                    setNotificationMessage(["Applying changes..."]);
+                    setShowNotification(true);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3500);
                 }
             } catch (error) {
                 setErrorMessage('Error uploading image. Please try again.');
@@ -220,7 +225,7 @@ const UserSettings: React.FC<UserSettingsProps> = ({ isOpen, onClose, userData }
                 {activeSection === 'image' && (
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <p className="mb-4 border-l-4 border-gray-400 bg-gray-100 p-2 text-sm">
-                            Upload a new profile picture (JPG, JPEG, PNG). You will be logged out after saving changes.
+                            Upload a new profile picture (JPG, JPEG, PNG). Page will be reloaded after applied changes.
                         </p>
                         <label>Upload Image:</label>
                         <input type="file" {...register('image')} className="mb-4 w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />

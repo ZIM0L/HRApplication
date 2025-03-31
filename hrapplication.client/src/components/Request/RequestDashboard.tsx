@@ -96,6 +96,7 @@ const RequestDashboard: React.FC = () => {
             setShowNotification(true);
             if (error instanceof Error) {
                 setNotificationMessage(error.message.split(" | "));
+                setIsModalOpen(false);
             }
         }
     }

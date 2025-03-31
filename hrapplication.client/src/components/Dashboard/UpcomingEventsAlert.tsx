@@ -38,7 +38,6 @@ const UpcomingEventsAlert = () => {
             const availableHeight = window.innerHeight - 150; // Adjust for header and pagination
             const eventHeight = 120; 
             setEventsPerPage(Math.floor(availableHeight / eventHeight));
-            console.log(teamInformation?.CalendarEvents)
         };
 
         // Recalculate on window resize

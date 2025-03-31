@@ -75,7 +75,11 @@ function Organization() {
                             </p>
                             <p className="flex text-gray-600">
                                 {teamInformation ?
-                                    teamInformation?.UserData.filter((value, index, array) => array.indexOf(value) === index).length
+                                    teamInformation?.UserData.filter((value, index, self) => 
+                                        index === self.findIndex((t) => (
+                                            t.email === value.email
+                                        ))
+                                    ).length
                                     :
                                     ""}
                                 <UserIcon className="h-4 w-4" />
