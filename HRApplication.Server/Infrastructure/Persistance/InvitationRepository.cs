@@ -48,6 +48,11 @@ namespace HRApplication.Server.Infrastructure.Persistance
             return _dbContex.Invitations.Where(x => x.JobPositionId == jobPositionId).ToList();
         }
 
+        public List<Invitation>? GetInvitatiosnByJobPositionIds(List<Guid> jobPositionId)
+        {
+            return _dbContex.Invitations.Where(x => jobPositionId.Contains(x.JobPositionId)).ToList();
+        }
+
         public List<InvitationResult>? GetTeamPendingInvitationsByTeamId(Guid teamId)
         {
             var invitations = _dbContex.Invitations

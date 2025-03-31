@@ -10,6 +10,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         bool CheckIfAnyInvitationForUser(Guid userId);
         Invitation? IsInvitationAlreadyCreated(Invitation invitation);
         List<Invitation>? GetInvitatiosnByJobPositionId(Guid jobPositionId);
+        List<Invitation>? GetInvitatiosnByJobPositionIds(List<Guid> jobPositionId);
         List<InvitationResult>? GetAllUserInvitations(Guid userId);
         List<InvitationResult>? GetTeamPendingInvitationsByTeamId(Guid teamId);
         void DeleteUserInvitation(Invitation invitation);

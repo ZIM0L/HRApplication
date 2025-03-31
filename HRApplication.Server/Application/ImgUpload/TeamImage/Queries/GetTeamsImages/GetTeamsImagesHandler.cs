@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using HRApplication.Server.Application.Interfaces.Repositories;
 using HRApplication.Server.Application.Utilities;
-using HRApplication.Server.Domain.Models;
 using MediatR;
 
 namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamsImages
@@ -38,7 +37,12 @@ namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamsI
 
             if (usersTeams == null || !usersTeams.Any())
             {
-                return CustomErrorOr.CustomErrors.Team.UserWithoutTeam;
+                var base64Image = await GetDefaultTeamImageBase64Async();
+                var defaultTeamImages = new Dictionary<string, string>
+                {
+                    { "default", base64Image }
+                };
+                return new TeamsImagesResult(defaultTeamImages);
             }
 
             var teamIds = usersTeams.Select(x => x.TeamId).ToList();
@@ -46,7 +50,12 @@ namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamsI
 
             if (teams == null || !teams.Any())
             {
-                return CustomErrorOr.CustomErrors.Team.UserWithoutTeam;
+                var base64Image = await GetDefaultTeamImageBase64Async();
+                var defaultTeamImages = new Dictionary<string, string>
+                {
+                    { "default", base64Image }
+                };
+                return new TeamsImagesResult(defaultTeamImages);
             }
 
             var teamImages = new Dictionary<string, string>();
@@ -60,7 +69,7 @@ namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamsI
             return new TeamsImagesResult(teamImages);
         }
 
-        private async Task<string> GetTeamImageBase64Async(Team team)
+        private async Task<string> GetTeamImageBase64Async(Domain.Models.Team team)
         {
             var fileName = team.TeamProfilePathImage;
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "TeamsPictures", team.TeamId.ToString());
@@ -72,6 +81,22 @@ namespace HRApplication.Server.Application.ImgUpload.TeamImage.Queries.GetTeamsI
             if (!File.Exists(filePath))
             {
                 filePath = Path.Combine(Directory.GetCurrentDirectory(), "TeamsPictures", "Default", "default-teamprofile-photo.jpg");
+            }
+
+            byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+
+            string base64Image = Convert.ToBase64String(fileBytes);
+
+            return base64Image;
+        }  
+        private async Task<string> GetDefaultTeamImageBase64Async()
+        {
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TeamsPictures", "Default", "default-teamprofile-photo.jpg");
+               
+            if (!File.Exists(filePath))
+            {
+              Console.WriteLine("File not found: " + filePath);
             }
 
             byte[] fileBytes = await File.ReadAllBytesAsync(filePath);

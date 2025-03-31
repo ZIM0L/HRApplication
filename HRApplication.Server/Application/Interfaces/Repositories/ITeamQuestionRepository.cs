@@ -7,6 +7,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         void AddNewTeamQuestion(TeamQuestion teamQuestion);
         List<TeamQuestion>? GetTeamQuestionByTeamId(Guid teamId);
         TeamQuestion? GetTeamQuestionByteamQuestionId(Guid teamQuestionId);
-        void DeleteTeamQuestionByTeamId(TeamQuestion teamQuestion);
+        void DeleteTeamQuestion(TeamQuestion teamQuestion);
+        void DeleteTeamQuestions(List<TeamQuestion> teamQuestion);
     }
 }

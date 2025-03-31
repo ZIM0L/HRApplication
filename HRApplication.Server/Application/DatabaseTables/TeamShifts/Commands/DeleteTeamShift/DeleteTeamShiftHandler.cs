@@ -43,7 +43,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamShifts.Commands.De
                 return isAdminResult.Errors;
             }
             var teamMembersShiftsToRemove = _teamMemberShiftsRepository.GetTeamMemberShiftsByTeamShiftId(Guid.Parse(request.teamShiftId));
-            _teamMemberShiftsRepository.DeleteTeamMemerShfits(teamMembersShiftsToRemove!);
+            _teamMemberShiftsRepository.DeleteTeamMemberShfits(teamMembersShiftsToRemove!);
             _teamShiftRepository.DeleteTeamShift(teamShift);
 
             return Unit.Value;

@@ -72,7 +72,6 @@ const SelectDashboard = () => {
     }
 
     if (!teams && !userTeamsProfilesSrc?.teamImage) return <Loading />;
-
     return (
         <div className="h-screen bg-gray-100">
             <div className="flex flex-col-reverse justify-between bg-dark-blue p-4 text-white shadow-md md:flex-row">
@@ -110,7 +109,7 @@ const SelectDashboard = () => {
                         <div key={org.team.teamId} className="flex flex-col items-center justify-between border-b px-6 py-2 hover:bg-gray-50 md:flex-row">
                             <div className="flex items-center gap-4">
                                 <img
-                                    src={`data:application/octet-stream;base64,${userTeamsProfilesSrc?.teamImage?.[org.team.teamId] || ""}`}
+                                    src={`data:application/octet-stream;base64,${userTeamsProfilesSrc?.teamImage?.[org.team.teamId] || userTeamsProfilesSrc?.teamImage?.["default"]}`}
                                     alt="Team Logo"
                                     className="h-12 w-12 rounded-full"
                                 />

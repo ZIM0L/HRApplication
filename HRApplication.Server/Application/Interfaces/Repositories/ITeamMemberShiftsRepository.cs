@@ -11,6 +11,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         TeamMemberShift? GetTeamMemberShiftByTeamMemberShiftId(Guid? teamMemberShiftId);
         void RemoveTeamMemberShifts(List<TeamMemberShift> shifts);
         void AddTeamMemberShifts(List<TeamMemberShift> teamMemberShift);
-        void DeleteTeamMemerShfits(List<TeamMemberShift> teamMemberShifts);
+        void DeleteTeamMemberShfits(List<TeamMemberShift> teamMemberShifts);
+        List<TeamMemberShift>? GetTeamMemberShiftsByTeamShiftsIds(List<Guid> teamShiftsIds);
     }
 }

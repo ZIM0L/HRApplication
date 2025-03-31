@@ -23,6 +23,12 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
+        public void DeleteCalendarEvents(List<CalendarEvent> calendarEvents)
+        {
+            _dbContex.Calendar_Events.RemoveRange(calendarEvents);
+            _dbContex.SaveChanges();
+        }
+
         public CalendarEvent? GetCalendarEvent(Guid calendarEventId)
         {
             return _dbContex.Calendar_Events.SingleOrDefault(x => x.CalendarEventId == calendarEventId);

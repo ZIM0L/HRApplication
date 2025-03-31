@@ -70,7 +70,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamMemberShifts.Comma
             }
             var toDelete = _teamMemberShiftsRepository.GetTeamMemberShiftByTeamMemberShiftId(shiftIdToDelete);
 
-            _teamMemberShiftsRepository.DeleteTeamMemerShfits(new List<TeamMemberShift> { toDelete! });
+            _teamMemberShiftsRepository.DeleteTeamMemberShfits(new List<TeamMemberShift> { toDelete! });
             return Unit.Value;
         }
     }

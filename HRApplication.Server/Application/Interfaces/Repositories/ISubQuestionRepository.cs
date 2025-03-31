@@ -6,7 +6,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
     {
         void AddSubQuestions(List<SubQuestion> subQuestions);
         List<SubQuestion>? GetSubQuestionsByTeamQuestionIds(List<Guid> teamQuestionIds);
-        void DeleteSubQuestionsByTeamQuestionIds(List<SubQuestion> subQuestions);
+        void DeleteSubQuestionsByTeamQuestions(List<SubQuestion> subQuestions);
         List<SubQuestion>? GetSubQuestionsByTeamQuestionId( Guid teamQuestionId);
     }
 }

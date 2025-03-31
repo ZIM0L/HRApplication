@@ -8,6 +8,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         void UpdateCalendarEvent(CalendarEvent calendarEvent);
         void CreateCalendarEvent(CalendarEvent calendarEvent);
         List<CalendarEvent>? GetCalendarEvents(Guid teamsCalendarId);
+        void DeleteCalendarEvents(List<CalendarEvent> calendarEvents);
         void DeleteCalendarEvent(CalendarEvent calendarEventId);
     }
 }

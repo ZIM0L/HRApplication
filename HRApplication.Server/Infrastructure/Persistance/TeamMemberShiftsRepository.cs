@@ -19,7 +19,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
-        public void DeleteTeamMemerShfits(List<TeamMemberShift> teamMemberShifts)
+        public void DeleteTeamMemberShfits(List<TeamMemberShift> teamMemberShifts)
         {
             _dbContex.Team_Member_Shifts.RemoveRange(teamMemberShifts);
             _dbContex.SaveChanges();
@@ -33,6 +33,13 @@ namespace HRApplication.Server.Infrastructure.Persistance
         public List<TeamMemberShift>? GetTeamMemberShiftsByTeamShiftId(Guid teamShiftId)
         {
             return _dbContex.Team_Member_Shifts.Where(shift => teamShiftId == shift.TeamShiftId).ToList();
+        }
+
+        public List<TeamMemberShift>? GetTeamMemberShiftsByTeamShiftsIds(List<Guid> teamShiftsIds)
+        {
+            return _dbContex.Team_Member_Shifts
+                .Where(x => teamShiftsIds.Contains(x.TeamShiftId))
+                .ToList();
         }
 
         public List<TeamMemberShift>? GetTeamMemberShiftsByUserIdAndDates(Guid userId, List<DateTime> dates)

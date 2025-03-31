@@ -38,14 +38,13 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCre
 
     const onSubmit: SubmitHandler<TeamInputs> = async (data) => {
         try {
-
             if (data.url && !/^https?:\/\//i.test(data.url)) {
                 data.url = `http://${data.url}`;
             }
 
             console.log("Data submitted:", data);
             const result = await CreateTeam(data);
-            if (result?.status == 200) {
+            if (result?.status === 200) {
                 setErrorMessage(["Team has been Created"]);
                 setShowResultNotification(true);
                 setIsError(false);
@@ -99,7 +98,7 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCre
                         By creating a team, you will automatically be assigned the role of Administrator.
                     </p>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)} className="grid-cols-1 grid gap-4 sm:grid-cols-2">
+                <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {/* Name */}
                     <div>
                         <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -211,7 +210,6 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCre
                         />
                     </div>
 
-
                     {/* Email */}
                     <div>
                         <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -301,14 +299,13 @@ const CreateNewTeamModal: React.FC<AddJobModalProps> = ({ isOpen, onClose, onCre
                     </div>
                 </form>
             </div>
-            {showResultNotification ? 
-            <Notification
-                messages={errorMessage}
-                onClose={() => { setShowResultNotification(false)}}
-                isError={isError} />
-                :
-                null
-            }
+            {showResultNotification && (
+                <Notification
+                    messages={errorMessage}
+                    onClose={() => { setShowResultNotification(false)}}
+                    isError={isError} 
+                />
+            )}
         </div>
     );
 };

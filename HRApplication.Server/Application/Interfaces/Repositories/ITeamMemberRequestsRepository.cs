@@ -11,6 +11,7 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         void DeleteTeamMemberRequest(TeamMemberRequest teamMemberRequest);
         TeamMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId);
         void UpdateTeamMemberRequest(TeamMemberRequest teamMemberRequest);
+        void DeleteTeamMemberRequests(List<TeamMemberRequest> teamMemberRequests);
 
     }
 }

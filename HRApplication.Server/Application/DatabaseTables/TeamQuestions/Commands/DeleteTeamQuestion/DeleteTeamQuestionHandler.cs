@@ -50,7 +50,7 @@ namespace HRApplication.Server.Application.DatabaseTables.TeamQuestions.Commands
                return response.Errors;
             }
 
-            _teamQuestionRepository.DeleteTeamQuestionByTeamId(teamQuestion);
+            _teamQuestionRepository.DeleteTeamQuestion(teamQuestion);
 
             return Unit.Value;
         }

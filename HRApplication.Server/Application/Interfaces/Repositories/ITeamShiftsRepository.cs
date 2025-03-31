@@ -9,5 +9,6 @@ namespace HRApplication.Server.Application.Interfaces.Repositories
         TeamShift? GetTeamShiftById(Guid teamShiftId);
         TeamShift? GetTeamShiftByTeamShiftId(Guid teamShiftId);
         void DeleteTeamShift(TeamShift teamShift);
+        void DeleteTeamShifts(List<TeamShift> teamShift);
     }
 }

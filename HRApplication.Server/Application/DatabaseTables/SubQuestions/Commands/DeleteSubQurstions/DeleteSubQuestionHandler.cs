@@ -18,7 +18,7 @@ namespace HRApplication.Server.Application.DatabaseTables.SubQuestions.Commands.
             var subQuestions = _subQuestionRepository.GetSubQuestionsByTeamQuestionId(request.teamQuestionId);
             if (subQuestions != null)
             {
-                _subQuestionRepository.DeleteSubQuestionsByTeamQuestionIds(subQuestions);
+                _subQuestionRepository.DeleteSubQuestionsByTeamQuestions(subQuestions);
             }
             return Unit.Value;
         }

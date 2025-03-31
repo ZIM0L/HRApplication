@@ -18,10 +18,16 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
-        public void DeleteTeamQuestionByTeamId(TeamQuestion teamQuestion)
+        public void DeleteTeamQuestion(TeamQuestion teamQuestion)
         {
            _dbContex.Team_Questions.Remove(teamQuestion);
            _dbContex.SaveChanges();
+        }
+
+        public void DeleteTeamQuestions(List<TeamQuestion> teamQuestion)
+        {
+            _dbContex.Team_Questions.RemoveRange(teamQuestion);
+            _dbContex.SaveChanges();
         }
 
         public List<TeamQuestion>? GetTeamQuestionByTeamId(Guid teamId)

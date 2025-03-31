@@ -24,6 +24,12 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
+        public void DeleteTeamMemberRequests(List<TeamMemberRequest> teamMemberRequests)
+        {
+            _dbContex.Team_Members_Requests.RemoveRange(teamMemberRequests);
+            _dbContex.SaveChanges();
+        }
+
         public TeamMemberRequest? GetTeamMemberRequestById(Guid teamMemberRequestId)
         {
             return _dbContex.Team_Members_Requests.SingleOrDefault(x => x.TeamMemberRequestId == teamMemberRequestId);

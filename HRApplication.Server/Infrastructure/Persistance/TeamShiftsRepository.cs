@@ -24,6 +24,12 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
+        public void DeleteTeamShifts(List<TeamShift> teamShift)
+        {
+            _dbContex.Team_Shifts.RemoveRange(teamShift);
+            _dbContex.SaveChanges();
+        }
+
         public TeamShift? GetTeamShiftById(Guid teamShiftId)
         {
             return _dbContex.Team_Shifts.SingleOrDefault(x => x.TeamShiftId == teamShiftId);

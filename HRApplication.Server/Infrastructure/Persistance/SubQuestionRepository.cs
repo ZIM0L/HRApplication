@@ -18,7 +18,7 @@ namespace HRApplication.Server.Infrastructure.Persistance
             _dbContex.SaveChanges();
         }
 
-        public void DeleteSubQuestionsByTeamQuestionIds(List<SubQuestion> subQuestions)
+        public void DeleteSubQuestionsByTeamQuestions(List<SubQuestion> subQuestions)
         {
             _dbContex.RemoveRange(subQuestions);
             _dbContex.SaveChanges();
