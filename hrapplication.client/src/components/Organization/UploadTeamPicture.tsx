@@ -16,7 +16,6 @@ interface ModalProps {
 
 const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const { register, handleSubmit, formState: { errors }, watch, reset } = useForm<IFormInput>();
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { selectedTeam } = useAuth();
@@ -27,7 +26,6 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     useEffect(() => {
         if (isOpen) {
             reset();
-            setImagePreview(null);
             setUploading(false);
             setErrorMessage(null);
             setNotificationMessage([]);
@@ -45,9 +43,6 @@ const UploadTeamPicture: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             setErrorMessage('Invalid file format. Only JPG, JPEG, and PNG files are allowed.');
             return;
         }
-
-        const previewUrl = URL.createObjectURL(file);
-        setImagePreview(previewUrl);
 
         const formData = new FormData();
         formData.append('image', file);

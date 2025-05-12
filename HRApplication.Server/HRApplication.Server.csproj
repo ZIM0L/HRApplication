@@ -10,6 +10,10 @@
     <UserSecretsId>7f0f0afb-cf49-4ed2-bcfc-7fbe25f0a270</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+    <ContainerRuntimeIdentifier>linux-x64</ContainerRuntimeIdentifier>
+    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:8.0</ContainerBaseImage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -86,6 +90,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\docker-compose.yml" Link="docker-compose.yml" />
     <None Include="wwwroot\src\index.css" />
     <None Include="wwwroot\src\index.js" />
     <None Include="wwwroot\fonts\Kanit\Kanit-Black.ttf" />
@@ -109,6 +114,10 @@
     <None Include="wwwroot\fonts\Kanit\OFL.txt" />
     <None Include="wwwroot\index.html" />
     <None Include="wwwroot\vite.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContainerPort Include="8081" />
   </ItemGroup>
 
 </Project>

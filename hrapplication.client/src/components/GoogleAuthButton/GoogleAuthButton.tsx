@@ -1,5 +1,4 @@
-﻿import React from 'react';
-
+﻿
 const GoogleLoginButton = () => {
     const handleRedirect = () => {
         window.location.href = `https://localhost:7250/auth/google-login`;

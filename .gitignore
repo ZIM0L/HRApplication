@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /Database Model
 /HRApplication.Server/Migrations
+Database Model
+.gitignore
+.gitattributes

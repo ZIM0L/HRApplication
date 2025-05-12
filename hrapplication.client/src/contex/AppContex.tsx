@@ -15,7 +15,6 @@ import { EmployeeShiftsAssignment } from '../types/Shift/Shift';
 import { GetUserImage } from '../api/UserAPI';
 import { GetTeamQuestions } from '../api/TeamQuestionAPI';
 import { GetPendingInvitations } from '../api/InvitationAPI';
-import { useNavigate } from 'react-router-dom';
 
 interface IProvider {
     children: React.ReactNode;
