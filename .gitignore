@@ -361,8 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Database Model
-/HRApplication.Server/Migrations
-Database Model
-.gitignore
-.gitattributes
+**/Database Model/
+HRApplication.Server/Migrations/
