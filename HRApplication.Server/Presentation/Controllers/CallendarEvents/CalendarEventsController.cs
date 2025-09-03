@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using ErrorOr;
+﻿using ErrorOr;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.CreateCalendarEvents;
 using HRApplication.Server.Application.DatabaseTables.CalendarEvents.Commands.DeleteCalendarEvent;

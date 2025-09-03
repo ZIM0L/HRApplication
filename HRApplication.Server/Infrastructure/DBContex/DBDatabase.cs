@@ -1,5 +1,4 @@
 ﻿using HRApplication.Server.Domain.Models;
-using HRApplication.Server.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

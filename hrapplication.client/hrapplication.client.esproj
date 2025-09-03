@@ -25,13 +25,4 @@
     <Folder Include="src\utils\enums\" />
     <Folder Include="src\utils\functions\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.dockerignore">
-      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
-      <Link>.dockerignore</Link>
-    </None>
-    <None Include="..\docker-compose.yml">
-      <Link>docker-compose.yml</Link>
-    </None>
-  </ItemGroup>
 </Project>

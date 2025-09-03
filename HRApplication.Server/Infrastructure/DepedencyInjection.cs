@@ -10,9 +10,6 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.AddDbContext<DBDatabase>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("MyConnectionString")));
-
             services.AddHttpContextAccessor();
             services.Configure<JwtSetting>(configuration.GetSection("JwtSetting"));
             services.AddScoped<IUserRepository, UserRepository>();
