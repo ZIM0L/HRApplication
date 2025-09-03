@@ -82,7 +82,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("https://localhost:5173")
+        policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -120,8 +120,14 @@ app.UseHttpsRedirection();
 
 // needed for cors also
 app.UseRouting();
-app.UseCors("AllowFrontend");
-app.UseCors("AllowProductionFrontend");
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors("AllowFrontend");
+}
+else
+{
+    app.UseCors("AllowProductionFrontend");
+}
 app.UseStaticFiles();
 
 app.UseAuthentication();

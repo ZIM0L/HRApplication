@@ -155,7 +155,7 @@ function CalendarApp() {
     const handleDeleteEvent = (deleteCalendarEvents: CalendarEventExternal[]) => {  
        setInitEvents((prevEvents) => {  
            const updatedEvents = prevEvents.filter((event) => !deleteCalendarEvents.some((deleteEvent) => deleteEvent.id === event.id));  
-           calendar.events.set(updatedEvents);  
+           calendar?.events.set(updatedEvents);
            return updatedEvents;  
        });  
        //@ts-expect-error works  
@@ -191,7 +191,7 @@ function CalendarApp() {
                 selectedCategories.includes(event.calendarId!.toLowerCase()) 
             );
         });
-        calendar.events.set(filteredEvents);
+        calendar?.events.set(filteredEvents);
     };
 
     const handleCategoryChange = (label: string) => {
