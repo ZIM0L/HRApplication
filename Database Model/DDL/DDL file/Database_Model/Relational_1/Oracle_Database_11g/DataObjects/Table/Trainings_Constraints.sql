@@ -1,1 +1,0 @@
-ALTER TABLE trainings ADD CONSTRAINT trainings_pk PRIMARY KEY ( trainingid );

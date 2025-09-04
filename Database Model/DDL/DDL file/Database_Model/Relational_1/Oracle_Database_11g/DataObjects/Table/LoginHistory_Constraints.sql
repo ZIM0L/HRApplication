@@ -1,1 +1,0 @@
-ALTER TABLE loginhistory ADD CONSTRAINT loginhistory_pk PRIMARY KEY ( loginid );

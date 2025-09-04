@@ -1,1 +1,0 @@
-ALTER TABLE leaverequest ADD CONSTRAINT leaverequest_pk PRIMARY KEY ( leaverequestid );

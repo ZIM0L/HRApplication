@@ -1,1 +1,0 @@
-ALTER TABLE schedule ADD CONSTRAINT schedule_pk PRIMARY KEY ( scheduleid );

@@ -1,1 +1,0 @@
-ALTER TABLE sessions ADD CONSTRAINT sessions_pk PRIMARY KEY ( sessionsid );

@@ -1,1 +1,0 @@
-ALTER TABLE userroles ADD CONSTRAINT userroles_pk PRIMARY KEY ( userroleid );
