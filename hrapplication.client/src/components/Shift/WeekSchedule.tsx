@@ -67,17 +67,17 @@ const WeekSchedule = () => {
             </div>
 
             {/* Week Schedule Table */}
-            <div className="overflow-x-auto rounded-lg bg-white shadow-md">
-                <table className="w-full table-auto border-collapse">
+            <div className="overflow-x-auto bg-white shadow-md">
+                <table className="w-full table-auto border-collapse rounded-lg">
                     <thead className="bg-gray-100">
                         <tr>
-                            <th className="min-w-[200px] max-w-[220px] border px-4 py-2 text-left text-sm font-medium text-gray-600">
+                            <th className="min-w-[200px] max-w-[220px] border border-1 border-gray-400 px-4 py-2 text-left text-sm font-medium text-gray-600">
                                 Employees
                             </th>
                             {weekDates.map((date, index) => (
                                 <th
                                     key={index}
-                                    className="border text-center text-sm text-gray-600"
+                                    className="border border-1 border-gray-400 text-center text-sm text-gray-600"
                                 >
                                     <p className="font-bold text-gray-700">
                                         {new Date(date).toLocaleDateString("en-US", {
@@ -93,7 +93,7 @@ const WeekSchedule = () => {
                         {teamInformation?.UserData.filter((user, index, self) =>
                             index === self.findIndex((u) => u.email === user.email)).map((assignment) => (
                             <tr key={assignment.email} className="hover:bg-gray-50">
-                                <td className="border px-4 py-3 text-sm font-medium text-gray-800">
+                                <td className="border px-4 py-3 text-sm font-medium text-gray-800 border-1 border-gray-400">
                                     {assignment.name} {assignment.surname}
                                 </td>
                                 {weekDates.map((date, index) => {
@@ -109,7 +109,7 @@ const WeekSchedule = () => {
                                     return (
                                         <td
                                             key={index}
-                                            className={`border px-4 py-3 text-sm text-center ${shiftForDate ? "bg-green-200" : ""}`}
+                                            className={`border border-1 border-gray-400 px-4 py-3 text-sm text-center ${shiftForDate ? "bg-green-200" : ""}`}
                                         >
                                             {shiftForDate
                                                 ? `${shiftForDate.shift.shiftStart.slice(0, 5)} - ${shiftForDate.shift.shiftEnd.slice(0, 5)}`

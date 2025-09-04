@@ -62,7 +62,7 @@ namespace HRApplication.Server.Infrastructure.DBContex
             modelBuilder.Entity<Invitation>()
                 .HasOne(jobPosition => jobPosition.JobPosition)
                 .WithMany(invitation => invitation.Invitations)
-                .HasForeignKey(jobPosition => jobPosition.InvitationId);
+                .HasForeignKey(jobPosition => jobPosition.JobPositionId);
 
             modelBuilder.Entity<TeamShift>()
                 .HasOne(team => team.Team)

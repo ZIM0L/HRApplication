@@ -91,13 +91,13 @@ const WeekSchedule = () => {
             <div className="mt-4 flex justify-between">
                 <button
                     onClick={goToPrevWeek}
-                    className="rounded-lg border-2 border-gray-200 px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
+                    className="border-2 rounded-md  px-2 py-1 text-lg text-gray-500 transition-colors hover:text-black hover:border-gray-400"
                 >
                     &lt; Previous Week
                 </button>
                 <button
                     onClick={goToNextWeek}
-                    className="rounded-lg border-2 border-gray-200 px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
+                    className="border-2 rounded-md  px-2 py-1 text-lg text-gray-500 transition-colors hover:text-black hover:border-gray-400"
                 >
                     Next Week &gt;
                 </button>
@@ -108,7 +108,7 @@ const WeekSchedule = () => {
                 <thead className="bg-gray-100">
                     <tr>
                         {weekDates.map((date, index) => (
-                            <th key={index} className="border px-2 py-3 text-center text-sm text-gray-700">
+                            <th key={index} className="border border-1 border-gray-400 px-2 py-3 text-center text-sm text-gray-700">
                                 <p className="font-semibold text-gray-700">
                                     {new Date(date).toLocaleDateString("en-US", { weekday: "short" })}
                                 </p>
@@ -127,7 +127,7 @@ const WeekSchedule = () => {
                                     return (
                                         <td
                                             key={index}
-                                            className={`border text-center px-2 py-3 text-sm ${shift ? "bg-green-200" : ""}`}
+                                            className={`border border-1 border-gray-400 text-center px-2 py-3 text-sm ${shift ? "bg-green-200" : ""}`}
                                         >
                                             {shift
                                                 ? `${shift.shift.shiftStart.slice(0, 5)} - ${shift.shift.shiftEnd.slice(0, 5)}`
